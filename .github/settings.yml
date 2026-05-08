@@ -6,6 +6,10 @@
 # nolte/gh-plumbing) do not trigger a fresh sync on their own. When a commons
 # change should propagate (new label, changed default, …), edit this file as
 # well — a one-line comment touch is enough — so the App re-runs the merge.
+#
+# Last propagation: 2026-05-08 — initial sync trigger after repo creation, to
+# pull in the commons-settings label set, default_branch=develop, branch
+# protection on develop/main, and the topic list below.
 
 _extends: nolte/gh-plumbing:.github/commons-settings.yml
 
