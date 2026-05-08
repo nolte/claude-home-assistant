@@ -1,0 +1,37 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  TASK_COLLECTION_BASE: https://raw.githubusercontent.com/nolte/taskfiles/develop/src
+
+includes:
+  mkdocs: "{{.TASK_COLLECTION_BASE}}/taskfile-include-mkdocs.yaml"
+  pre-commit: "{{.TASK_COLLECTION_BASE}}/taskfile-include-pre-commit.yaml"
+
+tasks:
+  default:
+    cmds:
+      - task -l
+    silent: true
+
+  lint:
+    desc: Run pre-commit across all files
+    cmds:
+      - pre-commit run --all-files
+
+  test:
+    desc: Run the test suite (placeholder — no runtime tests yet)
+    cmds:
+      - echo "no tests yet"
+    silent: true
+
+  docs:
+    desc: Build the MkDocs site
+    cmds:
+      - mkdocs build --strict
+
+  plugin:reload:
+    desc: Start Claude Code with this repo loaded as a plugin (dogfooding)
+    cmds:
+      - claude --plugin-dir .

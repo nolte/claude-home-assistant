@@ -1,0 +1,35 @@
+# See https://pre-commit.com for usage and config reference.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: [--allow-multiple-documents, --unsafe]
+      - id: check-json
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [-d, relaxed]
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.42.0
+    hooks:
+      - id: markdownlint
+        args:
+          - --disable
+          - MD013  # line-length
+          - MD022  # blanks-around-headings
+          - MD032  # blanks-around-lists
+          - MD033  # no-inline-html
+          - MD036  # no-emphasis-as-heading
+          - MD040  # fenced-code-language
+          - MD041  # first-line-h1
+          - MD049  # emphasis-style (allow underscore)
+          - --
