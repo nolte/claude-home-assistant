@@ -58,6 +58,13 @@ plugins:
         - en
       separator: '[\s\-,:!=\[\]()\"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
 
+  - gen-files:
+      scripts:
+        - scripts/docs/gen_catalog.py
+
+  - literate-nav:
+      nav_file: SUMMARY.md
+
 markdown_extensions:
   - abbr
   - admonition
@@ -102,3 +109,6 @@ extra:
 
 nav:
   - Startseite: de/index.md
+  - Skills: de/skills/SUMMARY.md
+  - Agents: de/agents/SUMMARY.md
+  - Tags: de/tags.md
