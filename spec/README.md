@@ -21,6 +21,15 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/security-hardening`](ha/security-hardening/de.md) | HA-Integration: Security-Hardening | HA Integration: Security Hardening | draft | unversioned |
 | [`ha/test-harness`](ha/test-harness/de.md) | HA-Integration: Test-Harness | HA Integration: Test Harness | draft | unversioned |
 | [`ha/dev-environment`](ha/dev-environment/de.md) | HA-Integration: Dev-Environment | HA Integration: Dev Environment | draft | unversioned |
+| [`claude/ha-integration-scaffold`](claude/ha-integration-scaffold/de.md) | Skill: `ha-integration-scaffold` | Skill: `ha-integration-scaffold` | draft | unversioned |
+| [`claude/ha-config-flow-augment`](claude/ha-config-flow-augment/de.md) | Skill: `ha-config-flow-augment` | Skill: `ha-config-flow-augment` | draft | unversioned |
+| [`claude/ha-coordinator-add`](claude/ha-coordinator-add/de.md) | Skill: `ha-coordinator-add` | Skill: `ha-coordinator-add` | draft | unversioned |
+| [`claude/ha-entity-description-mapper`](claude/ha-entity-description-mapper/de.md) | Skill: `ha-entity-description-mapper` | Skill: `ha-entity-description-mapper` | draft | unversioned |
+| [`claude/ha-service-definition-generator`](claude/ha-service-definition-generator/de.md) | Skill: `ha-service-definition-generator` | Skill: `ha-service-definition-generator` | draft | unversioned |
+| [`claude/ha-test-harness-augment`](claude/ha-test-harness-augment/de.md) | Skill: `ha-test-harness-augment` | Skill: `ha-test-harness-augment` | draft | unversioned |
+| [`claude/ha-lovelace-card-scaffold`](claude/ha-lovelace-card-scaffold/de.md) | Skill: `ha-lovelace-card-scaffold` | Skill: `ha-lovelace-card-scaffold` | draft | unversioned |
+| [`claude/ha-translation-sync`](claude/ha-translation-sync/de.md) | Skill: `ha-translation-sync` | Skill: `ha-translation-sync` | draft | unversioned |
+| [`claude/ha-security-audit`](claude/ha-security-audit/de.md) | Skill: `ha-security-audit` | Skill: `ha-security-audit` | draft | unversioned |
 
 ## Konventionen
 
