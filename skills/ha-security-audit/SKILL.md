@@ -52,7 +52,7 @@ Run `grep`-based pattern checks for each rule:
 | Config-flow input validation | `vol.Schema` constructs in `config_flow.py` |
 | Multi-instance service disambiguation | service handlers vs. `_resolve_entry` helper |
 | Diagnostics redaction | `async_redact_data` + `TO_REDACT` consistency with `entry.data` keys |
-| Logging discipline | `_LOGGER.{level}(...api_key|token|password|secret...)` |
+| Logging discipline | `_LOGGER.{level}(...api_key\|token\|password\|secret...)` |
 
 ### 2) Score
 
