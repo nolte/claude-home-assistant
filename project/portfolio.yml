@@ -1,0 +1,19 @@
+# Portfolio manifest for nolte/claude-home-assistant.
+# Schema: spec/portfolio/portfolio-management/ §Capability inventory per repository
+# Audience references resolve against AUDIENCES.md at the repo root.
+
+capabilities:
+  - name: claude-code-skills-and-agents-for-home-assistant
+    description: >-
+      A Claude Code plugin bundling skills and agents for Home Assistant
+      development — custom integrations, Lovelace cards, blueprints and
+      automations, and ESPHome / add-on work — that authors HA artefacts against
+      Home Assistant Core and HACS conventions.
+    audience:
+      - "Plugin-Autor beim Dogfooding in diesem Repo (nolte)"
+      - "Spätere öffentliche Nutzer (HA-Custom-Integration- und Card-Autoren-Community)"
+    status: active
+    rationale: >-
+      This repository owns the Home-Assistant-development Claude Code skill and
+      agent set in the portfolio, distinct from claude-shared's portfolio-wide
+      skills.
