@@ -16,16 +16,34 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-import mkdocs_gen_files
+import shutil
+
 import yaml
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SOURCES_FILE = REPO_ROOT / "docs" / "catalog-sources.yml"
 
-# Generator emits everything under the canonical-language docs tree (de/).
-# mkdocs-static-i18n falls back to the default language for missing files in
-# other languages, so EN inherits these pages automatically.
-LANG_PREFIX = "de"
+# The catalog is written as real files into the canonical-language docs tree
+# (docs/de/) rather than as mkdocs-gen-files virtual files. mkdocs-static-i18n
+# only localizes files that physically live under docs_dir; virtual gen-files
+# pages hit its "Unhandled file case" branch and are dropped from every language
+# tree (ultrabug/mkdocs-static-i18n#263). Writing real files lets i18n build the
+# catalog into the default language and fall English back onto it. A `hooks:`
+# entry runs main() in on_pre_build, before MkDocs collects the files.
+DOCS_LANG = REPO_ROOT / "docs" / "de"
+
+# Generated subtrees, wiped before each run so deleted artifacts don't linger as
+# orphan pages. Hand-written prose (docs/de/index.md) is never touched.
+_GENERATED = ("skills", "agents", "tags.md")
+
+
+def _doc_path(*parts: str) -> Path:
+    return DOCS_LANG.joinpath(*parts)
+
+
+def _write(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
 
 FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n?(.*)$", re.DOTALL)
 
@@ -220,6 +238,15 @@ def _render_tag_index(all_entries: list[dict]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _clean_generated() -> None:
+    for name in _GENERATED:
+        target = DOCS_LANG / name
+        if target.is_dir():
+            shutil.rmtree(target)
+        elif target.exists():
+            target.unlink()
+
+
 def main() -> None:
     sources = _load_sources()
     skills: list[dict] = []
@@ -228,28 +255,32 @@ def main() -> None:
         skills.extend(_collect_skills(source))
         agents.extend(_collect_agents(source))
 
+    _clean_generated()
+
     for entry in skills:
-        path = f"{LANG_PREFIX}/skills/{entry['source']['name']}/{entry['name']}.md"
-        with mkdocs_gen_files.open(path, "w") as fh:
-            fh.write(_render_skill_page(entry))
+        _write(
+            _doc_path("skills", entry["source"]["name"], f"{entry['name']}.md"),
+            _render_skill_page(entry),
+        )
 
     for entry in agents:
-        path = f"{LANG_PREFIX}/agents/{entry['source']['name']}/{entry['name']}.md"
-        with mkdocs_gen_files.open(path, "w") as fh:
-            fh.write(_render_agent_page(entry))
+        _write(
+            _doc_path("agents", entry["source"]["name"], f"{entry['name']}.md"),
+            _render_agent_page(entry),
+        )
 
-    with mkdocs_gen_files.open(f"{LANG_PREFIX}/skills/index.md", "w") as fh:
-        fh.write(_render_index("skill", skills))
-    with mkdocs_gen_files.open(f"{LANG_PREFIX}/agents/index.md", "w") as fh:
-        fh.write(_render_index("agent", agents))
-
-    with mkdocs_gen_files.open(f"{LANG_PREFIX}/skills/SUMMARY.md", "w") as fh:
-        fh.write(_render_summary("skill", skills))
-    with mkdocs_gen_files.open(f"{LANG_PREFIX}/agents/SUMMARY.md", "w") as fh:
-        fh.write(_render_summary("agent", agents))
-
-    with mkdocs_gen_files.open(f"{LANG_PREFIX}/tags.md", "w") as fh:
-        fh.write(_render_tag_index(skills + agents))
+    _write(_doc_path("skills", "index.md"), _render_index("skill", skills))
+    _write(_doc_path("agents", "index.md"), _render_index("agent", agents))
+    _write(_doc_path("skills", "SUMMARY.md"), _render_summary("skill", skills))
+    _write(_doc_path("agents", "SUMMARY.md"), _render_summary("agent", agents))
+    _write(_doc_path("tags.md"), _render_tag_index(skills + agents))
 
 
-main()
+def on_pre_build(config, **kwargs) -> None:
+    """MkDocs hook entry point: regenerate the catalog into docs/de/ before
+    MkDocs collects the files, so mkdocs-static-i18n sees real docs_dir files."""
+    main()
+
+
+if __name__ == "__main__":
+    main()
