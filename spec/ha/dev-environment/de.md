@@ -34,7 +34,7 @@ Quality-Scale-Marker: **unscaled** (Dev-Environment ist nicht Teil der HA-Qualit
 
 ### Cluster-Voraussetzung
 
-- **MUSS [MUST]** voraussetzen, dass ein lokaler Kind-Cluster (oder ein gleichwertiger lokaler K8s-Cluster) mit installiertem `homeassistant`-Helm-Chart läuft — die Spec adressiert nicht das Cluster-Setup, nur den Dev-Loop darauf
+- **MUSS [MUST]** voraussetzen, dass ein lokaler Kind-Cluster (oder ein gleichwertiger lokaler K8s-Cluster) mit einer laufenden HA-Instanz vorhanden ist — die Spec adressiert nicht das Cluster-Setup, nur den Dev-Loop darauf; die Instanz wird entweder über einen `homeassistant`-Helm-Chart oder über das in `ha/dev-instance-provisioning` definierte rohe Manifest bereitgestellt
 - **MUSS [MUST]** den HA-Pod via Label-Selector finden — typische Konvention: `app.kubernetes.io/name=homeassistant` oder ein vergleichbarer Helm-Chart-Standard-Selector
 - **SOLLTE [SHOULD]** Cluster-, Namespace- und Pod-Selector-Werte als `Taskfile.yml`-Variablen exponieren, sodass User sie pro Cluster überschreiben können
 
