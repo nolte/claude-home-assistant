@@ -18,9 +18,11 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/zeroconf-discovery`](ha/zeroconf-discovery/de.md) | HA-Integration: Zeroconf-Discovery | HA Integration: Zeroconf Discovery | draft | unversioned |
 | [`ha/diagnostics`](ha/diagnostics/de.md) | HA-Integration: Diagnostics | HA Integration: Diagnostics | draft | unversioned |
 | [`ha/lovelace-card-patterns`](ha/lovelace-card-patterns/de.md) | HA-Integration: Lovelace-Card-Patterns | HA Integration: Lovelace Card Patterns | draft | unversioned |
+| [`ha/lovelace-card-entity-selector`](ha/lovelace-card-entity-selector/de.md) | HA-Integration: Lovelace-Card-Entity-Selector-Filter | HA Integration: Lovelace Card Entity Selector Filtering | draft | unversioned |
 | [`ha/security-hardening`](ha/security-hardening/de.md) | HA-Integration: Security-Hardening | HA Integration: Security Hardening | draft | unversioned |
 | [`ha/test-harness`](ha/test-harness/de.md) | HA-Integration: Test-Harness | HA Integration: Test Harness | draft | unversioned |
 | [`ha/dev-environment`](ha/dev-environment/de.md) | HA-Integration: Dev-Environment | HA Integration: Dev Environment | draft | unversioned |
+| [`ha/dev-instance-provisioning`](ha/dev-instance-provisioning/de.md) | HA-Integration: Dev-Instanz-Provisioning | HA Integration: Dev Instance Provisioning | draft | unversioned |
 | [`claude/ha-integration-scaffold`](claude/ha-integration-scaffold/de.md) | Skill: `ha-integration-scaffold` | Skill: `ha-integration-scaffold` | draft | unversioned |
 | [`claude/ha-config-flow-augment`](claude/ha-config-flow-augment/de.md) | Skill: `ha-config-flow-augment` | Skill: `ha-config-flow-augment` | draft | unversioned |
 | [`claude/ha-coordinator-add`](claude/ha-coordinator-add/de.md) | Skill: `ha-coordinator-add` | Skill: `ha-coordinator-add` | draft | unversioned |
