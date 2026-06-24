@@ -36,7 +36,7 @@ Quality scale marker: custom cards are **not part of the HA quality scale**; the
 - **MUST** define `static getConfigElement()` on the card class for a custom editor, returning a registered custom element (`return document.createElement("<card-editor>")`) — HA displays this element in the dashboard card editor
 - **MUST** register the element returned by the editor beforehand via `customElements.define("<card-editor>", <EditorClass>)`, with `<card-editor>` in lowercase kebab-case and an integration-domain prefix
 - **SHOULD** carry the editor element in a separate `<card-name>-editor.js` file once it grows non-trivial — consistent with `ha/lovelace-card-patterns`
-- **MUST NOT** define `getConfigElement` and `getConfigForm` on the same card at the same time — either a custom editor element or the built-in form editor, not both
+- **SHOULD NOT** define `getConfigElement` and `getConfigForm` on the same card at the same time — one of the two suffices. HA documents them as alternatives (a custom editor element *or* the built-in form editor) but does not forbid the combination; this is therefore a spec preference for unambiguity, not an HA requirement
 
 ### `config-changed` event
 
@@ -73,7 +73,7 @@ Quality scale marker: custom cards are **not part of the HA quality scale**; the
 
 - [ ] `static getConfigElement()` returns an editor element registered via `customElements.define`
 - [ ] Editor element is named in lowercase kebab-case with an integration-domain prefix
-- [ ] Card defines either `getConfigElement` or `getConfigForm` — not both
+- [ ] Card preferably defines only one editor hook (`getConfigElement` *or* `getConfigForm`)
 - [ ] Editor dispatches `config-changed` with `bubbles: true`, `composed: true`, and the new config in `event.detail.config`
 - [ ] For `getConfigForm`: the return carries the required key `schema` (a list, one entry per field with `name` and `selector`)
 - [ ] `computeLabel`/`computeHelper`/`assertConfig` are present where the form needs them
