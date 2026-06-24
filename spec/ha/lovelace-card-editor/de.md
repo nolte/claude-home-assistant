@@ -36,7 +36,7 @@ Quality-Scale-Marker: Custom Cards sind **nicht Teil der HA-Quality-Scale**; der
 - **MUSS [MUST]** für einen Custom-Editor `static getConfigElement()` auf der Card-Klasse definieren, das ein registriertes Custom-Element zurückgibt (`return document.createElement("<card-editor>")`) — HA zeigt dieses Element im Card-Editor des Dashboards an
 - **MUSS [MUST]** das vom Editor zurückgegebene Element vorher per `customElements.define("<card-editor>", <EditorClass>)` registrieren, mit `<card-editor>` in lowercase-kebab-case und Integration-Domain-Präfix
 - **SOLLTE [SHOULD]** das Editor-Element in einer separaten `<card-name>-editor.js`-Datei führen, sobald es nicht-trivial wird — konsistent mit `ha/lovelace-card-patterns`
-- **MUSS NICHT [MUST NOT]** `getConfigElement` und `getConfigForm` gleichzeitig auf derselben Card definieren — entweder Custom-Editor-Element oder eingebauter Form-Editor, nicht beides
+- **SOLLTE NICHT [SHOULD NOT]** `getConfigElement` und `getConfigForm` gleichzeitig auf derselben Card definieren — eines von beiden genügt. HA dokumentiert sie als Alternativen (Custom-Editor-Element *oder* eingebauter Form-Editor), verbietet die Kombination aber nicht; dies ist daher eine Spec-Präferenz für Eindeutigkeit, keine HA-Vorgabe
 
 ### `config-changed`-Event
 
@@ -73,7 +73,7 @@ Quality-Scale-Marker: Custom Cards sind **nicht Teil der HA-Quality-Scale**; der
 
 - [ ] `static getConfigElement()` gibt ein per `customElements.define` registriertes Editor-Element zurück
 - [ ] Editor-Element ist lowercase-kebab-case mit Integration-Domain-Präfix benannt
-- [ ] Card definiert entweder `getConfigElement` oder `getConfigForm` — nicht beide
+- [ ] Card definiert bevorzugt nur einen Editor-Hook (`getConfigElement` *oder* `getConfigForm`)
 - [ ] Editor dispatcht `config-changed` mit `bubbles: true`, `composed: true` und der neuen Config in `event.detail.config`
 - [ ] Bei `getConfigForm`: Rückgabe enthält Pflicht-Key `schema` (eine Liste, ein Eintrag pro Feld mit `name` und `selector`)
 - [ ] `computeLabel`/`computeHelper`/`assertConfig` sind vorhanden, wo das Formular sie braucht
