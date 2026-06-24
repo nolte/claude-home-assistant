@@ -58,17 +58,20 @@ plugins:
         - en
       separator: '[\s\-,:!=\[\]()\"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
 
-  - gen-files:
-      scripts:
-        - scripts/docs/gen_catalog.py
+  - i18n:
+      docs_structure: folder
+      fallback_to_default: true
+      languages:
+        - locale: de
+          name: Deutsch
+          default: true
+          build: true
+        - locale: en
+          name: English
+          build: true
 
   - literate-nav:
       nav_file: SUMMARY.md
-
-  - redirects:
-      redirect_maps:
-        # Root entry point redirects to the default-language home page.
-        index.md: de/index.md
 
 markdown_extensions:
   - abbr
@@ -107,13 +110,19 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tilde
 
+hooks:
+  # Regenerate the skill/agent catalog into docs/de/ in on_pre_build, before
+  # MkDocs collects files, so mkdocs-static-i18n localizes real docs_dir files
+  # (gen-files virtual pages are dropped by i18n — ultrabug/mkdocs-static-i18n#263).
+  - scripts/docs/gen_catalog.py
+
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/nolte/claude-home-assistant
 
 nav:
-  - Startseite: de/index.md
-  - Skills: de/skills/SUMMARY.md
-  - Agents: de/agents/SUMMARY.md
-  - Tags: de/tags.md
+  - Startseite: index.md
+  - Skills: skills/SUMMARY.md
+  - Agents: agents/SUMMARY.md
+  - Tags: tags.md
