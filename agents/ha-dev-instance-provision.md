@@ -64,12 +64,13 @@ You **don't**:
 | `mode` | no | `provision` | `provision` or `teardown` |
 | `namespace` | no | `default` | Kubernetes namespace |
 | `statefulset_name` | no | `homeassistant` | Yields the stable pod `<name>-0` |
-| `pod_selector` | no | `app.kubernetes.io/name=homeassistant` | Must match the deploy/verify agents' selector |
 | `image` | no | `ghcr.io/home-assistant/home-assistant:stable` | Official image; PID 1 must restart on SIGTERM |
 | `storage_class` | no | cluster default | Resolved at run time if omitted |
 | `storage_size` | no | `2Gi` | `/config` PVC request |
 | `kube_context` | no | current `kubectl` context | Honour multi-cluster setups |
 | `wait_timeout` | no | `300` | Seconds to wait for the rollout |
+
+The pod carries the fixed label `app.kubernetes.io/name=homeassistant` — the portfolio convention that `ha-integration-deploy` / `ha-integration-verify` use as their default selector. The provisioner owns the label because it creates the pod, so the selector is intentionally not a parameter: a custom value would have to be threaded into the deploy/verify agents as well, which is out of scope here.
 
 ## Lifecycle — `mode: provision` (abort on first hard failure)
 
