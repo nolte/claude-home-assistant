@@ -1,5 +1,5 @@
-canonical_language: de
-languages: [de, en]
+canonical_language: en
+languages: [en, de]
 spec_root: spec
 
 # Portfolio-inherited spec layer (nolte/claude-shared#339, mechanism: #340,

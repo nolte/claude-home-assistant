@@ -24,16 +24,16 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 SOURCES_FILE = REPO_ROOT / "docs" / "catalog-sources.yml"
 
 # The catalog is written as real files into the canonical-language docs tree
-# (docs/de/) rather than as mkdocs-gen-files virtual files. mkdocs-static-i18n
+# (docs/en/) rather than as mkdocs-gen-files virtual files. mkdocs-static-i18n
 # only localizes files that physically live under docs_dir; virtual gen-files
 # pages hit its "Unhandled file case" branch and are dropped from every language
 # tree (ultrabug/mkdocs-static-i18n#263). Writing real files lets i18n build the
-# catalog into the default language and fall English back onto it. A `hooks:`
-# entry runs main() in on_pre_build, before MkDocs collects the files.
-DOCS_LANG = REPO_ROOT / "docs" / "de"
+# catalog into the default language and fall other languages back onto it. A
+# `hooks:` entry runs main() in on_pre_build, before MkDocs collects the files.
+DOCS_LANG = REPO_ROOT / "docs" / "en"
 
 # Generated subtrees, wiped before each run so deleted artifacts don't linger as
-# orphan pages. Hand-written prose (docs/de/index.md) is never touched.
+# orphan pages. Hand-written prose (docs/en/index.md) is never touched.
 _GENERATED = ("skills", "agents", "tags.md")
 
 
@@ -169,7 +169,7 @@ def _render_skill_page(entry: dict) -> str:
         f"_Plugin: **{entry['source']['name']}**_\n\n"
         f"> {entry['description']}\n"
         f"{_render_tags(entry['tags'])}\n"
-        f"[Quelle ansehen]({src_link})\n\n"
+        f"[View source]({src_link})\n\n"
         f"---\n\n"
         f"{entry['body'].strip()}\n"
     )
@@ -182,7 +182,7 @@ def _render_agent_page(entry: dict) -> str:
         f"_Plugin: **{entry['source']['name']}** · Distribution: `{entry['distribution']}`_\n\n"
         f"> {entry['description']}\n"
         f"{_render_tags(entry['tags'])}\n"
-        f"[Quelle ansehen]({src_link})\n\n"
+        f"[View source]({src_link})\n\n"
         f"---\n\n"
         f"{entry['body'].strip()}\n"
     )
@@ -193,7 +193,7 @@ def _render_index(kind: str, entries: list[dict]) -> str:
     if not entries:
         return (
             f"# {title}\n\n"
-            f"_Noch keine {title} in den konfigurierten Plugin-Quellen._\n"
+            f"_No {title} in the configured plugin sources yet._\n"
         )
     lines = [f"# {title}\n"]
     by_plugin: dict[str, list[dict]] = defaultdict(list)
@@ -210,7 +210,7 @@ def _render_index(kind: str, entries: list[dict]) -> str:
 
 
 def _render_summary(kind: str, entries: list[dict]) -> str:
-    out = [f"- [Übersicht](index.md)"]
+    out = [f"- [Overview](index.md)"]
     by_plugin: dict[str, list[dict]] = defaultdict(list)
     for e in entries:
         by_plugin[e["source"]["name"]].append(e)
@@ -227,7 +227,7 @@ def _render_tag_index(all_entries: list[dict]) -> str:
         for t in e["tags"]:
             by_tag[t].append(e)
     if not by_tag:
-        return "# Tags\n\n_Noch keine Tags in den konfigurierten Plugin-Quellen._\n"
+        return "# Tags\n\n_No tags in the configured plugin sources yet._\n"
     lines = ["# Tags\n"]
     for tag in sorted(by_tag):
         lines.append(f"\n## #{tag}\n")

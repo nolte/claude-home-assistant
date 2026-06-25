@@ -13,7 +13,7 @@ docs_dir: docs
 
 theme:
   name: material
-  language: de
+  language: en
 
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -54,21 +54,24 @@ theme:
 plugins:
   - search:
       lang:
-        - de
         - en
+        - de
       separator: '[\s\-,:!=\[\]()\"/]+|(?!\b)(?=[A-Z][a-z])|\.(?!\d)|&[lg]t;'
 
   - i18n:
       docs_structure: folder
       fallback_to_default: true
       languages:
-        - locale: de
-          name: Deutsch
-          default: true
-          build: true
         - locale: en
           name: English
+          default: true
           build: true
+        - locale: de
+          name: Deutsch
+          build: true
+          nav_translations:
+            Home: Startseite
+            Use cases: Anwendungsfälle
 
   - literate-nav:
       nav_file: SUMMARY.md
@@ -122,8 +125,8 @@ extra:
       link: https://github.com/nolte/claude-home-assistant
 
 nav:
-  - Startseite: index.md
-  - Anwendungsfälle: use-cases.md
+  - Home: index.md
+  - Use cases: use-cases.md
   - Skills: skills/SUMMARY.md
   - Agents: agents/SUMMARY.md
   - Tags: tags.md
