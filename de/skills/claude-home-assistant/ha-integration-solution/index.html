@@ -1,0 +1,893 @@
+
+<!doctype html>
+<html lang="de" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Claude Code skills, agents and conventions for Home Assistant development — packaged as the claude-home-assistant plugin.">
+      
+      
+        <meta name="author" content="nolte">
+      
+      
+        <link rel="canonical" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-solution/">
+      
+      
+      
+      
+        
+          <link rel="alternate" href="../../../../skills/claude-home-assistant/ha-integration-solution/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="de">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>ha-integration-solution - claude-home-assistant</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ha-integration-solution" class="md-skip">
+          Zum Inhalt
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
+    <a href="../../../" title="claude-home-assistant" class="md-header__button md-logo" aria-label="claude-home-assistant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            claude-home-assistant
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ha-integration-solution
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Zum Dunkelmodus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum Dunkelmodus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Zum Hellmodus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum Hellmodus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sprache wechseln">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../../skills/claude-home-assistant/ha-integration-solution/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="de" class="md-select__link">
+              Deutsch
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Suche" placeholder="Suche" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Suche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Zurücksetzen" aria-label="Zurücksetzen" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Suche wird initialisiert
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nolte/claude-home-assistant" title="Zum Repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nolte/claude-home-assistant
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Hauptnavigation" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Startseite
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../use-cases/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Anwendungsfälle
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../SUMMARY/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Skills
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../agents/SUMMARY/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Agents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../" title="claude-home-assistant" class="md-nav__button md-logo" aria-label="claude-home-assistant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    claude-home-assistant
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nolte/claude-home-assistant" title="Zum Repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nolte/claude-home-assistant
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Startseite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../use-cases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anwendungsfälle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SUMMARY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/SUMMARY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/nolte/claude-home-assistant/edit/develop/docs/en/skills/claude-home-assistant/ha-integration-solution.md" title="Seite editieren" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="ha-integration-solution">ha-integration-solution<a class="headerlink" href="#ha-integration-solution" title="Permanent link">&para;</a></h1>
+<p><em>Plugin: <strong>claude-home-assistant</strong></em></p>
+<blockquote>
+<p>Plan and orchestrate a complete Home Assistant Python custom-integration backend from a result-oriented device/cloud/API requirement, so the user never has to pick which integration skill to use. The integration-side counterpart to ha-automation-solution. Decomposes the requirement into the minimal dependency-ordered set of integration skills, presents the plan for approval, then dispatches ha-integration-scaffold, ha-config-flow-augment, ha-coordinator-add, ha-oauth2-credentials-augment, ha-entity-description-mapper, ha-entity-platform-add, ha-service-definition-generator, ha-integration-events-add, ha-device-automation-add, ha-discovery-augment, ha-bluetooth-augment, ha-diagnostics-augment, ha-repairs-add, ha-system-health-add, ha-significant-change-add, ha-backup-platform-add, ha-media-source-add, ha-reproduce-state-add, ha-conversation-agent-augment, ha-translation-sync, ha-test-harness-augment, ha-quality-scale-audit, and ha-security-audit in order — threading the integration domain and entity_ids between steps. Activate on "build an integration for device/API X", "scaffold and wire up a full custom integration for …", "integrate my Acme thermostat over its cloud API", "baue mir eine Integration für …", "richte eine Custom-Integration für … ein". Do not activate for a single clear augment (let the owning skill handle it), a pure YAML automation/helper solution (ha-automation-solution), a Lovelace frontend (ha-lovelace-card-scaffold), or deploying to a live HA instance (ha-integration-deploy agent).</p>
+</blockquote>
+<p><strong>Tags:</strong> <code>#home-assistant</code> <code>#integration</code> <code>#orchestration</code> <code>#planning</code></p>
+<p><a href="https://github.com/nolte/claude-home-assistant/blob/develop/skills/ha-integration-solution/SKILL.md">View source</a></p>
+<hr />
+<h1 id="ha-integration-solution_1">HA Integration Solution<a class="headerlink" href="#ha-integration-solution_1" title="Permanent link">&para;</a></h1>
+<p>Spec: <a href="https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-solution/de.md">https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-solution/de.md</a> (DE canonical) / <a href="https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-solution/en.md"><code>en.md</code></a>.</p>
+<p>This skill is the <strong>front door</strong> to the Python custom-integration backend cluster — the integration-side counterpart to <code>ha-automation-solution</code>. It does not generate any artifact itself — it decomposes the requirement, plans the dependency-ordered combination, and dispatches the owning individual skills, each of which owns its generation and spec conformance.</p>
+<h2 id="why-this-is-a-skill-not-an-agent">Why this is a skill, not an agent<a class="headerlink" href="#why-this-is-a-skill-not-an-agent" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Plan-before-generate gate</strong> — the skill plan must be presented and explicitly approved before any generation; that human-visible gate is core to the contract and an agent's fire-and-forget shape would lose it.</li>
+<li><strong>Mid-flow interactivity</strong> — clarifying questions (protocol, auth type, entity domains, quality features), plan confirmation, and the "this is actually a YAML automation, not an integration" decision are per-run dialogues.</li>
+<li><strong>Orchestrator that dispatches other skills</strong> — the skill-orchestrates-skill default (see <code>skill-vs-agent</code>) keeps the entry point in skill form, like <code>ha-automation-solution</code> dispatching its authoring skills.</li>
+<li>Counter-dimension considered: the per-building-block generation could run as parallel agents, but the plan approval and the <code>domain</code>/<code>entity_id</code> threading must stay visible in the user's context; skill wins.</li>
+</ul>
+<h2 id="when-this-skill-activates">When this skill activates<a class="headerlink" href="#when-this-skill-activates" title="Permanent link">&para;</a></h2>
+<p>Use this skill when the user describes a <strong>device/cloud/API integration result</strong> that likely needs more than one building block, and should not have to know which integration skill produces what — "build an integration for X", "integrate my Acme thermostat over its cloud API", "baue mir eine Integration für …".</p>
+<h2 id="when-not-to-activate">When NOT to activate<a class="headerlink" href="#when-not-to-activate" title="Permanent link">&para;</a></h2>
+<ul>
+<li>a single clear augment (one config-flow pattern, one coordinator, one platform, one diagnostics enrichment) → let the owning skill activate directly</li>
+<li>a pure YAML automation/helper/template/blueprint solution (no own protocol, no config flow) → <code>ha-automation-solution</code></li>
+<li>a Lovelace frontend card → <code>ha-lovelace-card-scaffold</code> (and the Lovelace skill family)</li>
+<li>deploying/verifying against a running HA instance → out of scope (generation only; the <code>ha-integration-deploy</code> / <code>ha-integration-verify</code> agents own that)</li>
+</ul>
+<h2 id="hard-rules">Hard rules<a class="headerlink" href="#hard-rules" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Never generate inline.</strong> Every building block is produced by its owning skill. This skill plans and dispatches; it does not write code.</li>
+<li><strong>Plan before generate.</strong> Always present the dependency-ordered skill plan and wait for explicit approval before dispatching anything.</li>
+<li><strong>One requirement, one run.</strong> No multi-requirement batches.</li>
+<li><strong>Scaffold first.</strong> For a new integration, <code>ha-integration-scaffold</code> is step 1 (greenfield hub); when an integration already exists under <code>custom_components/&lt;domain&gt;/</code>, skip scaffold and build on it.</li>
+<li><strong>Minimal building blocks.</strong> Decompose to the fewest skills that satisfy the requirement; never plan a surface or quality feature the requirement does not call for.</li>
+<li><strong>Thread identities.</strong> Dispatch in dependency order and pass the <code>domain</code> plus the <code>entity_id</code>s/file paths produced in earlier steps as inputs to dependent steps. Keep all names consistent per <a href="https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md"><code>ha/naming-conventions</code></a>.</li>
+<li><strong>Stop on NEEDS-WORK.</strong> If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent building block on an unfinished predecessor.</li>
+<li><strong>Relay reports verbatim.</strong> Pass through each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings without re-judging them.</li>
+<li><strong>Recognize automation-shaped work.</strong> When the requirement is really a YAML automation/helper solution rather than a custom integration, say so in the plan and point at <code>ha-automation-solution</code> instead of forcing an integration.</li>
+<li><strong>Verify HA internals against the official docs</strong> (see <a href="https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md"><code>ha/upstream-docs-verification</code></a>).</li>
+</ol>
+<h2 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requirement</code></td>
+<td>yes</td>
+<td>—</td>
+<td>The desired device/cloud/API result, in prose</td>
+</tr>
+<tr>
+<td><code>domain</code></td>
+<td>no</td>
+<td>derived from scaffold</td>
+<td>the integration domain; threaded into every step</td>
+</tr>
+<tr>
+<td><code>target_dir</code></td>
+<td>no</td>
+<td>working dir</td>
+<td>repo root; passed through to dispatched skills</td>
+</tr>
+<tr>
+<td><code>protocol</code> / <code>auth</code></td>
+<td>no</td>
+<td>asked when needed</td>
+<td>REST/MQTT/Bluetooth; API key/OAuth2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="decomposition-heuristic-requirement-shape-building-block-owning-skill">Decomposition heuristic (requirement shape → building block → owning skill)<a class="headerlink" href="#decomposition-heuristic-requirement-shape-building-block-owning-skill" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>The requirement needs…</th>
+<th>Building block</th>
+<th>Owning skill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a new integration skeleton (manifest, <code>__init__</code>, config entry, RuntimeData)</td>
+<td>greenfield hub</td>
+<td><code>ha-integration-scaffold</code></td>
+</tr>
+<tr>
+<td>user setup, multi-step/tenant, reauth, reconfigure, or discovery config step</td>
+<td>config flow</td>
+<td><code>ha-config-flow-augment</code></td>
+</tr>
+<tr>
+<td>OAuth2 / Application Credentials cloud auth</td>
+<td>OAuth2 flow</td>
+<td><code>ha-oauth2-credentials-augment</code></td>
+</tr>
+<tr>
+<td>a separate polling role / update interval</td>
+<td>DataUpdateCoordinator</td>
+<td><code>ha-coordinator-add</code></td>
+</tr>
+<tr>
+<td>declarative read-type entities from a datapoint/schema table</td>
+<td>EntityDescription lists</td>
+<td><code>ha-entity-description-mapper</code></td>
+</tr>
+<tr>
+<td>an active command-driven platform (climate/cover/light/fan/lock/media_player/…)</td>
+<td>platform entity</td>
+<td><code>ha-entity-platform-add</code></td>
+</tr>
+<tr>
+<td>a registered service action</td>
+<td>service</td>
+<td><code>ha-service-definition-generator</code></td>
+</tr>
+<tr>
+<td>firing/listening on the HA event bus</td>
+<td>integration events</td>
+<td><code>ha-integration-events-add</code></td>
+</tr>
+<tr>
+<td>a device trigger/condition/action</td>
+<td>device automation</td>
+<td><code>ha-device-automation-add</code></td>
+</tr>
+<tr>
+<td>DHCP/SSDP/USB/HomeKit/Zeroconf network discovery</td>
+<td>discovery matcher</td>
+<td><code>ha-discovery-augment</code></td>
+</tr>
+<tr>
+<td>BLE advertisements / Bluetooth support</td>
+<td>bluetooth</td>
+<td><code>ha-bluetooth-augment</code></td>
+</tr>
+<tr>
+<td>redacted diagnostics dump</td>
+<td>diagnostics</td>
+<td><code>ha-diagnostics-augment</code></td>
+</tr>
+<tr>
+<td>a user-facing fixable/informative issue</td>
+<td>repairs issue</td>
+<td><code>ha-repairs-add</code></td>
+</tr>
+<tr>
+<td>at-a-glance system-health info</td>
+<td>system health</td>
+<td><code>ha-system-health-add</code></td>
+</tr>
+<tr>
+<td>throttling insignificant continuous-value updates</td>
+<td>significant-change checker</td>
+<td><code>ha-significant-change-add</code></td>
+</tr>
+<tr>
+<td>backup hooks or a backup agent</td>
+<td>backup platform</td>
+<td><code>ha-backup-platform-add</code></td>
+</tr>
+<tr>
+<td>a browsable media source</td>
+<td>media source</td>
+<td><code>ha-media-source-add</code></td>
+</tr>
+<tr>
+<td>scene / reproduce-state support</td>
+<td>reproduce_state</td>
+<td><code>ha-reproduce-state-add</code></td>
+</tr>
+<tr>
+<td>intents / a conversation agent / LLM API tools</td>
+<td>voice &amp; AI surfaces</td>
+<td><code>ha-conversation-agent-augment</code></td>
+</tr>
+<tr>
+<td>translation/icon structural sync after string changes</td>
+<td>i18n drift fix</td>
+<td><code>ha-translation-sync</code></td>
+</tr>
+<tr>
+<td>tests for the added code paths</td>
+<td>test harness</td>
+<td><code>ha-test-harness-augment</code></td>
+</tr>
+<tr>
+<td>a read-only tier check</td>
+<td>quality-scale audit</td>
+<td><code>ha-quality-scale-audit</code></td>
+</tr>
+<tr>
+<td>a read-only security check</td>
+<td>security audit</td>
+<td><code>ha-security-audit</code></td>
+</tr>
+<tr>
+<td>a YAML automation/helper solution (no own protocol, no config flow)</td>
+<td>—</td>
+<td><strong>out of scope</strong> → <code>ha-automation-solution</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="workflow">Workflow<a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h2>
+<h3 id="1-clarify">1) Clarify<a class="headerlink" href="#1-clarify" title="Permanent link">&para;</a></h3>
+<p>If the requirement is underspecified, ask 1–3 targeted questions (which protocol, which auth type, which entity domains, which quality features) before planning. Check whether an integration already exists under <code>custom_components/&lt;domain&gt;/</code>, and whether the work is actually YAML-automation-shaped. Do not plan on guesses.</p>
+<h3 id="2-plan">2) Plan<a class="headerlink" href="#2-plan" title="Permanent link">&para;</a></h3>
+<p>Decompose into a dependency-ordered plan and present it as a table:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>| # | Building block | Skill | Depends on | Purpose |
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>|---|---|---|---|---|
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>| 1 | scaffold (domain=acme) | ha-integration-scaffold | — | manifest/__init__/config entry/RuntimeData |
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>| 2 | OAuth2 / Application Credentials | ha-oauth2-credentials-augment | <span class="ni">#1</span> | cloud auth |
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>| 3 | config flow | ha-config-flow-augment | <span class="ni">#1</span>,#2 | account setup + reauth |
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>| 4 | coordinator | ha-coordinator-add | <span class="ni">#1</span> | poll the Acme cloud API |
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>| 5 | climate entity | ha-entity-platform-add | <span class="ni">#4</span> | thermostat control |
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>| 6 | diagnostics | ha-diagnostics-augment | <span class="ni">#5</span> | redacted dump |
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>| 7 | translations | ha-translation-sync | <span class="ni">#3</span>,#5,#6 | string/icon sync |
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>| 8 | tests | ha-test-harness-augment | <span class="ni">#5</span> | climate platform tests |
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>| 9 | quality-scale audit | ha-quality-scale-audit | all | read-only tier check |
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>| 10 | security audit | ha-security-audit | all | read-only security check |
+</span></code></pre></div>
+<p>The typical order is scaffold → (config-flow + coordinator [+ oauth2]) → entities → [surfaces/robustness as needed] → translations → tests → review. State any "this is actually a YAML automation" finding here and point at <code>ha-automation-solution</code>. Wait for explicit approval.</p>
+<h3 id="3-dispatch">3) Dispatch<a class="headerlink" href="#3-dispatch" title="Permanent link">&para;</a></h3>
+<p>Invoke each owning skill in plan order, passing the <code>domain</code> and the <code>entity_id</code>s/file paths resolved in earlier steps as inputs to the dependent steps. After each, check the returned report; stop on NEEDS-WORK rather than building on an unfinished predecessor.</p>
+<h3 id="4-aggregate-report">4) Aggregate report<a class="headerlink" href="#4-aggregate-report" title="Permanent link">&para;</a></h3>
+<p>List every produced/changed file, its building block, and the wiring (the <code>domain</code>, which <code>entity_id</code> references which). Relay each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings verbatim — do not re-judge them. Point at the operator follow-ups (a bundled whole-picture pass via the <code>ha-integration-review</code> agent, deploy via the <code>ha-integration-deploy</code> agent, runtime verify via the <code>ha-integration-verify</code> agent) without executing them. Do not deploy.</p>
+<h2 id="boundaries">Boundaries<a class="headerlink" href="#boundaries" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Single-building-block generation + spec conformance → the owning individual skill</li>
+<li>A YAML automation/helper solution → <code>ha-automation-solution</code> (this skill only recognizes and points)</li>
+<li>A Lovelace frontend card → <code>ha-lovelace-card-scaffold</code></li>
+<li>Deploy / runtime verify against a live HA instance → out of scope; the <code>ha-integration-deploy</code> / <code>ha-integration-verify</code> agents</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Zurück zum Seitenanfang
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 nolte
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/nolte/claude-home-assistant" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "header.autohide", "toc.follow", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

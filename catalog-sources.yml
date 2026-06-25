@@ -1,0 +1,16 @@
+# Plugin source roots for the skill/agent catalog.
+# Read by scripts/docs/gen_catalog.py at MkDocs build time.
+#
+# Plugin mode: the local plugin MUST be the first entry. Additional external
+# plugins MAY follow. Adding more plugins later is a pure data change — no
+# generator-code edits needed.
+#
+# Spec: spec/claude/skill-agent-catalog/<lang>.md (in nolte-shared).
+
+sources:
+  - name: claude-home-assistant
+    local: .
+    skills_path: skills
+    agents_path: agents
+    repo_url: https://github.com/nolte/claude-home-assistant
+    branch: develop

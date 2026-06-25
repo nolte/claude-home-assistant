@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/tags/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/tags/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/tags/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/use-cases/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/use-cases/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/use-cases/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/agents/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/agents/SUMMARY/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/SUMMARY/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/SUMMARY/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-blueprint-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-blueprint-author/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-blueprint-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-dev-instance-provision/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-dev-instance-provision/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-dev-instance-provision/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-integration-deploy/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-integration-deploy/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-integration-deploy/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-integration-review/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-integration-review/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-integration-review/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-integration-verify/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-integration-verify/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-integration-verify/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/SUMMARY/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/SUMMARY/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/SUMMARY/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-automation-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-automation-author/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-automation-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-automation-solution/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-automation-solution/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-automation-solution/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-backup-platform-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-backup-platform-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-backup-platform-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-badge-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-badge-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-badge-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-blueprint-scaffold/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-blueprint-scaffold/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-blueprint-scaffold/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-bluetooth-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-bluetooth-augment/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-bluetooth-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-card-editor-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-card-editor-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-card-editor-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-card-features-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-card-features-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-card-features-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-config-flow-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-config-flow-augment/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-config-flow-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-conversation-agent-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-conversation-agent-augment/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-conversation-agent-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-coordinator-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-coordinator-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-coordinator-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-derived-sensor-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-derived-sensor-author/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-derived-sensor-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-device-automation-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-device-automation-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-device-automation-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-diagnostics-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-diagnostics-augment/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-diagnostics-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-discovery-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-discovery-augment/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-discovery-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-entity-description-mapper/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-entity-description-mapper/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-entity-description-mapper/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-entity-platform-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-entity-platform-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-entity-platform-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-helper-scaffold/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-helper-scaffold/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-helper-scaffold/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-integration-events-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-integration-events-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-events-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-integration-scaffold/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-integration-scaffold/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-scaffold/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-integration-solution/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-integration-solution/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-solution/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-lovelace-card-scaffold/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-lovelace-card-scaffold/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-lovelace-card-scaffold/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-lovelace-solution/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-lovelace-solution/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-lovelace-solution/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-media-source-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-media-source-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-media-source-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-oauth2-credentials-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-oauth2-credentials-augment/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-oauth2-credentials-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-panel-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-panel-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-panel-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-animation-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-animation-author/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-animation-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-page-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-page-author/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-page-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-pixel-art-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-pixel-art-author/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-pixel-art-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-solution/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-solution/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-solution/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-quality-scale-audit/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-quality-scale-audit/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-quality-scale-audit/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-repairs-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-repairs-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-repairs-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-reproduce-state-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-reproduce-state-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-reproduce-state-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-security-audit/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-security-audit/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-security-audit/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-service-definition-generator/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-service-definition-generator/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-service-definition-generator/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-significant-change-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-significant-change-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-significant-change-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-strategy-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-strategy-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-strategy-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-system-health-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-system-health-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-system-health-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-test-harness-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-test-harness-augment/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-test-harness-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-translation-sync/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-translation-sync/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-translation-sync/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-websocket-command-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-websocket-command-add/"/>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-websocket-command-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/use-cases/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/use-cases/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/use-cases/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/tags/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/tags/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/tags/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/agents/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/agents/SUMMARY/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/SUMMARY/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/SUMMARY/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-blueprint-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-blueprint-author/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-blueprint-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-dev-instance-provision/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-dev-instance-provision/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-dev-instance-provision/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-integration-deploy/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-integration-deploy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-integration-deploy/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-integration-review/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-integration-review/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-integration-review/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-integration-verify/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/agents/claude-home-assistant/ha-integration-verify/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/agents/claude-home-assistant/ha-integration-verify/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/SUMMARY/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/SUMMARY/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/SUMMARY/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-automation-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-automation-author/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-automation-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-automation-solution/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-automation-solution/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-automation-solution/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-backup-platform-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-backup-platform-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-backup-platform-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-badge-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-badge-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-badge-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-blueprint-scaffold/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-blueprint-scaffold/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-blueprint-scaffold/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-bluetooth-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-bluetooth-augment/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-bluetooth-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-card-editor-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-card-editor-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-card-editor-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-card-features-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-card-features-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-card-features-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-config-flow-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-config-flow-augment/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-config-flow-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-conversation-agent-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-conversation-agent-augment/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-conversation-agent-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-coordinator-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-coordinator-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-coordinator-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-derived-sensor-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-derived-sensor-author/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-derived-sensor-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-device-automation-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-device-automation-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-device-automation-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-diagnostics-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-diagnostics-augment/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-diagnostics-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-discovery-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-discovery-augment/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-discovery-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-entity-description-mapper/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-entity-description-mapper/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-entity-description-mapper/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-entity-platform-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-entity-platform-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-entity-platform-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-helper-scaffold/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-helper-scaffold/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-helper-scaffold/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-events-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-events-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-integration-events-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-scaffold/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-scaffold/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-integration-scaffold/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-solution/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-solution/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-integration-solution/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-lovelace-card-scaffold/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-lovelace-card-scaffold/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-lovelace-card-scaffold/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-lovelace-solution/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-lovelace-solution/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-lovelace-solution/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-media-source-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-media-source-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-media-source-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-oauth2-credentials-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-oauth2-credentials-augment/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-oauth2-credentials-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-panel-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-panel-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-panel-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-animation-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-animation-author/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-animation-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-page-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-page-author/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-page-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-pixel-art-author/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-pixel-art-author/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-pixel-art-author/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-solution/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-pixoo-solution/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-pixoo-solution/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-quality-scale-audit/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-quality-scale-audit/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-quality-scale-audit/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-repairs-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-repairs-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-repairs-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-reproduce-state-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-reproduce-state-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-reproduce-state-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-security-audit/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-security-audit/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-security-audit/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-service-definition-generator/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-service-definition-generator/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-service-definition-generator/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-significant-change-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-significant-change-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-significant-change-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-strategy-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-strategy-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-strategy-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-system-health-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-system-health-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-system-health-add/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-test-harness-augment/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-test-harness-augment/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-test-harness-augment/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-translation-sync/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-translation-sync/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-translation-sync/"/>
+    </url>
+    <url>
+        <loc>https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-websocket-command-add/</loc>
+        <lastmod>2026-06-25</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="de" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-websocket-command-add/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nolte.github.io/claude-home-assistant/skills/claude-home-assistant/ha-websocket-command-add/"/>
+    </url>
+</urlset>
