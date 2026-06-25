@@ -49,9 +49,21 @@ tasks:
     desc: |
       Create a parallel working copy under the configurable worktree root,
       always in the same predictable place: ${NOLTE_WORKTREE_ROOT:-~/repos/.worktrees}/<repo>/<slug>/.
-      The branch is created off origin/develop with an explicit base ref.
+      The branch is created off origin/develop with an explicit base ref, and a
+      .resume/<slug>/plan.md plan-before-work stub is seeded inside the worktree.
       Usage: task worktree:add -- <branch> [slug]
         task worktree:add -- feat/parser-fix
         task worktree:add -- chore/ci-tidy ci
     cmds:
       - ./scripts/worktree_add.sh {{.CLI_ARGS}}
+
+  resume:
+    desc: |
+      List resumable Claude Code sessions for THIS working copy (newest first,
+      with their opening prompt) and print the exact `claude --resume` command.
+      Use after a notebook crash, terminal close, or session expiry to get back
+      to an interrupted run — covers all top-level work, including free-form work
+      no resumable skill governs.
+    cmds:
+      - python3 scripts/resume_sessions.py
+    silent: true

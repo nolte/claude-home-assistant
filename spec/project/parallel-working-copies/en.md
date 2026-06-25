@@ -14,6 +14,7 @@ Readers: contributors (human and AI agents) doing parallel feature work in this 
 - Allow a contributor to advance two or more feature branches in parallel without the working tree of one branch overwriting another
 - Provide stable conventions for worktree paths, branch-to-worktree mapping, and lifecycle (create, use, retire) so the layout is predictable across repositories and contributors
 - Define how Claude Code sessions are scoped to worktrees so `CLAUDE.md` resolution, current-working-directory assumptions, and plugin loading remain coherent
+- Guarantee that interrupted feature work in a worktree is recoverable: a foundational implementation plan is on disk before substantive work begins, and that work runs in a fresh top-level session that `claude --resume` can reopen
 - Reserve the primary checkout exclusively for the integration role (sitting on `develop`) so that it remains a stable launchpad from which every new feature worktree branches off, and stays continuously available for integration tasks (rebases, conflict resolution, release inspection); the operative rule is the MUST in Requirements §Branch-to-worktree mapping
 
 ## Non-Goals
@@ -49,6 +50,13 @@ Readers: contributors (human and AI agents) doing parallel feature work in this 
 - **SHOULD** use `origin/develop` (after `git fetch origin develop`) as the base ref rather than the local `develop`, so the worktree starts from the remote tip and the primary checkout's local `develop` is irrelevant to the worktree's starting point
 - **MUST** follow the branch-prefix rules from `spec/project/branching-model/` (`feat/`, `fix/`, `chore/`, `docs/`, `exp/`); the worktree's path slug **MAY** drop the prefix for brevity but the branch itself **MUST NOT**
 
+### Lifecycle: Plan before work
+- **MUST**, before any substantive content work begins in a freshly created worktree (editing specs, skills, agents, docs, or code on its branch), record a foundational implementation plan on disk inside that worktree; the plan is written before the work it governs, so a fresh session—or a contributor returning after a crash—can pick the work up from a known starting point rather than reconstructing intent from a half-finished diff
+- **SHOULD** store the plan at `.resume/<slug>/plan.md` (where `<slug>` is the worktree's short slug per §Path layout), under `.resume/`; this path is gitignored, so the plan is a worktree-local working aid rather than a committed artefact, and it never competes with the feature's real changes for review attention
+- **SHOULD** give the plan the shape this kind of document uses: a goal statement, the researched current state, the load-bearing design decision (with the open questions to confirm before work starts), the ordered work steps, the invariants and guardrails carried over from `CLAUDE.md` and the governing specs, and a status/resume-anchor checklist whose first unchecked box is where the next session resumes
+- **SHOULD** let the conformant creation helper seed the plan: `task worktree:add -- <branch> [slug]` (`scripts/worktree_add.sh`) writes a `.resume/<slug>/plan.md` stub so the gate is self-serving, and prints a reminder that the stub **MUST** be filled in before substantive work begins
+- This gate is convention-driven, consistent with this spec's `Implementation: documentary-only` posture: no hook hard-aborts work when the plan is absent. The stub-writing helper makes authoring the plan the path of least resistance rather than a blocking check; a mechanical pre-work guard is deferred on the same terms as the deferred `.audits/` removal guard under §Audit artefacts in multiple worktrees
+
 ### Lifecycle: Retire
 - **MUST** remove a worktree with `git worktree remove <path>` once its pull request is merged or abandoned; deleting the directory with `rm -rf` is forbidden because it leaves the worktree registered in `.git/worktrees/` and produces "missing" entries in `git worktree list`
 - **MUST** delete the local branch (`git branch -d <branch>` or `-D` if the branch was merged via squash) after the worktree is removed, so stale local branches don't accumulate
@@ -77,6 +85,7 @@ A Claude Code session can create a worktree programmatically—most prominently 
 
 ### Claude Code session scoping
 - **SHOULD** start one Claude Code session per worktree, launched from the worktree's root directory (`cd <worktree>; claude`) so that `CLAUDE.md` hierarchy resolution, the auto memory project namespace, and current-working-directory defaults all bind to the worktree
+- **SHOULD** perform the substantive, long-running work of a worktree in a fresh top-level Claude Code session started from the worktree directory rather than dispatching it into a worktree-isolated subagent (`Agent({isolation: "worktree"})`) or a Workflow run, because only a top-level session's transcript is independently resumable: `task resume` (and `claude --resume` / `claude --continue`) lists and reopens top-level session transcripts, whereas a subagent's or Workflow agent's transcript lives under its parent session and can't be `claude --resume`d on its own. Pairing this with the §Lifecycle: Plan before work gate is what makes interrupted feature work recoverable—the plan on disk records where the work stands, and the resumable session reopens the context that produced it. A per-skill checkpoint format complements this session-level resume
 <!-- vale Microsoft.Contractions = NO -->
 - **MAY** continue using a single session across worktrees by passing absolute paths to file-reading tools and prefixing shell commands with `cd <worktree> && …`; this is supported but **SHOULD NOT** be the default, because the harness resets the shell `cwd` between bash invocations and `CLAUDE.md` resolution remains anchored to the original session's launch directory
 <!-- vale Microsoft.Contractions = YES -->

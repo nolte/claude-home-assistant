@@ -3,8 +3,10 @@
 #
 # Wired in Taskfile.yml as `task worktree:add -- <branch> [slug]`.
 #
-# Operationalises spec/project/parallel-working-copies/ §Path layout and
-# §Lifecycle: Create. The §Path layout SHOULD places every worktree under a
+# Operationalises spec/project/parallel-working-copies/ §Path layout,
+# §Lifecycle: Create, and §Lifecycle: Plan before work (it seeds a
+# .resume/<slug>/plan.md plan stub so the documentary-only plan gate is
+# self-serving). The §Path layout SHOULD places every worktree under a
 # single centralized root `<root>/<repo>/<short-slug>/`. That root used to be
 # hard-coded as `~/repos/.worktrees`; this helper makes it a per-machine
 # choice via the NOLTE_WORKTREE_ROOT environment variable while keeping
@@ -91,6 +93,70 @@ echo "→ Destination   : $dest"
 git fetch origin develop --quiet
 git worktree add -b "$branch" "$dest" origin/develop
 
+# Plan-before-work gate, per spec/project/parallel-working-copies/
+# §Lifecycle: Plan before work. Seed a foundational implementation-plan stub
+# inside the new worktree so the documentary-only gate is self-serving: the
+# contributor fills it in before any substantive work begins. The path lives
+# under .resume/ (gitignored), so the stub is a worktree-local working aid,
+# never a committed artefact that competes with the feature's deliverables.
+plan_dir="$dest/.resume/$slug"
+plan="$plan_dir/plan.md"
+mkdir -p "$plan_dir"
+
+# Header lines interpolate branch/slug/dest and contain no backticks.
+cat > "$plan" <<EOF
+# Implementation plan: $slug
+
+> Foundational plan for worktree work on branch '$branch'. Authored BEFORE
+> substantive work begins, so a fresh, resumable top-level session started in
+> this worktree can pick the work up from a known starting point rather than
+> reconstructing intent from a half-finished diff.
+>
+> - Branch: $branch
+> - Worktree: $dest
+> - Base: origin/develop
+EOF
+
+# Body is literal (quoted heredoc) so its backticks stay verbatim.
+cat >> "$plan" <<'EOF'
+
+## 1. Goal
+
+<!-- What outcome does this worktree deliver? One or two sentences. -->
+
+## 2. Current state (researched)
+
+<!-- Relevant specs, files, and prior art — the source of truth for the design. -->
+
+## 3. Design decision
+
+<!-- The load-bearing choice, plus the open questions to confirm with the
+     operator BEFORE work starts. -->
+
+## 4. Work steps (ordered)
+
+1. <!-- first concrete step -->
+
+## 5. Invariants / guardrails
+
+<!-- Rules carried over from CLAUDE.md and the governing specs that must hold. -->
+
+## 6. Status / resume anchors
+
+- [ ] <!-- first task; the first unchecked box is where the next session resumes -->
+
+> Resume: cd into this worktree and run `task resume` (or `claude --resume`),
+> then continue this plan from the first unchecked box.
+EOF
+
 echo
-echo "✓ Worktree ready. Start a session scoped to it with:"
+echo "✓ Worktree ready."
+echo
+echo "→ Plan-before-work gate (spec/project/parallel-working-copies/ §Lifecycle: Plan before work):"
+echo "    A plan stub was written to .resume/$slug/plan.md inside the worktree."
+echo "    Fill it in BEFORE starting substantive work on this branch."
+echo
+echo "→ Start the work in a FRESH top-level session scoped to this worktree, so it"
+echo "  stays resumable via 'task resume' / 'claude --resume' (subagent and"
+echo "  Workflow runs are not independently resumable):"
 echo "    cd $dest && claude"
