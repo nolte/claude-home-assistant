@@ -1,6 +1,6 @@
 {
   "name": "claude-home-assistant",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Claude Code skills and agents for Home Assistant development — custom integrations (Python), Lovelace cards (TypeScript/JavaScript), blueprints / automations (YAML), and ESPHome / add-on work.",
   "author": {
     "name": "nolte",

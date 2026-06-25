@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Claude Code skills and agents for Home Assistant development.",
-    "version": "0.1.0"
+    "version": "0.1.2"
   },
   "plugins": [
     {
       "name": "claude-home-assistant",
       "source": ".",
       "description": "Claude Code skills and agents for Home Assistant development — custom integrations, Lovelace cards, blueprints / automations, and ESPHome / add-on work.",
-      "version": "0.1.0"
+      "version": "0.1.2"
     }
   ]
 }
