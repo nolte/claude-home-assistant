@@ -106,6 +106,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-derived-sensor-author`](claude/ha-derived-sensor-author/de.md) | Skill: `ha-derived-sensor-author` | Skill: `ha-derived-sensor-author` | draft | unversioned |
 | [`claude/ha-repairs-add`](claude/ha-repairs-add/de.md) | Skill: `ha-repairs-add` | Skill: `ha-repairs-add` | draft | unversioned |
 | [`claude/ha-discovery-augment`](claude/ha-discovery-augment/de.md) | Skill: `ha-discovery-augment` | Skill: `ha-discovery-augment` | draft | unversioned |
+| [`claude/ha-device-automation-add`](claude/ha-device-automation-add/de.md) | Skill: `ha-device-automation-add` | Skill: `ha-device-automation-add` | draft | unversioned |
 
 Der Index listet nur **lokale** Specs. Portfolioweite `project/`-Specs (u. a. `project/branching-model`, `project/parallel-working-copies`) werden nicht mehr lokal geführt, sondern aus dem nolte-shared-Hub vererbt — siehe [Vererbte Specs](#vererbte-specs).
 
