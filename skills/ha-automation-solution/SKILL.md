@@ -54,6 +54,8 @@ Use this skill when the user describes a **result** that likely needs more than 
 | a manually/automation-held state, mode switch, countdown, weekly plan | `input_*` / `counter` / `timer` / `schedule` | `ha-helper-scaffold` |
 | event→action logic | `automation` | `ha-automation-author` |
 | a reusable manually-callable action sequence | `script` | `ha-automation-author` |
+| a one-shot snapshot of entity states | `scene` | `ha-automation-author` |
+| a free-form Jinja-computed entity | generic `template` | `ha-automation-author` |
 | an HTTP / shell / python escape-hatch | `rest_command` / `shell_command` / `python_script` | `ha-automation-author` |
 | a reusable, parameterized, shareable pattern | blueprint | `ha-blueprint-scaffold` |
 | an own device/cloud protocol, polling, config flow | custom integration | **out of scope** → `ha-integration-scaffold` |

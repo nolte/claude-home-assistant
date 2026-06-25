@@ -23,7 +23,7 @@ Generierung genau eines Helfer-Blocks pro Lauf aus der Zustands-Helfer-Familie: 
 ## Nicht-Ziele
 
 - Automationen, Scripts, Scenes, Template-Entities oder Command-Integrationen — das ist `ha-automation-author`
-- Abgeleitete/statistische Helfer-Sensoren (`bayesian`, `derivative`, … `utility_meter`, `group`) — das ist `ha-template-sensor-author`
+- Abgeleitete/statistische Helfer-Sensoren (`bayesian`, `derivative`, … `utility_meter`, `group`) — das ist `ha-derived-sensor-author`
 - Echte Sensoren/Aktoren aus einer Integration — gemessene Werte gehören in eine Integration, nicht in einen Input-Helfer
 - Blueprints — `ha-blueprint-scaffold`
 - Deployment in eine laufende HA-Instanz — Generierung only

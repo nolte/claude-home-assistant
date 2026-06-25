@@ -23,7 +23,7 @@ Generation of exactly one helper block per run from the state-helper family: `in
 ## Non-Goals
 
 - Automations, scripts, scenes, template entities, or command integrations — that is `ha-automation-author`
-- Derived/statistical helper sensors (`bayesian`, `derivative`, … `utility_meter`, `group`) — that is `ha-template-sensor-author`
+- Derived/statistical helper sensors (`bayesian`, `derivative`, … `utility_meter`, `group`) — that is `ha-derived-sensor-author`
 - Real sensors/actors from an integration — measured values belong in an integration, not an input helper
 - Blueprints — `ha-blueprint-scaffold`
 - Deployment into a running HA instance — generation only

@@ -1,6 +1,6 @@
 ---
 name: ha-automation-author
-description: Author one Home Assistant automation-logic or command artifact as spec-conformant YAML (or a sandboxed .py) from a described intent — an automation, script, scene, generic template entity, or a rest_command / shell_command / python_script — conforming to the matching spec/ha-automation/<topic>. Picks the artifact type, enforces a deliberate mode, stable id/unique_id, unavailable-guarded templates, shell-injection and python-sandbox safety, redirects legacy trigger helpers to modern equivalents, validates offline, and returns a conformance report. Activate on "write an automation that…", "create a script for…", "add a scene/template sensor/rest_command for…", "schreibe eine Automation, die…", "erstelle ein Script für…". Do not activate for blueprints (ha-blueprint-scaffold), stateful helpers (ha-helper-scaffold), derived/statistical sensors (ha-template-sensor-author), Python custom integrations (ha-integration-scaffold), or deploying to a live HA instance.
+description: Author one Home Assistant automation-logic or command artifact as spec-conformant YAML (or a sandboxed .py) from a described intent — an automation, script, scene, generic template entity, or a rest_command / shell_command / python_script — conforming to the matching spec/ha-automation/<topic>. Picks the artifact type, enforces a deliberate mode, stable id/unique_id, unavailable-guarded templates, shell-injection and python-sandbox safety, redirects legacy trigger helpers to modern equivalents, validates offline, and returns a conformance report. Activate on "write an automation that…", "create a script for…", "add a scene/template sensor/rest_command for…", "schreibe eine Automation, die…", "erstelle ein Script für…". Do not activate for blueprints (ha-blueprint-scaffold), stateful helpers (ha-helper-scaffold), derived/statistical sensors (ha-derived-sensor-author), Python custom integrations (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, automation, script, scene, yaml]
 ---
 
@@ -23,7 +23,7 @@ Use this skill to author **one** non-blueprint automation-logic or command artif
 
 - a parameterized, shareable blueprint → `ha-blueprint-scaffold` / `ha-blueprint-author`
 - a stateful helper (`input_*`, `counter`, `timer`, `schedule`) → `ha-helper-scaffold`
-- a derived/statistical helper sensor (`bayesian`, `derivative`, `filter`, `min_max`, `statistics`, `threshold`, `trend`, `history_stats`, `integration`, `utility_meter`, `group`) → `ha-template-sensor-author`
+- a derived/statistical helper sensor (`bayesian`, `derivative`, `filter`, `min_max`, `statistics`, `threshold`, `trend`, `history_stats`, `integration`, `utility_meter`, `group`) → `ha-derived-sensor-author`
 - a Python custom integration → `ha-integration-scaffold`
 - deploying/importing into a running HA instance → out of scope (generation only)
 
@@ -88,6 +88,6 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 - Blueprints → `ha-blueprint-scaffold` / `ha-blueprint-author`
 - Stateful helpers → `ha-helper-scaffold`
-- Derived/statistical sensors → `ha-template-sensor-author`
+- Derived/statistical sensors → `ha-derived-sensor-author`
 - Custom integrations → `ha-integration-scaffold`
 - Deploy to live HA → out of scope

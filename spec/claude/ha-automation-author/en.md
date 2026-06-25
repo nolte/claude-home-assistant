@@ -24,7 +24,7 @@ Generation of exactly one artifact per run from the logic/command part of `ha-au
 
 - Parameterized, shareable blueprints — that is `ha-blueprint-scaffold` / `ha-blueprint-author`
 - State helpers (`input_*`, `counter`, `timer`, `schedule`) — that is `ha-helper-scaffold`
-- Derived/statistical helper sensors (`bayesian`, `derivative`, `filter`, `min_max`, `statistics`, `threshold`, `trend`, `history_stats`, `integration`, `utility_meter`, `group`) — that is `ha-template-sensor-author`
+- Derived/statistical helper sensors (`bayesian`, `derivative`, `filter`, `min_max`, `statistics`, `threshold`, `trend`, `history_stats`, `integration`, `utility_meter`, `group`) — that is `ha-derived-sensor-author`
 - Python custom integrations — that is `ha-integration-scaffold`
 - Deployment into a running HA instance — generation only; deploy is `ha-integration-deploy` / manual
 - Migrating an existing automation into a blueprint — `ha-blueprint-scaffold`
@@ -91,4 +91,4 @@ Generation of exactly one artifact per run from the logic/command part of `ha-au
 - **Packages layout**: Should the skill write into `automations.yaml`/`scripts.yaml` by default or prefer a `packages/<name>.yaml` that bundles automation + associated helpers? Currently default per type, `packages/` on request.
 - **Validation depth**: When is a real `ha core check` against a temporary config worthwhile instead of static YAML/template checking?
 - **Agent offload**: Should the draft-validate-iterate loop be offloaded into a `ha-automation-author` agent like for blueprints, or does generation stay inline in the skill?
-- **`template` delimitation**: The generic `template:` integration also produces sensors — the boundary to `ha-template-sensor-author` (prefabricated statistics helpers) is conceptual, not syntactic. Is the description sufficient for a clean separation?
+- **`template` delimitation**: The generic `template:` integration also produces sensors — the boundary to `ha-derived-sensor-author` (prefabricated statistics helpers) is conceptual, not syntactic. Is the description sufficient for a clean separation?

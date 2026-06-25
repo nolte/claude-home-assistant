@@ -24,7 +24,7 @@ Generierung genau eines Artefakts pro Lauf aus dem Logik-/Command-Teil von `ha-a
 
 - Parametrisierte, teilbare Blueprints — das ist `ha-blueprint-scaffold` / `ha-blueprint-author`
 - Zustands-Helfer (`input_*`, `counter`, `timer`, `schedule`) — das ist `ha-helper-scaffold`
-- Abgeleitete/statistische Helfer-Sensoren (`bayesian`, `derivative`, `filter`, `min_max`, `statistics`, `threshold`, `trend`, `history_stats`, `integration`, `utility_meter`, `group`) — das ist `ha-template-sensor-author`
+- Abgeleitete/statistische Helfer-Sensoren (`bayesian`, `derivative`, `filter`, `min_max`, `statistics`, `threshold`, `trend`, `history_stats`, `integration`, `utility_meter`, `group`) — das ist `ha-derived-sensor-author`
 - Python-Custom-Integrationen — das ist `ha-integration-scaffold`
 - Deployment in eine laufende HA-Instanz — Generierung only; Deploy ist `ha-integration-deploy` / manuell
 - Migration einer bestehenden Automation in einen Blueprint — `ha-blueprint-scaffold`
@@ -91,4 +91,4 @@ Generierung genau eines Artefakts pro Lauf aus dem Logik-/Command-Teil von `ha-a
 - **Packages-Layout**: Soll der Skill standardmäßig in `automations.yaml`/`scripts.yaml` schreiben oder ein `packages/<name>.yaml` bevorzugen, das Automation + zugehörige Helfer bündelt? Aktuell Default je Typ, `packages/` auf Wunsch.
 - **Validierungs-Tiefe**: Wann lohnt ein echtes `ha core check` gegen eine temporäre Config statt statischer YAML-/Template-Prüfung?
 - **Agent-Auslagerung**: Soll der Draft-Validate-Iterate-Loop wie bei Blueprints in einen `ha-automation-author`-Agent ausgelagert werden, oder bleibt die Generierung inline im Skill?
-- **`template`-Abgrenzung**: Die generische `template:`-Integration produziert auch Sensoren — die Grenze zu `ha-template-sensor-author` (vorgefertigte Statistik-Helfer) ist konzeptionell, nicht syntaktisch. Reicht die Beschreibung zur sauberen Trennung?
+- **`template`-Abgrenzung**: Die generische `template:`-Integration produziert auch Sensoren — die Grenze zu `ha-derived-sensor-author` (vorgefertigte Statistik-Helfer) ist konzeptionell, nicht syntaktisch. Reicht die Beschreibung zur sauberen Trennung?

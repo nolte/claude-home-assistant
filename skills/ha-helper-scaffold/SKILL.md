@@ -1,6 +1,6 @@
 ---
 name: ha-helper-scaffold
-description: Scaffold one Home Assistant stateful helper entity as a spec-conformant YAML block from a described intent — input_boolean, input_button, input_datetime, input_number, input_select, input_text, counter, timer, or schedule — conforming to the matching spec/ha-automation/<topic>. Picks the right helper type, sets every mandatory field (min/max, options, has_date/has_time, duration, weekly windows, restore), redirects measured/derived values to a sensor, names per ha/naming-conventions, and reports the helper's state, trigger events, and mutating services. Activate on "add an input_number/input_select helper for…", "create a timer/counter/schedule for…", "lege einen Helfer für… an". Do not activate for automations/scripts/scenes (ha-automation-author), derived/statistical sensors (ha-template-sensor-author), real integration sensors, blueprints (ha-blueprint-scaffold), or deploying to a live HA instance.
+description: Scaffold one Home Assistant stateful helper entity as a spec-conformant YAML block from a described intent — input_boolean, input_button, input_datetime, input_number, input_select, input_text, counter, timer, or schedule — conforming to the matching spec/ha-automation/<topic>. Picks the right helper type, sets every mandatory field (min/max, options, has_date/has_time, duration, weekly windows, restore), redirects measured/derived values to a sensor, names per ha/naming-conventions, and reports the helper's state, trigger events, and mutating services. Activate on "add an input_number/input_select helper for…", "create a timer/counter/schedule for…", "lege einen Helfer für… an". Do not activate for automations/scripts/scenes (ha-automation-author), derived/statistical sensors (ha-derived-sensor-author), real integration sensors, blueprints (ha-blueprint-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, helper, input, yaml, scaffolding]
 ---
 
@@ -22,7 +22,7 @@ Use this skill to scaffold **one** stateful helper entity from a described inten
 ## When NOT to activate
 
 - an automation, script, scene, template entity, or command integration → `ha-automation-author`
-- a derived/statistical helper sensor (`bayesian`, `derivative`, … `utility_meter`, `group`) → `ha-template-sensor-author`
+- a derived/statistical helper sensor (`bayesian`, `derivative`, … `utility_meter`, `group`) → `ha-derived-sensor-author`
 - a measured value from real hardware → belongs in an integration, not an input helper
 - a blueprint → `ha-blueprint-scaffold`
 - deploying/importing into a running HA instance → out of scope
@@ -32,7 +32,7 @@ Use this skill to scaffold **one** stateful helper entity from a described inten
 1. **One helper, one type, one run.** No multi-helper batches.
 2. **Intent is mandatory.** Without it there is no scaffold; optional fields fall back to documented defaults stated in the output.
 3. **Read the topic spec first.** Read the matching [`ha-automation/<topic>`](https://github.com/nolte/claude-home-assistant/tree/develop/spec/ha-automation) spec before scaffolding.
-4. **Right helper, not the convenient one.** If the intent targets a measured value (→ sensor/integration), a derived value (→ `ha-template-sensor-author`), or behavior another helper carries better (one-shot press → `input_button`, not `input_boolean`), redirect instead of scaffolding the wrong helper.
+4. **Right helper, not the convenient one.** If the intent targets a measured value (→ sensor/integration), a derived value (→ `ha-derived-sensor-author`), or behavior another helper carries better (one-shot press → `input_button`, not `input_boolean`), redirect instead of scaffolding the wrong helper.
 5. **Never overwrite an existing helper** with the same `object_id`. Abort with the id quoted.
 6. **Mandatory fields are mandatory.** `input_number` → `min`+`max`; `input_select` → non-empty `options`; `input_datetime` → at least one of `has_date`/`has_time`; `input_text` → `max` ≤ 255; `timer` → `restore: true` when it must survive a restart; `schedule` → per-weekday `from`/`to` windows. Set `initial` only for a fixed start value, else document restore semantics.
 7. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md).** `object_id` snake_case; English display names ≤ 50 chars.
@@ -95,6 +95,6 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 ## Boundaries
 
 - Automations / scripts / scenes / templates / commands → `ha-automation-author`
-- Derived / statistical sensors → `ha-template-sensor-author`
+- Derived / statistical sensors → `ha-derived-sensor-author`
 - Real sensors/actuators → an integration (`ha-integration-scaffold`)
 - Deploy to live HA → out of scope
