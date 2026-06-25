@@ -60,3 +60,6 @@ desktop.ini
 
 # Logs
 *.log
+
+# Worktree-local plan stubs / resumable-session aids (scripts/worktree_add.sh, task resume)
+/.resume/
