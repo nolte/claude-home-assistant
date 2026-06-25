@@ -61,6 +61,34 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/naming-conventions`](ha/naming-conventions/de.md) | HA-Artefakte: Namenskonventionen | HA Artifacts: Naming Conventions | draft | unversioned |
 | [`ha/hacs-release`](ha/hacs-release/de.md) | HA-Integration: HACS-Release und Distribution | HA Integration: HACS Release and Distribution | draft | unversioned |
 | [`ha/upstream-docs-verification`](ha/upstream-docs-verification/de.md) | HA-Artefakte: Verifikation gegen offizielle Docs | HA Artifacts: Verification Against Official Docs | draft | unversioned |
+| [`ha-automation/automation`](ha-automation/automation/de.md) | HA-Automation: Automation nutzen | HA Automation: Using Automation | draft | unversioned |
+| [`ha-automation/script`](ha-automation/script/de.md) | HA-Automation: Script nutzen | HA Automation: Using Script | draft | unversioned |
+| [`ha-automation/scene`](ha-automation/scene/de.md) | HA-Automation: Scene nutzen | HA Automation: Using Scene | draft | unversioned |
+| [`ha-automation/template`](ha-automation/template/de.md) | HA-Automation: Template-Integration nutzen | HA Automation: Using the Template Integration | draft | unversioned |
+| [`ha-automation/group`](ha-automation/group/de.md) | HA-Automation: Group nutzen | HA Automation: Using Group | draft | unversioned |
+| [`ha-automation/input-boolean`](ha-automation/input-boolean/de.md) | HA-Automation: input_boolean nutzen | HA Automation: Using input_boolean | draft | unversioned |
+| [`ha-automation/input-button`](ha-automation/input-button/de.md) | HA-Automation: input_button nutzen | HA Automation: Using input_button | draft | unversioned |
+| [`ha-automation/input-datetime`](ha-automation/input-datetime/de.md) | HA-Automation: input_datetime nutzen | HA Automation: Using input_datetime | draft | unversioned |
+| [`ha-automation/input-number`](ha-automation/input-number/de.md) | HA-Automation: input_number nutzen | HA Automation: Using input_number | draft | unversioned |
+| [`ha-automation/input-select`](ha-automation/input-select/de.md) | HA-Automation: input_select nutzen | HA Automation: Using input_select | draft | unversioned |
+| [`ha-automation/input-text`](ha-automation/input-text/de.md) | HA-Automation: input_text nutzen | HA Automation: Using input_text | draft | unversioned |
+| [`ha-automation/timer`](ha-automation/timer/de.md) | HA-Automation: Timer nutzen | HA Automation: Using Timer | draft | unversioned |
+| [`ha-automation/counter`](ha-automation/counter/de.md) | HA-Automation: Counter nutzen | HA Automation: Using Counter | draft | unversioned |
+| [`ha-automation/schedule`](ha-automation/schedule/de.md) | HA-Automation: Schedule nutzen | HA Automation: Using Schedule | draft | unversioned |
+| [`ha-automation/python-script`](ha-automation/python-script/de.md) | HA-Automation: Python Script nutzen | HA Automation: Using Python Script | draft | unversioned |
+| [`ha-automation/shell-command`](ha-automation/shell-command/de.md) | HA-Automation: Shell Command nutzen | HA Automation: Using Shell Command | draft | unversioned |
+| [`ha-automation/rest-command`](ha-automation/rest-command/de.md) | HA-Automation: REST Command nutzen | HA Automation: Using REST Command | draft | unversioned |
+| [`ha-automation/derivative`](ha-automation/derivative/de.md) | HA-Automation: Derivative nutzen | HA Automation: Using Derivative | draft | unversioned |
+| [`ha-automation/integration-riemann`](ha-automation/integration-riemann/de.md) | HA-Automation: Integration (Riemann-Summe) nutzen | HA Automation: Using Integration (Riemann Sum) | draft | unversioned |
+| [`ha-automation/utility-meter`](ha-automation/utility-meter/de.md) | HA-Automation: Utility Meter nutzen | HA Automation: Using Utility Meter | draft | unversioned |
+| [`ha-automation/statistics`](ha-automation/statistics/de.md) | HA-Automation: Statistics-Sensor nutzen | HA Automation: Using the Statistics Sensor | draft | unversioned |
+| [`ha-automation/threshold`](ha-automation/threshold/de.md) | HA-Automation: Threshold nutzen | HA Automation: Using Threshold | draft | unversioned |
+| [`ha-automation/trend`](ha-automation/trend/de.md) | HA-Automation: Trend nutzen | HA Automation: Using Trend | draft | unversioned |
+| [`ha-automation/history-stats`](ha-automation/history-stats/de.md) | HA-Automation: history_stats nutzen | HA Automation: Using history_stats | draft | unversioned |
+| [`ha-automation/min-max`](ha-automation/min-max/de.md) | HA-Automation: min_max nutzen | HA Automation: Using min_max | draft | unversioned |
+| [`ha-automation/bayesian`](ha-automation/bayesian/de.md) | HA-Automation: Bayesian-Sensor nutzen | HA Automation: Using the Bayesian Sensor | draft | unversioned |
+| [`ha-automation/filter`](ha-automation/filter/de.md) | HA-Automation: Filter-Sensor nutzen | HA Automation: Using the Filter Sensor | draft | unversioned |
+| [`ha-automation/legacy-trigger-helpers`](ha-automation/legacy-trigger-helpers/de.md) | HA-Automation: Legacy-Trigger-Helfer vermeiden | HA Automation: Avoiding Legacy Trigger Helpers | draft | unversioned |
 | [`claude/ha-integration-scaffold`](claude/ha-integration-scaffold/de.md) | Skill: `ha-integration-scaffold` | Skill: `ha-integration-scaffold` | draft | unversioned |
 | [`claude/ha-config-flow-augment`](claude/ha-config-flow-augment/de.md) | Skill: `ha-config-flow-augment` | Skill: `ha-config-flow-augment` | draft | unversioned |
 | [`claude/ha-coordinator-add`](claude/ha-coordinator-add/de.md) | Skill: `ha-coordinator-add` | Skill: `ha-coordinator-add` | draft | unversioned |
@@ -75,7 +103,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 ## Konventionen
 
 - Slugs sind ASCII-kebab-case, abgeleitet aus dem kanonischen DE-Titel.
-- Topic-Folder gruppieren verwandte Specs (`ha/`, `claude/`); nur eine Verschachtelungs­ebene erlaubt.
+- Topic-Folder gruppieren verwandte Specs (`ha/`, `ha-automation/`, `claude/`); nur eine Verschachtelungs­ebene erlaubt.
 - Jede Spec lebt in genau einem Ordner mit einer Datei pro konfigurierter Sprache.
 - Strukturelle Drift zwischen DE und EN wird per `nolte-shared:spec`-Skill (Operation `drift-check`) gefangen.
 - RFC-2119-Schlüsselworte stehen in der DE-Fassung als `MUSS [MUST]`, `SOLLTE [SHOULD]`, `KANN [MAY]` und in der EN-Fassung als `MUST`, `SHOULD`, `MAY`.
@@ -88,3 +116,5 @@ Die HA-Integration-Specs unter `spec/ha/` werden aus den Specs in [`nolte/kamerp
 Ausnahme: `ha/blueprint-patterns` betrifft YAML-Blueprints statt Python-Integrationen und hat keine `kamerplanter-ha`-Vorlage. Diese Spec ist direkt aus der offiziellen HA-Blueprint-Doku (`home-assistant.io/docs/blueprint/`, Stand 2024–2026) plus den „Share your Blueprints"-Forum-Konventionen destilliert.
 
 Ausnahme: Die mit der Developer-Doku-Auswertung hinzugekommenen Specs (Integration-Core wie `ha/quality-scale`/`ha/integration-manifest`/`ha/setup-lifecycle`, die `ha/entity-platform-types`- und `ha/entity-platforms-*`-Kataloge sowie die `ha/lovelace-*`- und `ha/frontend-*`-Cluster) sind aus der offiziellen HA-Developer-Doku ([`developers.home-assistant.io`](https://github.com/home-assistant/developers.home-assistant), Stand 2024–2026) destilliert statt aus `kamerplanter-ha` — primär `core/integration-quality-scale/`, `creating_integration_manifest.md`, `config_entries_index.md`, `integration_setup_failures.md`, `core/platform/*`, `core/integration/*`, `core/entity/*` (Plattform-Docs), `core/bluetooth/`, `core/llm/`, `device_automation_*`, `network_discovery.md`, `integration_*events*.md`, die `intent_*`-, `asyncio_*`- und `development_*`-Guides sowie der `frontend/`-Baum (`custom-ui/*`, `data.md`, `extending/websocket-api.md`) für die Lovelace-/Frontend-Specs. Jede Anforderung ist an einer konkreten Doc-Datei verankert.
+
+Eigener Topic `spec/ha-automation/`: Anders als der `ha/`-Korpus (Integrations-**Entwicklung** in Python) beschreibt `ha-automation/` die **Nutzung** der eingebauten Automatisierungs-/Helfer-Integrationen auf Konfigurationsebene (YAML/UI) — die Grundlage für hochwertige Automationen und Dashboards. Scope ist ziel-orientiert kuratiert (Kern-Bausteine `automation`/`script`/`scene`/`template`/`group`, die `input_*`-/`timer`/`counter`/`schedule`-Helfer, die Command-Runner `python_script`/`shell_command`/`rest_command` und die berechneten Helfer-Sensoren `derivative`/`integration`/`utility_meter`/`statistics`/`threshold`/`trend`/`history_stats`/`min_max`/`bayesian`/`filter`), nicht die wörtliche HA-Kategorie „Automation" (der die Kern-Bausteine fehlen und die echte Legacy enthält). Jede Spec trägt eine verpflichtende Abgrenzung „Wann NICHT verwenden" mit Begründung und benannter Alternative, nennt ihre reale `ha_category` ehrlich und referenziert die Namens-Dimension `ha/naming-conventions`. Die Specs sind direkt aus der offiziellen HA-Nutzer-Doku ([`home-assistant.io`](https://github.com/home-assistant/home-assistant.io), `/integrations/<domain>/` + `/docs/automation/`, `/docs/scripts/`, `/docs/configuration/templating/`, Stand 2026) destilliert; jede Anforderung ist an einer konkreten Doc-Seite verankert.
