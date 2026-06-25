@@ -47,5 +47,6 @@ Use `/reload-plugins` inside the session to pick up changes without restarting.
 ## Authoring rules
 
 - Keep `CLAUDE.md`, `spec/`, and the plugin manifest in sync with what the repo actually ships.
+- Verify uncertainties against the official Home Assistant docs before asserting or generating any HA fact — Developer docs [`home-assistant/developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant) for integration internals, config flow, entities, coordinators, quality scale, and frontend/WebSocket contracts; architecture/user docs [`home-assistant/home-assistant.io`](https://github.com/home-assistant/home-assistant.io) for architecture, blueprints, and YAML schemas. Don't answer HA-internal questions from memory. Normative spec: `spec/ha/upstream-docs-verification`.
 - Never copy plugin-owned skills into a consumer's `.claude/skills/` — distribution happens via the plugin marketplace.
 - All generated configuration files (`.github/*.yml`, `Taskfile.yml`, workflow YAML) are written in English for portfolio consistency, regardless of the language used in conversation.

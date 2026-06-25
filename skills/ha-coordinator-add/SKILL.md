@@ -25,6 +25,7 @@ Use this skill when the user wants to add a new `DataUpdateCoordinator` to an ex
 3. **Never set min cap below 30 s without warning.** Sub-30s polling risks rate-limiting / DDoS. Warn the user explicitly when they request it.
 4. **Always update the options flow.** A new coordinator without a configurable interval defeats the user's ability to tune polling. The new `CONF_POLL_<ROLE>` lands in `OPTIONS_SCHEMA` plus `strings.json` plus translations.
 5. **Always ship tests.** Three tests for the new coordinator (auth error, connection error, happy path) are mandatory.
+6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
 

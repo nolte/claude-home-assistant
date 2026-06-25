@@ -28,6 +28,7 @@ Use this skill when the user wants to create one Home Assistant blueprint (autom
 3. **Never overwrite an existing blueprint.** If the resolved path already exists, abort with the path quoted. Collision is a user-disambiguation problem.
 4. **Never silently default.** When the user is silent on `domain`, `target_dir`, `author`, or `source_url`, use the documented defaults — but state every default in the dispatch and in the relayed report.
 5. **One blueprint, one domain, one run.** No multi-blueprint batches, no Python, no live-HA import.
+6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
 

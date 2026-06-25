@@ -60,6 +60,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/dev-instance-provisioning`](ha/dev-instance-provisioning/de.md) | HA-Integration: Dev-Instanz-Provisioning | HA Integration: Dev Instance Provisioning | draft | unversioned |
 | [`ha/naming-conventions`](ha/naming-conventions/de.md) | HA-Artefakte: Namenskonventionen | HA Artifacts: Naming Conventions | draft | unversioned |
 | [`ha/hacs-release`](ha/hacs-release/de.md) | HA-Integration: HACS-Release und Distribution | HA Integration: HACS Release and Distribution | draft | unversioned |
+| [`ha/upstream-docs-verification`](ha/upstream-docs-verification/de.md) | HA-Artefakte: Verifikation gegen offizielle Docs | HA Artifacts: Verification Against Official Docs | draft | unversioned |
 | [`claude/ha-integration-scaffold`](claude/ha-integration-scaffold/de.md) | Skill: `ha-integration-scaffold` | Skill: `ha-integration-scaffold` | draft | unversioned |
 | [`claude/ha-config-flow-augment`](claude/ha-config-flow-augment/de.md) | Skill: `ha-config-flow-augment` | Skill: `ha-config-flow-augment` | draft | unversioned |
 | [`claude/ha-coordinator-add`](claude/ha-coordinator-add/de.md) | Skill: `ha-coordinator-add` | Skill: `ha-coordinator-add` | draft | unversioned |
@@ -78,6 +79,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 - Jede Spec lebt in genau einem Ordner mit einer Datei pro konfigurierter Sprache.
 - Strukturelle Drift zwischen DE und EN wird per `nolte-shared:spec`-Skill (Operation `drift-check`) gefangen.
 - RFC-2119-Schlüsselworte stehen in der DE-Fassung als `MUSS [MUST]`, `SOLLTE [SHOULD]`, `KANN [MAY]` und in der EN-Fassung als `MUST`, `SHOULD`, `MAY`.
+- Unklarheiten über HA-Internals werden gegen die offizielle HA-Doku geprüft, bevor sie in eine Spec eingehen — die querschnittliche Pflicht definiert [`ha/upstream-docs-verification`](ha/upstream-docs-verification/de.md).
 
 ## Adaptionsquelle
 

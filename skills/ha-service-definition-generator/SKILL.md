@@ -26,6 +26,7 @@ Use this skill to add one HA service per call to an existing Custom Integration.
 4. **Always include `_resolve_entry` for multi-instance safety.** The handler must abort with a clear error when multiple config entries match.
 5. **Always refresh coordinator after mutation.** `mutating=true` services call `await entry.runtime_data.coordinators[<role>].async_request_refresh()` before returning.
 6. **Name services per `ha/naming-conventions`.** The `service` key is `snake_case` under the integration `domain`, with matching `services.yaml`/translation keys and English field labels (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)).
+7. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
 

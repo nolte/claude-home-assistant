@@ -26,6 +26,7 @@ Use this skill to align `strings.json` with every `translations/<lang>.json` fil
 3. **Never apply machine translations.** `<TODO: translate '<EN value>'>` is the only automatic placeholder.
 4. **Always run `report` first.** Default mode is `report`; `apply` is opt-in.
 5. **Always include `icons.json` drift.** A translation key without an icon (or vice versa) is a defect even when both files are internally consistent.
+6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
 

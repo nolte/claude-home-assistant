@@ -28,6 +28,7 @@ Use this skill when the user wants to add a custom Lovelace card to an existing 
 5. **Never reference external CDN assets.** Cards run offline-capable.
 6. **Never ask the user to add Lovelace resources by hand.** Auto-registration is the contract.
 7. **Name the element, class, and file per `ha/naming-conventions`.** The custom-element tag is `kebab-case` with at least one hyphen, namespaced by the integration `domain` (`<domain>-card`); if a config editor element is provided, its tag is `<tag>-editor`; the class is `PascalCase` ending in `Card`/`CardEditor`; the source file is `kebab-case`; the card `name`/`description` are English (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)).
+8. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
 
