@@ -123,6 +123,7 @@ extra:
 
 nav:
   - Startseite: index.md
+  - Anwendungsfälle: use-cases.md
   - Skills: skills/SUMMARY.md
   - Agents: agents/SUMMARY.md
   - Tags: tags.md
