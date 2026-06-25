@@ -27,7 +27,7 @@ Use this skill when the user wants to add a custom Lovelace card to an existing 
 4. **Always perform entity-change detection in `set hass`.** Re-rendering on every HA state tick burns CPU for nothing.
 5. **Never reference external CDN assets.** Cards run offline-capable.
 6. **Never ask the user to add Lovelace resources by hand.** Auto-registration is the contract.
-7. **Name the element, class, and file per `ha/naming-conventions`.** The custom-element tag is `kebab-case` with at least one hyphen, namespaced by the integration `domain` (`<domain>-card`); the editor tag is `<tag>-editor`; the class is `PascalCase` ending in `Card`/`CardEditor`; the source file is `kebab-case`; the card `name`/`description` are English (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)).
+7. **Name the element, class, and file per `ha/naming-conventions`.** The custom-element tag is `kebab-case` with at least one hyphen, namespaced by the integration `domain` (`<domain>-card`); if a config editor element is provided, its tag is `<tag>-editor`; the class is `PascalCase` ending in `Card`/`CardEditor`; the source file is `kebab-case`; the card `name`/`description` are English (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)).
 
 ## Inputs
 

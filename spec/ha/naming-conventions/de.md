@@ -73,7 +73,7 @@ Quality-Scale-Marker: **Bronze** — eine stabile, nicht-zufällige `unique_id` 
 - **MUSS [MUST]** das Custom-Element-Tag als `kebab-case` führen und — gemäß Web-Components-Pflicht — **mindestens einen Bindestrich** enthalten (z. B. `<domain>-card`)
 - **SOLLTE [SHOULD]** das Element-Tag mit der Integration-`domain` namespacen (z. B. `<domain>-card`), um Kollisionen mit anderen Cards zu vermeiden; ein zusätzliches portfolio-weites Vendor-Präfix ist nicht erforderlich
 - **MUSS [MUST]** den Card-Typ in der Lovelace-Konfiguration als `custom:<tag>` referenzieren, wobei `<tag>` exakt dem registrierten Element-Tag entspricht
-- **MUSS [MUST]** das zugehörige Editor-Element-Tag als `<tag>-editor` führen (Mechanik: `ha/lovelace-card-editor`)
+- **MUSS [MUST]**, *sofern* die Card ein Config-Editor-Element bereitstellt, dessen Element-Tag als `<tag>-editor` führen (Mechanik: `ha/lovelace-card-editor`) — eine Card ohne Editor ist von dieser Regel nicht betroffen
 - **MUSS [MUST]** den Card-Klassennamen als `PascalCase` führen, endend auf `Card` bzw. `CardEditor` (z. B. `FooCard`, `FooCardEditor`)
 - **MUSS [MUST]** den Card-`name` (Picker-Label) und die `description` englisch und menschenlesbar verfassen
 - **SOLLTE [SHOULD]** die Card-Quelldatei `kebab-case` und passend zum Element-Tag benennen (z. B. `foo-card.ts`)
@@ -94,7 +94,7 @@ Quality-Scale-Marker: **Bronze** — eine stabile, nicht-zufällige `unique_id` 
 - [ ] Keine generierte Entity setzt `self.entity_id` manuell; jede benennt sich über `has_entity_name` + `translation_key`
 - [ ] Keine `unique_id`, kein Device-`identifiers`-Eintrag und kein Datei-/Element-Name enthält IP, Hostname, Token, Zeitstempel oder personenbezogene Daten
 - [ ] Die Integration-`domain` ist identisch in Ordnername, `manifest.json` und allen Service-/Entity-Registrierungen
-- [ ] Jedes Custom-Element-Tag enthält mindestens einen Bindestrich; der Card-Typ wird als `custom:<tag>` referenziert; das Editor-Tag ist `<tag>-editor`
+- [ ] Jedes Custom-Element-Tag enthält mindestens einen Bindestrich; der Card-Typ wird als `custom:<tag>` referenziert; ein etwaiges Config-Editor-Tag ist `<tag>-editor`
 - [ ] Jeder Blueprint liegt unter `blueprints/<domain>/<author>/<file>.yaml` mit `snake_case`-Dateinamen; jeder Input-Schlüssel ist `snake_case`
 - [ ] Die Spec wiederholt keine Mechanik, sondern referenziert für jede Regel die zuständige Fach-Spec
 

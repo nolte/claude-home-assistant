@@ -73,7 +73,7 @@ Quality-Scale marker: **Bronze** — a stable, non-random `unique_id` is a Bronz
 - **MUST** carry the custom-element tag as `kebab-case` and — per the Web Components requirement — contain **at least one hyphen** (e.g., `<domain>-card`)
 - **SHOULD** namespace the element tag with the integration `domain` (e.g., `<domain>-card`) to avoid collisions with other cards; an additional portfolio-wide vendor prefix is not required
 - **MUST** reference the card type in the Lovelace configuration as `custom:<tag>`, where `<tag>` matches the registered element tag exactly
-- **MUST** carry the associated editor element tag as `<tag>-editor` (mechanics: `ha/lovelace-card-editor`)
+- **MUST**, *when* the card provides a config editor element, carry that element's tag as `<tag>-editor` (mechanics: `ha/lovelace-card-editor`) — a card without an editor is exempt from this rule
 - **MUST** carry the card class name as `PascalCase`, ending in `Card` or `CardEditor` (e.g., `FooCard`, `FooCardEditor`)
 - **MUST** write the card `name` (picker label) and `description` English and human-readable
 - **SHOULD** name the card source file `kebab-case` and matching the element tag (e.g., `foo-card.ts`)
@@ -94,7 +94,7 @@ Quality-Scale marker: **Bronze** — a stable, non-random `unique_id` is a Bronz
 - [ ] No generated entity sets `self.entity_id` manually; each names itself via `has_entity_name` + `translation_key`
 - [ ] No `unique_id`, device `identifiers` entry, or file/element name contains IP, hostname, token, timestamp, or personal data
 - [ ] The integration `domain` is identical across the folder name, `manifest.json`, and all service/entity registrations
-- [ ] Every custom-element tag contains at least one hyphen; the card type is referenced as `custom:<tag>`; the editor tag is `<tag>-editor`
+- [ ] Every custom-element tag contains at least one hyphen; the card type is referenced as `custom:<tag>`; any config editor tag is `<tag>-editor`
 - [ ] Every blueprint lives under `blueprints/<domain>/<author>/<file>.yaml` with a `snake_case` filename; every input key is `snake_case`
 - [ ] The spec repeats no mechanics but references the responsible domain spec for each rule
 
