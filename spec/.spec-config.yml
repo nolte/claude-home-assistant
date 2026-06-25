@@ -2,27 +2,30 @@ canonical_language: de
 languages: [de, en]
 spec_root: spec
 
-# Portfolio-inherited spec layer (nolte/claude-shared#339, mechanism: claude-shared#340).
-# This repo references portfolio-wide specs from the nolte-shared hub instead of
-# copying them verbatim. The previously copied `project/branching-model` and
-# `project/parallel-working-copies` specs were deleted; they now resolve from the
-# inherited set. No `overrides:` are declared — the former local copies differed from
-# the hub canonical only in copy artefacts (ghost-reference neutralisation and
-# `claude-shared`->`claude-home-assistant` example localisation), both of which the
-# inherited model resolves on its own.
+# Portfolio-inherited spec layer (nolte/claude-shared#339, mechanism: #340,
+# hub enablement: #341). This repo references portfolio-wide specs from the
+# nolte-shared hub instead of copying them verbatim. The previously copied
+# `project/branching-model` and `project/parallel-working-copies` specs were
+# deleted; they now resolve from the inherited set. No `overrides:` are declared —
+# the former local copies differed from the hub canonical only in copy artefacts
+# (ghost-reference neutralisation and `claude-shared`->`claude-home-assistant`
+# example localisation), both of which the inherited model resolves on its own.
 #
-# GATING — this declaration only resolves cleanly once the hub release pinned below:
-#   1. carries `Portfolio-Scope: portfolio` on `project/branching-model` and
-#      `project/parallel-working-copies`, AND on every sibling spec they cross-reference
-#      (else those refs become ghost references = Critical): project/pull-request-workflow,
-#      project/release-automation, project/workflow-health, project/project-structure,
-#      project/quality-gate, project/sprint, project/release-artifact, project/spec-readiness,
-#      project/docs-freshness, claude/review-plan, claude/resumable-work,
-#      claude/research-triangulate, claude/permission-allowlist;
-#   2. ships the `Portfolio-Scope: portfolio` spec subset with the plugin payload.
-# v0.1.9 is the planned next claude-shared release (open draft) that carries the #340
-# mechanism; bump `ref` to the exact release that first ships the scoped cluster.
-# PR #14 stays Draft until that release is live (floating/stale ref is a drift Warning).
+# Hub status — claude-shared#341 (merged 2026-06-25) tagged the inheritable
+# cluster `Portfolio-Scope: portfolio` and made it cross-reference-closed, so the
+# two specs above resolve every cross-reference inside the inherited set. The
+# cluster is those two plus the eight siblings they reference:
+# project/pull-request-workflow, project/quality-gate, project/release-automation,
+# project/release-artifact, project/release-skill-layer, project/workflow-health,
+# claude/review-plan, claude/permission-allowlist. The hub softened the references
+# to project/{sprint,spec-readiness,docs-freshness,project-structure} and
+# claude/{resumable-work,research-triangulate} to prose, so those are intentionally
+# NOT part of the cluster and need not be inherited. The `spec/` payload ships with
+# the plugin per claude-shared release-automation §"Inheritable spec payload".
+#
+# Pinned to v0.1.9 — the next claude-shared release (open draft) that first ships
+# this scoped cluster. This PR stays Draft until v0.1.9 is published (a pin to an
+# unpublished tag is a drift Warning); flip it to ready once the release is live.
 inherits:
   - source: nolte-shared
     ref: v0.1.9
