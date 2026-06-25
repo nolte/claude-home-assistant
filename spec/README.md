@@ -117,6 +117,13 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-reproduce-state-add`](claude/ha-reproduce-state-add/de.md) | Skill: `ha-reproduce-state-add` | Skill: `ha-reproduce-state-add` | draft | unversioned |
 | [`claude/ha-significant-change-add`](claude/ha-significant-change-add/de.md) | Skill: `ha-significant-change-add` | Skill: `ha-significant-change-add` | draft | unversioned |
 | [`claude/ha-backup-platform-add`](claude/ha-backup-platform-add/de.md) | Skill: `ha-backup-platform-add` | Skill: `ha-backup-platform-add` | draft | unversioned |
+| [`claude/ha-entity-platform-add`](claude/ha-entity-platform-add/de.md) | Skill: `ha-entity-platform-add` | Skill: `ha-entity-platform-add` | draft | unversioned |
+| [`claude/ha-card-editor-add`](claude/ha-card-editor-add/de.md) | Skill: `ha-card-editor-add` | Skill: `ha-card-editor-add` | draft | unversioned |
+| [`claude/ha-card-features-add`](claude/ha-card-features-add/de.md) | Skill: `ha-card-features-add` | Skill: `ha-card-features-add` | draft | unversioned |
+| [`claude/ha-badge-add`](claude/ha-badge-add/de.md) | Skill: `ha-badge-add` | Skill: `ha-badge-add` | draft | unversioned |
+| [`claude/ha-strategy-add`](claude/ha-strategy-add/de.md) | Skill: `ha-strategy-add` | Skill: `ha-strategy-add` | draft | unversioned |
+| [`claude/ha-panel-add`](claude/ha-panel-add/de.md) | Skill: `ha-panel-add` | Skill: `ha-panel-add` | draft | unversioned |
+| [`claude/ha-websocket-command-add`](claude/ha-websocket-command-add/de.md) | Skill: `ha-websocket-command-add` | Skill: `ha-websocket-command-add` | draft | unversioned |
 
 Der Index listet nur **lokale** Specs. Portfolioweite `project/`-Specs (u. a. `project/branching-model`, `project/parallel-working-copies`) werden nicht mehr lokal geführt, sondern aus dem nolte-shared-Hub vererbt — siehe [Vererbte Specs](#vererbte-specs).
 
