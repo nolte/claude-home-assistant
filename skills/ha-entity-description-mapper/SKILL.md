@@ -26,6 +26,7 @@ Use this skill when the user wants to add datapoints (sensors, binary sensors, b
 3. **Never concretise the backend-field lookup.** The skill produces the generic entity class with `entity_description.key`-based access; mapping to actual coordinator data dict paths is the user's job.
 4. **Always validate `device_class`/`state_class`/`unit` consistency.** Mismatches block the run with a verbose violation list.
 5. **Always update strings.json AND translations AND icons.json together.** Half-augments where code is present but translations are missing are forbidden.
+6. **Name keys and entities per `ha/naming-conventions`.** `EntityDescription.key` and `translation_key` are `snake_case`; entity names come from the `translation_key` path, never a hard-coded `_attr_name`; English display names only (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)).
 
 ## Inputs
 

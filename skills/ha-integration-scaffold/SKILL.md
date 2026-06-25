@@ -32,6 +32,7 @@ Use this skill when the user wants to:
 4. **Never set `self.entity_id = "..."`.** HA derives the `entity_id` from the system-language display name at first registration. The skeleton stays English-source so the slug remains language-independent (see [`ha/entity-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-architecture/de.md)).
 5. **Never bypass the API path whitelist.** Generated `api.py` carries `_API_PATH_RE` and a `_with_auth(headers)` helper; bearer tokens go on the wire only after the path has passed the whitelist (see [`ha/security-hardening`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/security-hardening/de.md)).
 6. **Never silently default.** When the user did not specify `hacs` / `zeroconf` / `auth` / `platforms`, fall back to documented defaults — but state every default in the output summary so the user sees what was assumed.
+7. **Name every artefact per `ha/naming-conventions`.** The integration `domain`, `unique_id`, `translation_key`, device `identifiers`, service names, config-entry title, and all generated file paths follow the consolidated naming authority — `snake_case` identifiers, English display names (≤ 50 chars), no volatile data (IP, hostname, token, timestamp) in any ID (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)). Rules 3–4 are the entity-name instances of this authority.
 
 ## Inputs
 

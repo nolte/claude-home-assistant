@@ -25,6 +25,7 @@ Use this skill to add one HA service per call to an existing Custom Integration.
 3. **Always raise `ServiceValidationError` on user error and `HomeAssistantError` on internal.** Generic `except Exception:` is forbidden in the handler.
 4. **Always include `_resolve_entry` for multi-instance safety.** The handler must abort with a clear error when multiple config entries match.
 5. **Always refresh coordinator after mutation.** `mutating=true` services call `await entry.runtime_data.coordinators[<role>].async_request_refresh()` before returning.
+6. **Name services per `ha/naming-conventions`.** The `service` key is `snake_case` under the integration `domain`, with matching `services.yaml`/translation keys and English field labels (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)).
 
 ## Inputs
 
