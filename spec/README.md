@@ -107,6 +107,16 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-repairs-add`](claude/ha-repairs-add/de.md) | Skill: `ha-repairs-add` | Skill: `ha-repairs-add` | draft | unversioned |
 | [`claude/ha-discovery-augment`](claude/ha-discovery-augment/de.md) | Skill: `ha-discovery-augment` | Skill: `ha-discovery-augment` | draft | unversioned |
 | [`claude/ha-device-automation-add`](claude/ha-device-automation-add/de.md) | Skill: `ha-device-automation-add` | Skill: `ha-device-automation-add` | draft | unversioned |
+| [`claude/ha-oauth2-credentials-augment`](claude/ha-oauth2-credentials-augment/de.md) | Skill: `ha-oauth2-credentials-augment` | Skill: `ha-oauth2-credentials-augment` | draft | unversioned |
+| [`claude/ha-bluetooth-augment`](claude/ha-bluetooth-augment/de.md) | Skill: `ha-bluetooth-augment` | Skill: `ha-bluetooth-augment` | draft | unversioned |
+| [`claude/ha-conversation-agent-augment`](claude/ha-conversation-agent-augment/de.md) | Skill: `ha-conversation-agent-augment` | Skill: `ha-conversation-agent-augment` | draft | unversioned |
+| [`claude/ha-diagnostics-augment`](claude/ha-diagnostics-augment/de.md) | Skill: `ha-diagnostics-augment` | Skill: `ha-diagnostics-augment` | draft | unversioned |
+| [`claude/ha-integration-events-add`](claude/ha-integration-events-add/de.md) | Skill: `ha-integration-events-add` | Skill: `ha-integration-events-add` | draft | unversioned |
+| [`claude/ha-system-health-add`](claude/ha-system-health-add/de.md) | Skill: `ha-system-health-add` | Skill: `ha-system-health-add` | draft | unversioned |
+| [`claude/ha-media-source-add`](claude/ha-media-source-add/de.md) | Skill: `ha-media-source-add` | Skill: `ha-media-source-add` | draft | unversioned |
+| [`claude/ha-reproduce-state-add`](claude/ha-reproduce-state-add/de.md) | Skill: `ha-reproduce-state-add` | Skill: `ha-reproduce-state-add` | draft | unversioned |
+| [`claude/ha-significant-change-add`](claude/ha-significant-change-add/de.md) | Skill: `ha-significant-change-add` | Skill: `ha-significant-change-add` | draft | unversioned |
+| [`claude/ha-backup-platform-add`](claude/ha-backup-platform-add/de.md) | Skill: `ha-backup-platform-add` | Skill: `ha-backup-platform-add` | draft | unversioned |
 
 Der Index listet nur **lokale** Specs. Portfolioweite `project/`-Specs (u. a. `project/branching-model`, `project/parallel-working-copies`) werden nicht mehr lokal geführt, sondern aus dem nolte-shared-Hub vererbt — siehe [Vererbte Specs](#vererbte-specs).
 
