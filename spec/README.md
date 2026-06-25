@@ -61,6 +61,9 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/naming-conventions`](ha/naming-conventions/de.md) | HA-Artefakte: Namenskonventionen | HA Artifacts: Naming Conventions | draft | unversioned |
 | [`ha/hacs-release`](ha/hacs-release/de.md) | HA-Integration: HACS-Release und Distribution | HA Integration: HACS Release and Distribution | draft | unversioned |
 | [`ha/upstream-docs-verification`](ha/upstream-docs-verification/de.md) | HA-Artefakte: Verifikation gegen offizielle Docs | HA Artifacts: Verification Against Official Docs | draft | unversioned |
+| [`ha/divoom-pixoo`](ha/divoom-pixoo/de.md) | HA-Gerät: Divoom Pixoo 64 (gickowtf-Integration) | HA Device: Divoom Pixoo 64 (gickowtf integration) | draft | unversioned |
+| [`ha/pixoo-pixel-art`](ha/pixoo-pixel-art/de.md) | HA-Gerät: Pixel-Art auf der 64×64-Matrix (Schattierung & Konturen) | HA Device: Pixel Art on the 64×64 Matrix (Shading & Contours) | draft | unversioned |
+| [`ha/pixoo-pixel-art-animation`](ha/pixoo-pixel-art-animation/de.md) | HA-Gerät: Pixel-Art-Animation auf der 64×64-Matrix | HA Device: Pixel Art Animation on the 64×64 Matrix | draft | unversioned |
 | [`ha-automation/automation`](ha-automation/automation/de.md) | HA-Automation: Automation nutzen | HA Automation: Using Automation | draft | unversioned |
 | [`ha-automation/script`](ha-automation/script/de.md) | HA-Automation: Script nutzen | HA Automation: Using Script | draft | unversioned |
 | [`ha-automation/scene`](ha-automation/scene/de.md) | HA-Automation: Scene nutzen | HA Automation: Using Scene | draft | unversioned |
