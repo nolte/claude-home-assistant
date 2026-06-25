@@ -175,7 +175,7 @@ permissions:
 
 jobs:
   hacs-validate:
-    uses: nolte/gh-plumbing/.github/workflows/reusable-hacs-validate.yaml@v1
+    uses: nolte/gh-plumbing/.github/workflows/reusable-hacs-validate.yaml@v1.1.24
     # Custom-Repo: einzelne Checks per `ignore` deaktivierbar (z. B. "brands").
     # Default-Store: KEIN ignore — siehe §Default-Store-Aufnahme.
     # with:
@@ -206,7 +206,7 @@ permissions:
 
 jobs:
   publish:
-    uses: nolte/gh-plumbing/.github/workflows/reusable-release-publish.yml@v1
+    uses: nolte/gh-plumbing/.github/workflows/reusable-release-publish.yml@v1.1.24
     with:
       tag: ${{ inputs.tag }}
       dry_run: ${{ inputs.dry_run }}
