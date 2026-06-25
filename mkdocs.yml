@@ -114,7 +114,7 @@ markdown_extensions:
   - pymdownx.tilde
 
 hooks:
-  # Regenerate the skill/agent catalog into docs/de/ in on_pre_build, before
+  # Regenerate the skill/agent catalog into docs/en/ in on_pre_build, before
   # MkDocs collects files, so mkdocs-static-i18n localizes real docs_dir files
   # (gen-files virtual pages are dropped by i18n — ultrabug/mkdocs-static-i18n#263).
   - scripts/docs/gen_catalog.py

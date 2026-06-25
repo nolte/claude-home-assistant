@@ -277,7 +277,7 @@ def main() -> None:
 
 
 def on_pre_build(config, **kwargs) -> None:
-    """MkDocs hook entry point: regenerate the catalog into docs/de/ before
+    """MkDocs hook entry point: regenerate the catalog into docs/en/ before
     MkDocs collects the files, so mkdocs-static-i18n sees real docs_dir files."""
     main()
 
