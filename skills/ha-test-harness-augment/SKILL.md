@@ -25,6 +25,7 @@ Use this skill to augment the test suite of an existing HA Custom Integration wi
 3. **Never include generic `except Exception:`.** Catch only specific known errors.
 4. **Always extend conftest.py rather than create parallel fixtures.** Reuse existing fixture names; add new ones only when none fits.
 5. **Always run the coverage-report command after augment.** Skill output names the new coverage delta.
+6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
 

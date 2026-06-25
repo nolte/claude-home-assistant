@@ -86,8 +86,10 @@ Validation runs as a CI gate via the two official GitHub Actions; in this portfo
 With `zip_release: true`, HACS downloads only the named release asset instead of cloning the repository — faster and more reliable, since only the integration files are shipped ([publish/include](https://www.hacs.xyz/docs/publish/include/): "Use zip releases instead of git clone (recommended)").
 
 - **MUST** produce, in CD, a ZIP asset with exactly the name given in `hacs.json` as `filename` (`<domain>.zip`) and attach it to the release; if the asset is missing or misnamed, the HACS download fails
+- **MAY** decouple the *build* name from `hacs.json` via the reusable's `asset-filename` input (`reusable-release-publish.yml`); when set it takes precedence, otherwise the reusable falls back to `hacs.json` `filename` and finally `<domain>.zip`. The input does **not** replace the `hacs.json` `filename`/`zip_release` keys — HACS reads `hacs.json` to choose the asset, so the build name and `hacs.json` `filename` **MUST** still agree (the reusable emits a warning on divergence)
 - **MUST** attach the ZIP asset to the draft release **before** `reusable-release-publish.yml` calls `draft=false` — otherwise a race arises in which HACS sees the release without the asset and the download fails; a separate `on: release published` workflow for the asset is therefore **not permitted**
 - **MUST** pack the integration files as ZIP content so HACS can extract them into `custom_components/<domain>/` (the integration directory's contents at the ZIP root level)
+- **Primary evidence [HACS source]:** on the `zip_release` path HACS calls `zipfile.ZipFile(asset).extractall(custom_components/<domain>/)` (`hacs/integration`, `repositories/base.py`) — the named asset is extracted **directly** there; **`content_in_root` is not consulted on this path** (it only applies on the non-ZIP / single-file path). Confirmed by the production `hacs.json` of `alandtse/alexa_media_player` (`zip_release: true` + `filename` + `content_in_root: false`)
 - **SHOULD** build the ZIP deterministically and reproducibly (no timestamp/path nondeterminism) so an identical source state produces identical assets
 
 ### Pre-releases / beta channel
@@ -175,7 +177,7 @@ permissions:
 
 jobs:
   hacs-validate:
-    uses: nolte/gh-plumbing/.github/workflows/reusable-hacs-validate.yaml@v1
+    uses: nolte/gh-plumbing/.github/workflows/reusable-hacs-validate.yaml@v1.1.24
     # Custom repo: disable individual checks via `ignore` (e.g. "brands").
     # Default store: NO ignore — see §Default-store inclusion.
     # with:
@@ -206,7 +208,7 @@ permissions:
 
 jobs:
   publish:
-    uses: nolte/gh-plumbing/.github/workflows/reusable-release-publish.yml@v1
+    uses: nolte/gh-plumbing/.github/workflows/reusable-release-publish.yml@v1.1.24
     with:
       tag: ${{ inputs.tag }}
       dry_run: ${{ inputs.dry_run }}
@@ -230,7 +232,7 @@ jobs:
 
 ## Open Questions
 
-- **ZIP internal layout** (settled as an assumption, not primary-sourced): The `zip_release` asset contains the **contents** of `custom_components/<domain>/` at the ZIP root level (the established `integration_blueprint` pattern); HACS extracts the named asset into `custom_components/<domain>/`. This assumption carries the CD ZIP build in `reusable-release-publish.yml`. Before a default-store inclusion it **should** be cross-checked against HACS behavior via a real test install; `content_in_root` layouts are excluded.
+- **ZIP internal layout** (resolved 2026-06-25, now primary-sourced): The `zip_release` asset contains the **contents** of `custom_components/<domain>/` at the ZIP root level (the established `integration_blueprint` pattern); HACS extracts it via `extractall` directly into `custom_components/<domain>/` and does not consult `content_in_root` there. **Primary evidence:** HACS source `hacs/integration` `repositories/base.py` (`zip_release` path, `zip_file.extractall(self.content.path.local)`) plus the production precedent `alandtse/alexa_media_player`. A real test install before a default-store inclusion remains recommended but is no longer needed to prove the mechanism.
 - **Complete `hacs.json` schema**: The surviving sources confirm individual fields but no single canonical full-schema reference with exact defaults and the semantics of `content_in_root`, `country`, `persistent_directory`, `render_readme`. Should a canonical schema source be pulled in?
 - **Versioning tooling alternative**: This spec confirms the `release-drafter`-plus-`chore(release)` path. Should `python-semantic-release` (stamping `manifest.json` via `version_variables`, since no `version_json` exists) be documented as an alternative, or does the existing path remain the only normed solution? Which tooling prevails in the HA community is not evidenced.
 - **ZIP in primary vs. dedicated reusable**: Should the ZIP asset build be integrated into `reusable-release-publish.yml` (HACS source already detected) or be a dedicated reusable invoked before the publish — a trade-off between cohesion and separation of concerns.

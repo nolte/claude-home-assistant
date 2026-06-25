@@ -32,6 +32,7 @@ Use this skill when the user wants to:
 3. **Never split the augment.** Code, strings, translations, manifest entry (where applicable), and tests land together in a single commit-ready state. Half augments where code exists but strings are missing are forbidden.
 4. **Never invent backend specifics.** For `oauth`, the skill scaffolds the flow skeleton — token endpoint, authorize endpoint, scopes, client ID/secret stay user-fed. Surface them in the output as an explicit checklist.
 5. **Always state the quality-scale impact.** The output names which Quality Scale tier the augment unlocks (Bronze → Silver for reauth, Silver → Gold for reconfigure, …).
+6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
 

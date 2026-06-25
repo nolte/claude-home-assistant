@@ -6,18 +6,24 @@ Claude Code plugin that bundles skills, agents, and specifications for efficient
 
 ## What you get
 
-- **Skills** — focused, on-demand workflow primitives Claude Code pulls in when relevant (config-flow scaffolding, Lovelace card boilerplate, blueprint authoring, ESPHome component patterns, …)
-- **Agents** — larger, autonomous helpers for tasks that span multiple steps (e.g. wiring a new integration end-to-end, validating a card against a live HA instance)
-- **Specifications** — bilingual source-of-truth documents under `spec/` that govern every skill and agent
+- **Skills** — focused, on-demand workflow primitives Claude Code pulls in when relevant. Each use case has a **`*-solution` front-door skill** that plans the work and dispatches the focused authoring skills, so you describe a result and never have to pick the right primitive yourself.
+- **Agents** — larger, autonomous helpers for tasks that span multiple steps (provisioning a dev HA instance, deploying and verifying an integration, authoring a blueprint, running a full pre-release review)
+- **Specifications** — bilingual source-of-truth documents under `spec/` that govern every skill and agent (`spec/ha/…` for HA-internal contracts, `spec/claude/…` for the skills/agents themselves)
 
-## Scope
+## Use cases
 
-This plugin covers the four most common Home Assistant authoring surfaces:
+What the plugin helps you accomplish, each with its front-door skill:
 
-- **Custom Integrations (Python)** — `custom_components/<domain>/`, config flows, coordinators, entities, tests against `pytest-homeassistant-custom-component`
-- **Lovelace Cards (TypeScript / JavaScript)** — Lit-based custom cards, HACS-conformant packaging, `hass`-object usage, `card-mod` patterns
-- **Blueprints & Automations (YAML)** — automation/script blueprints, Jinja templates, `packages/` layout
-- **ESPHome / Add-ons** — ESPHome custom components, Home Assistant add-ons (Docker / s6)
+- **Build a custom integration (Python)** — `ha-integration-solution`: scaffold `custom_components/<domain>/`, then augment config flow, coordinators, entity platforms, services, diagnostics, discovery, repairs, translations, and tests.
+- **Build a Lovelace frontend (TS / JS)** — `ha-lovelace-solution`: custom cards, visual config editors, tile features, badges, dashboard strategies, custom panels, and their WebSocket-command backends.
+- **Author automations & blueprints (YAML)** — `ha-automation-solution`: automations, scripts, helpers, derived/statistical sensors, device automations, and shareable blueprints.
+- **Drive a Divoom Pixoo display** — `ha-pixoo-solution`: information pages, detailed 64×64 pixel art (shading & contours), and animations, from a described requirement.
+- **Run & test on a dev HA** — agents `ha-dev-instance-provision`, `ha-integration-deploy`, `ha-integration-verify` (local Kubernetes / Kind), plus `ha-test-harness-augment` for pytest coverage.
+- **Review & harden before release** — `ha-quality-scale-audit`, `ha-security-audit`, and the bundled `ha-integration-review` agent.
+
+> ESPHome custom components and Home Assistant add-on (Docker / s6) workflows are on the roadmap; no skills ship for them yet.
+
+A complete capability map — every use case mapped to its skills, agents, and specs — lives in the documentation: <https://nolte.github.io/claude-home-assistant/use-cases/>.
 
 ## Quickstart
 
