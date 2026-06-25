@@ -33,3 +33,12 @@ repos:
           - MD041  # first-line-h1
           - MD049  # emphasis-style (allow underscore)
           - --
+
+  - repo: local
+    hooks:
+      - id: guard-primary-checkout
+        name: primary checkout must stay on develop
+        entry: scripts/guard_primary_checkout.sh
+        language: system
+        always_run: true
+        pass_filenames: false

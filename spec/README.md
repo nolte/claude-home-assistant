@@ -100,6 +100,15 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-security-audit`](claude/ha-security-audit/de.md) | Skill: `ha-security-audit` | Skill: `ha-security-audit` | draft | unversioned |
 | [`claude/ha-quality-scale-audit`](claude/ha-quality-scale-audit/de.md) | Skill: `ha-quality-scale-audit` | Skill: `ha-quality-scale-audit` | draft | unversioned |
 | [`claude/ha-blueprint-scaffold`](claude/ha-blueprint-scaffold/de.md) | Skill: `ha-blueprint-scaffold` | Skill: `ha-blueprint-scaffold` | draft | unversioned |
+| [`claude/ha-automation-solution`](claude/ha-automation-solution/de.md) | Skill: `ha-automation-solution` | Skill: `ha-automation-solution` | draft | unversioned |
+| [`claude/ha-automation-author`](claude/ha-automation-author/de.md) | Skill: `ha-automation-author` | Skill: `ha-automation-author` | draft | unversioned |
+| [`claude/ha-helper-scaffold`](claude/ha-helper-scaffold/de.md) | Skill: `ha-helper-scaffold` | Skill: `ha-helper-scaffold` | draft | unversioned |
+| [`claude/ha-derived-sensor-author`](claude/ha-derived-sensor-author/de.md) | Skill: `ha-derived-sensor-author` | Skill: `ha-derived-sensor-author` | draft | unversioned |
+| [`claude/ha-repairs-add`](claude/ha-repairs-add/de.md) | Skill: `ha-repairs-add` | Skill: `ha-repairs-add` | draft | unversioned |
+| [`claude/ha-discovery-augment`](claude/ha-discovery-augment/de.md) | Skill: `ha-discovery-augment` | Skill: `ha-discovery-augment` | draft | unversioned |
+| [`claude/ha-device-automation-add`](claude/ha-device-automation-add/de.md) | Skill: `ha-device-automation-add` | Skill: `ha-device-automation-add` | draft | unversioned |
+
+Der Index listet nur **lokale** Specs. Portfolioweite `project/`-Specs (u. a. `project/branching-model`, `project/parallel-working-copies`) werden nicht mehr lokal geführt, sondern aus dem nolte-shared-Hub vererbt — siehe [Vererbte Specs](#vererbte-specs).
 
 ## Konventionen
 
@@ -109,6 +118,12 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 - Strukturelle Drift zwischen DE und EN wird per `nolte-shared:spec`-Skill (Operation `drift-check`) gefangen.
 - RFC-2119-Schlüsselworte stehen in der DE-Fassung als `MUSS [MUST]`, `SOLLTE [SHOULD]`, `KANN [MAY]` und in der EN-Fassung als `MUST`, `SHOULD`, `MAY`.
 - Unklarheiten über HA-Internals werden gegen die offizielle HA-Doku geprüft, bevor sie in eine Spec eingehen — die querschnittliche Pflicht definiert [`ha/upstream-docs-verification`](ha/upstream-docs-verification/de.md).
+
+## Vererbte Specs
+
+Portfolioweite Specs werden gemäß `spec/project/portfolio-inherited-spec-layer/` (nolte/claude-shared#339) **referenziert statt kopiert**: Sie leben kanonisch einmal im `nolte-shared`-Hub und werden über den `inherits:`-Block in [`.spec-config.yml`](.spec-config.yml) eingebunden, gepinnt auf einen Hub-Release-`ref`. Eine verbatim kopierte Hub-Spec im lokalen `spec/`-Baum ist laut dieser Spec ein Critical-Befund.
+
+Vererbt (sobald der gepinnte Hub-Release sie als `Portfolio-Scope: portfolio` ausliefert): `project/branching-model`, `project/parallel-working-copies` samt des von ihnen referenzierten Schwester-Spec-Clusters. Abweichungen würden als deklarierte `overrides:` in `.spec-config.yml` geführt; aktuell sind keine nötig.
 
 ## Adaptionsquelle
 
