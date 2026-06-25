@@ -104,17 +104,23 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-automation-author`](claude/ha-automation-author/de.md) | Skill: `ha-automation-author` | Skill: `ha-automation-author` | draft | unversioned |
 | [`claude/ha-helper-scaffold`](claude/ha-helper-scaffold/de.md) | Skill: `ha-helper-scaffold` | Skill: `ha-helper-scaffold` | draft | unversioned |
 | [`claude/ha-derived-sensor-author`](claude/ha-derived-sensor-author/de.md) | Skill: `ha-derived-sensor-author` | Skill: `ha-derived-sensor-author` | draft | unversioned |
-| [`project/parallel-working-copies`](project/parallel-working-copies/de.md) | Parallele Working Copies | Parallel Working Copies | draft | unversioned |
-| [`project/branching-model`](project/branching-model/de.md) | Branching-Modell | Branching Model | draft | unversioned |
+
+Der Index listet nur **lokale** Specs. Portfolioweite `project/`-Specs (u. a. `project/branching-model`, `project/parallel-working-copies`) werden nicht mehr lokal geführt, sondern aus dem nolte-shared-Hub vererbt — siehe [Vererbte Specs](#vererbte-specs).
 
 ## Konventionen
 
 - Slugs sind ASCII-kebab-case, abgeleitet aus dem kanonischen DE-Titel.
-- Topic-Folder gruppieren verwandte Specs (`ha/`, `ha-automation/`, `claude/`, `project/`); nur eine Verschachtelungs­ebene erlaubt.
+- Topic-Folder gruppieren verwandte Specs (`ha/`, `ha-automation/`, `claude/`); nur eine Verschachtelungs­ebene erlaubt.
 - Jede Spec lebt in genau einem Ordner mit einer Datei pro konfigurierter Sprache.
 - Strukturelle Drift zwischen DE und EN wird per `nolte-shared:spec`-Skill (Operation `drift-check`) gefangen.
 - RFC-2119-Schlüsselworte stehen in der DE-Fassung als `MUSS [MUST]`, `SOLLTE [SHOULD]`, `KANN [MAY]` und in der EN-Fassung als `MUST`, `SHOULD`, `MAY`.
 - Unklarheiten über HA-Internals werden gegen die offizielle HA-Doku geprüft, bevor sie in eine Spec eingehen — die querschnittliche Pflicht definiert [`ha/upstream-docs-verification`](ha/upstream-docs-verification/de.md).
+
+## Vererbte Specs
+
+Portfolioweite Specs werden gemäß `spec/project/portfolio-inherited-spec-layer/` (nolte/claude-shared#339) **referenziert statt kopiert**: Sie leben kanonisch einmal im `nolte-shared`-Hub und werden über den `inherits:`-Block in [`.spec-config.yml`](.spec-config.yml) eingebunden, gepinnt auf einen Hub-Release-`ref`. Eine verbatim kopierte Hub-Spec im lokalen `spec/`-Baum ist laut dieser Spec ein Critical-Befund.
+
+Vererbt (sobald der gepinnte Hub-Release sie als `Portfolio-Scope: portfolio` ausliefert): `project/branching-model`, `project/parallel-working-copies` samt des von ihnen referenzierten Schwester-Spec-Clusters. Abweichungen würden als deklarierte `overrides:` in `.spec-config.yml` geführt; aktuell sind keine nötig.
 
 ## Adaptionsquelle
 
