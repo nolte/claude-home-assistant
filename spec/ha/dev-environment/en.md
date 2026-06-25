@@ -34,7 +34,7 @@ Quality scale marker: **unscaled** (dev environment is not part of the HA qualit
 
 ### Cluster precondition
 
-- **MUST** assume a local Kind cluster (or equivalent local K8s cluster) with the `homeassistant` Helm chart installed — the spec does not address cluster setup, only the dev loop on top
+- **MUST** assume a local Kind cluster (or equivalent local K8s cluster) with a running HA instance — the spec does not address cluster setup, only the dev loop on top; the instance is provisioned either via a `homeassistant` Helm chart or via the raw manifest defined in `ha/dev-instance-provisioning`
 - **MUST** locate the HA pod via label selector — typical convention: `app.kubernetes.io/name=homeassistant` or a comparable Helm-chart-standard selector
 - **SHOULD** expose cluster, namespace, and pod-selector values as `Taskfile.yml` variables, so users can override them per cluster
 
