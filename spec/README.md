@@ -104,11 +104,13 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-automation-author`](claude/ha-automation-author/de.md) | Skill: `ha-automation-author` | Skill: `ha-automation-author` | draft | unversioned |
 | [`claude/ha-helper-scaffold`](claude/ha-helper-scaffold/de.md) | Skill: `ha-helper-scaffold` | Skill: `ha-helper-scaffold` | draft | unversioned |
 | [`claude/ha-derived-sensor-author`](claude/ha-derived-sensor-author/de.md) | Skill: `ha-derived-sensor-author` | Skill: `ha-derived-sensor-author` | draft | unversioned |
+| [`project/parallel-working-copies`](project/parallel-working-copies/de.md) | Parallele Working Copies | Parallel Working Copies | draft | unversioned |
+| [`project/branching-model`](project/branching-model/de.md) | Branching-Modell | Branching Model | draft | unversioned |
 
 ## Konventionen
 
 - Slugs sind ASCII-kebab-case, abgeleitet aus dem kanonischen DE-Titel.
-- Topic-Folder gruppieren verwandte Specs (`ha/`, `ha-automation/`, `claude/`); nur eine Verschachtelungs­ebene erlaubt.
+- Topic-Folder gruppieren verwandte Specs (`ha/`, `ha-automation/`, `claude/`, `project/`); nur eine Verschachtelungs­ebene erlaubt.
 - Jede Spec lebt in genau einem Ordner mit einer Datei pro konfigurierter Sprache.
 - Strukturelle Drift zwischen DE und EN wird per `nolte-shared:spec`-Skill (Operation `drift-check`) gefangen.
 - RFC-2119-Schlüsselworte stehen in der DE-Fassung als `MUSS [MUST]`, `SOLLTE [SHOULD]`, `KANN [MAY]` und in der EN-Fassung als `MUST`, `SHOULD`, `MAY`.

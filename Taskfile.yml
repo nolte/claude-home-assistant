@@ -35,3 +35,23 @@ tasks:
     desc: Start Claude Code with this repo loaded as a plugin (dogfooding)
     cmds:
       - claude --plugin-dir .
+
+  worktree:root:
+    desc: |
+      Print the resolved worktree root for this machine. Reads
+      NOLTE_WORKTREE_ROOT (the per-machine, freely chosen path) and falls
+      back to ~/repos/.worktrees. See spec/project/parallel-working-copies/.
+    silent: true
+    cmds:
+      - 'echo "${NOLTE_WORKTREE_ROOT:-$HOME/repos/.worktrees}"'
+
+  worktree:add:
+    desc: |
+      Create a parallel working copy under the configurable worktree root,
+      always in the same predictable place: ${NOLTE_WORKTREE_ROOT:-~/repos/.worktrees}/<repo>/<slug>/.
+      The branch is created off origin/develop with an explicit base ref.
+      Usage: task worktree:add -- <branch> [slug]
+        task worktree:add -- feat/parser-fix
+        task worktree:add -- chore/ci-tidy ci
+    cmds:
+      - ./scripts/worktree_add.sh {{.CLI_ARGS}}
