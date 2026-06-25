@@ -124,6 +124,8 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-strategy-add`](claude/ha-strategy-add/de.md) | Skill: `ha-strategy-add` | Skill: `ha-strategy-add` | draft | unversioned |
 | [`claude/ha-panel-add`](claude/ha-panel-add/de.md) | Skill: `ha-panel-add` | Skill: `ha-panel-add` | draft | unversioned |
 | [`claude/ha-websocket-command-add`](claude/ha-websocket-command-add/de.md) | Skill: `ha-websocket-command-add` | Skill: `ha-websocket-command-add` | draft | unversioned |
+| [`claude/ha-integration-solution`](claude/ha-integration-solution/de.md) | Skill: `ha-integration-solution` | Skill: `ha-integration-solution` | draft | unversioned |
+| [`claude/ha-lovelace-solution`](claude/ha-lovelace-solution/de.md) | Skill: `ha-lovelace-solution` | Skill: `ha-lovelace-solution` | draft | unversioned |
 
 Der Index listet nur **lokale** Specs. Portfolioweite `project/`-Specs (u. a. `project/branching-model`, `project/parallel-working-copies`) werden nicht mehr lokal geführt, sondern aus dem nolte-shared-Hub vererbt — siehe [Vererbte Specs](#vererbte-specs).
 
