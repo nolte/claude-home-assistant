@@ -68,7 +68,7 @@ You **don't**:
 | `domain` | no | `automation` | One of `automation`, `script`, `template` |
 | `target_dir` | no | repo root | Where to write the file; the agent appends `blueprints/<domain>/<author>/` when writing into an HA config tree |
 | `author` | no | derived from git user or `local` | Namespace folder + `author` key |
-| `file_name` | no | derived from `name` (kebab-case) | The `.yaml` filename |
+| `file_name` | no | derived from `name` (`snake_case`) | The `.yaml` filename, per `ha/naming-conventions` |
 | `source_url` | no | — | Canonical origin; set only when the blueprint is meant to be shared |
 | `min_version` | no | auto | Forced to `2024.6.0` when sections are used; otherwise omitted unless a feature requires it |
 
@@ -76,7 +76,7 @@ You **don't**:
 
 ### 1. read the spec
 
-Read `spec/ha/blueprint-patterns/de.md` (canonical) so every decision below is grounded in its current requirements. If a portfolio reference blueprint exists, Glob/Read it for concrete patterns; otherwise rely on the spec alone.
+Read `spec/ha/blueprint-patterns/de.md` (canonical) so every decision below is grounded in its current requirements, and `spec/ha/naming-conventions/de.md` for the naming authority (filename, `blueprint.name`, input keys, `alias`). If a portfolio reference blueprint exists, Glob/Read it for concrete patterns; otherwise rely on the specs alone.
 
 ### 2. classify the intent
 
@@ -145,6 +145,7 @@ Return a structured conformance report (see Output).
 5. **Sections imply a version gate.** Using sections without `homeassistant.min_version: 2024.6.0` is a defect.
 6. **Backward-compatible edits only** when revising an existing blueprint: don't rename/remove inputs or selectors; new inputs carry a `default`.
 7. **Generation only.** Never import, deploy, or push to a live HA instance. Never dispatch sibling agents or skills.
+8. **Name per `ha/naming-conventions`.** The filename is `snake_case.yaml` under `blueprints/<domain>/<author>/`; `blueprint.name` and `alias` are English and ≤ 50 chars; every input key is `snake_case`; no foreign-language or installation-specific strings in names.
 
 ## Output to the caller
 

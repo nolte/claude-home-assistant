@@ -37,7 +37,7 @@ Use this skill when the user wants to create one Home Assistant blueprint (autom
 | `domain` | no | `automation` | One of `automation`, `script`, `template` |
 | `target_dir` | no | repo root | Where to write; an HA config tree triggers the `blueprints/<domain>/<author>/` path derivation |
 | `author` | no | git user or `local` | Namespace folder + `author` key |
-| `file_name` | no | derived from name (kebab-case) | The `.yaml` filename |
+| `file_name` | no | derived from name (`snake_case`) | The `.yaml` filename, per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md) |
 | `source_url` | no | — | Canonical origin; set only when the blueprint is meant to be shared |
 
 If the user is silent on any optional field, use the default but state it explicitly in the output.

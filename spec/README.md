@@ -58,6 +58,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/test-harness`](ha/test-harness/de.md) | HA-Integration: Test-Harness | HA Integration: Test Harness | draft | unversioned |
 | [`ha/dev-environment`](ha/dev-environment/de.md) | HA-Integration: Dev-Environment | HA Integration: Dev Environment | draft | unversioned |
 | [`ha/dev-instance-provisioning`](ha/dev-instance-provisioning/de.md) | HA-Integration: Dev-Instanz-Provisioning | HA Integration: Dev Instance Provisioning | draft | unversioned |
+| [`ha/naming-conventions`](ha/naming-conventions/de.md) | HA-Artefakte: Namenskonventionen | HA Artifacts: Naming Conventions | draft | unversioned |
 | [`claude/ha-integration-scaffold`](claude/ha-integration-scaffold/de.md) | Skill: `ha-integration-scaffold` | Skill: `ha-integration-scaffold` | draft | unversioned |
 | [`claude/ha-config-flow-augment`](claude/ha-config-flow-augment/de.md) | Skill: `ha-config-flow-augment` | Skill: `ha-config-flow-augment` | draft | unversioned |
 | [`claude/ha-coordinator-add`](claude/ha-coordinator-add/de.md) | Skill: `ha-coordinator-add` | Skill: `ha-coordinator-add` | draft | unversioned |
