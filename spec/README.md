@@ -100,6 +100,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-security-audit`](claude/ha-security-audit/de.md) | Skill: `ha-security-audit` | Skill: `ha-security-audit` | draft | unversioned |
 | [`claude/ha-quality-scale-audit`](claude/ha-quality-scale-audit/de.md) | Skill: `ha-quality-scale-audit` | Skill: `ha-quality-scale-audit` | draft | unversioned |
 | [`claude/ha-blueprint-scaffold`](claude/ha-blueprint-scaffold/de.md) | Skill: `ha-blueprint-scaffold` | Skill: `ha-blueprint-scaffold` | draft | unversioned |
+| [`claude/ha-automation-solution`](claude/ha-automation-solution/de.md) | Skill: `ha-automation-solution` | Skill: `ha-automation-solution` | draft | unversioned |
 | [`claude/ha-automation-author`](claude/ha-automation-author/de.md) | Skill: `ha-automation-author` | Skill: `ha-automation-author` | draft | unversioned |
 | [`claude/ha-helper-scaffold`](claude/ha-helper-scaffold/de.md) | Skill: `ha-helper-scaffold` | Skill: `ha-helper-scaffold` | draft | unversioned |
 | [`claude/ha-derived-sensor-author`](claude/ha-derived-sensor-author/de.md) | Skill: `ha-derived-sensor-author` | Skill: `ha-derived-sensor-author` | draft | unversioned |
