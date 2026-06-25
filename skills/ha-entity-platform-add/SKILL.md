@@ -21,7 +21,7 @@ Use this skill to scaffold **one** active platform entity — a command-driven d
 
 ## When NOT to activate
 
-- declarative read-type entities (`sensor`/`binary_sensor`/`button`/`number`/`select`/`switch`/`calendar`/`todo` via `EntityDescription` tables) → `ha-entity-description-mapper`
+- datapoints authored declaratively as `EntityDescription` tables — read-type `sensor`/`binary_sensor`/`button`, and the description-table form of `number`/`select`/`switch`/`calendar`/`todo` with no hand-written command/set method → `ha-entity-description-mapper`
 - the coordinator itself → `ha-coordinator-add`
 - greenfield integration scaffolding → `ha-integration-scaffold`
 - device-automation triggers/conditions/actions → `ha-device-automation-add`
@@ -31,7 +31,7 @@ Use this skill to scaffold **one** active platform entity — a command-driven d
 
 1. **One platform entity, one run.** No multi-platform batches.
 2. **Read the operationalized spec first.** Read [`ha/entity-platform-types`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platform-types/de.md) to pick active-vs-declarative and the family, **then** read the matching family spec ([`controls`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-controls/de.md) / [`climate`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-climate/de.md) / [`devices`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-devices/de.md) / [`media`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-media/de.md) / [`voice`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-voice/de.md) / [`inputs`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-inputs/de.md) / [`sensors`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-sensors/de.md)) in full. Do not generate from memory.
-3. **Active platforms only.** This skill scaffolds command-driven entities. If the capability is a declarative read-type one (`sensor`/`binary_sensor`/`button`/`number`/`select`/`switch`/`calendar`/`todo` via `EntityDescription` tables), point at `ha-entity-description-mapper` and abort.
+3. **Active platforms only.** This skill scaffolds command-driven entities authored as a full entity class with hand-written async command/set methods. The boundary is the **authoring form**, not the domain: a read-type datapoint (`sensor`/`binary_sensor`/`button`) or any entity expressed purely as an `EntityDescription` table without a hand-written command/set method → point at `ha-entity-description-mapper` and abort. Active platforms whose command/set method this skill writes — including the `inputs` family (`number`/`select`/`text`/`date`/`time`/`datetime`) and `calendar`/`todo` — stay in scope.
 4. **Name the domain, confirm the family.** Require the operator to name the target domain and confirm the resolved family before generating.
 5. **Base class from the family spec.** Derive the entity from the documented platform base class (`ClimateEntity`/`CoverEntity`/`LightEntity`/`FanEntity`/`LockEntity`/`MediaPlayerEntity`/`StateVacuumEntity`/`ValveEntity`/`HumidifierEntity`/`WaterHeaterEntity`/`SirenEntity`/`LawnMowerEntity` …).
 6. **Feature bitmask from the enum.** Set `supported_features` as a bitwise `|` combination of the platform-native `*EntityFeature` enum — **never** a raw integer.
@@ -55,7 +55,7 @@ If the operator is silent on an optional field, use the default but state it exp
 ## Pre-flight (in order — abort on first failure)
 
 1. `target_dir/custom_components/<domain>/manifest.json` exists; read `domain`.
-2. The capability is an **active** platform (exposes command methods). If it is a declarative read-type one, point at `ha-entity-description-mapper` and abort.
+2. The entity is authored as an **active** platform class that implements its async command/set method(s). If it is a read-type datapoint or a pure `EntityDescription`-table mapping with no hand-written command/set method, point at `ha-entity-description-mapper` and abort.
 3. Read `ha/entity-platform-types`; resolve the platform + family (infer + confirm); read the matching family spec in full.
 4. A coordinator or a `config_entry.runtime_data` binding is reachable for `async_setup_entry`; if absent, point at `ha-coordinator-add`.
 5. `<platform>.py` is not already present. If it is, abort.
@@ -90,7 +90,7 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 ## Boundaries
 
-- Declarative read-type entities → `ha-entity-description-mapper`
+- Declarative `EntityDescription`-table datapoints (read-type, or the table form of `number`/`select`/`switch`/`calendar`/`todo`) → `ha-entity-description-mapper`
 - The coordinator itself → `ha-coordinator-add`
 - Greenfield scaffold → `ha-integration-scaffold`
 - Device-automation triggers/conditions/actions → `ha-device-automation-add`

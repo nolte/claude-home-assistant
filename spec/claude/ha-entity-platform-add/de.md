@@ -4,7 +4,7 @@ Status: draft
 
 ## Kontext
 
-`ha/entity-platform-types` klassifiziert den HA-Plattform-Katalog in **deklarative Read-Type-Plattformen** (`sensor`, `binary_sensor`, `button`, `number`, `select`, `switch`, `calendar`, `todo` über `EntityDescription`-Tabellen) und **aktive, befehlsgetriebene Plattformen**, deren Entity async **Command-Methoden** exponiert: `climate`, `cover`, `light`, `fan`, `lock`, `media_player`, `vacuum`, `valve`, `humidifier`, `water_heater`, `siren`, `lawn_mower` u. a. Die aktiven Plattformen verteilen sich auf Familien-Specs: `ha/entity-platforms-controls` (`switch`/`button`/`scene`/`siren`/`valve`/`lock`/`remote`), `ha/entity-platforms-climate` (`fan`/`humidifier`/`water-heater`; `climate` selbst in `ha/entity-platform-types`), `ha/entity-platforms-devices` (`alarm_control_panel`/`vacuum`/`lawn_mower`/`calendar`/`todo`/Infrarot/Funk), `ha/entity-platforms-media` (`media_player`/`camera`/`image`), `ha/entity-platforms-voice` (`stt`/`tts`/`wake_word`/`assist_satellite`/`ai_task`/`notify`), `ha/entity-platforms-inputs` (`number`/`select`/`text`/`date`/`time`/`datetime`) und `ha/entity-platforms-sensors` (`weather`/`device_tracker`/`event`/`update`). Bislang gibt es keinen Skill, der eine aktive Plattform-Entity scaffoldet.
+`ha/entity-platform-types` klassifiziert den HA-Plattform-Katalog in **deklarative Read-Type-Plattformen** (`sensor`, `binary_sensor`, `button` über `EntityDescription`-Tabellen) und **aktive, befehlsgetriebene Plattformen**, deren Entity async **Command-/Set-Methoden** exponiert: `climate`, `cover`, `light`, `fan`, `lock`, `media_player`, `vacuum`, `valve`, `humidifier`, `water_heater`, `siren`, `lawn_mower` u. a. Bidirektionale Plattformen wie `switch`, `number`, `select`, `calendar`, `todo` sind ebenfalls aktiv — ihre Familien-Spec fordert eine Pflicht-Set-Methode (`async_set_native_value`/`async_select_option`/…) — lassen sich aber **entweder** rein deklarativ als `EntityDescription`-Tabelle (dann `ha-entity-description-mapper`) **oder** als volle aktive Entity-Klasse mit handgeschriebener Set-Methode (dann dieser Skill) ausführen; die Grenze ist die **Autoring-Form**, nicht die Domäne. Die aktiven Plattformen verteilen sich auf Familien-Specs: `ha/entity-platforms-controls` (`switch`/`button`/`scene`/`siren`/`valve`/`lock`/`remote`), `ha/entity-platforms-climate` (`fan`/`humidifier`/`water-heater`; `climate` selbst in `ha/entity-platform-types`), `ha/entity-platforms-devices` (`alarm_control_panel`/`vacuum`/`lawn_mower`/`calendar`/`todo`/Infrarot/Funk), `ha/entity-platforms-media` (`media_player`/`camera`/`image`), `ha/entity-platforms-voice` (`stt`/`tts`/`wake_word`/`assist_satellite`/`ai_task`/`notify`), `ha/entity-platforms-inputs` (`number`/`select`/`text`/`date`/`time`/`datetime`) und `ha/entity-platforms-sensors` (`weather`/`device_tracker`/`event`/`update`). Bislang gibt es keinen Skill, der eine aktive Plattform-Entity scaffoldet.
 
 Dieser Skill scaffoldet **eine** aktive Plattform-Entity in einer **bestehenden** Integration: das Plattform-Modul `<platform>.py` mit der Entity-Subklasse (`ClimateEntity` / `CoverEntity` / `LightEntity` / …), die `EntityDescription` (wo die Familie eine nutzt), die `_attr_supported_features`-/`supported_features`-Bitmaske aus dem plattform-eigenen `*EntityFeature`-Enum, die von der Domäne geforderten async Command-Methoden (`async_turn_on`/`async_set_temperature`/`async_open_cover`/`async_set_hvac_mode` …), das `async_setup_entry`-Platform-Setup, das die Entities zum Coordinator hinzufügt, sowie die State-/Attribut-Properties — spec-konform zu `ha/entity-platform-types` plus der gewählten Familien-Spec. Der Skill **MUSS [MUST]** vor der Generierung Ziel-Domäne und Familie bestätigen lassen.
 
@@ -22,7 +22,7 @@ Scaffolding genau einer aktiven Plattform-Entity pro Lauf in einer bestehenden `
 
 ## Nicht-Ziele
 
-- Deklarative Read-Type-Entities (`sensor`/`binary_sensor`/`button`/`number`/`select`/`switch`/`calendar`/`todo` über `EntityDescription`-Tabellen) — `ha-entity-description-mapper`
+- Rein deklarativ als `EntityDescription`-Tabelle ausgeführte Datapoints (Read-Type `sensor`/`binary_sensor`/`button` sowie die Tabellenform von `number`/`select`/`switch`/`calendar`/`todo` ohne handgeschriebene Command-/Set-Methode) — `ha-entity-description-mapper`
 - Der Coordinator selbst (`DataUpdateCoordinator`-Anlage und Update-Mechanik) — `ha-coordinator-add`
 - Greenfield-Scaffolding einer Integration — `ha-integration-scaffold`
 - Geräte-zentrierte Device-Automation-Trigger/Conditions/Actions — `ha-device-automation-add`
@@ -46,7 +46,7 @@ Scaffolding genau einer aktiven Plattform-Entity pro Lauf in einer bestehenden `
 ### Pre-Flight (in Reihenfolge, Abbruch beim ersten Fehler)
 
 - **MUSS [MUST]** prüfen, dass `target_dir/custom_components/<domain>/manifest.json` existiert; `domain` lesen
-- **MUSS [MUST]** prüfen, dass die Capability eine **aktive** Plattform ist (Command-Methoden exponiert); ist es eine deklarative Read-Type-Capability, **MUSS [MUST]** der Skill auf `ha-entity-description-mapper` verweisen und abbrechen
+- **MUSS [MUST]** prüfen, dass die Entity als **aktive** Plattform-Klasse mit handgeschriebener async Command-/Set-Methode angelegt wird; ist es ein Read-Type-Datapoint oder eine rein deklarative `EntityDescription`-Tabellen-Abbildung ohne handgeschriebene Command-/Set-Methode, **MUSS [MUST]** der Skill auf `ha-entity-description-mapper` verweisen und abbrechen
 - **MUSS [MUST]** `ha/entity-platform-types` lesen, daraus aktiv-vs-deklarativ und die Familie bestimmen, und die passende Familien-Spec (`ha/entity-platforms-controls` / `-climate` / `-devices` / `-media` / `-voice` / `-inputs` / `-sensors`) in voller Länge lesen
 - **MUSS [MUST]** prüfen, dass ein Coordinator existiert oder eine `runtime_data`/`config_entry`-Anbindung erreichbar ist, an die `async_setup_entry` die Entities hängt; fehlt sie, **SOLLTE [SHOULD]** der Skill auf `ha-coordinator-add` verweisen
 - **MUSS NICHT [MUST NOT]** ein bestehendes `<platform>.py`-Modul überschreiben; bei Kollision abbrechen
@@ -71,7 +71,7 @@ Scaffolding genau einer aktiven Plattform-Entity pro Lauf in einer bestehenden `
 ### Verbote
 
 - **MUSS NICHT [MUST NOT]** mehr als eine Plattform-Entity pro Lauf scaffolden
-- **MUSS NICHT [MUST NOT]** eine deklarative Read-Type-Entity über dieses Skill scaffolden — dafür `ha-entity-description-mapper`
+- **MUSS NICHT [MUST NOT]** eine rein deklarative `EntityDescription`-Tabellen-Entity ohne handgeschriebene Command-/Set-Methode über dieses Skill scaffolden — dafür `ha-entity-description-mapper`
 - **MUSS NICHT [MUST NOT]** in eine laufende HA-Instanz deployen
 
 ## Akzeptanzkriterien
@@ -82,7 +82,7 @@ Scaffolding genau einer aktiven Plattform-Entity pro Lauf in einer bestehenden `
 - [ ] `supported_features` ist eine bitweise-`|`-Kombination aus dem plattform-eigenen `*EntityFeature`-Enum, nie eine rohe Ganzzahl
 - [ ] Für jedes gesetzte Feature-Flag existiert die korrespondierende async Command-Methode; kein „auf Vorrat" gesetztes Flag
 - [ ] Alle je Domäne als **Required** markierten State-/Attribut-Properties sind implementiert; Zustands-/Mode-Enums sind eingebaut
-- [ ] Gesetzte `device_class` stammt aus dem plattform-eigenen geschlossenen Enum; deklarative Read-Type-Entities sind an `ha-entity-description-mapper` verwiesen
+- [ ] Gesetzte `device_class` stammt aus dem plattform-eigenen geschlossenen Enum; rein deklarative `EntityDescription`-Tabellen-Entities sind an `ha-entity-description-mapper` verwiesen
 - [ ] Bericht nennt Datei-Pfade und den Quality-Scale-Marker **Gold** (`entity-device-class`)
 
 ## Offene Fragen

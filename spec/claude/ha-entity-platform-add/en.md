@@ -4,7 +4,7 @@ Status: draft
 
 ## Context
 
-`ha/entity-platform-types` classifies the HA platform catalog into **declarative read-type platforms** (`sensor`, `binary_sensor`, `button`, `number`, `select`, `switch`, `calendar`, `todo` via `EntityDescription` tables) and **active, command-driven platforms** whose entity exposes async **command methods**: `climate`, `cover`, `light`, `fan`, `lock`, `media_player`, `vacuum`, `valve`, `humidifier`, `water_heater`, `siren`, `lawn_mower`, and others. The active platforms spread across family specs: `ha/entity-platforms-controls` (`switch`/`button`/`scene`/`siren`/`valve`/`lock`/`remote`), `ha/entity-platforms-climate` (`fan`/`humidifier`/`water-heater`; `climate` itself in `ha/entity-platform-types`), `ha/entity-platforms-devices` (`alarm_control_panel`/`vacuum`/`lawn_mower`/`calendar`/`todo`/infrared/radio-frequency), `ha/entity-platforms-media` (`media_player`/`camera`/`image`), `ha/entity-platforms-voice` (`stt`/`tts`/`wake_word`/`assist_satellite`/`ai_task`/`notify`), `ha/entity-platforms-inputs` (`number`/`select`/`text`/`date`/`time`/`datetime`), and `ha/entity-platforms-sensors` (`weather`/`device_tracker`/`event`/`update`). No skill scaffolds an active platform entity so far.
+`ha/entity-platform-types` classifies the HA platform catalog into **declarative read-type platforms** (`sensor`, `binary_sensor`, `button` via `EntityDescription` tables) and **active, command-driven platforms** whose entity exposes async **command/set methods**: `climate`, `cover`, `light`, `fan`, `lock`, `media_player`, `vacuum`, `valve`, `humidifier`, `water_heater`, `siren`, `lawn_mower`, and others. Bidirectional platforms such as `switch`, `number`, `select`, `calendar`, `todo` are active too — their family spec mandates a set method (`async_set_native_value`/`async_select_option`/…) — but may be authored **either** purely declaratively as an `EntityDescription` table (then `ha-entity-description-mapper`) **or** as a full active entity class with a hand-written set method (then this skill); the boundary is the **authoring form**, not the domain. The active platforms spread across family specs: `ha/entity-platforms-controls` (`switch`/`button`/`scene`/`siren`/`valve`/`lock`/`remote`), `ha/entity-platforms-climate` (`fan`/`humidifier`/`water-heater`; `climate` itself in `ha/entity-platform-types`), `ha/entity-platforms-devices` (`alarm_control_panel`/`vacuum`/`lawn_mower`/`calendar`/`todo`/infrared/radio-frequency), `ha/entity-platforms-media` (`media_player`/`camera`/`image`), `ha/entity-platforms-voice` (`stt`/`tts`/`wake_word`/`assist_satellite`/`ai_task`/`notify`), `ha/entity-platforms-inputs` (`number`/`select`/`text`/`date`/`time`/`datetime`), and `ha/entity-platforms-sensors` (`weather`/`device_tracker`/`event`/`update`). No skill scaffolds an active platform entity so far.
 
 This skill scaffolds **one** active platform entity into an **existing** integration: the platform module `<platform>.py` with the entity subclass (`ClimateEntity` / `CoverEntity` / `LightEntity` / …), the `EntityDescription` (where the family uses one), the `_attr_supported_features` / `supported_features` bitmask from the platform-native `*EntityFeature` enum, the async command methods the domain mandates (`async_turn_on`/`async_set_temperature`/`async_open_cover`/`async_set_hvac_mode` …), the `async_setup_entry` platform setup that adds the entities to the coordinator, and the state/attribute properties — conformant to `ha/entity-platform-types` plus the chosen family spec. The skill **MUST** have the operator name the target domain and confirm the family before generating.
 
@@ -22,7 +22,7 @@ Scaffolding exactly one active platform entity per run into an existing `custom_
 
 ## Non-Goals
 
-- Declarative read-type entities (`sensor`/`binary_sensor`/`button`/`number`/`select`/`switch`/`calendar`/`todo` via `EntityDescription` tables) — `ha-entity-description-mapper`
+- Datapoints authored purely as an `EntityDescription` table (read-type `sensor`/`binary_sensor`/`button`, plus the table form of `number`/`select`/`switch`/`calendar`/`todo` with no hand-written command/set method) — `ha-entity-description-mapper`
 - The coordinator itself (`DataUpdateCoordinator` setup and update mechanics) — `ha-coordinator-add`
 - Greenfield scaffolding of an integration — `ha-integration-scaffold`
 - Device-centric device-automation triggers/conditions/actions — `ha-device-automation-add`
@@ -46,7 +46,7 @@ Scaffolding exactly one active platform entity per run into an existing `custom_
 ### Pre-flight (in order — abort on first failure)
 
 - **MUST** check that `target_dir/custom_components/<domain>/manifest.json` exists; read `domain`
-- **MUST** check the capability is an **active** platform (exposes command methods); if it is a declarative read-type capability, the skill **MUST** point at `ha-entity-description-mapper` and abort
+- **MUST** check the entity is authored as an **active** platform class with a hand-written async command/set method; if it is a read-type datapoint or a purely declarative `EntityDescription`-table mapping with no hand-written command/set method, the skill **MUST** point at `ha-entity-description-mapper` and abort
 - **MUST** read `ha/entity-platform-types`, determine active-vs-declarative and the family from it, and read the matching family spec (`ha/entity-platforms-controls` / `-climate` / `-devices` / `-media` / `-voice` / `-inputs` / `-sensors`) in full
 - **MUST** check a coordinator exists or a `runtime_data`/`config_entry` binding is reachable for `async_setup_entry` to attach the entities to; if absent, the skill **SHOULD** point at `ha-coordinator-add`
 - **MUST NOT** overwrite an existing `<platform>.py` module; on collision abort
@@ -71,7 +71,7 @@ Scaffolding exactly one active platform entity per run into an existing `custom_
 ### Prohibitions
 
 - **MUST NOT** scaffold more than one platform entity per run
-- **MUST NOT** scaffold a declarative read-type entity through this skill — use `ha-entity-description-mapper`
+- **MUST NOT** scaffold a purely declarative `EntityDescription`-table entity with no hand-written command/set method through this skill — use `ha-entity-description-mapper`
 - **MUST NOT** deploy to a running HA instance
 
 ## Acceptance criteria
@@ -82,7 +82,7 @@ Scaffolding exactly one active platform entity per run into an existing `custom_
 - [ ] `supported_features` is a bitwise `|` combination of the platform-native `*EntityFeature` enum, never a raw integer
 - [ ] Every set feature flag has its corresponding async command method; no flag set "on spec"
 - [ ] All state/attribute properties the domain marks as **Required** are implemented; state/mode enums are built-in
-- [ ] A set `device_class` comes from the closed platform-native enum; declarative read-type entities are referred to `ha-entity-description-mapper`
+- [ ] A set `device_class` comes from the closed platform-native enum; purely declarative `EntityDescription`-table entities are referred to `ha-entity-description-mapper`
 - [ ] Report names the file paths and the quality-scale marker **Gold** (`entity-device-class`)
 
 ## Open questions
