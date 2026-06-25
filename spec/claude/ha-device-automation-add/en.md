@@ -53,7 +53,7 @@ Augmenting exactly one device-automation kind per run (`trigger`, `condition`, o
 
 - **MUST** create the matching platform module: `device_trigger.py`, `device_condition.py`, or `device_action.py`
 - **MUST** for triggers implement `async_get_triggers(hass, device_id)`; every dictionary carries `CONF_PLATFORM: "device"`, `CONF_DOMAIN`, `CONF_DEVICE_ID`, and at least `CONF_TYPE`; `TRIGGER_SCHEMA` extends `TRIGGER_BASE_SCHEMA` (module constant); `async_attach_trigger(hass, config, action, trigger_info)` calls the `action` on fire and returns a detach function
-- **MUST** for conditions implement `async_get_conditions(hass, device_id)`; `CONDITION_SCHEMA` derives from `DEVICE_CONDITION_BASE_SCHEMA`; `async_condition_from_config(config, config_validation)` is a `@callback`, returns a `bool` checker function, and respects `config_validation`
+- **MUST** for conditions implement `async_get_conditions(hass, device_id)`; `CONDITION_SCHEMA` derives from `DEVICE_CONDITION_BASE_SCHEMA` (module constant); `async_condition_from_config(config, config_validation)` is a `@callback`, returns a `bool` checker function, and respects `config_validation`
 - **MUST** for actions implement `async_get_actions(hass, device_id)`; `ACTION_SCHEMA` derives from `DEVICE_ACTION_BASE_SCHEMA` (module constant); `async_call_action_from_config(hass, config, variables, context)` executes the action
 - **MUST NOT** apply the respective `*_SCHEMA` to the config manually — the core applies it when it is a module constant
 - **MAY** implement `async_get_*_capabilities` to declare extra input fields (e.g. a `for` duration, a target value) for the UI editor, kept as narrow as possible; and mark an entry secondary via `"metadata": {"secondary": True}`
