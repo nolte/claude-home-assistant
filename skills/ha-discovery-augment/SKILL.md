@@ -33,7 +33,7 @@ Use this skill to add **one** discovery mechanism — DHCP, SSDP/uPnP, USB, Home
 2. **Read [`ha/discovery-mechanisms`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/discovery-mechanisms/de.md) first.** Do not generate from memory.
 3. **Right mechanism, with delimitation.** mDNS/Zeroconf → `ha/zeroconf-discovery`/scaffold; Bluetooth → `ha/bluetooth`. Redirect rather than augmenting the wrong one.
 4. **Manifest matcher is a list of matcher dicts** under the correct key (`dhcp`/`ssdp`/`usb`/`homekit`/`mqtt`); discovery fires when **all** items of **any one** matcher are present. Narrow generic OUI/bridge-chip matchers (e.g. add a `description` match for `vid: 10C4`/`pid: EA60`).
-5. **Typed discovery step.** Implement `async_step_dhcp(self, discovery_info: DhcpServiceInfo)` / `async_step_ssdp(... SsdpServiceInfo)` / `async_step_usb(... UsbServiceInfo)` / `async_step_homekit(... ZeroconfServiceInfo)` or the `mqtt` step in `config_flow.py`.
+5. **Typed discovery step.** Implement `async_step_dhcp(self, discovery_info: DhcpServiceInfo)` / `async_step_ssdp(... SsdpServiceInfo)` / `async_step_usb(... UsbServiceInfo)` / `async_step_homekit(... ZeroconfServiceInfo)` / `async_step_mqtt(... MqttServiceInfo)` in `config_flow.py`.
 6. **Always confirm.** Forward into a confirm step (`async_step_discovery_confirm` + `self._set_confirm_only()`) before `async_create_entry` — never an entry without user confirmation.
 7. **Own the update path.** Set `await self.async_set_unique_id(<stable_id>)` then `self._abort_if_unique_id_configured(updates={CONF_HOST: host})`; never a second entry on re-discovery. For DHCP IP-updates register the MAC (`CONNECTION_NETWORK_MAC`) and set `registered_devices: true`; for MQTT add `mqtt` to `dependencies` and `await mqtt.async_wait_for_mqtt_client(hass)` before subscribing.
 8. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
@@ -67,7 +67,7 @@ State `domain`, the resolved `mechanism`, the matcher, the `unique_id` source, a
 | Mechanism | Manifest key | Step | Matcher fields |
 |---|---|---|---|
 | DHCP | `dhcp` | `async_step_dhcp` | `hostname` / `macaddress` / `registered_devices` |
-| SSDP/uPnP | `ssdp` | `async_step_ssdp` | `st` / `manufacturer` / `deviceType` |
+| SSDP/uPnP | `ssdp` | `async_step_ssdp` | `st` / `usn` / `server` / `manufacturer` / `deviceType` |
 | USB | `usb` | `async_step_usb` | `vid` / `pid` / `serial_number` / `description` |
 | HomeKit | `homekit` | `async_step_homekit` | `models` (prefix match) |
 | MQTT | `mqtt` | `async_step_mqtt` | topic list (+ `mqtt` in `dependencies`) |

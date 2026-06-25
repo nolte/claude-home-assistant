@@ -59,7 +59,7 @@ Augmenting exactly one discovery mechanism per run (`dhcp`, `ssdp`, `usb`, `home
   - `homekit`: `models` as a list of model-name **prefixes** (prefix match)
   - `mqtt`: a list of topics; add `mqtt` to `dependencies`
 - **MUST** for generic USB bridge chips (e.g. `vid: 10C4`/`pid: EA60`) additionally match on `description` or similar so no unexpected discovery fires
-- **MUST** implement the matching typed step in `config_flow.py`: `async_step_dhcp(self, discovery_info: DhcpServiceInfo)`, `async_step_ssdp(self, discovery_info: SsdpServiceInfo)`, `async_step_usb(self, discovery_info: UsbServiceInfo)`, `async_step_homekit(self, discovery_info: ZeroconfServiceInfo)`, or the `mqtt` step
+- **MUST** implement the matching typed step in `config_flow.py`: `async_step_dhcp(self, discovery_info: DhcpServiceInfo)`, `async_step_ssdp(self, discovery_info: SsdpServiceInfo)`, `async_step_usb(self, discovery_info: UsbServiceInfo)`, `async_step_homekit(self, discovery_info: ZeroconfServiceInfo)`, or `async_step_mqtt(self, discovery_info: MqttServiceInfo)`
 - **MUST** forward into a confirm step (typically `async_step_discovery_confirm` with `self._set_confirm_only()`) before calling `async_create_entry` — never an entry without user confirmation
 - **MUST** in the discovery step set `await self.async_set_unique_id(<stable_id>)` and immediately call `self._abort_if_unique_id_configured(updates={CONF_HOST: host})`; a second entry on re-discovery is forbidden
 - **MUST** for DHCP IP-update flows register the MAC via `CONNECTION_NETWORK_MAC` in the device info and set `registered_devices: true`

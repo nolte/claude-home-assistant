@@ -59,7 +59,7 @@ Ergänzung genau eines Discovery-Mechanismus pro Lauf (`dhcp`, `ssdp`, `usb`, `h
   - `homekit`: `models` als Liste von Modellname-**Prefixen** (Prefix-Match)
   - `mqtt`: Liste von Topics; `mqtt` zu `dependencies` ergänzen
 - **MUSS [MUST]** bei generischen USB-Bridge-Chips (z. B. `vid: 10C4`/`pid: EA60`) zusätzlich auf `description` o. Ä. matchen, damit keine unerwartete Discovery auslöst
-- **MUSS [MUST]** den passenden typisierten Step in `config_flow.py` implementieren: `async_step_dhcp(self, discovery_info: DhcpServiceInfo)`, `async_step_ssdp(self, discovery_info: SsdpServiceInfo)`, `async_step_usb(self, discovery_info: UsbServiceInfo)`, `async_step_homekit(self, discovery_info: ZeroconfServiceInfo)` bzw. der `mqtt`-Step
+- **MUSS [MUST]** den passenden typisierten Step in `config_flow.py` implementieren: `async_step_dhcp(self, discovery_info: DhcpServiceInfo)`, `async_step_ssdp(self, discovery_info: SsdpServiceInfo)`, `async_step_usb(self, discovery_info: UsbServiceInfo)`, `async_step_homekit(self, discovery_info: ZeroconfServiceInfo)` bzw. `async_step_mqtt(self, discovery_info: MqttServiceInfo)`
 - **MUSS [MUST]** in einen Bestätigungs-Step weiterleiten (typisch `async_step_discovery_confirm` mit `self._set_confirm_only()`), bevor `async_create_entry` aufgerufen wird — nie ein Entry ohne User-Bestätigung
 - **MUSS [MUST]** im Discovery-Step `await self.async_set_unique_id(<stabiler_id>)` setzen und unmittelbar `self._abort_if_unique_id_configured(updates={CONF_HOST: host})` aufrufen; ein zweiter Entry bei Re-Discovery ist verboten
 - **MUSS [MUST]** für DHCP-IP-Update-Flows die MAC über `CONNECTION_NETWORK_MAC` in der Device-Info registrieren und `registered_devices: true` setzen
