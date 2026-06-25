@@ -85,4 +85,4 @@ Ein Integral-Sensor ist richtig, sobald das **Zeit-Integral** eines kontinuierli
 
 ## Offene Fragen
 
-- **`state_class` des Ergebnisses**: Die Doku nennt nicht explizit, ob der Integral-Sensor `state_class: total` oder `total_increasing` trägt (relevant für Langzeit-Statistik/Energy-Dashboard). Soll die Spec hierfür auf eine querschnittliche Sensor-Spec (`ha-automation/sensor-conventions`) verweisen, statt einen Wert zu behaupten?
+- **`state_class` des Ergebnisses**: Die Doku nennt nicht explizit, ob der Integral-Sensor `state_class: total` oder `total_increasing` trägt (relevant für Langzeit-Statistik/Energy-Dashboard). Soll die Spec hierfür auf eine querschnittliche Sensor-Spec verweisen, statt einen Wert zu behaupten?

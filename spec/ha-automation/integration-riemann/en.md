@@ -85,4 +85,4 @@ An integral sensor is right as soon as the **time integral** of a continuous rea
 
 ## Open Questions
 
-- **`state_class` of the result**: The docs do not explicitly state whether the integral sensor carries `state_class: total` or `total_increasing` (relevant for long-term statistics/Energy dashboard). Should this spec point at a cross-cutting sensor spec (`ha-automation/sensor-conventions`) instead of asserting a value?
+- **`state_class` of the result**: The docs do not explicitly state whether the integral sensor carries `state_class: total` or `total_increasing` (relevant for long-term statistics/Energy dashboard). Should this spec point at a cross-cutting sensor spec instead of asserting a value?

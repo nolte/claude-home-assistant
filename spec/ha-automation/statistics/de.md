@@ -67,6 +67,7 @@ Ein Statistik-Sensor ist richtig, sobald eine **echte Verteilung über mehrere a
 
 - **MUSS NICHT [MUST NOT]** den Statistik-Sensor für **Langzeit-/historische Auswertungen** über lange Zeiträume verwenden (z. B. „Stunden, die ein Gerät heute an war") — dafür sind `history_stats` bzw. die Recorder-Langzeitstatistik gedacht; `statistics` arbeitet auf einem gleitenden Fenster der jüngsten Samples, nicht auf der vollständigen Historie
 - **SOLLTE NICHT [SHOULD NOT]** einen Statistik-Sensor anlegen, wo ein **einzelner abgeleiteter Wert** per Formel genügt (z. B. Summe/Differenz/Umrechnung zweier Entitäten) — das ist Aufgabe eines Template-Sensors (`ha-automation/template`); `statistics` ist nur sinnvoll, wenn eine echte Verteilung über mehrere Samples ausgewertet wird
+- **MUSS NICHT [MUST NOT]** `statistics` einsetzen, wenn nur **ein einzelner geglätteter Ausgabe-Strom** des verrauschten Signals gebraucht wird — reine Glättung ist Aufgabe von `ha-automation/filter`; `statistics` ist erst dann das richtige Werkzeug, wenn eine statistische Kenngröße/Verteilung über die jüngsten Samples (Mittelwert, Streuung, Min/Max, Änderung) ausgewertet werden soll
 - **SOLLTE NICHT [SHOULD NOT]** `state_characteristic` und Fenstergröße „nach Gefühl" wählen — die Kennzahl (z. B. `mean` vs. `median` vs. `change`) und `sampling_size`/`max_age` bestimmen die Aussage des Sensors vollständig; eine unpassende Kombination liefert eine technisch gültige, fachlich falsche Zahl
 - **SOLLTE NICHT [SHOULD NOT]** eine **binäre Quelle** mit einer rein numerischen Kennzahl (z. B. `median`, `standard_deviation`) koppeln oder umgekehrt — die Doku führt getrennte Kennzahl-Kataloge für Sensor- und Binärsensor-Quellen; nur deren Schnittmenge ist über beide Quelltypen gültig
 - **MUSS NICHT [MUST NOT]** `statistics` als Ersatz für einen zyklisch zurückgesetzten **Verbrauchszähler** missbrauchen (z. B. „Verbrauch dieser Woche") — dafür ist `utility_meter` (`ha-automation/utility-meter`) zuständig, das einen steigenden Gesamtzähler in abrechenbare Zyklen schneidet
@@ -79,7 +80,7 @@ Ein Statistik-Sensor ist richtig, sobald eine **echte Verteilung über mehrere a
 - [ ] `percentile` ist nur zusammen mit der `percentile`-Kennzahl gesetzt; `precision` ist bewusst gewählt
 - [ ] Jeder Sensor trägt einen englischen `name` ≤50 Zeichen und eine `unique_id`
 - [ ] Automationen lesen die Kennzahl und berücksichtigen ggf. `source_value_valid`/`age_coverage_ratio`
-- [ ] Die „Wann NICHT verwenden"-Abgrenzung ist eingehalten: kein Statistik-Sensor, wo `history_stats`, `template` oder `utility_meter` das richtige Werkzeug ist
+- [ ] Die „Wann NICHT verwenden"-Abgrenzung ist eingehalten: kein Statistik-Sensor, wo `history_stats`, `template`, `filter` oder `utility_meter` das richtige Werkzeug ist
 - [ ] Die Spec wiederholt keine Namens-Mechanik, sondern referenziert `ha/naming-conventions`
 
 ## Offene Fragen

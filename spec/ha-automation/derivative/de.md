@@ -80,4 +80,4 @@ Ein Derivative-Sensor ist richtig, sobald die **zeitliche Ableitung** eines kont
 
 ## Offene Fragen
 
-- **`state_class` des Ergebnisses**: Die Doku spezifiziert die `state_class` des Derivative-Sensors nicht explizit und nennt keine Energy-Dashboard-Eignung. Soll die Spec hier auf eine querschnittliche Sensor-Spec (`ha-automation/sensor-conventions`) verweisen, statt einen Wert zu behaupten?
+- **`state_class` des Ergebnisses**: Die Doku spezifiziert die `state_class` des Derivative-Sensors nicht explizit und nennt keine Energy-Dashboard-Eignung. Soll die Spec hier auf eine querschnittliche Sensor-Spec verweisen, statt einen Wert zu behaupten?

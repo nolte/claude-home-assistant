@@ -80,4 +80,4 @@ A derivative sensor is right as soon as the **time derivative** of a continuous 
 
 ## Open Questions
 
-- **`state_class` of the result**: The docs do not explicitly specify the derivative sensor's `state_class` and state no Energy-dashboard suitability. Should this spec point at a cross-cutting sensor spec (`ha-automation/sensor-conventions`) instead of asserting a value?
+- **`state_class` of the result**: The docs do not explicitly specify the derivative sensor's `state_class` and state no Energy-dashboard suitability. Should this spec point at a cross-cutting sensor spec instead of asserting a value?

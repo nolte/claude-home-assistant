@@ -67,6 +67,7 @@ A statistics sensor is right as soon as a **real distribution over several recen
 
 - **MUST NOT** use the statistics sensor for **long-term/historical analysis** over long timespans (e.g. "hours a device was on today") — that is what `history_stats` or the recorder long-term statistics are for; `statistics` works on a sliding window of the most recent samples, not on the full history
 - **SHOULD NOT** create a statistics sensor where a **single derived value** via a formula suffices (e.g. sum/difference/conversion of two entities) — that is a template sensor's job (`ha-automation/template`); `statistics` is only meaningful when evaluating a real distribution over several samples
+- **MUST NOT** use `statistics` when only **a single smoothed output stream** of the noisy signal is needed — pure smoothing is `ha-automation/filter`'s job; `statistics` is the right tool only once a statistical characteristic/distribution over the most recent samples (mean, dispersion, min/max, change) is to be evaluated
 - **SHOULD NOT** choose `state_characteristic` and window size "by feel" — the characteristic (e.g. `mean` vs. `median` vs. `change`) and `sampling_size`/`max_age` fully determine what the sensor says; an unsuitable combination yields a technically valid but semantically wrong number
 - **SHOULD NOT** pair a **binary source** with a purely numeric characteristic (e.g. `median`, `standard_deviation`) or vice versa — the docs list separate characteristic catalogs for sensor and binary-sensor sources; only their intersection is valid across both source types
 - **MUST NOT** misuse `statistics` as a substitute for a cyclically reset **consumption meter** (e.g. "consumption this week") — that is what `utility_meter` (`ha-automation/utility-meter`) is for, slicing an increasing total counter into billable cycles
@@ -79,7 +80,7 @@ A statistics sensor is right as soon as a **real distribution over several recen
 - [ ] `percentile` is set only together with the `percentile` characteristic; `precision` is chosen deliberately
 - [ ] Every sensor carries an English `name` ≤50 chars and a `unique_id`
 - [ ] Automations read the characteristic and account for `source_value_valid`/`age_coverage_ratio` where relevant
-- [ ] The "when NOT to use" delimitation holds: no statistics sensor where `history_stats`, `template`, or `utility_meter` is the right tool
+- [ ] The "when NOT to use" delimitation holds: no statistics sensor where `history_stats`, `template`, `filter`, or `utility_meter` is the right tool
 - [ ] The spec repeats no naming mechanics but references `ha/naming-conventions`
 
 ## Open Questions
