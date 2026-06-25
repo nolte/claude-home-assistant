@@ -25,6 +25,7 @@ Use this skill to add **one** Repairs issue (fixable or informative) to an exist
 - system health (`system_health.py`) → separate HA mechanism
 - grading the whole integration against the quality scale → `ha-quality-scale-audit`
 - transient connection/API error handling (`UpdateFailed`, `entity-unavailable`) → `ha-coordinator-add` / `ha/coordinator-patterns`
+- a multi-step repair flow with complex user input, or an issue raised on behalf of another integration (`issue_domain`) → out of scope (standard `ConfirmRepairFlow`/single-issue case only)
 - deploying/importing into a running HA instance → out of scope
 
 ## Hard rules

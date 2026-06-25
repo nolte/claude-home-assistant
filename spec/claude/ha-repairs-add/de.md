@@ -52,14 +52,14 @@ Ergänzung genau eines Repair-Issues pro Lauf in einer bestehenden `custom_compo
 
 ### Generierungs-Regeln (aus `ha/repairs`)
 
-- **MUSS [MUST]** das Issue über `homeassistant.helpers.issue_registry.async_create_issue(hass, domain, issue_id, ...)` anlegen und mindestens `is_fixable`, `severity` (`IssueSeverity`) und `translation_key` setzen; `issue_id` ist innerhalb der `domain` eindeutig
+- **MUSS [MUST]** das Issue über `homeassistant.helpers.issue_registry.async_create_issue(hass, domain, issue_id, ...)` anlegen und mindestens `domain`, `issue_id`, `is_fixable`, `severity` (`IssueSeverity`) und `translation_key` setzen; `issue_id` ist innerhalb der `domain` eindeutig
 - **MUSS [MUST]** `severity` bewusst wählen: `ERROR` wenn aktuell etwas kaputt ist, `WARNING` wenn etwas in Zukunft bricht; `CRITICAL` nicht für Normalfälle
 - **SOLLTE [SHOULD]** bei Deprecations `breaks_in_ha_version` setzen
 - **MUSS [MUST]** für `is_fixable=True` ein `repairs.py` mit `async_create_fix_flow(hass, issue_id, data) -> RepairsFlow` als Top-Level-Async-Funktion erzeugen, das anhand `issue_id` zum Flow routet; der Flow leitet von `RepairsFlow` ab (oder nutzt `ConfirmRepairFlow`), implementiert `async_step_init` und schließt mit `self.async_create_entry(title="", data={})` ab (entfernt das Issue automatisch)
 - **MUSS [MUST]** für `is_fixable=False` `learn_more_url` auf die Anleitung zeigen lassen und **kein** `repairs.py` für dieses Issue verlangen
 - **MUSS [MUST]** den `translation_key` in `strings.json` unter `issues:` mit `title` und `description` hinterlegen, alle `translation_placeholders` im Text auflösen und **keine** hartkodierten User-Strings im Python-Code lassen (Detail-Übersetzung folgt `ha/translations`)
 - **MUSS [MUST]** einen `async_delete_issue(hass, domain, issue_id)`-Pfad erzeugen oder benennen, der das Issue entfernt, sobald der zugrunde liegende Zustand behoben ist
-- **SOLLTE [SHOULD]** `is_persistent=True` setzen, wenn das Problem nur im Moment des Auftretens erkennbar ist; sonst `is_persistent=False`
+- **SOLLTE [SHOULD]** `is_persistent=True` setzen, wenn das Problem nur im Moment seines Auftretens erkennbar ist (z. B. fehlgeschlagenes Update) — die Anzeige überlebt dann einen HA-Neustart; sonst `is_persistent=False`, wenn der Zustand bei jedem Start neu prüfbar ist (z. B. veraltete Backend-Version)
 - **MUSS [MUST]** Bezeichner nach `ha/naming-conventions` benennen und HA-Interna gegen die offizielle Doku verifizieren (`ha/upstream-docs-verification`)
 
 ### Validierung & Bericht
