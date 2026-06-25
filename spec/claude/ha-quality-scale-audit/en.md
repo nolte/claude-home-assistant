@@ -84,7 +84,7 @@ Read-only audit. The skill reads `manifest.json`, `quality_scale.yaml`, and the 
   | Rule | Spec | Evidence check |
   |---|---|---|
   | `runtime-data` | `ha/runtime-data-pattern` | `entry.runtime_data` used, **no** `hass.data[DOMAIN]` |
-  | `config-flow`, `test-before-setup`, `unique-config-entry` | `ha/config-flow-patterns` | `config_flow.py` present; `_abort_if_unique_id_configured`; setup tests |
+  | `config-flow`, `test-before-configure`, `test-before-setup`, `unique-config-entry` | `ha/config-flow-patterns` | `config_flow.py` present; `_abort_if_unique_id_configured`; setup tests |
   | `parallel-updates` | `ha/entity-architecture`, `ha/coordinator-patterns` | `PARALLEL_UPDATES` constant per platform module |
   | `entity-translations`, `exception-translations` | `ha/translations` | entries in `strings.json` |
   | `diagnostics` | `ha/diagnostics` | `diagnostics.py` with `async_get_config_entry_diagnostics` |
