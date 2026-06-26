@@ -11,7 +11,7 @@ This plugin provides reusable building blocks that let Claude Code deliver Home 
 What the plugin is for, each with its front-door skill:
 
 - **Build a custom integration (Python)** — `ha-integration-solution`: scaffold `custom_components/<domain>/`, then add config flow, coordinators, entity platforms, services, diagnostics, discovery, repairs, translations, and tests.
-- **Build a Lovelace frontend (TS / JS)** — `ha-lovelace-solution`: custom cards, visual config editors, tile features, badges, dashboard strategies, custom panels, and their WebSocket-command backends.
+- **Build a Lovelace frontend (TypeScript / JavaScript)** — `ha-lovelace-solution`: custom cards, visual config editors, tile features, badges, dashboard strategies, custom panels, and their WebSocket-command backends.
 - **Author automations & blueprints (YAML)** — `ha-automation-solution`: automations, scripts, helpers, derived/statistical sensors, device automations, and shareable blueprints.
 - **Drive a Divoom Pixoo display** — `ha-pixoo-solution`: information pages, detailed 64×64 pixel art (shading & contours), and animations, from a described requirement.
 - **Run & test on a dev HA** — agents `ha-dev-instance-provision`, `ha-integration-deploy`, `ha-integration-verify` (local Kubernetes / Kind) plus `ha-test-harness-augment` for pytest coverage.

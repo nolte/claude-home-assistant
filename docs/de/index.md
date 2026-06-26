@@ -11,7 +11,7 @@ Dieses Plugin liefert wiederverwendbare Bausteine, mit denen Claude Code Home-As
 Wofür das Plugin gedacht ist, jeweils mit der Front-Door-Skill:
 
 - **Custom Integration bauen (Python)** — `ha-integration-solution`: `custom_components/<domain>/` scaffolden und anschließend Config-Flow, Coordinators, Entity-Plattformen, Services, Diagnostics, Discovery, Repairs, Translations und Tests ergänzen.
-- **Lovelace-Frontend bauen (TS / JS)** — `ha-lovelace-solution`: Custom Cards, visuelle Config-Editoren, Tile-Features, Badges, Dashboard-Strategien, Custom-Panels und ihre WebSocket-Command-Backends.
+- **Lovelace-Frontend bauen (TypeScript / JavaScript)** — `ha-lovelace-solution`: Custom Cards, visuelle Config-Editoren, Tile-Features, Badges, Dashboard-Strategien, Custom-Panels und ihre WebSocket-Command-Backends.
 - **Automations & Blueprints (YAML)** — `ha-automation-solution`: Automations, Scripts, Helper, abgeleitete/statistische Sensoren, Device-Automations und teilbare Blueprints.
 - **Divoom-Pixoo-Display bauen** — `ha-pixoo-solution`: Info-Pages, detaillierte 64×64-Pixel-Art (Schattierung & Konturen) und Animationen aus einer Anforderung.
 - **Auf einer Dev-HA betreiben & testen** — Agents `ha-dev-instance-provision`, `ha-integration-deploy`, `ha-integration-verify` (lokales Kubernetes / Kind) plus `ha-test-harness-augment` für pytest-Abdeckung.
