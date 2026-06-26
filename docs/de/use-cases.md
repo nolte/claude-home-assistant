@@ -1,6 +1,6 @@
 # Anwendungsfälle
 
-Dieses Plugin bündelt Skills, Agents und Specs entlang von sechs Anwendungsfällen. Jeder Fall hat eine **Front-Door-Skill** (`*-solution`), die aus einer ergebnis-orientierten Anforderung die minimale Kombination an Artefakten plant und die fokussierten Skills aufruft — du musst nicht selbst wissen, welche Skill welches Artefakt erzeugt.
+Dieses Plugin bündelt Skills, Agents und Specs entlang von sechs Anwendungsfällen. Jeder Fall hat eine **Front-Door-Skill** (`*-solution`) — den Einstiegspunkt, der das gewünschte Ergebnis in die minimale Menge an Artefakten übersetzt und die fokussierten Skills aufruft. Du musst nicht selbst wissen, welche Skill welches Artefakt erzeugt.
 
 Den vollständigen, automatisch generierten Katalog mit Beschreibung jeder Skill und jedes Agents findest du unter [Skills](skills/index.md) und [Agents](agents/index.md).
 
@@ -11,7 +11,7 @@ Den vollständigen, automatisch generierten Katalog mit Beschreibung jeder Skill
 
 ## 1. Custom Integration bauen (Python)
 
-Eine vollständige HACS-taugliche Custom Integration unter `custom_components/<domain>/` — vom Skelett bis zu fortgeschrittenen Plattform-Features.
+Eine vollständige Custom Integration unter `custom_components/<domain>/`, installierbar über HACS (den Home Assistant Community Store) — vom Skelett bis zu fortgeschrittenen Plattform-Features.
 
 - **Front-Door:** `ha-integration-solution`
 - **Skelett:** `ha-integration-scaffold` (Manifest, Lifecycle, Config-Flow, Coordinator, Entity, Plattformen, Translations, Icons, Diagnostics, pytest-Harness)
@@ -67,5 +67,5 @@ ESPHome-Custom-Components und Home-Assistant-Add-ons (Docker / s6) sind als Anwe
 ## Wie alles zusammenhängt
 
 - **Skills & Agents** sind die ausführenden Bausteine — Skills laufen interaktiv im Gespräch, Agents autonom mit strukturiertem Report.
-- **Specs** unter `spec/` sind die Quelle der Wahrheit: `spec/ha/*` für HA-interne Verträge (gegen die offizielle HA-Doku verifiziert), `spec/claude/*` für die Skills/Agents selbst. Jede Skill und jeder Agent ist an seine Spec gebunden.
+- **Specs** unter `spec/` sind die Quelle der Wahrheit: `spec/ha/*` für HA-interne Verträge (gegen die offizielle HA-Doku verifiziert), `spec/claude/*` für die Skills/Agents selbst. Alle Skills und Agents sind an ihre jeweilige Spec gebunden.
 - **`*-solution`-Front-Doors** sind die empfohlene Einstiegsstelle pro Anwendungsfall, wenn mehr als ein Artefakt nötig ist.

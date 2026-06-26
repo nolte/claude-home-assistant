@@ -1,8 +1,8 @@
 # Use cases
 
-This plugin bundles skills, agents, and specs along six use cases. Each case has a **front-door skill** (`*-solution`) that turns a result-oriented requirement into the minimal combination of artifacts and invokes the focused skills — you don't have to know which skill produces which artifact.
+This plugin bundles skills, agents, and specs along six use cases. Each case has a **front-door skill** (`*-solution`) — the entry point that turns the result you want into the minimal set of artifacts and dispatches the focused skills. You don't have to know which skill produces which artifact.
 
-The full, auto-generated catalog with a description of every skill and agent is under [Skills](skills/index.md) and [Agents](agents/index.md).
+Find the full, auto-generated catalog — with a description of every skill and agent — under [Skills](skills/index.md) and [Agents](agents/index.md).
 
 !!! info "Front-door vs. focused skills"
     The `*-solution` skills **generate nothing themselves** — they plan (with an approval gate) and dispatch. The focused skills each own one artifact and their own spec conformance. You can also use a focused skill directly when the need is unambiguous.
@@ -11,7 +11,7 @@ The full, auto-generated catalog with a description of every skill and agent is 
 
 ## 1. Build a custom integration (Python)
 
-A complete, HACS-capable custom integration under `custom_components/<domain>/` — from skeleton to advanced platform features.
+A complete custom integration under `custom_components/<domain>/`, installable through HACS (the Home Assistant Community Store) — from skeleton to advanced platform features.
 
 - **Front door:** `ha-integration-solution`
 - **Skeleton:** `ha-integration-scaffold` (manifest, lifecycle, config flow, coordinator, entity, platforms, translations, icons, diagnostics, pytest harness)

@@ -4,13 +4,13 @@ Claude-Code-Plugin mit Skills und Agents für die effiziente Entwicklung von [Ho
 
 ## Worum es geht
 
-Dieses Plugin liefert wiederverwendbare Bausteine, mit denen Claude Code Home-Assistant-Projekte mit weniger Reibung umsetzt. Du beschreibst ein **Ergebnis** — die passende `*-solution`-Front-Door-Skill plant die Arbeit und ruft die fokussierten Authoring-Skills auf.
+Dieses Plugin liefert wiederverwendbare Bausteine, mit denen Claude Code Home-Assistant-Projekte reibungsärmer umsetzt. Du beschreibst ein **Ergebnis** — die passende `*-solution`-Front-Door-Skill plant die Arbeit und ruft die fokussierten Authoring-Skills auf.
 
 ## Anwendungsfälle
 
 Wofür das Plugin gedacht ist, jeweils mit der Front-Door-Skill:
 
-- **Custom Integration bauen (Python)** — `ha-integration-solution`: `custom_components/<domain>/` scaffolden, dann Config-Flow, Coordinators, Entity-Plattformen, Services, Diagnostics, Discovery, Repairs, Translations und Tests ergänzen.
+- **Custom Integration bauen (Python)** — `ha-integration-solution`: `custom_components/<domain>/` scaffolden und anschließend Config-Flow, Coordinators, Entity-Plattformen, Services, Diagnostics, Discovery, Repairs, Translations und Tests ergänzen.
 - **Lovelace-Frontend bauen (TS / JS)** — `ha-lovelace-solution`: Custom Cards, visuelle Config-Editoren, Tile-Features, Badges, Dashboard-Strategien, Custom-Panels und ihre WebSocket-Command-Backends.
 - **Automations & Blueprints (YAML)** — `ha-automation-solution`: Automations, Scripts, Helper, abgeleitete/statistische Sensoren, Device-Automations und teilbare Blueprints.
 - **Divoom-Pixoo-Display bauen** — `ha-pixoo-solution`: Info-Pages, detaillierte 64×64-Pixel-Art (Schattierung & Konturen) und Animationen aus einer Anforderung.
@@ -24,4 +24,4 @@ Die vollständige Übersicht — jeder Anwendungsfall auf seine Skills, Agents u
 
 ## Status
 
-Aktiv in Entwicklung. Das Plugin liefert Skills und Agents über mehrere Anwendungsfälle (Integration, Lovelace, Automation, Pixoo, Dev-Lifecycle, Review). Specs werden bilingual geführt (DE kanonisch, EN als Übersetzung); jede Skill und jeder Agent ist an eine Spec unter `spec/` gebunden.
+Aktiv in Entwicklung. Das Plugin liefert Skills und Agents über mehrere Anwendungsfälle (Integration, Lovelace, Automation, Pixoo, Dev-Lifecycle, Review). Specs werden bilingual geführt (EN kanonisch, DE als Übersetzung); jede Skill und jeder Agent ist an eine Spec unter `spec/` gebunden.

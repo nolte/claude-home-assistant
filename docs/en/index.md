@@ -2,7 +2,7 @@
 
 Claude Code plugin with skills and agents for the efficient development of [Home Assistant](https://www.home-assistant.io/) artifacts — custom integrations, Lovelace cards, blueprints / automations, and ESPHome / add-on work.
 
-## What it is about
+## Overview
 
 This plugin provides reusable building blocks that let Claude Code deliver Home Assistant projects with less friction. You describe a **result** — the matching `*-solution` front-door skill plans the work and invokes the focused authoring skills.
 
@@ -24,4 +24,4 @@ The full overview — every use case mapped to its skills, agents, and specs —
 
 ## Status
 
-Actively in development. The plugin ships skills and agents across several use cases (integration, Lovelace, automation, Pixoo, dev lifecycle, review). Specs are maintained bilingually (DE canonical, EN translation); every skill and agent is bound to a spec under `spec/`.
+Actively in development. The plugin ships skills and agents across several use cases (integration, Lovelace, automation, Pixoo, dev lifecycle, review). Specs are maintained bilingually (EN canonical, DE translation); every skill and agent is bound to a spec under `spec/`.
