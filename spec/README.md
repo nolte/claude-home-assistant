@@ -18,6 +18,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/zeroconf-discovery`](ha/zeroconf-discovery/en.md) | HA Integration: Zeroconf Discovery | HA-Integration: Zeroconf-Discovery | draft | unversioned |
 | [`ha/diagnostics`](ha/diagnostics/en.md) | HA Integration: Diagnostics | HA-Integration: Diagnostics | draft | unversioned |
 | [`ha/lovelace-card-patterns`](ha/lovelace-card-patterns/en.md) | HA Integration: Lovelace Card Patterns | HA-Integration: Lovelace-Card-Patterns | draft | unversioned |
+| [`ha/lovelace-card-preview`](ha/lovelace-card-preview/en.md) | HA Integration: Lovelace Card Preview | HA-Integration: Lovelace-Card-Preview | draft | unversioned |
 | [`ha/lovelace-card-entity-selector`](ha/lovelace-card-entity-selector/en.md) | HA Integration: Lovelace Card Entity Selector Filtering | HA-Integration: Lovelace-Card-Entity-Selector-Filter | draft | unversioned |
 | [`ha/blueprint-patterns`](ha/blueprint-patterns/en.md) | HA Blueprint: Authoring Patterns | HA-Blueprint: Authoring-Patterns | draft | unversioned |
 | [`ha/quality-scale`](ha/quality-scale/en.md) | HA Integration: Quality Scale | HA-Integration: Quality-Scale | draft | unversioned |
@@ -129,6 +130,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-entity-platform-add`](claude/ha-entity-platform-add/en.md) | Skill: `ha-entity-platform-add` | Skill: `ha-entity-platform-add` | draft | unversioned |
 | [`claude/ha-card-editor-add`](claude/ha-card-editor-add/en.md) | Skill: `ha-card-editor-add` | Skill: `ha-card-editor-add` | draft | unversioned |
 | [`claude/ha-card-features-add`](claude/ha-card-features-add/en.md) | Skill: `ha-card-features-add` | Skill: `ha-card-features-add` | draft | unversioned |
+| [`claude/ha-card-preview-add`](claude/ha-card-preview-add/en.md) | Skill: `ha-card-preview-add` | Skill: `ha-card-preview-add` | draft | unversioned |
 | [`claude/ha-badge-add`](claude/ha-badge-add/en.md) | Skill: `ha-badge-add` | Skill: `ha-badge-add` | draft | unversioned |
 | [`claude/ha-strategy-add`](claude/ha-strategy-add/en.md) | Skill: `ha-strategy-add` | Skill: `ha-strategy-add` | draft | unversioned |
 | [`claude/ha-panel-add`](claude/ha-panel-add/en.md) | Skill: `ha-panel-add` | Skill: `ha-panel-add` | draft | unversioned |
