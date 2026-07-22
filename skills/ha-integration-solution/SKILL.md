@@ -26,7 +26,7 @@ Use this skill when the user describes a **device/cloud/API integration result**
 - a single clear augment (one config-flow pattern, one coordinator, one platform, one diagnostics enrichment) → let the owning skill activate directly
 - a pure YAML automation/helper/template/blueprint solution (no own protocol, no config flow) → `ha-automation-solution`
 - a Lovelace frontend card → `ha-lovelace-card-scaffold` (and the Lovelace skill family)
-- deploying/verifying against a running HA instance → out of scope (generation only; the `ha-integration-deploy` / `ha-integration-verify` agents own that)
+- deploying/verifying against a running HA instance as a standalone task → not an activation reason; deploy/verify happens only inside the opt-in `deploy_ready` lifecycle phase (§5) of a build run, behind a second gate, via the `ha-integration-deploy` / `ha-integration-verify` agents
 
 ## Hard rules
 
@@ -41,6 +41,7 @@ Use this skill when the user describes a **device/cloud/API integration result**
 9. **Recognize automation-shaped work.** When the requirement is really a YAML automation/helper solution rather than a custom integration, say so in the plan and point at `ha-automation-solution` instead of forcing an integration.
 10. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 11. **Tier-driven completeness, audit-gated.** Plan the building blocks the `target_tier` requires (cumulative Bronze→Platinum); finish `release_ready` runs with `ha-integration-ci-scaffold` + `ha-hacs-release`; run `ha-quality-scale-audit` + `ha-security-audit` last as the acceptance gate, routing any shortfall back to the named remediation skill per finding. These two audits are the **in-flow acceptance gate** — run once, here, against the freshly generated code. They deliberately overlap with the bundled `ha-integration-review` agent, which re-runs quality-scale + security *plus* cross-cutting + drift; the split is **temporal, not additive**. A run that clears this in-flow gate **MUST NOT** also dispatch `ha-integration-review` for the same two dimensions in the same pass — the bundled agent is the separate **release / pre-PR whole-picture pass** (see the closing report), pointed at as a follow-up, never run on top of a green in-flow gate.
+12. **Deploy-ready is opt-in, behind a second gate.** Generation stays the default and the plan approval (rule 2) remains the single gate for it. Only when `deploy_ready` is set does the deploy→verify→review lifecycle phase run (§5) — and only after a **second explicit human gate** — chaining `ha-dev-instance-provision` (only if no dev-HA pod exists) → `ha-integration-deploy` → `ha-integration-verify` → `ha-integration-review`. On an `ha-integration-verify` FAIL or an `ha-integration-review` NEEDS-WORK, **route the finding back to the owning authoring/remediation skill** (the rule-11 pattern), re-dispatch the fix, then re-deploy and re-verify — a closed feedback loop, not a terminal report. The `ha-integration-review` executed here is exactly the release/pre-PR whole-picture pass of rule 11, legitimately run at this separate post-gate time and never on top of the in-flow gate in the generation pass. Never `kubectl delete pod`; a code refresh is `kill 1` (the `ha-integration-deploy` agent owns that).
 
 ## Inputs
 
@@ -52,6 +53,7 @@ Use this skill when the user describes a **device/cloud/API integration result**
 | `protocol` / `auth` | no | asked when needed | REST/MQTT/Bluetooth; API key/OAuth2 |
 | `target_tier` | no | `silver` | `bronze`/`silver`/`gold`/`platinum`; drives the included building blocks (cumulative) |
 | `release_ready` | no | inferred | also scaffold CI validation + HACS-release readiness |
+| `deploy_ready` | no | `false` | opt-in: after a **second** explicit gate, run the deploy→verify→review lifecycle phase (§5) with a fix feedback loop; default keeps the run generation-only |
 
 ## Runtime skill resolution
 
@@ -130,7 +132,7 @@ Decompose into a dependency-ordered plan and present it as a table:
 | 10 | security audit | ha-security-audit | all | read-only security check |
 ```
 
-The typical order is scaffold → (config-flow + coordinator [+ oauth2] [+ options]) → entities [+ device registry] → [Gold surfaces as the tier needs — diagnostics, discovery, repairs, services] → translations → tests → quality-scale + security audit → [release-ready — CI + HACS release]. Include exactly the building blocks the `target_tier` requires (cumulative). State any "this is actually a YAML automation" finding here and point at `ha-automation-solution`. Wait for explicit approval — that approval is the **single human gate**; after it the dispatch, the audits, and the release-ready finish run to completion, stopping only on a NEEDS-WORK.
+The typical order is scaffold → (config-flow + coordinator [+ oauth2] [+ options]) → entities [+ device registry] → [Gold surfaces as the tier needs — diagnostics, discovery, repairs, services] → translations → tests → quality-scale + security audit → [release-ready — CI + HACS release]. Include exactly the building blocks the `target_tier` requires (cumulative). State any "this is actually a YAML automation" finding here and point at `ha-automation-solution`. Wait for explicit approval — that approval is the **single human gate for generation**; after it the dispatch, the audits, and the release-ready finish run to completion, stopping only on a NEEDS-WORK. The opt-in `deploy_ready` lifecycle phase (§5) is gated separately, by a **second** explicit approval.
 
 ### 3) Dispatch
 
@@ -138,11 +140,22 @@ Invoke each owning skill in plan order, passing the `domain` and the `entity_id`
 
 ### 4) Aggregate report
 
-List every produced/changed file, its building block, and the wiring (the `domain`, which `entity_id` references which). Relay each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings verbatim — do not re-judge them. Point at the operator follow-ups (a bundled whole-picture pass via the `ha-integration-review` agent, deploy via the `ha-integration-deploy` agent, runtime verify via the `ha-integration-verify` agent) without executing them. The `ha-integration-review` follow-up is the **release / pre-PR** review — it adds cross-cutting + drift *on top of* quality-scale + security and must **not** re-run this run's in-flow quality+security gate; a caller who cleared the in-flow gate does not run it again for the same two dimensions in the same pass. Do not deploy.
+List every produced/changed file, its building block, and the wiring (the `domain`, which `entity_id` references which). Relay each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings verbatim — do not re-judge them. Point at the operator follow-ups (a bundled whole-picture pass via the `ha-integration-review` agent, deploy via the `ha-integration-deploy` agent, runtime verify via the `ha-integration-verify` agent) without executing them. The `ha-integration-review` follow-up is the **release / pre-PR** review — it adds cross-cutting + drift *on top of* quality-scale + security and must **not** re-run this run's in-flow quality+security gate; a caller who cleared the in-flow gate does not run it again for the same two dimensions in the same pass. In the default generation-only run, stop here and do not deploy. When `deploy_ready` is set, continue into §5 after a second explicit gate.
+
+### 5) Deploy-ready lifecycle phase (opt-in)
+
+Runs **only** when `deploy_ready` is set, and **only** after a second explicit human approval distinct from the plan gate — so the generation-only default and its single gate are preserved. This turns the former set of manual agent islands (build → deploy → verify → review with no feedback loop) into one autonomous flow:
+
+1. **Provision (if needed).** If no dev-HA pod exists in the local Kind cluster, dispatch `ha-dev-instance-provision`; otherwise skip.
+2. **Deploy.** Dispatch `ha-integration-deploy` (lint pre-flight → `kubectl cp` → bytecode-cache cleanup → `kill 1` restart → wait-on-ready → log tail). Never `kubectl delete pod`.
+3. **Verify.** Dispatch `ha-integration-verify` (pod status, log error-pattern scan, installed-files check).
+4. **Review.** Dispatch the bundled `ha-integration-review` agent — the release/pre-PR whole-picture pass (quality-scale + security + cross-cutting + drift).
+
+**Feedback loop.** On an `ha-integration-verify` FAIL or an `ha-integration-review` NEEDS-WORK, do not terminate with a descriptive report: route each finding back to the owning authoring/remediation skill (the rule-11 pattern), re-dispatch the fix, then re-run from step 2 (re-deploy → re-verify), until verify passes and review is CONFORMANT or the operator stops the loop. Report the deploy/verify/review outcome and every fix cycle at the end.
 
 ## Boundaries
 
 - Single-building-block generation + spec conformance → the owning individual skill
 - A YAML automation/helper solution → `ha-automation-solution` (this skill only recognizes and points)
 - A Lovelace frontend card → `ha-lovelace-card-scaffold`
-- Deploy / runtime verify against a live HA instance → out of scope; the `ha-integration-deploy` / `ha-integration-verify` agents
+- Deploy / runtime verify against a live HA instance → generation-only by default; available only via the opt-in `deploy_ready` lifecycle phase (§5), which drives the `ha-integration-deploy` / `ha-integration-verify` / `ha-integration-review` agents behind a second gate with a fix feedback loop

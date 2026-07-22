@@ -27,7 +27,7 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 - Die Generierung eines einzelnen Bausteins samt Spec-Konformität — das bleibt bei den dispatchten Einzel-Skills
 - Eine reine YAML-Automation-/Helfer-Lösung — das ist `ha-automation-solution`
 - Eine Lovelace-Frontend-Lösung — das ist `ha-lovelace-card-scaffold` (und die zugehörige Lovelace-Skill-Familie)
-- Deployment in eine laufende HA-Instanz oder Laufzeit-Verifikation — das sind die Operator-Folge-Schritte über die `ha-integration-deploy`- und `ha-integration-verify`-Agenten (out of generation scope)
+- Deployment in eine laufende HA-Instanz oder Laufzeit-Verifikation als Teil des Standard-Generierungslaufs — das läuft über die `ha-integration-deploy`- / `ha-integration-verify`-Agenten und nur innerhalb der Opt-in-`deploy_ready`-Lifecycle-Phase hinter einem zweiten Gate (außerhalb des Generierungs-only-Scopes)
 - Eine eigene Validierungs- oder Konformitäts-Logik — jeder dispatchte Skill validiert sein eigenes Artefakt; dieser Skill aggregiert nur die Berichte
 
 ## Anforderungen
@@ -42,7 +42,7 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 ### Eingaben
 
 - **MUSS [MUST]** erfassen: `requirement` (Prosa, das gewünschte Geräte-/Cloud-/API-Ergebnis)
-- **KANN [MAY]** erfassen: `domain` (Integration-Domain, sonst aus dem Scaffold-Schritt abgeleitet), `target_dir` (Repo-Root), bekannte Protokoll-/Auth-Details (REST/MQTT/Bluetooth; API-Key/OAuth2), ein `target_tier` (`bronze`/`silver`/`gold`/`platinum`, Default `silver`), das die enthaltenen Bausteine kumulativ treibt, und `release_ready` (auch CI-Validierung + HACS-Release-Reife scaffolden)
+- **KANN [MAY]** erfassen: `domain` (Integration-Domain, sonst aus dem Scaffold-Schritt abgeleitet), `target_dir` (Repo-Root), bekannte Protokoll-/Auth-Details (REST/MQTT/Bluetooth; API-Key/OAuth2), ein `target_tier` (`bronze`/`silver`/`gold`/`platinum`, Default `silver`), das die enthaltenen Bausteine kumulativ treibt, `release_ready` (auch CI-Validierung + HACS-Release-Reife scaffolden) und `deploy_ready` (Default `false`; Opt-in: die Deploy→Verify→Review-Lifecycle-Phase mit Fix-Feedback-Loop hinter einem zweiten Gate ausführen)
 
 ### Pre-Flight
 
@@ -63,7 +63,9 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 - **MUSS [MUST]** den Baustein-Satz nach `target_tier` treiben (kumulativ Bronze→Platinum) — Bronze Scaffold + Config-Flow + Tests; Silver + Reauth + `PARALLEL_UPDATES` + `entity-unavailable` + Options; Gold + Diagnostics + Discovery + `ha-device-registry-augment` + Repairs + Reconfigure + Translations; Platinum dispatcht `ha-dev-workflow-apply` (den zuständigen Skill von `ha/dev-workflow`), um den Strict-Typing- / Code-Stil- / `hassfest`-Workflow anzuwenden und zu validieren, statt einen bloßen Checklistenpunkt anzuzeigen
 - **MUSS [MUST]** einen `release_ready`-Lauf mit `ha-integration-ci-scaffold` (hassfest/HACS/pytest-CI) und `ha-hacs-release` (HACS-Distributions-Reife) abschließen
 - **MUSS [MUST]** den Lauf mit dem Read-only-Audit-Gate abschließen — `ha-quality-scale-audit` und `ha-security-audit` (modifizieren nie Code); ein Defizit routet je Finding zurück an den benannten Remediation-Skill. Dies ist das **In-Flow-Acceptance-Gate**, hier einmal ausgeführt; es überschneidet sich bewusst mit dem gebündelten `ha-integration-review`-Agenten (der Quality-Scale + Security *plus* Cross-Cutting + Drift erneut fährt). Die Trennung ist **zeitlich, nicht additiv**: Ein Lauf, der dieses Gate besteht, **MUSS NICHT [MUST NOT]** zusätzlich `ha-integration-review` für dieselben zwei Dimensionen im selben Durchlauf dispatchen — dieser Agent ist der separate **Release-/Pre-PR-Gesamtblick-Durchlauf**, auf den als Folge-Schritt hingewiesen wird, nie zusätzlich auf ein grünes In-Flow-Gate ausgeführt
-- **SOLLTE [SHOULD]** die Plan-Bestätigung als einzelnes menschliches Gate behandeln — danach laufen Dispatch, Audits und der Release-Ready-Abschluss bis zur Fertigstellung, Stopp nur bei NEEDS-WORK
+- **SOLLTE [SHOULD]** die Plan-Bestätigung als einzelnes menschliches Gate für die Generierung behandeln — danach laufen Dispatch, Audits und der Release-Ready-Abschluss bis zur Fertigstellung, Stopp nur bei NEEDS-WORK
+- **KANN [MAY]**, nur wenn `deploy_ready` gesetzt ist und nur nach einem **zweiten expliziten menschlichen Gate**, das vom Plan-Gate verschieden ist, die Deploy→Verify→Review-Lifecycle-Phase ausführen: `ha-dev-instance-provision` (nur falls kein Dev-HA-Pod existiert) → `ha-integration-deploy` → `ha-integration-verify` → `ha-integration-review` (der Release-/Pre-PR-Gesamtblick-Durchlauf, legitim zu diesem separaten Post-Gate-Zeitpunkt ausgeführt, nie zusätzlich zum In-Flow-Gate). Der Generierungs-only-Default und sein einzelnes Gate bleiben erhalten, wenn `deploy_ready` nicht gesetzt ist
+- **MUSS [MUST]** in dieser Phase bei einem `ha-integration-verify`-FAIL oder einem `ha-integration-review`-NEEDS-WORK jedes Finding an den zuständigen Authoring-/Remediation-Skill zurückrouten (das Audit-Defizit-Muster), den Fix neu dispatchen und dann neu deployen und neu verifizieren — ein geschlossener Feedback-Loop, kein terminaler beschreibender Bericht; nie `kubectl delete pod` (ein Code-Refresh ist `kill 1`, im Besitz des `ha-integration-deploy`-Agenten)
 - **MUSS [MUST]** die Skills in Abhängigkeits-Reihenfolge dispatchen und die `domain` sowie die in einem Schritt erzeugten `entity_id`s/Datei-Pfade als Eingaben der abhängigen Schritte durchreichen
 - **MUSS [MUST]** abbrechen und zurückmelden, wenn ein dispatchter Skill einen NEEDS-WORK-Bericht liefert, statt auf einem unfertigen Vorgänger-Baustein weiterzubauen
 - **MUSS [MUST]** die Artefakte minimal halten — keinen Baustein planen, den die Anforderung nicht verlangt
@@ -73,14 +75,14 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 
 - **MUSS [MUST]** am Ende jeden erzeugten/geänderten Datei-Pfad, den zugehörigen Baustein und die Verdrahtung (`domain`, welche `entity_id` welche referenziert) auflisten
 - **MUSS [MUST]** die aggregierten CONFORMANT / NEEDS-WORK-Berichte der Einzel-Skills sowie die Findings der Read-only-Reviews weiterreichen, ohne sie neu zu bewerten
-- **MUSS [MUST]** auf die Operator-Folge-Schritte hinweisen (ein gebündelter Gesamtblick-Durchlauf über den `ha-integration-review`-Agenten als **Release-/Pre-PR**-Review, Deploy/Verify über die `ha-integration-deploy`- und `ha-integration-verify`-Agenten), ohne sie auszuführen — der `ha-integration-review`-Folge-Schritt ergänzt Cross-Cutting + Drift *zusätzlich zu* Quality-Scale + Security und **MUSS NICHT [MUST NOT]** das In-Flow-Quality+Security-Gate dieses Laufs erneut fahren
+- **MUSS [MUST]** im Generierungs-only-Default (`deploy_ready` nicht gesetzt) auf die Operator-Folge-Schritte hinweisen (ein gebündelter Gesamtblick-Durchlauf über den `ha-integration-review`-Agenten als **Release-/Pre-PR**-Review, Deploy/Verify über die `ha-integration-deploy`- und `ha-integration-verify`-Agenten), ohne sie auszuführen — der `ha-integration-review`-Folge-Schritt ergänzt Cross-Cutting + Drift *zusätzlich zu* Quality-Scale + Security und **MUSS NICHT [MUST NOT]** das In-Flow-Quality+Security-Gate dieses Laufs erneut fahren. Ist `deploy_ready` gesetzt, werden diese Folge-Schritte stattdessen von der Opt-in-Lifecycle-Phase hinter dem zweiten Gate ausgeführt, und der Bericht enthält das Deploy/Verify/Review-Ergebnis und jeden Fix-Zyklus
 
 ### Verbote
 
 - **MUSS NICHT [MUST NOT]** mehr als eine Anforderung pro Lauf orchestrieren
 - **MUSS NICHT [MUST NOT]** einen Plan ohne Nutzer-Bestätigung ausführen
 - **MUSS NICHT [MUST NOT]** einen dispatchten Skill-Bericht neu bewerten
-- **MUSS NICHT [MUST NOT]** in eine laufende HA-Instanz deployen oder gegen sie verifizieren
+- **MUSS NICHT [MUST NOT]** im Generierungs-only-Default in eine laufende HA-Instanz deployen oder gegen sie verifizieren — Deploy/Verify geschieht **nur** innerhalb der Opt-in-`deploy_ready`-Lifecycle-Phase, hinter dem zweiten expliziten Gate
 
 ## Akzeptanzkriterien
 
@@ -94,6 +96,9 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 - [ ] Abbruch bei einem NEEDS-WORK-Vorgänger statt Weiterbau
 - [ ] Lauf endet mit den Read-only-Reviews (`ha-quality-scale-audit`, `ha-security-audit`)
 - [ ] Gesamt-Bericht listet alle Dateien und die Verdrahtung, reicht die Einzel-Berichte weiter und verweist auf die Deploy/Verify-Folge-Schritte
+- [ ] Ist `deploy_ready` gesetzt, provisioniert eine Opt-in-Phase (falls nötig), deployt, verifiziert und reviewt hinter einem **zweiten** expliziten Gate, das vom Plan-Gate verschieden ist
+- [ ] In dieser Phase routet ein `ha-integration-verify`-FAIL oder `ha-integration-review`-NEEDS-WORK zurück an den zuständigen Skill und treibt Deploy→Verify erneut, statt mit einem beschreibenden Bericht zu terminieren
+- [ ] Der Generierungs-only-Default (und sein einzelnes Gate) bleibt erhalten, wenn `deploy_ready` nicht gesetzt ist
 
 ## Offene Fragen
 

@@ -27,7 +27,7 @@ Planning and orchestration across the integration backend cluster. One requireme
 - Generating a single building block and its spec conformance — that stays with the dispatched individual skills
 - A pure YAML-automation/helper solution — that is `ha-automation-solution`
 - A Lovelace frontend solution — that is `ha-lovelace-card-scaffold` (and the associated Lovelace skill family)
-- Deploying to a running HA instance or runtime verification — those are the operator follow-ups via the `ha-integration-deploy` and `ha-integration-verify` agents (out of generation scope)
+- Deploying to a running HA instance or runtime verification as part of the default generation run — those run via the `ha-integration-deploy` / `ha-integration-verify` agents, and only inside the opt-in `deploy_ready` lifecycle phase behind a second gate (out of the generation-only scope)
 - Its own validation or conformance logic — each dispatched skill validates its own artifact; this skill only aggregates the reports
 
 ## Requirements
@@ -42,7 +42,7 @@ Planning and orchestration across the integration backend cluster. One requireme
 ### Inputs
 
 - **MUST** capture: `requirement` (prose, the desired device/cloud/API result)
-- **MAY** capture: `domain` (integration domain, otherwise derived from the scaffold step), `target_dir` (repo root), known protocol/auth details (REST/MQTT/Bluetooth; API key/OAuth2), a `target_tier` (`bronze`/`silver`/`gold`/`platinum`, default `silver`) that drives the included building blocks cumulatively, and `release_ready` (also scaffold CI validation + HACS-release readiness)
+- **MAY** capture: `domain` (integration domain, otherwise derived from the scaffold step), `target_dir` (repo root), known protocol/auth details (REST/MQTT/Bluetooth; API key/OAuth2), a `target_tier` (`bronze`/`silver`/`gold`/`platinum`, default `silver`) that drives the included building blocks cumulatively, `release_ready` (also scaffold CI validation + HACS-release readiness), and `deploy_ready` (default `false`; opt-in: run the deploy→verify→review lifecycle phase with a fix feedback loop behind a second gate)
 
 ### Pre-flight
 
@@ -63,7 +63,9 @@ Planning and orchestration across the integration backend cluster. One requireme
 - **MUST** drive the building-block set by `target_tier` (cumulative Bronze→Platinum) — Bronze scaffold + config-flow + tests; Silver + reauth + `PARALLEL_UPDATES` + `entity-unavailable` + options; Gold + diagnostics + discovery + `ha-device-registry-augment` + repairs + reconfigure + translations; Platinum dispatches `ha-dev-workflow-apply` (the owning skill of `ha/dev-workflow`) to apply and validate the strict-typing / code-style / `hassfest` workflow, instead of surfacing a bare checklist item
 - **MUST** finish a `release_ready` run with `ha-integration-ci-scaffold` (hassfest/HACS/pytest CI) and `ha-hacs-release` (HACS distribution readiness)
 - **MUST** close the run with the read-only audit gate — `ha-quality-scale-audit` and `ha-security-audit` (they never modify code); a shortfall routes back to the named remediation skill per finding. This is the **in-flow acceptance gate**, run once here; it deliberately overlaps the bundled `ha-integration-review` agent (which re-runs quality-scale + security *plus* cross-cutting + drift). The split is **temporal, not additive**: a run that clears this gate **MUST NOT** also dispatch `ha-integration-review` for the same two dimensions in the same pass — that agent is the separate **release / pre-PR whole-picture pass**, pointed at as a follow-up, never run on top of a green in-flow gate
-- **SHOULD** treat the plan approval as the single human gate — after it the dispatch, the audits, and the release-ready finish run to completion, stopping only on NEEDS-WORK
+- **SHOULD** treat the plan approval as the single human gate for generation — after it the dispatch, the audits, and the release-ready finish run to completion, stopping only on NEEDS-WORK
+- **MAY**, only when `deploy_ready` is set and only after a **second explicit human gate** distinct from the plan gate, run the deploy→verify→review lifecycle phase: `ha-dev-instance-provision` (only if no dev-HA pod exists) → `ha-integration-deploy` → `ha-integration-verify` → `ha-integration-review` (the release/pre-PR whole-picture pass, legitimately executed at this separate post-gate time, never on top of the in-flow gate). The generation-only default and its single gate are preserved when `deploy_ready` is unset
+- **MUST**, in that phase, on an `ha-integration-verify` FAIL or an `ha-integration-review` NEEDS-WORK, route each finding back to the owning authoring/remediation skill (the audit-shortfall pattern), re-dispatch the fix, then re-deploy and re-verify — a closed feedback loop, not a terminal descriptive report; never `kubectl delete pod` (a code refresh is `kill 1`, owned by the `ha-integration-deploy` agent)
 - **MUST** dispatch the skills in dependency order and thread the `domain` plus the `entity_id`s/file paths produced in one step into the inputs of dependent steps
 - **MUST** stop and report when a dispatched skill returns a NEEDS-WORK report, rather than building on an unfinished predecessor building block
 - **MUST** keep artifacts minimal — never plan a building block the requirement does not call for
@@ -73,14 +75,14 @@ Planning and orchestration across the integration backend cluster. One requireme
 
 - **MUST** list, at the end, every produced/changed file path, its building block, and the wiring (`domain`, which `entity_id` references which)
 - **MUST** relay the aggregated CONFORMANT / NEEDS-WORK reports of the individual skills plus the read-only review findings without re-judging them
-- **MUST** point at the operator follow-ups (a bundled whole-picture pass via the `ha-integration-review` agent as the **release / pre-PR** review, deploy/verify via the `ha-integration-deploy` and `ha-integration-verify` agents) without executing them — the `ha-integration-review` follow-up adds cross-cutting + drift *on top of* quality-scale + security and **MUST NOT** re-run this run's in-flow quality+security gate
+- **MUST**, in the default generation-only run (`deploy_ready` unset), point at the operator follow-ups (a bundled whole-picture pass via the `ha-integration-review` agent as the **release / pre-PR** review, deploy/verify via the `ha-integration-deploy` and `ha-integration-verify` agents) without executing them — the `ha-integration-review` follow-up adds cross-cutting + drift *on top of* quality-scale + security and **MUST NOT** re-run this run's in-flow quality+security gate. When `deploy_ready` is set, these follow-ups are instead executed by the opt-in lifecycle phase behind the second gate, and the report includes the deploy/verify/review outcome and every fix cycle
 
 ### Prohibitions
 
 - **MUST NOT** orchestrate more than one requirement per run
 - **MUST NOT** execute a plan without user confirmation
 - **MUST NOT** re-judge a dispatched skill report
-- **MUST NOT** deploy to or verify against a running HA instance
+- **MUST NOT** deploy to or verify against a running HA instance in the default generation-only run — deploy/verify happens **only** inside the opt-in `deploy_ready` lifecycle phase, behind the second explicit gate
 
 ## Acceptance criteria
 
@@ -94,6 +96,9 @@ Planning and orchestration across the integration backend cluster. One requireme
 - [ ] Stops on a NEEDS-WORK predecessor instead of building further
 - [ ] Run ends with the read-only reviews (`ha-quality-scale-audit`, `ha-security-audit`)
 - [ ] Aggregate report lists every file and the wiring, relays the individual reports, and points at the deploy/verify follow-ups
+- [ ] When `deploy_ready` is set, an opt-in phase provisions (if needed), deploys, verifies, and reviews behind a **second** explicit gate distinct from the plan gate
+- [ ] In that phase a `ha-integration-verify` FAIL or `ha-integration-review` NEEDS-WORK routes back to the owning skill and re-drives deploy→verify, instead of terminating with a descriptive report
+- [ ] The generation-only default (and its single gate) is preserved when `deploy_ready` is unset
 
 ## Open questions
 
