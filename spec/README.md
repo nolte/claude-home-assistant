@@ -55,6 +55,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/lovelace-views-panels`](ha/lovelace-views-panels/en.md) | HA Integration: Lovelace Views and Custom Panels | HA-Integration: Lovelace-Views und Custom-Panels | draft | unversioned |
 | [`ha/lovelace-panel-config-view`](ha/lovelace-panel-config-view/en.md) | HA Integration: Custom Panel Configuration and Options View | HA-Integration: Custom-Panel Konfigurations- und Options-Ansicht | draft | unversioned |
 | [`ha/lovelace-layout-antipatterns`](ha/lovelace-layout-antipatterns/en.md) | HA Dashboard: Layout and Card-Arrangement Antipatterns | HA-Dashboard: Layout- und Card-Anordnungs-Antipatterns | draft | unversioned |
+| [`ha/card-panel-sizing`](ha/card-panel-sizing/en.md) | HA Dashboard: Card and Panel Sizing | HA-Dashboard: Card- und Panel-Sizing | draft | unversioned |
 | [`ha/frontend-data-api`](ha/frontend-data-api/en.md) | HA Integration: Frontend Data API (`hass` object) | HA-Integration: Frontend-Data-API (`hass`-Objekt) | draft | unversioned |
 | [`ha/frontend-websocket-commands`](ha/frontend-websocket-commands/en.md) | HA Integration: Frontend WebSocket Commands | HA-Integration: Frontend-WebSocket-Commands | draft | unversioned |
 | [`ha/security-hardening`](ha/security-hardening/en.md) | HA Integration: Security Hardening | HA-Integration: Security-Hardening | draft | unversioned |

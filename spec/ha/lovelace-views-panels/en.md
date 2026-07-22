@@ -10,7 +10,7 @@ A **custom view** overrides the default masonry layout (Pinterest-like) and defi
 
 A **custom panel** is a full-page page, linked from the sidebar, with real-time access to the Home Assistant object (core examples: dashboards, Map, Logbook, History). Users register their own panels through the `panel_custom` component in `configuration.yaml`; the panel element receives `hass`, `narrow`, `route`, and `panel` as properties.
 
-This spec covers both related surfaces. It delimits against the sibling specs: `ha/lovelace-card-patterns` covers the single card, `ha/lovelace-strategies` covers programmatic dashboard generation; the `hass` data channels are described in `ha/frontend-data-api`.
+This spec covers both related surfaces. It delimits against the sibling specs: `ha/lovelace-card-patterns` covers the single card, `ha/lovelace-strategies` covers programmatic dashboard generation; the `hass` data channels are described in `ha/frontend-data-api`; the card/panel sizing decision procedure (`getGridOptions`/`getCardSize`) is `ha/card-panel-sizing`.
 
 Quality scale marker: custom views and custom panels are **not part of the HA quality scale** — the pattern lives outside the scale.
 

@@ -71,6 +71,7 @@ Quality-Scale-Marker: **Bronze** (Custom Cards sind nicht Teil der HA-Quality-Sc
 - **MUSS [MUST]** `getCardSize()` implementieren und einen Wert >= 1 zurückgeben (jede Einheit entspricht ~50px in der Vor-Sections-Lovelace-Welt)
 - **SOLLTE [SHOULD]** `getGridOptions()` implementieren — HA 2024.3+ Sections-Layout nutzt das, um die Card responsiv zu skalieren; Default-Form: `return { columns: 6, rows: 3, min_columns: 3, min_rows: 2 }`
 - **KANN [MAY]** dynamische `getGridOptions()` führen, wenn die Card je nach Konfiguration unterschiedliche Größen braucht — das Return-Objekt wird pro Render evaluiert
+- Die *Entscheidung*, welche Werte zurückzugeben sind (festes `rows` + `min_rows: rows` vs. `rows: "auto"`, die Aufteilung `getGridOptions` ↔ `getCardSize` und die CSS-Vorbedingungen für `"auto"`), gehört `ha/card-panel-sizing` — dieser Abschnitt formuliert die Lifecycle-Pflicht, nicht das Sizing-Verfahren
 
 ### `getConfigElement` und `getStubConfig`
 
