@@ -23,7 +23,8 @@ Ergänzung genau eines Custom-Panels pro Lauf in einem bestehenden Repo: das Pan
 ## Nicht-Ziele
 
 - Custom-View als Layout-Container (überschreibt Masonry, rendert Core-Cards/Badges via `ll-*`-Events) — abgedeckt in `ha/lovelace-views-panels` (View-Teil), nicht von diesem Skill generiert
-- Eine einzelne Card oder eine Panel-Mode-View (Single-Card-Layout im Dashboard) — `ha-lovelace-card-scaffold` / `ha/lovelace-card-patterns`
+- Eine einzelne Card — `ha-lovelace-card-scaffold` / `ha/lovelace-card-patterns`
+- Eine Panel-Mode-View (eine `type: panel`-View mit genau einer vollbreiten Card — Dashboard-YAML, keine gescaffoldete Card) — `ha-panel-author`, der die Lieferform-Entscheidung inkl. Panel-Mode-View besitzt, gemäß `ha/lovelace-views-panels`
 - Programmatische Dashboard-Generierung (Strategien, die ganze Views/Dashboards berechnen) — `ha/lovelace-strategies`
 - WebSocket-Commands, die das Panel aufruft — `ha/frontend-websocket-commands`
 - Greenfield-Scaffolding einer Integration — `ha-integration-scaffold`
