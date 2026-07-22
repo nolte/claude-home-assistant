@@ -45,7 +45,7 @@ Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovel
 
 ### Pre-Flight
 
-- **MUSS [MUST]** `requirement` als nichtleer prüfen; bei Unterspezifikation gezielt 1–3 Rückfragen stellen (welches Geräte-/Entity-Ziel, JS oder Lit/TS, welcher Tag-Name, ob ein Backend-Endpoint nötig ist), bevor er plant
+- **MUSS [MUST]** `requirement` als nichtleer prüfen; dann die Anforderungs-Konfidenz einschätzen — eine klar spezifizierte Anforderung nutzt den leichten Pfad (1–3 gezielte Rückfragen: welches Geräte-/Entity-Ziel, JS oder Lit/TS, welcher Tag-Name, ob ein Backend-Endpoint nötig ist), während eine Anforderung unterhalb einer Konfidenzschwelle (vages Ergebnis, ungenannte Entities, unklarer Scope) **MUSS [MUST]** zuerst `requirements-elicit` dispatchen und gegen das bestätigte Anforderungs-Artefakt planen, analog zum `issue-orchestrate`-Upstream-Gate — bevor er plant
 - **MUSS [MUST]** prüfen, ob die Anforderung einen Backend-Endpoint (WebSocket-Command) verlangt; wenn ja, das im Plan ausweisen — und wenn (noch) keine Custom-Integration existiert, `ha-integration-scaffold` als Voraussetzung benennen, statt die Backend-Arbeit in einen Frontend-Skill zu pressen
 
 ### Zerlegungs-Heuristik (Anforderung → Artefakt-Typ → Skill)
@@ -83,6 +83,7 @@ Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovel
 
 - [ ] Zuständige Skills werden pro Lauf gegen das aktive Frontend-`ha-*`-Inventar aufgelöst (ein neu hinzugefügter oder umbenannter Familien-Skill ist dispatchbar, ohne den Orchestrator zu editieren); die Zerlegungs-Zuordnungen sind illustrativ, keine eingefrorene geschlossene Menge
 - [ ] Skill erfragt fehlende Eckdaten (Ziel-Entity, JS vs. Lit/TS, Tag-Name, Backend-Bedarf), bevor er plant
+- [ ] Eine unterspezifizierte Anforderung dispatcht `requirements-elicit` vor der Planung; eine klar spezifizierte nutzt den schnellen 1–3-Fragen-Clarify-Pfad
 - [ ] Skill präsentiert einen Artefakt-Plan in Abhängigkeits-Reihenfolge und wartet auf Bestätigung
 - [ ] Skill dispatcht die zuständigen Einzel-Skills statt selbst zu generieren
 - [ ] Identitäten (Card-Tag, Datei-Pfad, Modul-Resource, `<domain>`, Command-`type`) früherer Artefakte werden als Eingaben der abhängigen Schritte durchgereicht

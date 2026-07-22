@@ -71,7 +71,7 @@ Resolve the owning skill for each artifact **at runtime**, by matching the requi
 
 ### 1) Clarify
 
-If the requirement is underspecified, ask 1–3 targeted questions (which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed) before planning. Do not plan on guesses.
+First gauge requirement confidence. When the requirement is clearly specified, use the lightweight path: ask 1–3 targeted questions (which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed) before planning. When it is below a confidence threshold (vague result, unnamed entities, unclear scope), dispatch `requirements-elicit` first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding. Do not plan on guesses.
 
 ### 2) Plan
 

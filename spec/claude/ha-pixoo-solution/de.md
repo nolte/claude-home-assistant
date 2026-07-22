@@ -45,7 +45,7 @@ Planung und Orchestrierung über die Divoom-Pixoo-Skill-Familie: `ha-pixoo-page-
 
 ### Pre-Flight
 
-- **MUSS [MUST]** prüfen, dass `requirement` nicht leer ist; bei Unterspezifikation 1–3 gezielte Fragen stellen (welche Info, statisch vs. animiert, Ziel-Geräte-Entität, Palette), bevor geplant wird
+- **MUSS [MUST]** prüfen, dass `requirement` nicht leer ist; dann die Anforderungs-Konfidenz einschätzen — eine klar spezifizierte Anforderung nutzt den leichten Pfad (1–3 gezielte Fragen: welche Info, statisch vs. animiert, Ziel-Geräte-Entität, Palette), während eine Anforderung unterhalb einer Konfidenzschwelle (vage Anzeige, ungenannte Entities, unklarer Scope) **MUSS [MUST]** zuerst `requirements-elicit` dispatchen und gegen das bestätigte Anforderungs-Artefakt planen, analog zum `issue-orchestrate`-Upstream-Gate — bevor geplant wird
 - **MUSS [MUST]** eine Authoring-Anforderung von reinem Integrations-Setup abgrenzen; ist die Anfrage Geräte-Setup / Config-Flow / `scan_interval` / Entity-Verdrahtung, sie als **Nutzung** der bestehenden Integration gemäß `ha/divoom-pixoo` benennen und stoppen, statt Artefakte zu planen
 
 ### Zerlegungs-Heuristik (Anforderung → Artefakt-Typ → Skill)
@@ -80,6 +80,7 @@ Planung und Orchestrierung über die Divoom-Pixoo-Skill-Familie: `ha-pixoo-page-
 
 - [ ] Zuständige Skills werden bei jedem Lauf gegen das lebende Pixoo-`ha-pixoo-*`-Inventar aufgelöst (ein neu hinzugefügter oder umbenannter Familien-Skill ist dispatchbar, ohne den Orchestrator zu ändern); die Zerlegungs-Zuordnungen sind illustrativ, kein eingefrorenes geschlossenes Set
 - [ ] Skill fragt fehlende Essentials ab (welche Info, statisch vs. animiert, Ziel-Entität, Palette), bevor geplant wird
+- [ ] Eine unterspezifizierte Anforderung dispatcht `requirements-elicit` vor der Planung; eine klar spezifizierte nutzt den schnellen 1–3-Fragen-Clarify-Pfad
 - [ ] Skill präsentiert einen Artefakt-Plan in Abhängigkeitsreihenfolge und wartet auf Bestätigung
 - [ ] Skill dispatcht die zuständigen Einzel-Skills, statt selbst zu generieren
 - [ ] Identitäten (Seitenstruktur, Komponentenpositionen, Palette/Ramps, Ziel-Entität `sensor.<name>_current_page`) früherer Artefakte werden in die Eingaben abhängiger Schritte eingefädelt

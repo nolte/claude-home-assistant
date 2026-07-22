@@ -46,7 +46,7 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 
 ### Pre-Flight
 
-- **MUSS [MUST]** `requirement` als nichtleer prüfen; bei Unterspezifikation gezielt 1–3 Rückfragen stellen (welches Protokoll, welche Auth-Art, welche Entity-Domänen, welche Qualitätsmerkmale), bevor er plant
+- **MUSS [MUST]** `requirement` als nichtleer prüfen; dann die Anforderungs-Konfidenz einschätzen — eine klar spezifizierte Anforderung nutzt den leichten Pfad (1–3 gezielte Rückfragen: welches Protokoll, welche Auth-Art, welche Entity-Domänen, welche Qualitätsmerkmale), während eine Anforderung unterhalb einer Konfidenzschwelle (vages Ziel, ungenanntes Gerät/API, unklarer Scope) **MUSS [MUST]** zuerst `requirements-elicit` dispatchen und gegen das bestätigte Anforderungs-Artefakt planen, analog zum `issue-orchestrate`-Upstream-Gate — bevor er plant
 - **MUSS [MUST]** prüfen, ob die Anforderung in Wahrheit YAML-Automation-förmig ist (kein eigenes Protokoll, keine Config-Flow-Integration); wenn ja, das im Plan ausweisen und an `ha-automation-solution` verweisen statt eine Integration zu erzwingen
 - **MUSS [MUST]** prüfen, ob bereits eine Integration unter `target_dir/custom_components/<domain>/` existiert; wenn ja, den Scaffold-Schritt überspringen und auf den Bestand aufsetzen
 
@@ -88,6 +88,7 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 
 - [ ] Zuständige Skills werden pro Lauf gegen das aktive Integrations-`ha-*`-Inventar aufgelöst (ein neu hinzugefügter oder umbenannter Familien-Skill ist dispatchbar, ohne den Orchestrator zu editieren); die Zerlegungs-Zuordnungen sind illustrativ, keine eingefrorene geschlossene Menge
 - [ ] Skill erfragt fehlende Eckdaten (Protokoll, Auth-Art, Entity-Domänen, Qualitätsmerkmale), bevor er plant
+- [ ] Eine unterspezifizierte Anforderung dispatcht `requirements-elicit` vor der Planung; eine klar spezifizierte nutzt den schnellen 1–3-Fragen-Clarify-Pfad
 - [ ] Skill präsentiert einen abhängigkeits-geordneten Skill-Plan und wartet auf Bestätigung
 - [ ] Skill dispatcht die zuständigen Einzel-Skills statt selbst zu generieren
 - [ ] `ha-integration-scaffold` ist Schritt 1 für eine neue Integration; bei Bestand wird darauf aufgesetzt
