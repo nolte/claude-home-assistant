@@ -40,7 +40,7 @@ Use this skill when the user describes a **device/cloud/API integration result**
 8. **Relay reports verbatim.** Pass through each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings without re-judging them.
 9. **Recognize automation-shaped work.** When the requirement is really a YAML automation/helper solution rather than a custom integration, say so in the plan and point at `ha-automation-solution` instead of forcing an integration.
 10. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
-11. **Tier-driven completeness, audit-gated.** Plan the building blocks the `target_tier` requires (cumulative Bronze→Platinum); finish `release_ready` runs with `ha-integration-ci-scaffold` + `ha-hacs-release`; run `ha-quality-scale-audit` + `ha-security-audit` last as the acceptance gate, routing any shortfall back to the named remediation skill per finding.
+11. **Tier-driven completeness, audit-gated.** Plan the building blocks the `target_tier` requires (cumulative Bronze→Platinum); finish `release_ready` runs with `ha-integration-ci-scaffold` + `ha-hacs-release`; run `ha-quality-scale-audit` + `ha-security-audit` last as the acceptance gate, routing any shortfall back to the named remediation skill per finding. These two audits are the **in-flow acceptance gate** — run once, here, against the freshly generated code. They deliberately overlap with the bundled `ha-integration-review` agent, which re-runs quality-scale + security *plus* cross-cutting + drift; the split is **temporal, not additive**. A run that clears this in-flow gate **MUST NOT** also dispatch `ha-integration-review` for the same two dimensions in the same pass — the bundled agent is the separate **release / pre-PR whole-picture pass** (see the closing report), pointed at as a follow-up, never run on top of a green in-flow gate.
 
 ## Inputs
 
@@ -137,7 +137,7 @@ Invoke each owning skill in plan order, passing the `domain` and the `entity_id`
 
 ### 4) Aggregate report
 
-List every produced/changed file, its building block, and the wiring (the `domain`, which `entity_id` references which). Relay each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings verbatim — do not re-judge them. Point at the operator follow-ups (a bundled whole-picture pass via the `ha-integration-review` agent, deploy via the `ha-integration-deploy` agent, runtime verify via the `ha-integration-verify` agent) without executing them. Do not deploy.
+List every produced/changed file, its building block, and the wiring (the `domain`, which `entity_id` references which). Relay each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings verbatim — do not re-judge them. Point at the operator follow-ups (a bundled whole-picture pass via the `ha-integration-review` agent, deploy via the `ha-integration-deploy` agent, runtime verify via the `ha-integration-verify` agent) without executing them. The `ha-integration-review` follow-up is the **release / pre-PR** review — it adds cross-cutting + drift *on top of* quality-scale + security and must **not** re-run this run's in-flow quality+security gate; a caller who cleared the in-flow gate does not run it again for the same two dimensions in the same pass. Do not deploy.
 
 ## Boundaries
 
