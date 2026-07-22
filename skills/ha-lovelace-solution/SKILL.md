@@ -29,7 +29,7 @@ Use this skill when the user describes a **frontend result** that likely needs m
 
 ## Hard rules
 
-1. **Never generate inline.** Every artifact is produced by its owning skill — `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author`, or `ha-websocket-command-add`. This skill plans and dispatches; it does not write artifacts.
+1. **Never generate inline.** Every artifact is produced by its owning skill — `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-card-sizing-determine`, `ha-card-preview-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author`, or `ha-websocket-command-add`. This skill plans and dispatches; it does not write artifacts.
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
 3. **One requirement, one run.** No multi-requirement batches.
 4. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; never add an add-on a single artifact already covers.
@@ -55,6 +55,8 @@ Use this skill when the user describes a **frontend result** that likely needs m
 | a standalone custom card (the visible card element) | custom card (`www/<card>.js`) | `ha-lovelace-card-scaffold` (step 1 when a card is needed) |
 | a visual config editor for a card (`ha-form` via `getConfigElement`) | card editor element | `ha-card-editor-add` (depends on the card) |
 | a tile/card feature (interactive control row in the tile card and other host cards) | card-feature element | `ha-card-features-add` (depends on a frontend module) |
+| correct sizing across all view types and edit mode (`getGridOptions`/`getCardSize`; fixes the edit-mode overlay overlap and view/masonry/panel misfit) | size declaration | `ha-card-sizing-determine` (depends on any scaffolded card/panel; post-generation completion step) |
+| a correct card-picker / editor live preview | preview wiring | `ha-card-preview-add` (depends on the card) |
 | a custom badge in the dashboard badge picker | badge element | `ha-badge-add` (independent top-level) |
 | auto-generated views/cards (dashboard or view strategy) | strategy class | `ha-strategy-add` (independent top-level) |
 | a full-page custom panel in the sidebar | custom panel | `ha-panel-author` (independent top-level; dispatches `ha-panel-add` for the base scaffold) |
@@ -85,6 +87,8 @@ Surface any backend / custom-integration prerequisite here. Wait for explicit ap
 ### 3) Dispatch
 
 Invoke each owning skill in plan order, passing the identities resolved in earlier steps (card tag, file path, module resource, `<domain>`, command `type`) as inputs to the dependent steps. After each, check the returned report; stop on NEEDS-WORK.
+
+For every scaffolded card or panel, run the size-declaration completion step by dispatching `ha-card-sizing-determine` (per [`ha/card-panel-sizing`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/card-panel-sizing/en.md)) before the aggregate report, and dispatch `ha-card-preview-add` when a card-picker / editor preview is in scope — these are the default post-generation completion steps, not optional afterthoughts, since wrong sizing and a broken preview are exactly the defects a naive requirement will not name.
 
 ### 4) Aggregate report
 
