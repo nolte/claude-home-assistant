@@ -54,7 +54,7 @@ The skill augments **one** test class (platform tests, service tests, helper tes
 ### Generator choreography
 
 - **MUST** create or extend the relevant test file based on `kind`:
-  - `kind=platform` → `tests/test_<platform>.py`: platform setup test (asserts that `async_setup_entry` for the platform registers the expected number of entities), `_handle_coordinator_update` test (asserts that `native_value` is extracted correctly from coordinator data), at least one happy-path test per `EntityDescription` in the tuple list
+  - `kind=platform` → `tests/test_<platform>.py`: platform setup test (asserts that `async_setup_entry` for the platform registers the expected number of entities), `_handle_coordinator_update` test (asserts that `native_value` is extracted correctly from coordinator data), at least one happy-path test per `EntityDescription` in the tuple list, and a `snapshot_platform` entity/registry snapshot test via `syrupy` (`tests/snapshots/*.ambr`) — the dominant HA-core platform-test pattern
   - `kind=service` → `tests/test_services.py`: service test with happy path, missing disambiguation, auth error (see `ha-service-definition-generator` test pattern)
   - `kind=helpers` → `tests/test_helpers.py`: at least one test per helper function in `helpers.py`
   - `kind=lovelace_cleanup` → `tests/test_lovelace_cleanup.py`: tests the Lovelace card auto-registration in `__init__.py` (StaticPathConfig call, correct URLs, correct paths)
@@ -72,6 +72,7 @@ The skill augments **one** test class (platform tests, service tests, helper tes
 ## Acceptance Criteria
 
 - [ ] The relevant test file exists and contains the tests per `kind`
+- [ ] For `kind=platform`, a `snapshot_platform` entity/registry snapshot test (`syrupy`) is included
 - [ ] `tests/conftest.py` is extended with the necessary fixtures (when required)
 - [ ] `tests/fixtures/` contains the necessary JSON snapshots
 - [ ] `pytest tests/<test-file> -v` runs cleanly
