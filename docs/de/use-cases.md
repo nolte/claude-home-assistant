@@ -2,6 +2,8 @@
 
 Dieses Plugin bündelt Skills, Agents und Specs entlang von sechs Anwendungsfällen. Jeder Fall hat eine **Front-Door-Skill** (`*-solution`) — den Einstiegspunkt, der das gewünschte Ergebnis in die minimale Menge an Artefakten übersetzt und die fokussierten Skills aufruft. Du musst nicht selbst wissen, welche Skill welches Artefakt erzeugt.
 
+Über diesen sechs Domain-Front-Doors steht **`ha-solution`**, der Top-Level-Router. Beschreibe ein beliebiges Home-Assistant-Ergebnis: Er ordnet die Anfrage einer oder mehreren Domänen zu und leitet jeden Teil an die zuständige `*-solution` weiter. Bei echt domänenübergreifender Arbeit — etwa eine Custom Card plus die dahinterliegende Integration plus eine Automation — zerlegt er sie in Abhängigkeitsreihenfolge und hält die geteilten Identitäten (Domain, Entity-IDs, Card-Tags, Command-Typen) über die Grenzen hinweg konsistent. Greif direkt zu einer einzelnen Domain-Front-Door, wenn du schon weißt, dass die Anfrage in genau einer Domäne liegt.
+
 Den vollständigen, automatisch generierten Katalog mit Beschreibung jeder Skill und jedes Agents findest du unter [Skills](skills/index.md) und [Agents](agents/index.md).
 
 !!! info "Front-Door vs. fokussierte Skills"
@@ -17,7 +19,8 @@ Eine vollständige Custom Integration unter `custom_components/<domain>/`, insta
 - **Skelett:** `ha-integration-scaffold` (Manifest, Lifecycle, Config-Flow, Coordinator, Entity, Plattformen, Translations, Icons, Diagnostics, pytest-Harness)
 - **Ergänzen / erweitern:** `ha-config-flow-augment`, `ha-coordinator-add`, `ha-entity-platform-add`, `ha-entity-description-mapper`, `ha-service-definition-generator`, `ha-diagnostics-augment`, `ha-discovery-augment`, `ha-bluetooth-augment`, `ha-oauth2-credentials-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-significant-change-add`, `ha-reproduce-state-add`, `ha-integration-events-add`, `ha-conversation-agent-augment`
 - **Qualität:** `ha-translation-sync`, `ha-test-harness-augment`
-- **Specs:** `spec/ha/integration-architecture`, `…/config-flow-patterns`, `…/coordinator-patterns`, `…/entity-architecture` und die übrigen `spec/ha/*`-Integration-Topics
+- **Code-Style & Validierung:** `ha-dev-workflow-apply` (Ruff-Format, Strict-Typing per mypy, hassfest- und voluptuous-Checks — vom Bronze-Floor bis Platinum)
+- **Specs:** `spec/ha/integration-architecture`, `…/config-flow-patterns`, `…/coordinator-patterns`, `…/entity-architecture`, `…/dev-workflow` und die übrigen `spec/ha/*`-Integration-Topics
 
 ## 2. Lovelace-Frontend bauen (TypeScript / JavaScript)
 

@@ -8,13 +8,13 @@ Claude Code plugin that bundles skills, agents, and specifications for efficient
 
 Building Home Assistant (HA) artifacts by hand means re-deriving the same config-flow, coordinator, entity, and quality-scale patterns every time. This plugin captures those patterns as reusable, spec-governed building blocks so [Claude Code](https://docs.claude.com/en/docs/claude-code/overview) produces HA-conformant code instead of ad-hoc boilerplate.
 
-- You describe a **result**; a `*-solution` front-door skill — the single entry point per use case — plans the work and dispatches the focused authoring skills, so you never pick the right primitive by hand.
+- You describe a **result**; the top-level `ha-solution` router classifies it into one or more domains and routes each to the owning domain front-door skill (`*-solution`), which plans the work and dispatches the focused authoring skills — so you never pick the right primitive by hand.
 - HA-internal contracts (config flow, coordinators, entities, services, quality scale) are codified as specs that every skill and agent obeys.
 - The intended consumers are the maintainer dogfooding here and on `kamerplanter-ha` and — as the plugin matures — the wider HA integration- and card-author community.
 
 ## What you get
 
-- **Skills** — focused, on-demand workflow primitives Claude Code pulls in when relevant. Each use case has a `*-solution` front-door skill that plans the work and dispatches the focused authoring skills.
+- **Skills** — focused, on-demand workflow primitives Claude Code pulls in when relevant. Each use case has a `*-solution` front-door skill that plans the work and dispatches the focused authoring skills; the top-level `ha-solution` router picks the right one — or several, for cross-domain requests — for you.
 - **Agents** — larger, autonomous helpers for multi-step tasks (provisioning a dev HA instance, deploying and verifying an integration, authoring a blueprint, running a full pre-release review).
 - **Specifications** — bilingual source-of-truth documents under `spec/` that govern every skill and agent (`spec/ha/…` for HA-internal contracts, `spec/claude/…` for the skills/agents themselves).
 

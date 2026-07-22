@@ -2,6 +2,8 @@
 
 This plugin bundles skills, agents, and specs along six use cases. Each case has a **front-door skill** (`*-solution`) — the entry point that turns the result you want into the minimal set of artifacts and dispatches the focused skills. You don't have to know which skill produces which artifact.
 
+Above these six domain front doors sits **`ha-solution`**, the top-level router. Describe any Home Assistant result and it classifies the request into one or more domains and routes each part to the owning `*-solution`. For genuinely cross-domain work — say a custom card plus its backing integration plus an automation — it decomposes across them in dependency order and threads the shared identities (domain, entity IDs, card tags, command types) across the boundaries. Reach for a single domain front door directly when you already know the request lives in one domain.
+
 Find the full, auto-generated catalog — with a description of every skill and agent — under [Skills](skills/index.md) and [Agents](agents/index.md).
 
 !!! info "Front-door vs. focused skills"
@@ -17,7 +19,8 @@ A complete custom integration under `custom_components/<domain>/`, installable t
 - **Skeleton:** `ha-integration-scaffold` (manifest, lifecycle, config flow, coordinator, entity, platforms, translations, icons, diagnostics, pytest harness)
 - **Add / augment:** `ha-config-flow-augment`, `ha-coordinator-add`, `ha-entity-platform-add`, `ha-entity-description-mapper`, `ha-service-definition-generator`, `ha-diagnostics-augment`, `ha-discovery-augment`, `ha-bluetooth-augment`, `ha-oauth2-credentials-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-significant-change-add`, `ha-reproduce-state-add`, `ha-integration-events-add`, `ha-conversation-agent-augment`
 - **Quality:** `ha-translation-sync`, `ha-test-harness-augment`
-- **Specs:** `spec/ha/integration-architecture`, `…/config-flow-patterns`, `…/coordinator-patterns`, `…/entity-architecture`, and the other `spec/ha/*` integration topics
+- **Code style & validation:** `ha-dev-workflow-apply` (Ruff format, strict typing with a local mypy-strict profile, hassfest and voluptuous validation — the bronze-floor-to-platinum dev workflow)
+- **Specs:** `spec/ha/integration-architecture`, `…/config-flow-patterns`, `…/coordinator-patterns`, `…/entity-architecture`, `…/dev-workflow`, and the other `spec/ha/*` integration topics
 
 ## 2. Build a Lovelace frontend (TypeScript / JavaScript)
 

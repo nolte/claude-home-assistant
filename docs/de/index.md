@@ -4,7 +4,7 @@ Claude-Code-Plugin mit Skills und Agents für die effiziente Entwicklung von [Ho
 
 ## Worum es geht
 
-Dieses Plugin liefert wiederverwendbare Bausteine, mit denen Claude Code Home-Assistant-Projekte reibungsärmer umsetzt. Du beschreibst ein **Ergebnis** — die passende `*-solution`-Front-Door-Skill plant die Arbeit und ruft die fokussierten Authoring-Skills auf.
+Dieses Plugin liefert wiederverwendbare Bausteine, mit denen Claude Code Home-Assistant-Projekte reibungsärmer umsetzt. Du beschreibst ein **Ergebnis** — der Top-Level-Router `ha-solution` ordnet es einer oder mehreren Domänen zu und übergibt jede an die passende Domain-Front-Door-Skill (`*-solution`), die die Arbeit plant und die fokussierten Authoring-Skills aufruft. Ist die Domäne bereits eindeutig, kannst du die Domain-Solution direkt aufrufen.
 
 ## Anwendungsfälle
 
