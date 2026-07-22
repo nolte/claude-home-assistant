@@ -25,7 +25,7 @@ Use this skill to align `strings.json` with every `translations/<lang>.json` fil
 2. **Never silently delete orphaned keys.** Surface them; ask for confirmation.
 3. **Never apply machine translations.** `<TODO: translate '<EN value>'>` is the only automatic placeholder.
 4. **Always run `report` first.** Default mode is `report`; `apply` is opt-in.
-5. **Always include `icons.json` drift.** A translation key without an icon (or vice versa) is a defect even when both files are internally consistent.
+5. **Always include `icons.json` drift — and fill it.** A translation key without an icon (or vice versa) is a defect even when both files are internally consistent; in `apply` mode, fill a missing `icons.json` entry with a `<TODO: icon>` marker via the same mechanism as `strings.json`, rather than only reporting it.
 6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
@@ -56,6 +56,10 @@ For `icons.json` vs. `strings.json`:
 - list `entity.<platform>.<key>` mismatches
 - list `services.<name>` mismatches
 
+For `strings.json` config-flow completeness:
+
+- flag config-flow steps whose `data` fields lack a matching `data_description` entry (a Bronze config-flow subcheck)
+
 Print the drift report.
 
 ### 2) Confirm (only in `apply` mode)
@@ -71,11 +75,12 @@ Print the drift report.
 ### 4) Report
 
 - counts of missing / orphaned / structural-gap entries per language
-- counts of `icons.json` mismatches
+- counts of `icons.json` mismatches (and `<TODO: icon>` markers filled in `apply` mode)
+- count of config-flow fields missing a `data_description` entry
 - list of `<TODO>` placeholders the user now needs to fill in
 
 ## Boundaries
 
 - New language file → user decision; manual init
 - Machine translation → out of scope
-- `icons.json` sync (auto-fill) → separate spec planned (`ha-icons-sync`)
+- Icon-name choice / value localization (icon names are not translated) → out of scope; structural `icons.json` drift and TODO-fill of missing keys are handled by this skill

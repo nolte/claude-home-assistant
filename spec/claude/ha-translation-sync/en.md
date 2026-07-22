@@ -64,7 +64,8 @@ The skill performs **sync operations** on an existing translation structure. It 
 - **MUST** add an entry with `<TODO: translate '<EN value>'>` as placeholder for every missing key in `<lang>.json`
 - **MUST** explicitly list orphaned keys before removing and obtain user confirmation — no silent delete
 - **MUST** align key ordering in every `<lang>.json` with that of `strings.json` — JSON dicts are unordered in Python, but file writers typically preserve insertion order
-- **MUST** report `icons.json` drift separately — `icons.json` sync is not part of this skill (separate `ha-icons-sync` skill conceivable)
+- **MUST** report `icons.json` drift and, in `apply` mode, fill a missing `icons.json` key with a `<TODO: icon>` marker — icon auto-fill is part of this skill (the same TODO mechanism as `strings.json`)
+- **MUST** flag config-flow steps whose `data` fields lack a matching `data_description` entry in `strings.json` (a Bronze config-flow subcheck)
 
 ### Forbidden
 
@@ -75,7 +76,8 @@ The skill performs **sync operations** on an existing translation structure. It 
 ## Acceptance Criteria
 
 - [ ] Skill output carries the drift report with missing keys, orphaned keys, structural gaps
-- [ ] Skill output carries the `icons.json` drift report (separate)
+- [ ] `icons.json` drift is reported and, in `apply` mode, missing keys are TODO-filled
+- [ ] Config-flow fields missing a `data_description` entry are flagged
 - [ ] In `apply` mode: every `translations/<lang>.json` carries every key from `strings.json` (as `<TODO>` when translation is missing)
 - [ ] Orphaned keys are presented to the user before removal
 - [ ] Existing translation values are unchanged after `apply`
