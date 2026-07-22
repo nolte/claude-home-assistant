@@ -29,7 +29,7 @@ Use this skill when the user describes a **result** that likely needs more than 
 
 ## Hard rules
 
-1. **Never generate inline.** Every artifact is produced by its owning skill — `ha-automation-author`, `ha-helper-scaffold`, `ha-derived-sensor-author`, or `ha-blueprint-scaffold`. This skill plans and dispatches; it does not write artifacts.
+1. **Never generate inline.** Every artifact is produced by its owning skill, resolved at runtime from the live `ha-automation` family inventory (see [Runtime skill resolution](#runtime-skill-resolution)) rather than a frozen name list — the skill names in the decomposition heuristic are illustrative anchors. This skill plans and dispatches; it does not write artifacts.
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
 3. **One requirement, one run.** No multi-requirement batches.
 4. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; never add a helper or sensor a single artifact already covers.
@@ -45,6 +45,10 @@ Use this skill when the user describes a **result** that likely needs more than 
 | `requirement` | yes | — | The desired result, in prose |
 | `target_dir` / `target_file` | no | working dir | passed through to dispatched skills |
 | `known_sources` | no | asked when needed | existing `entity_id`s to use as sources |
+
+## Runtime skill resolution
+
+Resolve the owning skill for each artifact **at runtime**, by matching the requirement against the live inventory of this plugin's `ha-automation` family (`ha-automation-author`, `ha-helper-scaffold`, `ha-derived-sensor-author`, `ha-blueprint-scaffold`) — read each candidate's stated responsibility from your available-skills registry, or, when running inside the plugin source tree, `Glob skills/ha-*/SKILL.md` and read its `description:`. Match on responsibility, not on a remembered name. The decomposition heuristic below is an **illustrative anchor** of the typical mappings, **not** an authoritative or exhaustive list: re-resolve against the current inventory on every run, so a skill newly added to (or renamed within) the family is dispatchable immediately and a removed one is not — without editing this skill (the runtime-lookup pattern of `issue-orchestrate`). If you genuinely cannot enumerate the live inventory, fall back to the anchor table and note the degraded resolution.
 
 ## Decomposition heuristic (requirement → artifact type → skill)
 

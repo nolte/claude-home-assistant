@@ -29,7 +29,7 @@ Use this skill when the user describes a **frontend result** that likely needs m
 
 ## Hard rules
 
-1. **Never generate inline.** Every artifact is produced by its owning skill — `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-card-sizing-determine`, `ha-card-preview-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author`, or `ha-websocket-command-add`. This skill plans and dispatches; it does not write artifacts.
+1. **Never generate inline.** Every artifact is produced by its owning skill, resolved at runtime from the live frontend `ha-*` inventory (see [Runtime skill resolution](#runtime-skill-resolution)) rather than a frozen name list — the skill names in the decomposition heuristic are illustrative anchors. This skill plans and dispatches; it does not write artifacts.
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
 3. **One requirement, one run.** No multi-requirement batches.
 4. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; never add an add-on a single artifact already covers.
@@ -47,6 +47,10 @@ Use this skill when the user describes a **frontend result** that likely needs m
 | `target_dir` | no | working dir | repo root, passed through to dispatched skills |
 | `domain` | no | asked when needed | the existing integration's domain (for `www/` placement and the WS command) |
 | `known_sources` | no | asked when needed | existing card tag / module resource to build on |
+
+## Runtime skill resolution
+
+Resolve the owning skill for each artifact **at runtime**, by matching the requirement against the live inventory of this plugin's frontend `ha-*` skills (`ha-lovelace-*`, `ha-card-*`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-*`, `ha-websocket-command-add`) — read each candidate's stated responsibility from your available-skills registry, or, when running inside the plugin source tree, `Glob skills/ha-*/SKILL.md` and read its `description:`. Match on responsibility, not on a remembered name. The decomposition heuristic below is an **illustrative anchor** of the typical mappings, **not** an authoritative or exhaustive list: re-resolve against the current inventory on every run, so a skill newly added to (or renamed within) the family is dispatchable immediately and a removed one is not — without editing this skill (the runtime-lookup pattern of `issue-orchestrate`). If you genuinely cannot enumerate the live inventory, fall back to the anchor table and note the degraded resolution.
 
 ## Decomposition heuristic (requirement → artifact type → skill)
 

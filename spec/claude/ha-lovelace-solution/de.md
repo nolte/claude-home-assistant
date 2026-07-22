@@ -50,6 +50,7 @@ Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovel
 
 ### Zerlegungs-Heuristik (Anforderung → Artefakt-Typ → Skill)
 
+- **MUSS [MUST]** jeden zuständigen Skill zur Laufzeit auflösen, indem die Anforderung gegen das aktive Inventar der Frontend-`ha-*`-Skills abgeglichen wird (die formulierte Zuständigkeit jedes Kandidaten), nicht aus einer eingefrorenen Namensliste — die Zuordnungen unten sind ein illustrativer Anker, pro Lauf neu aufgelöst, sodass ein zur Familie hinzugefügter oder entfernter Skill dispatchbar ist, ohne den Orchestrator zu editieren (analog zu `issue-orchestrate`)
 - **MUSS [MUST]** eine eigenständige Custom-Card (das sichtbare Karten-Element) auf `ha-lovelace-card-scaffold` abbilden — Schritt 1, sobald eine Card gebraucht wird
 - **MUSS [MUST]** einen visuellen Config-Editor für eine Card (`ha-form` über `getConfigElement`) auf `ha-card-editor-add` abbilden, abhängig von der Card
 - **MUSS [MUST]** ein Tile-/Card-Feature (interaktive Control-Row in der Tile-Card und anderen Host-Cards) auf `ha-card-features-add` abbilden, abhängig von einem Frontend-Modul
@@ -80,6 +81,7 @@ Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovel
 
 ## Akzeptanzkriterien
 
+- [ ] Zuständige Skills werden pro Lauf gegen das aktive Frontend-`ha-*`-Inventar aufgelöst (ein neu hinzugefügter oder umbenannter Familien-Skill ist dispatchbar, ohne den Orchestrator zu editieren); die Zerlegungs-Zuordnungen sind illustrativ, keine eingefrorene geschlossene Menge
 - [ ] Skill erfragt fehlende Eckdaten (Ziel-Entity, JS vs. Lit/TS, Tag-Name, Backend-Bedarf), bevor er plant
 - [ ] Skill präsentiert einen Artefakt-Plan in Abhängigkeits-Reihenfolge und wartet auf Bestätigung
 - [ ] Skill dispatcht die zuständigen Einzel-Skills statt selbst zu generieren

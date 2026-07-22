@@ -49,6 +49,7 @@ Planung und Orchestrierung über die `ha-automation/`-Skill-Familie plus `ha-blu
 
 ### Zerlegungs-Heuristik (Anforderung → Artefakt-Typ → Skill)
 
+- **MUSS [MUST]** jeden zuständigen Skill zur Laufzeit auflösen, indem die Anforderung gegen das aktive Inventar der `ha-automation`-Familie abgeglichen wird (die formulierte Zuständigkeit jedes Kandidaten), nicht aus einer eingefrorenen Namensliste — die Zuordnungen unten sind ein illustrativer Anker, pro Lauf neu aufgelöst, sodass ein zur Familie hinzugefügter oder entfernter Skill dispatchbar ist, ohne den Orchestrator zu editieren (analog zu `issue-orchestrate`)
 - **MUSS [MUST]** einen gemessenen oder abgeleiteten Wert (Rate, Glättung, Integral, Aggregat, Schwelle, Trend, Verbrauchsperiode, Wahrscheinlichkeit) auf `ha-derived-sensor-author` abbilden
 - **MUSS [MUST]** einen manuell/per Automation gehaltenen Zustand, Modus-Schalter, Countdown oder Wochenplan auf `ha-helper-scaffold` abbilden
 - **MUSS [MUST]** Event→Aktion-Logik auf `ha-automation-author` (`automation`) und wiederverwendbare manuell aufrufbare Aktionssequenzen auf `script` abbilden; einen HTTP-/Shell-/Python-Escape-Hatch auf das jeweilige Command-Artefakt von `ha-automation-author`
@@ -76,6 +77,7 @@ Planung und Orchestrierung über die `ha-automation/`-Skill-Familie plus `ha-blu
 
 ## Akzeptanzkriterien
 
+- [ ] Zuständige Skills werden pro Lauf gegen das aktive Inventar der `ha-automation`-Familie aufgelöst (ein neu hinzugefügter oder umbenannter Familien-Skill ist dispatchbar, ohne den Orchestrator zu editieren); die Zerlegungs-Zuordnungen sind illustrativ, keine eingefrorene geschlossene Menge
 - [ ] Skill erfragt fehlende Eckdaten (Quelle, Schwellwert, Zeitfenster), bevor er plant
 - [ ] Skill präsentiert einen Artefakt-Plan in Abhängigkeits-Reihenfolge und wartet auf Bestätigung
 - [ ] Skill dispatcht die zuständigen Einzel-Skills statt selbst zu generieren

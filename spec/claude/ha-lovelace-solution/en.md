@@ -50,6 +50,7 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 
 ### Decomposition heuristic (requirement → artifact type → skill)
 
+- **MUST** resolve each owning skill at runtime by matching the requirement against the live frontend `ha-*` skill inventory (each candidate's stated responsibility), not from a frozen name list — the mappings below are an illustrative anchor, re-resolved each run, so a skill added to or removed from the family is dispatchable without editing the orchestrator (mirroring `issue-orchestrate`)
 - **MUST** map a standalone custom card (the visible card element) to `ha-lovelace-card-scaffold` — step 1 whenever a card is needed
 - **MUST** map a visual config editor for a card (`ha-form` via `getConfigElement`) to `ha-card-editor-add`, depending on the card
 - **MUST** map a tile/card feature (interactive control row inside the tile card and other host cards) to `ha-card-features-add`, depending on a frontend module
@@ -80,6 +81,7 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 
 ## Acceptance criteria
 
+- [ ] Owning skills are resolved against the live frontend `ha-*` inventory each run (a newly added or renamed family skill is dispatchable without editing the orchestrator); the decomposition mappings are illustrative, not a frozen closed set
 - [ ] Skill asks for missing essentials (target entity, JS vs. Lit/TS, tag name, backend need) before planning
 - [ ] Skill presents an artifact plan in dependency order and waits for confirmation
 - [ ] Skill dispatches the owning individual skills instead of generating itself

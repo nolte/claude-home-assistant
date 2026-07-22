@@ -52,6 +52,7 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 
 ### Dispatch-/Plan-Regeln
 
+- **MUSS [MUST]** jeden zuständigen Skill zur Laufzeit auflösen, indem die Anforderung gegen das aktive Inventar der Integrations-`ha-*`-Skills abgeglichen wird (die formulierte Zuständigkeit jedes Kandidaten), nicht aus einer eingefrorenen Namensliste — die Zuordnungen in diesem Abschnitt sind ein illustrativer Anker, pro Lauf neu aufgelöst, sodass ein zur Familie hinzugefügter oder entfernter Skill dispatchbar ist, ohne den Orchestrator zu editieren (analog zum Runtime-Lookup-Dispatch von `issue-orchestrate`)
 - **MUSS [MUST]** vor jeder Generierung einen Plan als Tabelle in Abhängigkeits-Reihenfolge präsentieren: pro Eintrag `#`, Baustein, zuständiger Skill, Abhängigkeit (`depends-on`), Zweck — und explizite Bestätigung abwarten
 - **MUSS NICHT [MUST NOT]** einen Baustein selbst inline generieren; jede Generierung läuft über den zuständigen Einzel-Skill
 - **MUSS [MUST]** `ha-integration-scaffold` als Schritt 1 dispatchen, sobald eine *neue* Integration angelegt wird (Greenfield-Hub)
@@ -83,6 +84,7 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 
 ## Akzeptanzkriterien
 
+- [ ] Zuständige Skills werden pro Lauf gegen das aktive Integrations-`ha-*`-Inventar aufgelöst (ein neu hinzugefügter oder umbenannter Familien-Skill ist dispatchbar, ohne den Orchestrator zu editieren); die Zerlegungs-Zuordnungen sind illustrativ, keine eingefrorene geschlossene Menge
 - [ ] Skill erfragt fehlende Eckdaten (Protokoll, Auth-Art, Entity-Domänen, Qualitätsmerkmale), bevor er plant
 - [ ] Skill präsentiert einen abhängigkeits-geordneten Skill-Plan und wartet auf Bestätigung
 - [ ] Skill dispatcht die zuständigen Einzel-Skills statt selbst zu generieren

@@ -30,7 +30,7 @@ Use this skill when the user describes a **device/cloud/API integration result**
 
 ## Hard rules
 
-1. **Never generate inline.** Every building block is produced by its owning skill. This skill plans and dispatches; it does not write code.
+1. **Never generate inline.** Every building block is produced by its owning skill, resolved at runtime from the live integration `ha-*` inventory (see [Runtime skill resolution](#runtime-skill-resolution)), never from a frozen snapshot of names. This skill plans and dispatches; it does not write code.
 2. **Plan before generate.** Always present the dependency-ordered skill plan and wait for explicit approval before dispatching anything.
 3. **One requirement, one run.** No multi-requirement batches.
 4. **Scaffold first.** For a new integration, `ha-integration-scaffold` is step 1 (greenfield hub); when an integration already exists under `custom_components/<domain>/`, skip scaffold and build on it.
@@ -52,6 +52,10 @@ Use this skill when the user describes a **device/cloud/API integration result**
 | `protocol` / `auth` | no | asked when needed | REST/MQTT/Bluetooth; API key/OAuth2 |
 | `target_tier` | no | `silver` | `bronze`/`silver`/`gold`/`platinum`; drives the included building blocks (cumulative) |
 | `release_ready` | no | inferred | also scaffold CI validation + HACS-release readiness |
+
+## Runtime skill resolution
+
+Resolve the owning skill for each building block **at runtime**, by matching the requirement against the live inventory of this plugin's integration/backend `ha-*` skills — read each candidate's stated responsibility from your available-skills registry, or, when running inside the plugin source tree, `Glob skills/ha-*/SKILL.md` and read its `description:`. Match on responsibility, not on a remembered name. The decomposition heuristic below is an **illustrative anchor** of the typical mappings, **not** an authoritative or exhaustive list: re-resolve against the current inventory on every run, so a skill newly added to (or renamed within) the family is dispatchable immediately and a removed one is not — without editing this skill (the runtime-lookup pattern of `issue-orchestrate`). If you genuinely cannot enumerate the live inventory, fall back to the anchor table and note the degraded resolution.
 
 ## Decomposition heuristic (requirement shape → building block → owning skill)
 
