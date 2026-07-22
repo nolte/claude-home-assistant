@@ -115,6 +115,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-automation-author`](claude/ha-automation-author/en.md) | Skill: `ha-automation-author` | Skill: `ha-automation-author` | draft | unversioned |
 | [`claude/ha-helper-scaffold`](claude/ha-helper-scaffold/en.md) | Skill: `ha-helper-scaffold` | Skill: `ha-helper-scaffold` | draft | unversioned |
 | [`claude/ha-derived-sensor-author`](claude/ha-derived-sensor-author/en.md) | Skill: `ha-derived-sensor-author` | Skill: `ha-derived-sensor-author` | draft | unversioned |
+| [`claude/ha-dev-workflow-apply`](claude/ha-dev-workflow-apply/en.md) | Skill: `ha-dev-workflow-apply` | Skill: `ha-dev-workflow-apply` | draft | unversioned |
 | [`claude/ha-repairs-add`](claude/ha-repairs-add/en.md) | Skill: `ha-repairs-add` | Skill: `ha-repairs-add` | draft | unversioned |
 | [`claude/ha-discovery-augment`](claude/ha-discovery-augment/en.md) | Skill: `ha-discovery-augment` | Skill: `ha-discovery-augment` | draft | unversioned |
 | [`claude/ha-device-automation-add`](claude/ha-device-automation-add/en.md) | Skill: `ha-device-automation-add` | Skill: `ha-device-automation-add` | draft | unversioned |
