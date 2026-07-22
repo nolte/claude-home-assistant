@@ -95,6 +95,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha-automation/legacy-trigger-helpers`](ha-automation/legacy-trigger-helpers/en.md) | HA Automation: Avoiding Legacy Trigger Helpers | HA-Automation: Legacy-Trigger-Helfer vermeiden | draft | unversioned |
 | [`claude/ha-integration-scaffold`](claude/ha-integration-scaffold/en.md) | Skill: `ha-integration-scaffold` | Skill: `ha-integration-scaffold` | draft | unversioned |
 | [`claude/ha-config-flow-augment`](claude/ha-config-flow-augment/en.md) | Skill: `ha-config-flow-augment` | Skill: `ha-config-flow-augment` | draft | unversioned |
+| [`claude/ha-options-flow-augment`](claude/ha-options-flow-augment/en.md) | Skill: `ha-options-flow-augment` | Skill: `ha-options-flow-augment` | draft | unversioned |
 | [`claude/ha-coordinator-add`](claude/ha-coordinator-add/en.md) | Skill: `ha-coordinator-add` | Skill: `ha-coordinator-add` | draft | unversioned |
 | [`claude/ha-entity-description-mapper`](claude/ha-entity-description-mapper/en.md) | Skill: `ha-entity-description-mapper` | Skill: `ha-entity-description-mapper` | draft | unversioned |
 | [`claude/ha-service-definition-generator`](claude/ha-service-definition-generator/en.md) | Skill: `ha-service-definition-generator` | Skill: `ha-service-definition-generator` | draft | unversioned |
