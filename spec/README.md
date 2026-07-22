@@ -135,6 +135,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-card-features-add`](claude/ha-card-features-add/en.md) | Skill: `ha-card-features-add` | Skill: `ha-card-features-add` | draft | unversioned |
 | [`claude/ha-card-preview-add`](claude/ha-card-preview-add/en.md) | Skill: `ha-card-preview-add` | Skill: `ha-card-preview-add` | draft | unversioned |
 | [`claude/ha-badge-add`](claude/ha-badge-add/en.md) | Skill: `ha-badge-add` | Skill: `ha-badge-add` | draft | unversioned |
+| [`claude/ha-solution`](claude/ha-solution/en.md) | Skill: `ha-solution` | Skill: `ha-solution` | draft | unversioned |
 | [`claude/ha-strategy-add`](claude/ha-strategy-add/en.md) | Skill: `ha-strategy-add` | Skill: `ha-strategy-add` | draft | unversioned |
 | [`claude/ha-panel-add`](claude/ha-panel-add/en.md) | Skill: `ha-panel-add` | Skill: `ha-panel-add` | draft | unversioned |
 | [`claude/ha-panel-author`](claude/ha-panel-author/en.md) | Skill: `ha-panel-author` | Skill: `ha-panel-author` | draft | unversioned |
