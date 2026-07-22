@@ -64,7 +64,8 @@ Der Skill macht **Sync-Operationen** auf einer existierenden Translation-Struktu
 - **MUSS [MUST]** für jede fehlende Key in `<lang>.json` einen Eintrag mit `<TODO: translate '<EN-Wert>'>` als Platzhalter ergänzen
 - **MUSS [MUST]** verwaiste Keys vor dem Entfernen explizit auflisten und User-Bestätigung holen — kein silent delete
 - **MUSS [MUST]** die Schlüssel-Reihenfolge in jeder `<lang>.json` an die von `strings.json` angleichen — JSON-Dictionaries sind in Python ungeordnet, aber Datei-Schreiber halten typisch die Insertion-Order
-- **MUSS [MUST]** `icons.json`-Drift als separaten Bericht ausgeben — Sync von `icons.json` ist nicht Teil dieses Skills (separater Skill `ha-icons-sync` denkbar)
+- **MUSS [MUST]** `icons.json`-Drift melden und im `apply`-Mode einen fehlenden `icons.json`-Key mit einem `<TODO: icon>`-Marker füllen — Icon-Auto-Fill ist Teil dieses Skills (derselbe TODO-Mechanismus wie bei `strings.json`)
+- **MUSS [MUST]** Config-Flow-Steps flaggen, deren `data`-Felder keinen passenden `data_description`-Eintrag in `strings.json` haben (ein Bronze-Config-Flow-Subcheck)
 
 ### Verbote
 
@@ -75,7 +76,8 @@ Der Skill macht **Sync-Operationen** auf einer existierenden Translation-Struktu
 ## Akzeptanzkriterien
 
 - [ ] Skill-Output enthält Drift-Bericht mit fehlenden Keys, verwaisten Keys, strukturellen Lücken
-- [ ] Skill-Output enthält `icons.json`-Drift-Bericht (separat)
+- [ ] `icons.json`-Drift wird gemeldet und im `apply`-Mode werden fehlende Keys TODO-gefüllt
+- [ ] Config-Flow-Felder ohne `data_description`-Eintrag werden geflaggt
 - [ ] Im `apply`-Mode: jede `translations/<lang>.json` enthält jeden Key aus `strings.json` (als `<TODO>` falls Übersetzung fehlt)
 - [ ] Verwaiste Keys werden vor Entfernung dem User vorgelegt
 - [ ] Bestehende Translation-Werte sind nach `apply` unverändert
