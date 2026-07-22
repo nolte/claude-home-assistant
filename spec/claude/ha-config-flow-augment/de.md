@@ -16,7 +16,7 @@ Der Skill erweitert einen **bestehenden** `config_flow.py` einer Custom Integrat
 
 - Nachrüstung einzelner Config-Flow-Patterns ohne dass der User den initial-Scaffold-Pfad noch einmal durchlaufen muss
 - Non-destruktive Erweiterung: bestehende Steps bleiben unverändert; nur neue Steps und neue Schema-Konstanten landen im Code
-- Cross-File-Konsistenz für jeden hinzugefügten Step: `config_flow.py`-Code, `strings.json`-Step-Strings, `translations/<lang>.json`-Spiegel, ggf. `manifest.json`-Discovery-Schlüssel, Tests in `tests/test_config_flow.py`
+- Cross-File-Konsistenz für jeden hinzugefügten Step: `config_flow.py`-Code, `strings.json`-Step-Strings, `translations/<lang>.json`-Spiegel, ggf. `manifest.json`-Discovery-Schlüssel, Tests in `tests/test_config_flow.py`; für das `oauth`-Pattern zusätzlich `manifest.json:dependencies: [application_credentials]`, ein `__init__.py`-Registrierungs-Block und `application_credentials.py` (`async_get_authorization_server`)
 - Quality-Scale-Übergänge sichtbar machen: ein User → Reauth-Augment hebt Bronze auf Silver; ein User → Reconfigure-Augment hebt Silver auf Gold
 
 ## Nicht-Ziele
@@ -25,6 +25,7 @@ Der Skill erweitert einen **bestehenden** `config_flow.py` einer Custom Integrat
 - Destruktive Refactorings (Step-Umbau, Step-Entfernung, Schema-Reduktion) — manuelle Aufgabe
 - Backend-spezifische OAuth-Provider-Konfiguration (Token-Endpoint, Scopes, Client-ID-Auth) — der Skill scaffolded den OAuth-**Flow**-Skelett; konkrete Provider-Werte trägt der User
 - Multi-Account-Architektur jenseits von Multi-Step-Auswahl (z. B. ein Account mit Sub-Accounts pro Service-Region) — eigene Folge-Spec, sobald konkret nötig
+- Discovery-Transporte außer Zeroconf (DHCP/SSDP/USB/HomeKit/MQTT) — `ha-discovery-augment`; das `zeroconf`-Pattern dieses Skills besitzt nur die mDNS/Zeroconf-Nachrüstung
 
 ## Anforderungen
 
