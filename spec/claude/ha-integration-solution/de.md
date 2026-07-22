@@ -42,7 +42,7 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 ### Eingaben
 
 - **MUSS [MUST]** erfassen: `requirement` (Prosa, das gewünschte Geräte-/Cloud-/API-Ergebnis)
-- **KANN [MAY]** erfassen: `domain` (Integration-Domain, sonst aus dem Scaffold-Schritt abgeleitet), `target_dir` (Repo-Root) und bekannte Protokoll-/Auth-Details (REST/MQTT/Bluetooth; API-Key/OAuth2)
+- **KANN [MAY]** erfassen: `domain` (Integration-Domain, sonst aus dem Scaffold-Schritt abgeleitet), `target_dir` (Repo-Root), bekannte Protokoll-/Auth-Details (REST/MQTT/Bluetooth; API-Key/OAuth2), ein `target_tier` (`bronze`/`silver`/`gold`/`platinum`, Default `silver`), das die enthaltenen Bausteine kumulativ treibt, und `release_ready` (auch CI-Validierung + HACS-Release-Reife scaffolden)
 
 ### Pre-Flight
 
@@ -55,11 +55,14 @@ Planung und Orchestrierung über den Integration-Backend-Cluster. Eine Anforderu
 - **MUSS [MUST]** vor jeder Generierung einen Plan als Tabelle in Abhängigkeits-Reihenfolge präsentieren: pro Eintrag `#`, Baustein, zuständiger Skill, Abhängigkeit (`depends-on`), Zweck — und explizite Bestätigung abwarten
 - **MUSS NICHT [MUST NOT]** einen Baustein selbst inline generieren; jede Generierung läuft über den zuständigen Einzel-Skill
 - **MUSS [MUST]** `ha-integration-scaffold` als Schritt 1 dispatchen, sobald eine *neue* Integration angelegt wird (Greenfield-Hub)
-- **MUSS [MUST]** das Fundament vor den Entities planen: `ha-config-flow-augment` und `ha-coordinator-add`; `ha-oauth2-credentials-augment` nur bei OAuth2/Cloud-Auth
+- **MUSS [MUST]** das Fundament vor den Entities planen: `ha-config-flow-augment` und `ha-coordinator-add`; `ha-oauth2-credentials-augment` nur bei OAuth2/Cloud-Auth; `ha-options-flow-augment` für eine Post-Setup-Option und `ha-config-entry-migrate` für einen Stored-Shape-Change
 - **MUSS [MUST]** deklarative Read-Type-Entities (Datapoint-/Schema-getrieben) auf `ha-entity-description-mapper` abbilden und aktive, befehlsgetriebene Plattformen (climate/cover/light/fan/lock/media_player/…) auf `ha-entity-platform-add`
-- **SOLLTE [SHOULD]** Aktionen/Oberflächen/Robustheit nur nach Bedarf der Anforderung planen: `ha-service-definition-generator` (Services), `ha-integration-events-add` (Event-Bus), `ha-device-automation-add` (Device-Automations), `ha-discovery-augment` (DHCP/SSDP/USB/HomeKit/Zeroconf), `ha-bluetooth-augment` (BLE), `ha-diagnostics-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-significant-change-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-reproduce-state-add`, `ha-conversation-agent-augment`
+- **SOLLTE [SHOULD]** Aktionen/Oberflächen/Robustheit nur nach Bedarf der Anforderung planen: `ha-service-definition-generator` (Services), `ha-integration-events-add` (Event-Bus), `ha-device-automation-add` (Device-Automations), `ha-discovery-augment` (DHCP/SSDP/USB/HomeKit/Zeroconf), `ha-bluetooth-augment` (BLE), `ha-diagnostics-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-significant-change-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-reproduce-state-add`, `ha-conversation-agent-augment`, `ha-device-registry-augment` (Geräte-Gruppierung / `via_device` / stale-devices)
 - **MUSS [MUST]** i18n und Tests gegen Ende planen: `ha-translation-sync` nach allen string-erzeugenden Schritten, `ha-test-harness-augment` für die ergänzten Code-Pfade
-- **SOLLTE [SHOULD]** den Lauf mit den Read-only-Reviews abschließen: `ha-quality-scale-audit` und `ha-security-audit` (der gebündelte Review-Pfad; modifizieren nie Code)
+- **MUSS [MUST]** den Baustein-Satz nach `target_tier` treiben (kumulativ Bronze→Platinum) — Bronze Scaffold + Config-Flow + Tests; Silver + Reauth + `PARALLEL_UPDATES` + `entity-unavailable` + Options; Gold + Diagnostics + Discovery + `ha-device-registry-augment` + Repairs + Reconfigure + Translations; Platinum Strict-Typing/Async als `ha/dev-workflow`-Checklist-Punkt
+- **MUSS [MUST]** einen `release_ready`-Lauf mit `ha-integration-ci-scaffold` (hassfest/HACS/pytest-CI) und `ha-hacs-release` (HACS-Distributions-Reife) abschließen
+- **MUSS [MUST]** den Lauf mit dem Read-only-Audit-Gate abschließen — `ha-quality-scale-audit` und `ha-security-audit` (modifizieren nie Code); ein Defizit routet je Finding zurück an den benannten Remediation-Skill
+- **SOLLTE [SHOULD]** die Plan-Bestätigung als einzelnes menschliches Gate behandeln — danach laufen Dispatch, Audits und der Release-Ready-Abschluss bis zur Fertigstellung, Stopp nur bei NEEDS-WORK
 - **MUSS [MUST]** die Skills in Abhängigkeits-Reihenfolge dispatchen und die `domain` sowie die in einem Schritt erzeugten `entity_id`s/Datei-Pfade als Eingaben der abhängigen Schritte durchreichen
 - **MUSS [MUST]** abbrechen und zurückmelden, wenn ein dispatchter Skill einen NEEDS-WORK-Bericht liefert, statt auf einem unfertigen Vorgänger-Baustein weiterzubauen
 - **MUSS [MUST]** die Artefakte minimal halten — keinen Baustein planen, den die Anforderung nicht verlangt

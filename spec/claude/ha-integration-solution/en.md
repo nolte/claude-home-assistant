@@ -42,7 +42,7 @@ Planning and orchestration across the integration backend cluster. One requireme
 ### Inputs
 
 - **MUST** capture: `requirement` (prose, the desired device/cloud/API result)
-- **MAY** capture: `domain` (integration domain, otherwise derived from the scaffold step), `target_dir` (repo root), and known protocol/auth details (REST/MQTT/Bluetooth; API key/OAuth2)
+- **MAY** capture: `domain` (integration domain, otherwise derived from the scaffold step), `target_dir` (repo root), known protocol/auth details (REST/MQTT/Bluetooth; API key/OAuth2), a `target_tier` (`bronze`/`silver`/`gold`/`platinum`, default `silver`) that drives the included building blocks cumulatively, and `release_ready` (also scaffold CI validation + HACS-release readiness)
 
 ### Pre-flight
 
@@ -55,11 +55,14 @@ Planning and orchestration across the integration backend cluster. One requireme
 - **MUST** present a plan as a table in dependency order before any generation: per entry `#`, building block, owning skill, dependency (`depends-on`), purpose — and wait for explicit confirmation
 - **MUST NOT** generate a building block inline itself; every generation runs through the owning individual skill
 - **MUST** dispatch `ha-integration-scaffold` as step 1 whenever a *new* integration is created (greenfield hub)
-- **MUST** plan the foundation before the entities: `ha-config-flow-augment` and `ha-coordinator-add`; `ha-oauth2-credentials-augment` only for OAuth2/cloud auth
+- **MUST** plan the foundation before the entities: `ha-config-flow-augment` and `ha-coordinator-add`; `ha-oauth2-credentials-augment` only for OAuth2/cloud auth; `ha-options-flow-augment` for a post-setup option and `ha-config-entry-migrate` for a stored-shape change
 - **MUST** map declarative read-type entities (datapoint/schema driven) to `ha-entity-description-mapper` and active, command-driven platforms (climate/cover/light/fan/lock/media_player/…) to `ha-entity-platform-add`
-- **SHOULD** plan actions/surfaces/robustness only as the requirement needs: `ha-service-definition-generator` (services), `ha-integration-events-add` (event bus), `ha-device-automation-add` (device automations), `ha-discovery-augment` (DHCP/SSDP/USB/HomeKit/Zeroconf), `ha-bluetooth-augment` (BLE), `ha-diagnostics-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-significant-change-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-reproduce-state-add`, `ha-conversation-agent-augment`
+- **SHOULD** plan actions/surfaces/robustness only as the requirement needs: `ha-service-definition-generator` (services), `ha-integration-events-add` (event bus), `ha-device-automation-add` (device automations), `ha-discovery-augment` (DHCP/SSDP/USB/HomeKit/Zeroconf), `ha-bluetooth-augment` (BLE), `ha-diagnostics-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-significant-change-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-reproduce-state-add`, `ha-conversation-agent-augment`, `ha-device-registry-augment` (device grouping / `via_device` / stale-devices)
 - **MUST** plan i18n and tests near the end: `ha-translation-sync` after all string-producing steps, `ha-test-harness-augment` for the added code paths
-- **SHOULD** close the run with the read-only reviews: `ha-quality-scale-audit` and `ha-security-audit` (the bundled review path; they never modify code)
+- **MUST** drive the building-block set by `target_tier` (cumulative Bronze→Platinum) — Bronze scaffold + config-flow + tests; Silver + reauth + `PARALLEL_UPDATES` + `entity-unavailable` + options; Gold + diagnostics + discovery + `ha-device-registry-augment` + repairs + reconfigure + translations; Platinum strict-typing/async as a `ha/dev-workflow` checklist item
+- **MUST** finish a `release_ready` run with `ha-integration-ci-scaffold` (hassfest/HACS/pytest CI) and `ha-hacs-release` (HACS distribution readiness)
+- **MUST** close the run with the read-only audit gate — `ha-quality-scale-audit` and `ha-security-audit` (they never modify code); a shortfall routes back to the named remediation skill per finding
+- **SHOULD** treat the plan approval as the single human gate — after it the dispatch, the audits, and the release-ready finish run to completion, stopping only on NEEDS-WORK
 - **MUST** dispatch the skills in dependency order and thread the `domain` plus the `entity_id`s/file paths produced in one step into the inputs of dependent steps
 - **MUST** stop and report when a dispatched skill returns a NEEDS-WORK report, rather than building on an unfinished predecessor building block
 - **MUST** keep artifacts minimal — never plan a building block the requirement does not call for
