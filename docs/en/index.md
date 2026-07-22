@@ -4,7 +4,7 @@ Claude Code plugin with skills and agents for the efficient development of [Home
 
 ## Overview
 
-This plugin provides reusable building blocks that let Claude Code deliver Home Assistant projects with less friction. You describe a **result** — the matching `*-solution` front-door skill plans the work and invokes the focused authoring skills.
+This plugin provides reusable building blocks that let Claude Code deliver Home Assistant projects with less friction. You describe a **result** — the top-level `ha-solution` router classifies it into one or more domains and hands each off to the matching domain front-door skill (`*-solution`), which plans the work and invokes the focused authoring skills. When the domain is already clear, you can go straight to that domain solution.
 
 ## Use cases
 

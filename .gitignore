@@ -31,6 +31,15 @@ dist/
 /docs/en/skills/SUMMARY.md
 /docs/en/agents/SUMMARY.md
 /docs/en/tags.md
+# Guard against a future canonical-language flip leaving stale generated
+# catalog output behind in a non-canonical tree (as docs/de/ did before PR #32).
+/docs/*/skills/*/
+/docs/*/agents/*/
+/docs/*/skills/index.md
+/docs/*/agents/index.md
+/docs/*/skills/SUMMARY.md
+/docs/*/agents/SUMMARY.md
+/docs/*/tags.md
 
 # Task runner cache
 .task/

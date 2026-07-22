@@ -2,6 +2,8 @@
 
 Dieses Plugin bündelt Skills, Agents und Specs entlang von sechs Anwendungsfällen. Jeder Fall hat eine **Front-Door-Skill** (`*-solution`) — den Einstiegspunkt, der das gewünschte Ergebnis in die minimale Menge an Artefakten übersetzt und die fokussierten Skills aufruft. Du musst nicht selbst wissen, welche Skill welches Artefakt erzeugt.
 
+Über diesen sechs Domain-Front-Doors steht **`ha-solution`**, der Top-Level-Router. Beschreibe ein beliebiges Home-Assistant-Ergebnis: Er ordnet die Anfrage einer oder mehreren Domänen zu und leitet jeden Teil an die zuständige `*-solution` weiter. Bei echt domänenübergreifender Arbeit — etwa eine Custom Card plus die dahinterliegende Integration plus eine Automation — zerlegt er sie in Abhängigkeitsreihenfolge und hält die geteilten Identitäten (Domain, Entity-IDs, Card-Tags, Command-Typen) über die Grenzen hinweg konsistent. Greif direkt zu einer einzelnen Domain-Front-Door, wenn du schon weißt, dass die Anfrage in genau einer Domäne liegt.
+
 Den vollständigen, automatisch generierten Katalog mit Beschreibung jeder Skill und jedes Agents findest du unter [Skills](skills/index.md) und [Agents](agents/index.md).
 
 !!! info "Front-Door vs. fokussierte Skills"

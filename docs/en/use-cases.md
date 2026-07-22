@@ -2,6 +2,8 @@
 
 This plugin bundles skills, agents, and specs along six use cases. Each case has a **front-door skill** (`*-solution`) — the entry point that turns the result you want into the minimal set of artifacts and dispatches the focused skills. You don't have to know which skill produces which artifact.
 
+Above these six domain front doors sits **`ha-solution`**, the top-level router. Describe any Home Assistant result and it classifies the request into one or more domains and routes each part to the owning `*-solution`. For genuinely cross-domain work — say a custom card plus its backing integration plus an automation — it decomposes across them in dependency order and threads the shared identities (domain, entity IDs, card tags, command types) across the boundaries. Reach for a single domain front door directly when you already know the request lives in one domain.
+
 Find the full, auto-generated catalog — with a description of every skill and agent — under [Skills](skills/index.md) and [Agents](agents/index.md).
 
 !!! info "Front-door vs. focused skills"
