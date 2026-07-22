@@ -128,6 +128,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-strategy-add`](claude/ha-strategy-add/en.md) | Skill: `ha-strategy-add` | Skill: `ha-strategy-add` | draft | unversioned |
 | [`claude/ha-panel-add`](claude/ha-panel-add/en.md) | Skill: `ha-panel-add` | Skill: `ha-panel-add` | draft | unversioned |
 | [`claude/ha-panel-author`](claude/ha-panel-author/en.md) | Skill: `ha-panel-author` | Skill: `ha-panel-author` | draft | unversioned |
+| [`claude/ha-panel-ux-audit`](claude/ha-panel-ux-audit/en.md) | Skill: `ha-panel-ux-audit` | Skill: `ha-panel-ux-audit` | draft | unversioned |
 | [`claude/ha-websocket-command-add`](claude/ha-websocket-command-add/en.md) | Skill: `ha-websocket-command-add` | Skill: `ha-websocket-command-add` | draft | unversioned |
 | [`claude/ha-integration-solution`](claude/ha-integration-solution/en.md) | Skill: `ha-integration-solution` | Skill: `ha-integration-solution` | draft | unversioned |
 | [`claude/ha-lovelace-solution`](claude/ha-lovelace-solution/en.md) | Skill: `ha-lovelace-solution` | Skill: `ha-lovelace-solution` | draft | unversioned |

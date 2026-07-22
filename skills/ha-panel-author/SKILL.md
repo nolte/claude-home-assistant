@@ -52,8 +52,11 @@ Use this skill when the user wants a **complete, production-grade panel** built 
 | `data_sources` | no | asked when needed | entities / registries / WebSocket data the panel renders |
 | `backend_needed` | no | inferred + confirmed | whether the panel calls a backend endpoint (→ WebSocket command) |
 | `delivery_shape` | no | decided + confirmed | override for the custom-panel / panel-mode-view / custom-view decision |
+| `ux_audit_report` | no | none | a `ha-panel-ux-audit` report to consume as a prioritized improvement work-list |
 
 If the need is underspecified, ask 1–3 targeted questions (which data/entities, what interactivity, whether a backend endpoint is needed, target repo/domain) before deciding the shape. Do not plan on guesses.
+
+When a `ux_audit_report` (from `ha-panel-ux-audit`) is provided, treat its work-list as the prioritized set of improvements to fold into the build plan — address findings in severity order and confirm the mobile-usability items are resolved.
 
 ## Pre-flight (in order — abort on first failure)
 
