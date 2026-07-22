@@ -19,7 +19,8 @@ Eine vollständige Custom Integration unter `custom_components/<domain>/`, insta
 - **Skelett:** `ha-integration-scaffold` (Manifest, Lifecycle, Config-Flow, Coordinator, Entity, Plattformen, Translations, Icons, Diagnostics, pytest-Harness)
 - **Ergänzen / erweitern:** `ha-config-flow-augment`, `ha-coordinator-add`, `ha-entity-platform-add`, `ha-entity-description-mapper`, `ha-service-definition-generator`, `ha-diagnostics-augment`, `ha-discovery-augment`, `ha-bluetooth-augment`, `ha-oauth2-credentials-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-significant-change-add`, `ha-reproduce-state-add`, `ha-integration-events-add`, `ha-conversation-agent-augment`
 - **Qualität:** `ha-translation-sync`, `ha-test-harness-augment`
-- **Specs:** `spec/ha/integration-architecture`, `…/config-flow-patterns`, `…/coordinator-patterns`, `…/entity-architecture` und die übrigen `spec/ha/*`-Integration-Topics
+- **Code-Style & Validierung:** `ha-dev-workflow-apply` (Ruff-Format, Strict-Typing per mypy, hassfest- und voluptuous-Checks — vom Bronze-Floor bis Platinum)
+- **Specs:** `spec/ha/integration-architecture`, `…/config-flow-patterns`, `…/coordinator-patterns`, `…/entity-architecture`, `…/dev-workflow` und die übrigen `spec/ha/*`-Integration-Topics
 
 ## 2. Lovelace-Frontend bauen (TypeScript / JavaScript)
 

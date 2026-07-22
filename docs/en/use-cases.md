@@ -19,7 +19,8 @@ A complete custom integration under `custom_components/<domain>/`, installable t
 - **Skeleton:** `ha-integration-scaffold` (manifest, lifecycle, config flow, coordinator, entity, platforms, translations, icons, diagnostics, pytest harness)
 - **Add / augment:** `ha-config-flow-augment`, `ha-coordinator-add`, `ha-entity-platform-add`, `ha-entity-description-mapper`, `ha-service-definition-generator`, `ha-diagnostics-augment`, `ha-discovery-augment`, `ha-bluetooth-augment`, `ha-oauth2-credentials-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-significant-change-add`, `ha-reproduce-state-add`, `ha-integration-events-add`, `ha-conversation-agent-augment`
 - **Quality:** `ha-translation-sync`, `ha-test-harness-augment`
-- **Specs:** `spec/ha/integration-architecture`, `…/config-flow-patterns`, `…/coordinator-patterns`, `…/entity-architecture`, and the other `spec/ha/*` integration topics
+- **Code style & validation:** `ha-dev-workflow-apply` (Ruff format, strict typing with a local mypy-strict profile, hassfest and voluptuous validation — the bronze-floor-to-platinum dev workflow)
+- **Specs:** `spec/ha/integration-architecture`, `…/config-flow-patterns`, `…/coordinator-patterns`, `…/entity-architecture`, `…/dev-workflow`, and the other `spec/ha/*` integration topics
 
 ## 2. Build a Lovelace frontend (TypeScript / JavaScript)
 
