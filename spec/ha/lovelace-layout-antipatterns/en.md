@@ -16,7 +16,7 @@ The existing `ha/lovelace-*` cluster describes **how** to build cards, views, pa
 - `[community]` — observed in real community practice (forum threads, dashboard showcases, real card code), not stated in the official docs; used as corroboration, never asserted as an HA fact.
 - `[policy]` — a nolte-portfolio rule, marked as such; not presented as an HA fact.
 
-This spec delimits against its siblings: card internals and lifecycle live in `ha/lovelace-card-patterns`, editor mechanics in `ha/lovelace-card-editor`, feature widgets in `ha/lovelace-card-features`, badge internals in `ha/lovelace-badges`, programmatic generation in `ha/lovelace-strategies`, and the view/panel element contract in `ha/lovelace-views-panels`. Overlaps are referenced by slug, not repeated.
+This spec delimits against its siblings: card internals and lifecycle live in `ha/lovelace-card-patterns`, editor mechanics in `ha/lovelace-card-editor`, feature widgets in `ha/lovelace-card-features`, badge internals in `ha/lovelace-badges`, programmatic generation in `ha/lovelace-strategies`, the view/panel element contract in `ha/lovelace-views-panels`, and the card/panel sizing decision procedure (`getGridOptions`/`getCardSize` — fixed vs. `rows: "auto"`) in `ha/card-panel-sizing`. Overlaps are referenced by slug, not repeated.
 
 Quality scale marker: dashboard layout and custom cards are **not part of the HA quality scale** — this catalogue is a nolte-portfolio guardrail and lives outside the scale.
 

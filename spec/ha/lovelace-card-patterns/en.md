@@ -71,6 +71,7 @@ Quality scale marker: **Bronze** (custom cards are not part of the HA quality sc
 - **MUST** implement `getCardSize()` and return a value >= 1 (one unit equals ~50 px in the pre-sections Lovelace world)
 - **SHOULD** implement `getGridOptions()` — HA 2024.3+ sections layout uses it to scale the card responsively; default shape: `return { columns: 6, rows: 3, min_columns: 3, min_rows: 2 }`
 - **MAY** carry a dynamic `getGridOptions()` when the card needs different sizes depending on configuration — the return object is evaluated per render
+- The *decision* of which values to return (fixed `rows` + `min_rows: rows` vs. `rows: "auto"`, the `getGridOptions` ↔ `getCardSize` split, and the CSS preconditions for `"auto"`) is owned by `ha/card-panel-sizing` — this section states the lifecycle obligation, not the sizing procedure
 
 ### `getConfigElement` and `getStubConfig`
 

@@ -16,7 +16,7 @@ Der bestehende `ha/lovelace-*`-Cluster beschreibt, **wie** man Cards, Views, Pan
 - `[community]` — in realer Community-Praxis beobachtet (Forum-Threads, Dashboard-Showcases, echter Card-Code), nicht in der offiziellen Doku belegt; als Korroboration genutzt, nie als HA-Fakt behauptet.
 - `[policy]` — eine nolte-Portfolio-Regel, als solche gekennzeichnet; nicht als HA-Fakt dargestellt.
 
-Diese Spec grenzt gegen ihre Geschwister ab: Card-Interna und Lifecycle liegen in `ha/lovelace-card-patterns`, Editor-Mechanik in `ha/lovelace-card-editor`, Feature-Widgets in `ha/lovelace-card-features`, Badge-Interna in `ha/lovelace-badges`, programmatische Generierung in `ha/lovelace-strategies`, und der View-/Panel-Element-Contract in `ha/lovelace-views-panels`. Überschneidungen werden per Slug referenziert, nicht wiederholt.
+Diese Spec grenzt gegen ihre Geschwister ab: Card-Interna und Lifecycle liegen in `ha/lovelace-card-patterns`, Editor-Mechanik in `ha/lovelace-card-editor`, Feature-Widgets in `ha/lovelace-card-features`, Badge-Interna in `ha/lovelace-badges`, programmatische Generierung in `ha/lovelace-strategies`, der View-/Panel-Element-Contract in `ha/lovelace-views-panels`, und das Card-/Panel-Sizing-Entscheidungsverfahren (`getGridOptions`/`getCardSize` — fest vs. `rows: "auto"`) in `ha/card-panel-sizing`. Überschneidungen werden per Slug referenziert, nicht wiederholt.
 
 Quality-Scale-Marker: Dashboard-Layout und Custom Cards sind **nicht Teil der HA-Quality-Scale** — dieser Katalog ist ein nolte-Portfolio-Guardrail und steht außerhalb der Skala.
 
