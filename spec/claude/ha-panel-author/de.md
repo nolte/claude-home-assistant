@@ -43,7 +43,8 @@ Entwicklung genau einer Panel-Lösung pro Lauf, End-to-End, in ein bestehendes R
 ### Eingaben
 
 - **MUSS [MUST]** erfassen: `need` (Prosa, das gewünschte Panel-/Seiten-Ergebnis)
-- **KANN [MAY]** erfassen: `target_dir` (Repo-Root), `domain` der bestehenden Integration, `data_sources` (Entities/Registries/WebSocket-Daten), `backend_needed` und einen `delivery_shape`-Override
+- **KANN [MAY]** erfassen: `target_dir` (Repo-Root), `domain` der bestehenden Integration, `data_sources` (Entities/Registries/WebSocket-Daten), `backend_needed`, einen `delivery_shape`-Override und einen `ux_audit_report` (einen `ha-panel-ux-audit`-Report, der als priorisierte Verbesserungs-Arbeitsliste konsumiert wird)
+- **SOLLTE [SHOULD]** — wenn ein `ux_audit_report` bereitgestellt ist — dessen Arbeitsliste in den Build-Plan einfalten, die Findings in Severity-Reihenfolge abarbeiten und die Mobile-Usability-Punkte als gelöst bestätigen
 
 ### Pre-Flight (in Reihenfolge, Abbruch beim ersten Fehler)
 

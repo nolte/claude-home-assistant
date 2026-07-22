@@ -43,7 +43,8 @@ Developing exactly one panel solution per run, end-to-end, into an existing repo
 ### Inputs
 
 - **MUST** capture: `need` (prose, the desired panel/page result)
-- **MAY** capture: `target_dir` (repo root), `domain` of the existing integration, `data_sources` (entities/registries/WebSocket data), `backend_needed`, and a `delivery_shape` override
+- **MAY** capture: `target_dir` (repo root), `domain` of the existing integration, `data_sources` (entities/registries/WebSocket data), `backend_needed`, a `delivery_shape` override, and a `ux_audit_report` (a `ha-panel-ux-audit` report to consume as a prioritized improvement work-list)
+- **SHOULD** — when a `ux_audit_report` is provided — fold its work-list into the build plan, address the findings in severity order, and confirm the mobile-usability items are resolved
 
 ### Pre-flight (in order — abort on first failure)
 
