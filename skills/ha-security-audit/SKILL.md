@@ -52,7 +52,10 @@ Run `grep`-based pattern checks for each rule:
 | Bearer-token gating | `Authorization` header occurrences across modules |
 | Config-flow input validation | `vol.Schema` constructs in `config_flow.py` |
 | Multi-instance service disambiguation | service handlers vs. `_resolve_entry` helper |
-| Diagnostics redaction | `async_redact_data` + `TO_REDACT` consistency with `entry.data` keys |
+| Diagnostics redaction | `async_redact_data` + `TO_REDACT` consistency with `entry.data` keys, incl. coordinates (`latitude`/`longitude`) per the `ha/security-hardening` classification |
+| Transport security (TLS) | `ssl=False` / `verify=False` / `TCPConnector(ssl=False)` occurrences |
+| Request timeouts | outbound `session.{get,post,put,patch,delete}` without `timeout=` / `ClientTimeout` |
+| HTTP view auth | `hass.http.register_view` without `requires_auth = True` |
 | Logging discipline | `_LOGGER.{level}(...api_key\|token\|password\|secret...)` |
 
 ### 2) Score

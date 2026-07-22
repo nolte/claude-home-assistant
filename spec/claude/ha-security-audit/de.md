@@ -74,8 +74,13 @@ Pro Regel aus `ha/security-hardening` führt der Skill den folgenden Check aus:
 
 #### Diagnostics-Redaction
 
-- **MUSS [MUST]** in `diagnostics.py` nach `async_redact_data`-Aufrufen suchen und prüfen, ob `TO_REDACT` jeden Schlüssel aus `entry.data` enthält, der einen Auth- oder Identifier-Charakter hat (heuristisch: `*key`, `*token`, `*password`, `*secret`, `*auth`, `*tenant*`)
-- **Finding wenn**: `diagnostics.py` fehlt → medium; `async_redact_data` fehlt → medium; `TO_REDACT` hat Lücken (z. B. fehlt `tenant_slug`, der in `entry.data` als Schlüssel auftaucht) → low (oder medium, je nach Schlüssel-Charakter)
+- **MUSS [MUST]** in `diagnostics.py` nach `async_redact_data`-Aufrufen suchen und prüfen, ob `TO_REDACT` jeden MUSS-redact-Key aus `ha/security-hardening` § Diagnostics-Redaction enthält, der in `entry.data` auftaucht — Credentials (`*key`, `*token`, `*password`, `*secret`, `*auth`), Tenant-Identifier (`*tenant*`) und **Koordinaten** (`latitude`, `longitude`)
+- **Finding wenn**: `diagnostics.py` fehlt → medium; `async_redact_data` fehlt → medium; eine MUSS-redact-Key-Lücke (Koordinaten eingeschlossen) → **medium** (wie `ha-diagnostics-augment` es klassifiziert); eine SOLLTE-redact-Key-Lücke → low
+
+#### Transport-Sicherheit (TLS & Timeouts)
+
+- **MUSS [MUST]** mit `grep` nach deaktivierter TLS-Verifikation (`ssl=False`, `verify=False`, `TCPConnector(ssl=False)`), nach ausgehenden Requests ohne expliziten `timeout=` / `ClientTimeout` und nach `hass.http.register_view(...)` ohne `requires_auth` suchen
+- **Finding wenn**: TLS-Verifikation ohne Begründungs-Kommentar deaktiviert → high; ausgehender Request ohne Timeout → medium; registrierte View ohne `requires_auth` → medium (gemäß `ha/security-hardening` § Transport-Sicherheit)
 
 #### Logging-Disziplin
 
@@ -103,6 +108,7 @@ Pro Regel aus `ha/security-hardening` führt der Skill den folgenden Check aus:
 
 - [ ] Skill liest `manifest.json`, `api.py`, `config_flow.py`, `__init__.py`, `services.py` (sofern vorhanden), `diagnostics.py`
 - [ ] Skill produziert pro `ha/security-hardening`-Regel einen Audit-Eintrag (auch bei „pass")
+- [ ] Skill prüft Transport-Sicherheit (TLS-Verifikation, Request-Timeouts, HTTP-View-Auth) und flaggt MUSS-redact-Key-Auslassungen (Koordinaten eingeschlossen) mit medium
 - [ ] Findings sind nach Severity (high → low) sortiert
 - [ ] Skill macht keine Datei-Modifikationen (`git status` unverändert nach Lauf)
 - [ ] Skill-Output enthält Quality-Scale-Stand-Zusammenfassung

@@ -74,8 +74,13 @@ Per `ha/security-hardening` rule the skill runs the following check:
 
 #### Diagnostics redaction
 
-- **MUST** look for `async_redact_data` calls in `diagnostics.py` and check whether `TO_REDACT` carries every key from `entry.data` that has an auth or identifier character (heuristic: `*key`, `*token`, `*password`, `*secret`, `*auth`, `*tenant*`)
-- **Finding when**: `diagnostics.py` missing → medium; `async_redact_data` missing → medium; `TO_REDACT` has gaps (for example `tenant_slug` is missing while the key appears in `entry.data`) → low (or medium, depending on key character)
+- **MUST** look for `async_redact_data` calls in `diagnostics.py` and check whether `TO_REDACT` carries every MUST-redact key from `ha/security-hardening` § Diagnostics redaction that appears in `entry.data` — credentials (`*key`, `*token`, `*password`, `*secret`, `*auth`), tenant identifiers (`*tenant*`), and **coordinates** (`latitude`, `longitude`)
+- **Finding when**: `diagnostics.py` missing → medium; `async_redact_data` missing → medium; a MUST-redact-key gap (coordinates included) → **medium** (matching how `ha-diagnostics-augment` classifies it); a SHOULD-redact-key gap → low
+
+#### Transport security (TLS & timeouts)
+
+- **MUST** `grep` for disabled TLS verification (`ssl=False`, `verify=False`, `TCPConnector(ssl=False)`), for outbound requests lacking an explicit `timeout=` / `ClientTimeout`, and for `hass.http.register_view(...)` without `requires_auth`
+- **Finding when**: TLS verification disabled without a justifying comment → high; an outbound request without a timeout → medium; a registered view without `requires_auth` → medium (per `ha/security-hardening` § Transport security)
 
 #### Logging discipline
 
@@ -103,6 +108,7 @@ Per `ha/security-hardening` rule the skill runs the following check:
 
 - [ ] The skill reads `manifest.json`, `api.py`, `config_flow.py`, `__init__.py`, `services.py` (when present), `diagnostics.py`
 - [ ] The skill produces an audit entry per `ha/security-hardening` rule (also on "pass")
+- [ ] The skill checks transport security (TLS verification, request timeouts, HTTP-view auth) and flags MUST-redact-key omissions (coordinates included) at medium
 - [ ] Findings are sorted by severity (high → low)
 - [ ] The skill makes no file modifications (`git status` is unchanged after the run)
 - [ ] Skill output carries the quality-scale state summary

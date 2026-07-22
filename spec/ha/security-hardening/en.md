@@ -62,6 +62,10 @@ Quality scale marker: **Silver** (input validation and safe defaults are a Silve
 
 - **MUST** use `async_redact_data` for every credential entry stored in `entry.data` / `entry.options` (see `ha/diagnostics`) — diagnostics dumps land in forum posts and must not contain secrets
 - **MUST NOT** leak credentials into coordinator data — if the backend itself returns auth material in API responses (for example refresh tokens), it belongs in `TO_REDACT` as well
+- **MUST** classify redaction keys against this canonical set — consumed by both `ha-diagnostics-augment` (which redacts) and `ha-security-audit` (which flags omissions), so guidance does not diverge:
+  - **MUST-redact** (credentials, coordinates, contact): `password`, `api_key`, `token`, `access_token`, `refresh_token`, `client_secret`, `secret`, `auth`, `bearer`, `encryption_key`, `pin`, `latitude`, `longitude`, `email`
+  - **SHOULD-redact** (support-useful, contextual): `host`, `ip_address`, `mac`, `serial_number`, `username`, `unique_id`, and tenant/account identifiers (`tenant_slug`, `tenant_id`, `org_id`)
+- **MUST** treat the omission of a MUST-redact key (coordinates included) as at least a **medium** issue, not low
 
 ### Logging discipline
 
@@ -69,6 +73,12 @@ Quality scale marker: **Silver** (input validation and safe defaults are a Silve
 - **MUST NOT** dump full API responses unredacted into DEBUG logs when the response carries sensitive fields
 - **SHOULD** define a dedicated helper function (`_safe_log(payload)`) for DEBUG diagnostics that strips sensitive fields before logging
 - **MAY** carry request IDs / correlation IDs in logs — that helps tracing without containing credentials
+
+### Transport security (TLS & timeouts)
+
+- **MUST NOT** disable TLS certificate verification on outbound HTTP — no `ssl=False`, `verify=False`, or `aiohttp.TCPConnector(ssl=False)` — unless a documented local self-signed backend justifies it in a comment
+- **MUST** set an explicit timeout on every outbound request (`aiohttp.ClientTimeout` / `timeout=`) so a stalled backend cannot hang the event loop
+- **SHOULD** gate every `hass.http.register_view(...)` with `requires_auth = True` unless the view is intentionally public
 
 ### Cross-references
 
@@ -86,12 +96,15 @@ Quality scale marker: **Silver** (input validation and safe defaults are a Silve
 - [ ] Service handlers call the `_resolve_entry` helper from `ha/services` and abort with `ServiceValidationError` on ambiguity
 - [ ] `diagnostics.py` redacts every credential and multi-tenant identifier (see `ha/diagnostics`)
 - [ ] A `grep` for `_LOGGER\.[a-z]+\(.*api_key`, `_LOGGER\.[a-z]+\(.*token`, `_LOGGER\.[a-z]+\(.*password` returns no hits
+- [ ] Redaction keys follow the canonical MUST-redact / SHOULD-redact classification; coordinates are MUST-redact
+- [ ] Outbound HTTP never disables TLS verification and sets an explicit request timeout
+- [ ] Registered HTTP views set `requires_auth = True` unless intentionally public
 - [ ] Quality scale marker: **Silver**
 
 ## Open Questions
 
 - **API-client spec maturity**: Currently the HTTP client shape (`api.py` layout, exception hierarchy, path whitelist form) is defined only indirectly through cross-reference to kamerplanter-ha. When does that become a dedicated `ha/api-client-patterns` spec?
-- **TLS-verification default**: Should skills force `verify=True` (TLS-cert validation) as the default, or remain backend-specific (some self-signed local backends)?
+- **TLS-verification default** (resolved): outbound HTTP **MUST NOT** disable TLS certificate verification (see § Transport security); a self-signed local backend is the only exception and requires a documented justifying comment.
 - **Whitelist granularity**: How specific does the path whitelist need to be? Currently formulated as "match the matching backend paths"; a heuristic (per-endpoint vs. top-level area) is missing.
 - **Hard-enforce bearer-token-in-log ban**: A `grep`-based CI rule as an acceptance criterion; should that become a mandatory lint hook (for example a bandit / semgrep pattern), or is code review sufficient?
 - **Audit-log addition**: Should the spec mirror audit-relevant actions (service calls, reauth events) into HA system events, so users can trace them in the logbook?
