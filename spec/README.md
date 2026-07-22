@@ -113,6 +113,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-repairs-add`](claude/ha-repairs-add/en.md) | Skill: `ha-repairs-add` | Skill: `ha-repairs-add` | draft | unversioned |
 | [`claude/ha-discovery-augment`](claude/ha-discovery-augment/en.md) | Skill: `ha-discovery-augment` | Skill: `ha-discovery-augment` | draft | unversioned |
 | [`claude/ha-device-automation-add`](claude/ha-device-automation-add/en.md) | Skill: `ha-device-automation-add` | Skill: `ha-device-automation-add` | draft | unversioned |
+| [`claude/ha-device-registry-augment`](claude/ha-device-registry-augment/en.md) | Skill: `ha-device-registry-augment` | Skill: `ha-device-registry-augment` | draft | unversioned |
 | [`claude/ha-oauth2-credentials-augment`](claude/ha-oauth2-credentials-augment/en.md) | Skill: `ha-oauth2-credentials-augment` | Skill: `ha-oauth2-credentials-augment` | draft | unversioned |
 | [`claude/ha-bluetooth-augment`](claude/ha-bluetooth-augment/en.md) | Skill: `ha-bluetooth-augment` | Skill: `ha-bluetooth-augment` | draft | unversioned |
 | [`claude/ha-conversation-agent-augment`](claude/ha-conversation-agent-augment/en.md) | Skill: `ha-conversation-agent-augment` | Skill: `ha-conversation-agent-augment` | draft | unversioned |
