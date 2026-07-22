@@ -37,6 +37,7 @@ Use this skill when the user describes a **frontend result** that likely needs m
 6. **Stop on NEEDS-WORK.** If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent artifact on an unfinished predecessor.
 7. **Backend lives in a Python integration.** A WebSocket command's backend belongs to a custom integration — dispatch the command via `ha-websocket-command-add`, surface a missing integration as a prerequisite (`ha-integration-scaffold`), and never fold backend work into a frontend skill.
 8. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Layout-antipattern catalogue governs every artifact.** Every dispatched card/panel/strategy/badge must conform to [`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md); fold its acceptance checklist into each artifact's conformance gate and stop on a violation as with any NEEDS-WORK (rule 6).
 
 ## Inputs
 

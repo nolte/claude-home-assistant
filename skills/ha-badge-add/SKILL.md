@@ -38,6 +38,7 @@ Use this skill to add **one** custom badge — the small status widget at the he
 7. **Graphical editor is optional.** Add the static `getConfigElement()` / `getStubConfig()` only when an editor is wanted; do **not** spell out the `config-changed` event pattern here — that is governed by [`ha/lovelace-card-editor`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-card-editor/de.md).
 8. **Document the wiring.** Reference the badge via `type: "custom:<badge-type>"` in a view's `badges:` list and add a `module` resource with the badge module URL (typically `/local/<badge-name>.js`); note the HA restart needed after first creating the `www` folder.
 9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+10. **Honour the layout-antipattern catalogue** ([`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md)). Badges do not render in `panel` or `sidebar` views (A2) — when documenting the wiring, note the target view must support badges (Sections, Masonry), not panel/sidebar.
 
 ## Inputs
 

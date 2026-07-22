@@ -64,6 +64,7 @@ Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovel
 - **MUSS [MUST]** die Skills in Abhängigkeits-Reihenfolge dispatchen (Card vor ihren Add-ons; Badges/Strategies/Panels unabhängig; ein WebSocket-Command als Backend, das die Card/das Panel konsumiert) und die Identitäten (Card-Tag/`custom:<type>`, Datei-Pfad, Modul-Resource, `<domain>`, Command-`type`) als Eingaben der abhängigen Schritte durchreichen
 - **MUSS [MUST]** abbrechen und zurückmelden, wenn ein dispatchter Skill einen NEEDS-WORK-Bericht liefert, statt auf einem unfertigen Vorgänger-Artefakt weiterzubauen
 - **MUSS [MUST]** alle Bezeichner über die Artefakte hinweg konsistent nach `ha/naming-conventions` halten und HA-Interna gegen die offizielle Doku verifizieren (`ha/upstream-docs-verification`)
+- **MUSS [MUST]** jedes dispatchte Artefakt an `ha/lovelace-layout-antipatterns` binden und dessen Acceptance-Checkliste in das Konformitäts-Gate jedes Artefakts einfließen lassen
 
 ### Gesamt-Bericht
 
