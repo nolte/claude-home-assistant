@@ -1,6 +1,6 @@
 ---
 name: ha-lovelace-solution
-description: Plan and orchestrate a complete Home Assistant Lovelace/frontend solution from a result-oriented requirement, so the user never has to pick which frontend skill to use. Decomposes the requirement into the minimal combination of artifacts across the Lovelace skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-lovelace-card-scaffold, ha-card-editor-add, ha-card-features-add, ha-badge-add, ha-strategy-add, ha-panel-add, and ha-websocket-command-add in order — threading the card tag, file path, module resource, and domain between steps — and surfaces a WebSocket backend's Python-integration dependency in the plan instead of folding it into a frontend skill. Activate on "build a custom card with an editor and a feature", "create a dashboard strategy plus a badge", "set up a custom panel with a WebSocket backend", "baue mir eine Lovelace-Card mit Editor", "richte ein Custom-Panel mit WebSocket-Backend ein". Do not activate for a single clear frontend artifact (let the owning skill handle it), the Python integration backend (ha-integration-scaffold), or deploying to a live HA instance.
+description: Plan and orchestrate a complete Home Assistant Lovelace/frontend solution from a result-oriented requirement, so the user never has to pick which frontend skill to use. Decomposes the requirement into the minimal combination of artifacts across the Lovelace skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-lovelace-card-scaffold, ha-card-editor-add, ha-card-features-add, ha-badge-add, ha-strategy-add, ha-panel-author, and ha-websocket-command-add in order — threading the card tag, file path, module resource, and domain between steps — and surfaces a WebSocket backend's Python-integration dependency in the plan instead of folding it into a frontend skill. Activate on "build a custom card with an editor and a feature", "create a dashboard strategy plus a badge", "set up a custom panel with a WebSocket backend", "baue mir eine Lovelace-Card mit Editor", "richte ein Custom-Panel mit WebSocket-Backend ein". Do not activate for a single clear frontend artifact (let the owning skill handle it), the Python integration backend (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, lovelace, frontend, orchestration]
 ---
 
@@ -29,7 +29,7 @@ Use this skill when the user describes a **frontend result** that likely needs m
 
 ## Hard rules
 
-1. **Never generate inline.** Every artifact is produced by its owning skill — `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-add`, or `ha-websocket-command-add`. This skill plans and dispatches; it does not write artifacts.
+1. **Never generate inline.** Every artifact is produced by its owning skill — `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author`, or `ha-websocket-command-add`. This skill plans and dispatches; it does not write artifacts.
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
 3. **One requirement, one run.** No multi-requirement batches.
 4. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; never add an add-on a single artifact already covers.
@@ -57,7 +57,7 @@ Use this skill when the user describes a **frontend result** that likely needs m
 | a tile/card feature (interactive control row in the tile card and other host cards) | card-feature element | `ha-card-features-add` (depends on a frontend module) |
 | a custom badge in the dashboard badge picker | badge element | `ha-badge-add` (independent top-level) |
 | auto-generated views/cards (dashboard or view strategy) | strategy class | `ha-strategy-add` (independent top-level) |
-| a full-page custom panel in the sidebar | custom panel | `ha-panel-add` (independent top-level) |
+| a full-page custom panel in the sidebar | custom panel | `ha-panel-author` (independent top-level; dispatches `ha-panel-add` for the base scaffold) |
 | a backend endpoint a card/panel calls | WebSocket command (Python) | `ha-websocket-command-add` (backend; needs an integration → `ha-integration-scaffold` if absent) |
 | an own device/cloud protocol, config flow, the integration that hosts the command | custom integration | **out of scope** → `ha-integration-scaffold` |
 

@@ -4,13 +4,13 @@ Status: draft
 
 ## Context
 
-The Lovelace/frontend skill family each produces **one** artifact from a narrowly scoped intent: `ha-lovelace-card-scaffold` builds the custom card itself, `ha-card-editor-add` adds an `ha-form` config editor via `getConfigElement`, `ha-card-features-add` adds a tile/card feature, `ha-badge-add` a custom badge, `ha-strategy-add` a dashboard/view strategy, and `ha-panel-add` a full-page custom panel. Real-world frontend requirements are rarely a single artifact: "a custom card for my pump with a visual config editor and a tile feature" is a chain of `card-scaffold` → `card-editor` + `card-features`, where the add-ons build on the previously generated card. A user who doesn't know the skills would have to do that decomposition themselves — which frontend element, which add-on, which order, which file/custom-element references which. That mapping burden is exactly what the user should not have to carry.
+The Lovelace/frontend skill family each produces **one** artifact from a narrowly scoped intent: `ha-lovelace-card-scaffold` builds the custom card itself, `ha-card-editor-add` adds an `ha-form` config editor via `getConfigElement`, `ha-card-features-add` adds a tile/card feature, `ha-badge-add` a custom badge, `ha-strategy-add` a dashboard/view strategy, and `ha-panel-author` develops a production-grade custom panel (dispatching `ha-panel-add` for the base scaffold). Real-world frontend requirements are rarely a single artifact: "a custom card for my pump with a visual config editor and a tile feature" is a chain of `card-scaffold` → `card-editor` + `card-features`, where the add-ons build on the previously generated card. A user who doesn't know the skills would have to do that decomposition themselves — which frontend element, which add-on, which order, which file/custom-element references which. That mapping burden is exactly what the user should not have to carry.
 
 This skill is the **upstream planning and dispatch layer** of the frontend cluster: it takes a fuzzy frontend requirement, decomposes it into the minimal combination of artifacts, fixes the dependency order, confirms the plan with the user, and then dispatches the owning skills one after another, threading the identities (card tag name, file path, module resource, `<domain>`) of earlier steps into the inputs of later ones. It generates **no** artifact itself — generation and spec conformance stay with the individual skills. A frontend-cluster specialty: when a card or panel calls a backend endpoint (a WebSocket command), that backend lives in a Python custom integration — the skill surfaces that dependency in the plan but does not fold backend work into a frontend skill.
 
 ## Scope
 
-Planning and orchestration across the Lovelace/frontend skill family: `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-add`, and — as the backend endpoint a card/panel consumes — `ha-websocket-command-add`. One requirement per run → one artifact plan → N dispatched owning calls → one aggregate report. The skill decides the *combination* (which artifacts, which type per artifact, which order, which wiring), not the content of any single artifact.
+Planning and orchestration across the Lovelace/frontend skill family: `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author`, and — as the backend endpoint a card/panel consumes — `ha-websocket-command-add`. One requirement per run → one artifact plan → N dispatched owning calls → one aggregate report. The skill decides the *combination* (which artifacts, which type per artifact, which order, which wiring), not the content of any single artifact.
 
 ## Goals
 
@@ -22,7 +22,7 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 
 ## Non-Goals
 
-- Generating a single artifact and its spec conformance — that stays with `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-add`, `ha-websocket-command-add`
+- Generating a single artifact and its spec conformance — that stays with `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author`, `ha-websocket-command-add`
 - Scaffolding the Python custom integration that hosts a WebSocket-command backend — that is `ha-integration-scaffold` (the skill only recognizes the need and points)
 - Deploying to a running HA instance or writing dashboard/resource configuration into a real Lovelace config — generation only
 - Its own validation or conformance logic — each dispatched skill validates its own artifact; this skill only aggregates the reports
@@ -53,7 +53,7 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 - **MUST** map a standalone custom card (the visible card element) to `ha-lovelace-card-scaffold` — step 1 whenever a card is needed
 - **MUST** map a visual config editor for a card (`ha-form` via `getConfigElement`) to `ha-card-editor-add`, depending on the card
 - **MUST** map a tile/card feature (interactive control row inside the tile card and other host cards) to `ha-card-features-add`, depending on a frontend module
-- **MUST** map a custom badge to `ha-badge-add`, a dashboard/view strategy (auto-generation of views/cards) to `ha-strategy-add`, and a full-page custom panel to `ha-panel-add` — each an independent top-level frontend element
+- **MUST** map a custom badge to `ha-badge-add`, a dashboard/view strategy (auto-generation of views/cards) to `ha-strategy-add`, and a full-page custom panel to `ha-panel-author` (which dispatches `ha-panel-add` for the base scaffold) — each an independent top-level frontend element
 - **MUST** map a backend endpoint a card or panel calls to `ha-websocket-command-add` (Python side); the command lives in a custom integration and is its prerequisite (`ha-integration-scaffold` when absent)
 - **MUST** keep artifacts minimal — never create an add-on a single artifact already covers
 
