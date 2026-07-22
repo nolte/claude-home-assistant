@@ -53,6 +53,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/lovelace-badges`](ha/lovelace-badges/en.md) | HA Integration: Lovelace Badges | HA-Integration: Lovelace-Badges | draft | unversioned |
 | [`ha/lovelace-strategies`](ha/lovelace-strategies/en.md) | HA Integration: Lovelace Strategies | HA-Integration: Lovelace-Strategies | draft | unversioned |
 | [`ha/lovelace-views-panels`](ha/lovelace-views-panels/en.md) | HA Integration: Lovelace Views and Custom Panels | HA-Integration: Lovelace-Views und Custom-Panels | draft | unversioned |
+| [`ha/lovelace-panel-config-view`](ha/lovelace-panel-config-view/en.md) | HA Integration: Custom Panel Configuration and Options View | HA-Integration: Custom-Panel Konfigurations- und Options-Ansicht | draft | unversioned |
 | [`ha/lovelace-layout-antipatterns`](ha/lovelace-layout-antipatterns/en.md) | HA Dashboard: Layout and Card-Arrangement Antipatterns | HA-Dashboard: Layout- und Card-Anordnungs-Antipatterns | draft | unversioned |
 | [`ha/frontend-data-api`](ha/frontend-data-api/en.md) | HA Integration: Frontend Data API (`hass` object) | HA-Integration: Frontend-Data-API (`hass`-Objekt) | draft | unversioned |
 | [`ha/frontend-websocket-commands`](ha/frontend-websocket-commands/en.md) | HA Integration: Frontend WebSocket Commands | HA-Integration: Frontend-WebSocket-Commands | draft | unversioned |
@@ -136,6 +137,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-panel-add`](claude/ha-panel-add/en.md) | Skill: `ha-panel-add` | Skill: `ha-panel-add` | draft | unversioned |
 | [`claude/ha-panel-author`](claude/ha-panel-author/en.md) | Skill: `ha-panel-author` | Skill: `ha-panel-author` | draft | unversioned |
 | [`claude/ha-panel-ux-audit`](claude/ha-panel-ux-audit/en.md) | Skill: `ha-panel-ux-audit` | Skill: `ha-panel-ux-audit` | draft | unversioned |
+| [`claude/ha-panel-config-view-add`](claude/ha-panel-config-view-add/en.md) | Skill: `ha-panel-config-view-add` | Skill: `ha-panel-config-view-add` | draft | unversioned |
 | [`claude/ha-websocket-command-add`](claude/ha-websocket-command-add/en.md) | Skill: `ha-websocket-command-add` | Skill: `ha-websocket-command-add` | draft | unversioned |
 | [`claude/ha-integration-solution`](claude/ha-integration-solution/en.md) | Skill: `ha-integration-solution` | Skill: `ha-integration-solution` | draft | unversioned |
 | [`claude/ha-lovelace-solution`](claude/ha-lovelace-solution/en.md) | Skill: `ha-lovelace-solution` | Skill: `ha-lovelace-solution` | draft | unversioned |
