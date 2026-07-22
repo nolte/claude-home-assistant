@@ -1,6 +1,6 @@
 ---
 name: ha-panel-add
-description: Augment an existing Home Assistant integration or frontend repo with one custom panel — a full-page custom element registered in the sidebar that takes over the whole content area — conforming to spec/ha/lovelace-views-panels (custom-panel part). Creates the panel custom element (Lit or another non-React framework receiving hass / narrow / route / panel, registered via customElements.define), the JS-module wiring, and the panel_custom registration in configuration.yaml (unique url_path, module_url, optional sidebar_title/sidebar_icon/config/embed_iframe). Distinguishes a custom panel from a panel-mode view (single-card layout) and a custom view (layout container). Activate on "add a custom panel", "register a sidebar panel", "create a full-page custom panel", "füge ein Custom-Panel hinzu", "registriere ein Sidebar-Panel". Do not activate for a single card or panel-mode view (ha-lovelace-card-scaffold), a dashboard strategy (ha/lovelace-strategies), a websocket command the panel calls (ha/frontend-websocket-commands), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
+description: Augment an existing Home Assistant integration or frontend repo with one custom panel — a full-page custom element registered in the sidebar that takes over the whole content area — conforming to spec/ha/lovelace-views-panels (custom-panel part). Creates the panel custom element (Lit or another non-React framework receiving hass / narrow / route / panel, registered via customElements.define), the JS-module wiring, and the panel_custom registration in configuration.yaml (unique url_path, module_url, optional sidebar_title/sidebar_icon/config/embed_iframe). Distinguishes a custom panel from a panel-mode view (single-card layout) and a custom view (layout container). Activate on "add a custom panel", "register a sidebar panel", "create a full-page custom panel", "füge ein Custom-Panel hinzu", "registriere ein Sidebar-Panel". Do not activate for a single card (ha-lovelace-card-scaffold), a panel-mode view (ha-panel-author, which owns the panel-mode-view delivery-shape decision), a dashboard strategy (ha/lovelace-strategies), a websocket command the panel calls (ha/frontend-websocket-commands), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, frontend, lovelace, custom-panel]
 ---
 
@@ -21,7 +21,8 @@ Use this skill to add **one** custom panel — a full-page custom element regist
 
 ## When NOT to activate
 
-- a single card, or a panel-mode view (single-card layout in a dashboard) → `ha-lovelace-card-scaffold` / `ha/lovelace-card-patterns`
+- a single card → `ha-lovelace-card-scaffold` / `ha/lovelace-card-patterns`
+- a panel-mode view (a `type: panel` view holding one full-width card — dashboard YAML, not a scaffolded card) → `ha-panel-author` (owns the delivery-shape decision incl. panel-mode view) per `ha/lovelace-views-panels`
 - a custom view as a layout container (renders core cards/badges via `ll-*` events) → `ha/lovelace-views-panels` (view part), not this skill
 - a programmatic dashboard strategy → `ha/lovelace-strategies`
 - a WebSocket command the panel calls → `ha/frontend-websocket-commands`
@@ -84,7 +85,8 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 ## Boundaries
 
-- A single card or panel-mode view → `ha-lovelace-card-scaffold`
+- A single card → `ha-lovelace-card-scaffold`
+- A panel-mode view (dashboard YAML: a `type: panel` view with one full-width card) → `ha-panel-author`
 - A custom view as a layout container → `ha/lovelace-views-panels` (view part)
 - A dashboard strategy → `ha/lovelace-strategies`
 - A WebSocket command the panel calls → `ha/frontend-websocket-commands`
