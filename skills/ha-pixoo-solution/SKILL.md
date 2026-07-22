@@ -6,6 +6,8 @@ tags: [home-assistant, divoom-pixoo, display, orchestration]
 
 # HA Pixoo Solution
 
+Spec: [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-pixoo-solution/en.md) (EN canonical) / [`de.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-pixoo-solution/de.md). This spec governs the front-door dispatch/plan contract, structurally consistent with its `ha-{integration,lovelace,automation}-solution` siblings; the grounding specs below govern the Pixoo domain artifacts.
+
 Grounding specs: [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md) (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/en.md), [`ha/pixoo-pixel-art`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art/de.md), [`ha/pixoo-pixel-art-animation`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art-animation/de.md).
 
 This skill is the **front door** to the Divoom Pixoo skill family. It does not generate any artifact itself — it decomposes the requirement, plans the combination, and dispatches the owning authoring skills, each of which owns its generation and spec conformance.

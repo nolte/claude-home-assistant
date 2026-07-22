@@ -142,6 +142,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-websocket-command-add`](claude/ha-websocket-command-add/en.md) | Skill: `ha-websocket-command-add` | Skill: `ha-websocket-command-add` | draft | unversioned |
 | [`claude/ha-integration-solution`](claude/ha-integration-solution/en.md) | Skill: `ha-integration-solution` | Skill: `ha-integration-solution` | draft | unversioned |
 | [`claude/ha-lovelace-solution`](claude/ha-lovelace-solution/en.md) | Skill: `ha-lovelace-solution` | Skill: `ha-lovelace-solution` | draft | unversioned |
+| [`claude/ha-pixoo-solution`](claude/ha-pixoo-solution/en.md) | Skill: `ha-pixoo-solution` | Skill: `ha-pixoo-solution` | draft | unversioned |
 
 Der Index listet nur **lokale** Specs. Portfolioweite `project/`-Specs (u. a. `project/branching-model`, `project/parallel-working-copies`) werden nicht mehr lokal geführt, sondern aus dem nolte-shared-Hub vererbt — siehe [Vererbte Specs](#vererbte-specs).
 
