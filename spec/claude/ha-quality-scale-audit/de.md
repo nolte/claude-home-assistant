@@ -44,6 +44,8 @@ Read-only Audit. Der Skill liest `manifest.json`, `quality_scale.yaml` und die C
 - **MUSS [MUST]** erfassen: `target_dir` (Repo-Root)
 - **KANN [MAY]** erfassen: `target_tier` (`bronze` / `silver` / `gold` / `platinum`); ohne Angabe wird das in der `manifest.json` deklarierte Tier als Ziel angenommen, ersatzweise `bronze`
 - **KANN [MAY]** erfassen: `severity_threshold` (`low` / `medium` / `high`); Default `low` (alle Findings melden)
+- **KANN [MAY]** erfassen: `mode` (`report` / `gate`); Default `report`. Im `gate`-Mode schreibt der Skill weiterhin nichts, endet aber mit Exit-Code ≠ 0, wenn ein Finding ab `fail_on` bestehen bleibt — ein CI-Drift-Gate
+- **KANN [MAY]** erfassen: `fail_on` (`low` / `medium` / `high`); Default `high`; die Mindest-Severity, die den `gate`-Mode fehlschlagen lässt
 
 ### Pre-Flight
 
@@ -108,7 +110,7 @@ Read-only Audit. Der Skill liest `manifest.json`, `quality_scale.yaml` und die C
   - `severity` — high / medium / low
   - `path` — Datei + Zeilennummer (oder das fehlende Artefakt)
   - `evidence` — Code-Snippet bzw. `quality_scale.yaml`-Auszug (max. 5 Zeilen)
-  - `remediation` — empfohlener Fix; bei Skill-fixbaren Findings den Skill-Namen referenzieren
+  - `remediation` — bei Skill-fixbaren Findings der konkrete dispatchbare Edit-Skill (z. B. `parallel-updates`/`entity-unavailable` → `ha-entity-platform-add`, `diagnostics` → `ha-diagnostics-augment`, `repair-issues` → `ha-repairs-add`, `test-coverage` → `ha-test-harness-augment`), sonst eine manuelle Edit-Aktion
 - **MUSS [MUST]** am Ende eine Zusammenfassung enthalten: Anzahl Findings pro Severity, plus eine **Tier-Stand-Zeile**, die das deklarierte, das dokumentierte und das verifizierte Tier gegenüberstellt (z. B. `deklariert: silver / dokumentiert: silver / verifiziert: bronze ✓ · silver ✗`)
 
 ### Verbote
@@ -127,10 +129,11 @@ Read-only Audit. Der Skill liest `manifest.json`, `quality_scale.yaml` und die C
 - [ ] Findings sind nach Severity (high → low) sortiert
 - [ ] Skill macht keine Datei-Modifikationen (`git status` unverändert nach Lauf)
 - [ ] Skill-Output enthält die Tier-Stand-Zeile (deklariert / dokumentiert / verifiziert)
+- [ ] `gate`-Mode endet mit Exit-Code ≠ 0, wenn ein Finding ab `fail_on` bestehen bleibt; `report`-Mode endet mit 0
 
 ## Offene Fragen
 
 - **Tiefe der Code-Verifikation**: Der Skill verifiziert nur die Schlüssel-Regeln mit Sibling-Spec gegen Code; die übrigen ~30 Regeln werden gegen die `quality_scale.yaml`-Deklaration geprüft. Ab wann lohnt ein tieferer, `hassfest`-naher Check?
-- **`quality_scale.yaml`-Drift-Gate**: Soll der Skill als CI-Hook konsumierbar sein (Exit-Code != 0, wenn deklariertes ≠ verifiziertes Tier)? Aktuell nur interaktiv.
+- **`quality_scale.yaml`-Drift-Gate** (gelöst): Der Skill ist via `mode: gate` als CI-Hook konsumierbar (Exit-Code ≠ 0 bei Findings ≥ `fail_on`).
 - **Marker-Synchronisierung**: Soll der Skill auch die Quality-Scale-Marker der Sibling-Specs gegen das HA-`tiers.json` prüfen, oder bleibt das Review-Aufgabe?
-- **Auto-Remediation-Kette**: Lohnt eine Verkettung, die high-Findings direkt an den jeweils zuständigen Edit-Skill weiterreicht? Aktuell jedes Finding manuell zu dispatchen.
+- **Auto-Remediation-Kette** (teilweise gelöst): Die `remediation` jedes Findings benennt jetzt den konkreten dispatchbaren Edit-Skill; die automatische Übergabe (den Skill tatsächlich aufzurufen) bleibt bewusst manuell — dies ist ein read-only Audit.
