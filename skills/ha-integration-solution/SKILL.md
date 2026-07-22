@@ -1,6 +1,6 @@
 ---
 name: ha-integration-solution
-description: Plan and orchestrate a complete Home Assistant Python custom-integration backend from a result-oriented device/cloud/API requirement, so the user never has to pick which integration skill to use. The integration-side counterpart to ha-automation-solution. Decomposes the requirement into the minimal dependency-ordered set of integration skills, presents the plan for approval, then dispatches ha-integration-scaffold, ha-config-flow-augment, ha-coordinator-add, ha-oauth2-credentials-augment, ha-entity-description-mapper, ha-entity-platform-add, ha-service-definition-generator, ha-integration-events-add, ha-device-automation-add, ha-discovery-augment, ha-bluetooth-augment, ha-diagnostics-augment, ha-repairs-add, ha-system-health-add, ha-significant-change-add, ha-backup-platform-add, ha-media-source-add, ha-reproduce-state-add, ha-conversation-agent-augment, ha-translation-sync, ha-test-harness-augment, ha-quality-scale-audit, and ha-security-audit in order — threading the integration domain and entity_ids between steps. Activate on "build an integration for device/API X", "scaffold and wire up a full custom integration for …", "integrate my Acme thermostat over its cloud API", "baue mir eine Integration für …", "richte eine Custom-Integration für … ein". Do not activate for a single clear augment (let the owning skill handle it), a pure YAML automation/helper solution (ha-automation-solution), a Lovelace frontend (ha-lovelace-card-scaffold), or deploying to a live HA instance (ha-integration-deploy agent).
+description: Plan and orchestrate a complete Home Assistant Python custom-integration backend from a result-oriented device/cloud/API requirement, driven by a chosen quality-scale target tier (Bronze through Platinum) and optionally finishing with CI validation and HACS-release readiness, so the user never has to pick which integration skill to use. The integration-side counterpart to ha-automation-solution. Decomposes the requirement into the minimal dependency-ordered set of integration skills for the target tier, presents the plan for approval, then dispatches ha-integration-scaffold, ha-config-flow-augment, ha-options-flow-augment, ha-config-entry-migrate, ha-oauth2-credentials-augment, ha-coordinator-add, ha-entity-description-mapper, ha-entity-platform-add, ha-device-registry-augment, ha-service-definition-generator, ha-integration-events-add, ha-device-automation-add, ha-discovery-augment, ha-bluetooth-augment, ha-diagnostics-augment, ha-repairs-add, ha-system-health-add, ha-significant-change-add, ha-backup-platform-add, ha-media-source-add, ha-reproduce-state-add, ha-conversation-agent-augment, ha-translation-sync, ha-test-harness-augment, ha-quality-scale-audit, ha-security-audit, ha-integration-ci-scaffold, and ha-hacs-release in order — threading the integration domain and entity_ids between steps. Activate on "build an integration for device/API X", "scaffold and wire up a full custom integration for …", "build a Gold-tier integration for my Acme thermostat cloud API", "baue mir eine vollständige Integration für …", "richte eine Custom-Integration für … ein". Do not activate for a single clear augment (let the owning skill handle it), a pure YAML automation/helper solution (ha-automation-solution), a Lovelace frontend (ha-lovelace-card-scaffold), or deploying to a live HA instance (ha-integration-deploy agent).
 tags: [home-assistant, integration, orchestration, planning]
 ---
 
@@ -40,6 +40,7 @@ Use this skill when the user describes a **device/cloud/API integration result**
 8. **Relay reports verbatim.** Pass through each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings without re-judging them.
 9. **Recognize automation-shaped work.** When the requirement is really a YAML automation/helper solution rather than a custom integration, say so in the plan and point at `ha-automation-solution` instead of forcing an integration.
 10. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+11. **Tier-driven completeness, audit-gated.** Plan the building blocks the `target_tier` requires (cumulative Bronze→Platinum); finish `release_ready` runs with `ha-integration-ci-scaffold` + `ha-hacs-release`; run `ha-quality-scale-audit` + `ha-security-audit` last as the acceptance gate, routing any shortfall back to the named remediation skill per finding.
 
 ## Inputs
 
@@ -49,17 +50,22 @@ Use this skill when the user describes a **device/cloud/API integration result**
 | `domain` | no | derived from scaffold | the integration domain; threaded into every step |
 | `target_dir` | no | working dir | repo root; passed through to dispatched skills |
 | `protocol` / `auth` | no | asked when needed | REST/MQTT/Bluetooth; API key/OAuth2 |
+| `target_tier` | no | `silver` | `bronze`/`silver`/`gold`/`platinum`; drives the included building blocks (cumulative) |
+| `release_ready` | no | inferred | also scaffold CI validation + HACS-release readiness |
 
 ## Decomposition heuristic (requirement shape → building block → owning skill)
 
 | The requirement needs… | Building block | Owning skill |
 |---|---|---|
 | a new integration skeleton (manifest, `__init__`, config entry, RuntimeData) | greenfield hub | `ha-integration-scaffold` |
-| user setup, multi-step/tenant, reauth, reconfigure, or discovery config step | config flow | `ha-config-flow-augment` |
+| user setup, multi-step/tenant, reauth, reconfigure, or zeroconf config step | config flow | `ha-config-flow-augment` |
+| a post-setup config option retrofitted into the options flow | options flow | `ha-options-flow-augment` |
+| a stored config-entry schema migration + version bump | config-entry migration | `ha-config-entry-migrate` |
 | OAuth2 / Application Credentials cloud auth | OAuth2 flow | `ha-oauth2-credentials-augment` |
 | a separate polling role / update interval | DataUpdateCoordinator | `ha-coordinator-add` |
 | declarative read-type entities from a datapoint/schema table | EntityDescription lists | `ha-entity-description-mapper` |
 | an active command-driven platform (climate/cover/light/fan/lock/media_player/…) | platform entity | `ha-entity-platform-add` |
+| device grouping / hub-child `via_device` hierarchy / stale-device removal | device registry | `ha-device-registry-augment` |
 | a registered service action | service | `ha-service-definition-generator` |
 | firing/listening on the HA event bus | integration events | `ha-integration-events-add` |
 | a device trigger/condition/action | device automation | `ha-device-automation-add` |
@@ -77,7 +83,21 @@ Use this skill when the user describes a **device/cloud/API integration result**
 | tests for the added code paths | test harness | `ha-test-harness-augment` |
 | a read-only tier check | quality-scale audit | `ha-quality-scale-audit` |
 | a read-only security check | security audit | `ha-security-audit` |
+| HA-domain CI validation (hassfest / HACS action / pytest matrix) | CI workflow | `ha-integration-ci-scaffold` |
+| HACS-release readiness (`hacs.json`, version alignment, ZIP release) | HACS release | `ha-hacs-release` |
 | a YAML automation/helper solution (no own protocol, no config flow) | — | **out of scope** → `ha-automation-solution` |
+
+## Target-tier decomposition
+
+The requirement **plus a `target_tier`** drives *which* building blocks the plan includes, so one run reaches a deliberate quality-scale level (cumulative — each tier includes those below):
+
+- **Bronze** (baseline): `ha-integration-scaffold` (config flow, `runtime_data`, `has_entity_name`), the config flow (`ha-config-flow-augment`), and platform tests (`ha-test-harness-augment`).
+- **Silver**: + reauth (`ha-config-flow-augment`), coordinator error handling + `PARALLEL_UPDATES` + `entity-unavailable` (`ha-coordinator-add`, `ha-entity-platform-add`), and options where post-setup config is needed (`ha-options-flow-augment`).
+- **Gold**: + diagnostics (`ha-diagnostics-augment`), discovery (`ha-discovery-augment`), the device hierarchy (`ha-device-registry-augment`), repairs (`ha-repairs-add`), reconfigure (`ha-config-flow-augment`), and entity/exception translations (`ha-translation-sync`, `ha-service-definition-generator`).
+- **Platinum**: strict typing / fully-async — a `ha/dev-workflow` obligation surfaced as a checklist item (no dedicated generator).
+- **Release-ready** (any tier): + CI validation (`ha-integration-ci-scaffold`) and HACS-release readiness (`ha-hacs-release`).
+
+A stored-shape change from a later edit routes through `ha-config-entry-migrate`. The quality-scale + security audits run last and confirm the reached tier; a shortfall routes back to the named remediation skill per finding.
 
 ## Workflow
 
@@ -104,7 +124,7 @@ Decompose into a dependency-ordered plan and present it as a table:
 | 10 | security audit | ha-security-audit | all | read-only security check |
 ```
 
-The typical order is scaffold → (config-flow + coordinator [+ oauth2]) → entities → [surfaces/robustness as needed] → translations → tests → review. State any "this is actually a YAML automation" finding here and point at `ha-automation-solution`. Wait for explicit approval.
+The typical order is scaffold → (config-flow + coordinator [+ oauth2] [+ options]) → entities [+ device registry] → [Gold surfaces as the tier needs — diagnostics, discovery, repairs, services] → translations → tests → quality-scale + security audit → [release-ready — CI + HACS release]. Include exactly the building blocks the `target_tier` requires (cumulative). State any "this is actually a YAML automation" finding here and point at `ha-automation-solution`. Wait for explicit approval — that approval is the **single human gate**; after it the dispatch, the audits, and the release-ready finish run to completion, stopping only on a NEEDS-WORK.
 
 ### 3) Dispatch
 
