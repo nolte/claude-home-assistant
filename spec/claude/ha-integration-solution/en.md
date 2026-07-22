@@ -52,6 +52,7 @@ Planning and orchestration across the integration backend cluster. One requireme
 
 ### Dispatch / plan rules
 
+- **MUST** resolve each owning skill at runtime by matching the requirement against the live integration `ha-*` skill inventory (each candidate's stated responsibility), not from a frozen name list — the mappings in this section are an illustrative anchor, re-resolved each run, so a skill added to or removed from the family is dispatchable without editing the orchestrator (mirroring `issue-orchestrate`'s runtime-lookup dispatch)
 - **MUST** present a plan as a table in dependency order before any generation: per entry `#`, building block, owning skill, dependency (`depends-on`), purpose — and wait for explicit confirmation
 - **MUST NOT** generate a building block inline itself; every generation runs through the owning individual skill
 - **MUST** dispatch `ha-integration-scaffold` as step 1 whenever a *new* integration is created (greenfield hub)
@@ -83,6 +84,7 @@ Planning and orchestration across the integration backend cluster. One requireme
 
 ## Acceptance criteria
 
+- [ ] Owning skills are resolved against the live integration `ha-*` inventory each run (a newly added or renamed family skill is dispatchable without editing the orchestrator); the decomposition mappings are illustrative, not a frozen closed set
 - [ ] Skill asks for missing essentials (protocol, auth type, entity domains, quality features) before planning
 - [ ] Skill presents a dependency-ordered skill plan and waits for confirmation
 - [ ] Skill dispatches the owning individual skills instead of generating itself

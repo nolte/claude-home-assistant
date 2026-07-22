@@ -49,6 +49,7 @@ Planning and orchestration across the `ha-automation/` skill family plus `ha-blu
 
 ### Decomposition heuristic (requirement → artifact type → skill)
 
+- **MUST** resolve each owning skill at runtime by matching the requirement against the live `ha-automation` family inventory (each candidate's stated responsibility), not from a frozen name list — the mappings below are an illustrative anchor, re-resolved each run, so a skill added to or removed from the family is dispatchable without editing the orchestrator (mirroring `issue-orchestrate`)
 - **MUST** map a measured or derived value (rate, smoothing, integral, aggregate, threshold, trend, consumption cycle, probability) to `ha-derived-sensor-author`
 - **MUST** map a manually/automation-held state, mode switch, countdown, or weekly plan to `ha-helper-scaffold`
 - **MUST** map event→action logic to `ha-automation-author` (`automation`) and a reusable manually-callable action sequence to `script`; an HTTP/shell/python escape-hatch to the matching command artifact of `ha-automation-author`
@@ -76,6 +77,7 @@ Planning and orchestration across the `ha-automation/` skill family plus `ha-blu
 
 ## Acceptance criteria
 
+- [ ] Owning skills are resolved against the live `ha-automation` family inventory each run (a newly added or renamed family skill is dispatchable without editing the orchestrator); the decomposition mappings are illustrative, not a frozen closed set
 - [ ] Skill asks for missing essentials (source, threshold, time windows) before planning
 - [ ] Skill presents an artifact plan in dependency order and waits for confirmation
 - [ ] Skill dispatches the owning individual skills instead of generating itself
