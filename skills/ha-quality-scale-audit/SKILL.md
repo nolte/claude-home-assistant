@@ -43,6 +43,8 @@ Use this skill to audit an existing HA Custom Integration against `ha/quality-sc
 | `target_dir` | yes | — | repo root |
 | `target_tier` | no | declared tier, else `bronze` | `bronze` / `silver` / `gold` / `platinum` |
 | `severity_threshold` | no | `low` | report findings at or above this severity |
+| `mode` | no | `report` | `report` (interactive) or `gate` (CI: non-zero exit on findings ≥ `fail_on`) |
+| `fail_on` | no | `high` | in `gate` mode, the minimum severity that fails the run |
 
 ## Pre-flight
 
@@ -78,7 +80,7 @@ Emit Markdown findings (one per rule, even when several call sites match):
 - **Severity:** high / medium / low
 - **Path:** custom_components/<domain>/<file>:<line> (or the missing artifact)
 - **Evidence:** <code snippet or quality_scale.yaml excerpt, max 5 lines>
-- **Remediation:** <suggested skill or manual edit>
+- **Remediation:** the concrete dispatchable edit skill when skill-fixable (`parallel-updates`/`entity-unavailable` → `ha-entity-platform-add`; `reauthentication-flow`/`reconfiguration-flow` → `ha-config-flow-augment`; `diagnostics` → `ha-diagnostics-augment`; `repair-issues` → `ha-repairs-add`; `exception-translations`/`entity-translations` → `ha-service-definition-generator`/`ha-translation-sync`; `test-coverage` → `ha-test-harness-augment`), else a manual edit
 ```
 
 End with a summary table:
@@ -92,13 +94,13 @@ End with a summary table:
 Plus a tier-state line contrasting declared / documented / verified, e.g.
 `declared: silver / documented: silver / verified: bronze ✓ · silver ✗`.
 
-### 4) No commit
+### 4) No commit; CI gate
 
-The skill never commits. Surface the report and stop.
+The skill never commits — in either mode. In the default `report` mode it surfaces the report and exits zero. In `gate` mode it still writes nothing but **exits non-zero** when any finding at or above `fail_on` remains, so a CI job can use it as a quality-scale drift gate.
 
 ## Boundaries
 
 - Auto-fix → manual or via the relevant edit skill
 - Security audit → `ha-security-audit`
 - Full `hassfest`-grade rule proving → out of scope; key rules verified, the rest trusted from `quality_scale.yaml`
-- CI integration → not in scope today; the report is interactive
+- CI integration → supported via `mode: gate` (non-zero exit on findings ≥ `fail_on`); the default `report` mode stays interactive
