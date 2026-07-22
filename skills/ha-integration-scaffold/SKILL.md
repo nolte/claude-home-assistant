@@ -19,9 +19,9 @@ Use this skill when the user wants to:
 ## When NOT to activate
 
 - editing an existing `custom_components/<domain>/` → there is no scaffold to do; consult the relevant detail spec under `spec/ha/*`
-- scaffolding a Lovelace card → separate skill `ha-lovelace-card-scaffold` (planned)
+- scaffolding a Lovelace card → separate skill `ha-lovelace-card-scaffold`
 - scaffolding an ESPHome custom component → separate skill `ha-esphome-component-scaffold` (planned)
-- scaffolding a blueprint / automation → separate skill (planned)
+- scaffolding a blueprint / automation → separate skill `ha-blueprint-scaffold`
 - migrating a YAML-configured integration to config flow → separate skill (planned, only on demand)
 
 ## Hard rules
@@ -34,6 +34,7 @@ Use this skill when the user wants to:
 6. **Never silently default.** When the user did not specify `hacs` / `zeroconf` / `auth` / `platforms`, fall back to documented defaults — but state every default in the output summary so the user sees what was assumed.
 7. **Name every artefact per `ha/naming-conventions`.** The integration `domain`, `unique_id`, `translation_key`, device `identifiers`, service names, config-entry title, and all generated file paths follow the consolidated naming authority — `snake_case` identifiers, English display names (≤ 50 chars), no volatile data (IP, hostname, token, timestamp) in any ID (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)). Rules 3–4 are the entity-name instances of this authority.
 8. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Emit `PARALLEL_UPDATES` in every platform module.** Each generated entity-platform module carries a module-level `PARALLEL_UPDATES` constant — `0` for coordinator-backed read-only platforms — so the integration satisfies the Silver quality-scale rule `parallel-updates` that `ha-quality-scale-audit` checks. Verify the exact numeric convention against the HA `parallel-updates` rule page.
 
 ## Inputs
 
@@ -83,7 +84,7 @@ Write these files (every file is mandatory unless marked optional):
 - `config_flow.py` — user flow + (when `auth=true`) reauth + reconfigure + options flow ([`ha/config-flow-patterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/config-flow-patterns/de.md)); when `zeroconf=true`, additionally `async_step_zeroconf` ([`ha/zeroconf-discovery`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/zeroconf-discovery/de.md))
 - `coordinator.py` — `<Domain>Coordinator` with error mapping ([`ha/coordinator-patterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/coordinator-patterns/de.md))
 - `entity.py` — base entity + DeviceInfo factories ([`ha/entity-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-architecture/de.md), [`ha/device-registry`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/device-registry/de.md))
-- one platform module per entry in `platforms` (default: `sensor.py`)
+- one platform module per entry in `platforms` (default: `sensor.py`), each with a module-level `PARALLEL_UPDATES` constant
 - `strings.json` — English source ([`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md))
 - `translations/en.json` and `translations/de.json` — mirrors of `strings.json`
 - `icons.json` — icon mappings ([`ha/icons`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/icons/de.md))
@@ -138,14 +139,14 @@ Return a brief summary listing:
 1. files written (counted)
 2. defaults that were assumed (when the user did not specify them)
 3. the path to `plan.md`
-4. one-line note that hassfest validation should run as part of CI (`hacs/action@main` is configured in the project-structure scaffold)
+4. one-line note that hassfest validation should run in CI — the HA-specific CI workflow (hassfest / hacs-validate / pytest matrix) is scaffolded by the dedicated `ha-integration-ci-scaffold` skill (planned), not by the generic project-structure scaffold
 
 ## Boundaries to neighbouring skills
 
 - API endpoint logic → consumer task; no dedicated skill planned
-- Config flow extension beyond the defaults → `ha-config-flow-augment` (planned)
-- Add a second coordinator → `ha-coordinator-add` (planned)
-- Lovelace card scaffold → `ha-lovelace-card-scaffold` (planned)
-- Test coverage augmentation → `ha-test-harness-augment` (planned)
-- Deploy and verify against a Kind cluster → agents `ha-integration-deploy` / `ha-integration-verify` (planned)
+- Config flow extension beyond the defaults → `ha-config-flow-augment`
+- Add a second coordinator → `ha-coordinator-add`
+- Lovelace card scaffold → `ha-lovelace-card-scaffold`
+- Test coverage augmentation → `ha-test-harness-augment`
+- Deploy and verify against a Kind cluster → agents `ha-integration-deploy` / `ha-integration-verify`
 - Repo project structure (Taskfile, pre-commit, .github/workflows, mkdocs) → `nolte-shared:project-structure-apply`

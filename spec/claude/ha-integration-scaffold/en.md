@@ -83,7 +83,7 @@ The skill writes these files in one go (no per-file user approval — bulk appro
   - `custom_components/<domain>/config_flow.py` — user flow plus reauth (when `auth=true`) plus reconfigure plus options flow (see `ha/config-flow-patterns`)
   - `custom_components/<domain>/coordinator.py` — a `<Domain>Coordinator` class with error mapping (see `ha/coordinator-patterns`)
   - `custom_components/<domain>/entity.py` — base entity class plus DeviceInfo factory functions (see `ha/entity-architecture` and `ha/device-registry`)
-  - `custom_components/<domain>/<platform>.py` for each platform in `platforms` — `EntityDescription` tuple list plus generic entity class (see `ha/entity-architecture`)
+  - `custom_components/<domain>/<platform>.py` for each platform in `platforms` — `EntityDescription` tuple list plus generic entity class, and a module-level `PARALLEL_UPDATES` constant (Silver `parallel-updates`) (see `ha/entity-architecture`)
   - `custom_components/<domain>/strings.json` — English source strings for config flow, entities, services where applicable (see `ha/translations`)
   - `custom_components/<domain>/translations/en.json` — mirror of `strings.json`
   - `custom_components/<domain>/translations/de.json` — German translation
@@ -124,11 +124,12 @@ The skill writes these files in one go (no per-file user approval — bulk appro
 ### Boundaries to neighbouring skills
 
 - **API client specifics** (real endpoints, real schemas, real validation logic) → no dedicated skill planned; consumer task
-- **Config flow augmentations** beyond the default (multi-step tenants, custom discovery) → separate skill `ha-config-flow-augment` (planned)
-- **Coordinator topology extension** beyond the single coordinator → separate skill `ha-coordinator-add` (planned)
-- **Lovelace card scaffold** → separate skill `ha-lovelace-card-scaffold` (planned)
-- **Test coverage beyond the default skeleton** → separate skill `ha-test-harness-augment` (planned)
-- **Deploy / verify into the Kind cluster** → agents `ha-integration-deploy` / `ha-integration-verify` (planned)
+- **Config flow augmentations** beyond the default (multi-step tenants, custom discovery) → separate skill `ha-config-flow-augment`
+- **Coordinator topology extension** beyond the single coordinator → separate skill `ha-coordinator-add`
+- **Lovelace card scaffold** → separate skill `ha-lovelace-card-scaffold`
+- **Test coverage beyond the default skeleton** → separate skill `ha-test-harness-augment`
+- **Deploy / verify into the Kind cluster** → agents `ha-integration-deploy` / `ha-integration-verify`
+- **HA-specific CI workflow** (hassfest / hacs-validate / pytest matrix) → separate skill `ha-integration-ci-scaffold` (planned); the generic `nolte-shared:project-structure-apply` does not emit HA-specific CI
 
 ## Acceptance Criteria
 
@@ -143,6 +144,7 @@ The skill writes these files in one go (no per-file user approval — bulk appro
 - [ ] `runtime_data` is typed via `@dataclass`; no occurrence of `hass.data[DOMAIN]` in the code
 - [ ] `_attr_has_entity_name = True` on the base entity class; no occurrence of `_attr_name = "<hardcoded>"` in the platform modules
 - [ ] Translation keys are consistent across `strings.json`, `translations/<lang>.json`, `icons.json`, and platform code
+- [ ] Every generated platform module declares a module-level `PARALLEL_UPDATES` constant (Silver `parallel-updates`)
 
 ## Open Questions
 
@@ -150,5 +152,5 @@ The skill writes these files in one go (no per-file user approval — bulk appro
 - **Multi-coordinator default**: Today the skill scaffolds a single coordinator. Should it automatically create a second coordinator (alerts at a shorter interval) on `iot_class=local_polling` and `integration_type=hub`, or does that stay a consumer task?
 - **`requirements` skeleton**: Should the skill set `aiohttp` as a default requirement in `manifest.json`, or does that stay a user task? `kamerplanter-ha` has an empty `requirements` array because the API client uses the `aiohttp` shipped by HA.
 - **`README.md` scaffold**: Should the skill produce a `README.md` for the consumer repo, or is the consumer README out of scope? Currently not on the mandatory list.
-- **CI workflow scaffold**: Should the skill produce `.github/workflows/ci.yml`, or is that the job of `nolte-shared:project-structure-apply`? The latter is cleaner (separation of responsibility), but then the user has to call two skills in succession.
+- **CI workflow scaffold**: HA-specific CI (hassfest / hacs-validate / pytest matrix) is owned by the dedicated `ha-integration-ci-scaffold` skill (planned), not by the generic `nolte-shared:project-structure-apply` (which does not emit HA-specific CI). This skill's acceptance only requires hassfest to *pass*, not that it generates the workflow. Whether `ha-integration-scaffold` should chain into `ha-integration-ci-scaffold` automatically remains open.
 - **`plan.md` format threshold**: How structured is `plan.md`? Currently formulated as a formless mapping; a mandatory template would be more concrete but rigid.

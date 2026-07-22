@@ -56,12 +56,14 @@ The skill augments an **existing** platform file (typically `sensor.py`) with da
   - `device_class` (when set) is an HA-known class for the platform — for example `SensorDeviceClass.TEMPERATURE` for `sensor`
   - `state_class` (when set) is `MEASUREMENT`, `TOTAL_INCREASING`, or `TOTAL`
   - `native_unit_of_measurement` (when set) is consistent with `device_class` (for example `°C` / `K` for `TEMPERATURE`)
+  - `entity_category` (when set) is a member of `EntityCategory` (`CONFIG` / `DIAGNOSTIC`)
 - **MUST** report validation violations as a verbose list and abort the run instead of writing half-generated datapoints
 
 ### Generator choreography
 
 - **MUST** append the `EntityDescription` tuple list in `<platform>.py` — constant name typically `<DOMAIN>_<PLATFORM>_DESCRIPTIONS` (uppercase with `_DESCRIPTIONS` suffix)
 - **MUST** ensure a generic entity class consuming the tuple list exists; if missing, append it
+- **MUST** ensure `<platform>.py` declares a module-level `PARALLEL_UPDATES` constant (Silver `parallel-updates` rule); verify the value against the HA `parallel-updates` rule page (`0` for coordinator-backed read-only platforms)
 - **MUST** add `entity.<platform>.<translation_key>.name` per datapoint to `strings.json` and every `translations/<lang>.json` — English in `strings.json`, translations as TODO markers in non-EN languages unless the user supplies them
 - **MUST** add `entity.<platform>.<translation_key>.default` to `icons.json` (plus `state.<value>` if the datapoint spec carries state icons)
 - **SHOULD** set a code comment with the HA quality-scale tier per datapoint when the spec defines it (typically Bronze for datapoints without `device_class`, Silver for datapoints with correct `device_class`+`state_class`)
@@ -78,9 +80,12 @@ The skill augments an **existing** platform file (typically `sensor.py`) with da
 - [ ] `strings.json` carries every datapoint under `entity.<platform>.<translation_key>.name`
 - [ ] Every `translations/<lang>.json` carries every datapoint with a translation or `<TODO: …>` marker
 - [ ] `icons.json` carries every datapoint under `entity.<platform>.<translation_key>.default`; for state icons, the `state:` block as well
+- [ ] `<platform>.py` declares a module-level `PARALLEL_UPDATES` constant
+- [ ] A provided `entity_category` is validated as an `EntityCategory` member; an invalid value blocks the run
 - [ ] `ruff check custom_components/<domain>/<platform>.py` runs cleanly
 - [ ] Validation violations are reported as a list and block the run
 - [ ] Existing datapoints stay unchanged
+- [ ] The report points at `ha-test-harness-augment` for test coverage of the new descriptions
 
 ## Open Questions
 
