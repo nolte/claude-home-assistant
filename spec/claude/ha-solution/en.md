@@ -44,7 +44,7 @@ Domain classification and cross-domain routing above the `ha-*-solution` family.
 
 ### Pre-flight
 
-- **MUST** check `requirement` is non-empty; on underspecification ask 1–3 targeted questions (which device/entity target, whether a dashboard surface is wanted, whether an automation should react) before classifying
+- **MUST** check `requirement` is non-empty; then gauge requirement confidence — a clearly-specified requirement uses the lightweight path (ask 1–3 targeted questions: which device/entity target, whether a dashboard surface is wanted, whether an automation should react), while a requirement below a confidence threshold (vague or broad cross-domain result, unnamed targets, unclear scope) **MUST** dispatch `requirements-elicit` first and classify against the confirmed requirement artifact, mirroring the `issue-orchestrate` upstream gate — before classifying
 - **MUST** route a clearly single-domain requirement straight to the owning `*-solution` instead of adding a routing layer
 
 ### Classification & routing rules
@@ -72,6 +72,7 @@ Domain classification and cross-domain routing above the `ha-*-solution` family.
 ## Acceptance criteria
 
 - [ ] A single entry point accepts any HA requirement and routes it to the correct domain solution(s)
+- [ ] An under-specified requirement dispatches `requirements-elicit` before classifying; a clearly-specified one uses the fast 1–3-question clarify path
 - [ ] The requirement is classified into one or more of integration/backend, Lovelace/frontend, YAML-automation, Pixoo
 - [ ] A cross-domain requirement is decomposed across the relevant `*-solution`s in dependency order with identities threaded across boundaries
 - [ ] Domain solutions are resolved against the live `ha-*-solution` inventory each run (an added or renamed domain solution is routable without editing the router)
@@ -83,5 +84,5 @@ Domain classification and cross-domain routing above the `ha-*-solution` family.
 
 - **Solution vs. agent dispatch**: should the per-domain solutions run as skills (visible, sequential) or via agents (isolated, parallel)? Currently skill dispatch, because the cross-domain identity threading (backend `domain`/`entity_id`s → frontend card / automation) must stay visible in the user context.
 - **Double gating**: each domain `*-solution` has its own plan-approval gate, and the router adds a domain-plan gate on top. Should the router's approval subsume the first domain solution's gate to avoid gate fatigue, or stay separate? Currently separate — the router plans domains, each solution plans its own artifacts.
-- **Requirement confidence**: how should the router treat an under-specified cross-domain requirement — its own lightweight clarify, or dispatch `requirements-elicit` first? (See the sibling `ha-*-solution` requirements-elicit gate work.)
+- **Requirement confidence (resolved)**: an under-specified cross-domain requirement dispatches `requirements-elicit` before classifying, and a clearly-specified one uses the lightweight 1–3-question path — the same confidence gate as the sibling `ha-*-solution`s, mirroring the `issue-orchestrate` upstream gate.
 - **Identity source of truth**: when several domains could each define an `entity_id`, which domain owns it? Currently the backend/integration domain is the source and later domains consume it.

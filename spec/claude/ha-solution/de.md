@@ -44,7 +44,7 @@ Domänen-Klassifikation und domänenübergreifendes Routing über der `ha-*-solu
 
 ### Pre-Flight
 
-- **MUSS [MUST]** prüfen, dass `requirement` nicht leer ist; bei Unterspezifikation 1–3 gezielte Fragen stellen (welches Geräte-/Entity-Ziel, ob eine Dashboard-Oberfläche gewünscht ist, ob eine Automation reagieren soll), bevor klassifiziert wird
+- **MUSS [MUST]** prüfen, dass `requirement` nicht leer ist; dann die Anforderungs-Konfidenz einschätzen — eine klar spezifizierte Anforderung nutzt den leichten Pfad (1–3 gezielte Fragen: welches Geräte-/Entity-Ziel, ob eine Dashboard-Oberfläche gewünscht ist, ob eine Automation reagieren soll), während eine Anforderung unterhalb einer Konfidenzschwelle (vages oder breites domänenübergreifendes Ergebnis, ungenannte Ziele, unklarer Scope) **MUSS [MUST]** zuerst `requirements-elicit` dispatchen und gegen das bestätigte Anforderungs-Artefakt klassifizieren, analog zum `issue-orchestrate`-Upstream-Gate — bevor klassifiziert wird
 - **MUSS [MUST]** eine klar single-domain Anforderung direkt an die zuständige `*-solution` routen, statt eine Routing-Schicht hinzuzufügen
 
 ### Klassifikations- & Routing-Regeln
@@ -72,6 +72,7 @@ Domänen-Klassifikation und domänenübergreifendes Routing über der `ha-*-solu
 ## Akzeptanzkriterien
 
 - [ ] Ein einziger Eingangspunkt nimmt jede HA-Anforderung an und routet sie an die korrekte(n) Domänen-Lösung(en)
+- [ ] Eine unterspezifizierte Anforderung dispatcht `requirements-elicit` vor der Klassifikation; eine klar spezifizierte nutzt den schnellen 1–3-Fragen-Clarify-Pfad
 - [ ] Die Anforderung wird in eine oder mehrere von Integration/Backend, Lovelace/Frontend, YAML-Automation, Pixoo klassifiziert
 - [ ] Eine domänenübergreifende Anforderung wird über die relevanten `*-solution`s in Abhängigkeitsreihenfolge zerlegt, mit über Grenzen gefädelten Identitäten
 - [ ] Domänen-Lösungen werden bei jedem Lauf gegen das lebende `ha-*-solution`-Inventar aufgelöst (eine hinzugefügte oder umbenannte Domänen-Lösung ist routbar, ohne den Router zu ändern)
@@ -83,5 +84,5 @@ Domänen-Klassifikation und domänenübergreifendes Routing über der `ha-*-solu
 
 - **Solution- vs. Agent-Dispatch**: Sollen die Domänen-Lösungen als Skills (sichtbar, sequenziell) oder über Agenten (isoliert, parallel) laufen? Aktuell Skill-Dispatch, weil die domänenübergreifende Identitäts-Verdrahtung (Backend-`domain`/`entity_id`s → Frontend-Card / Automation) im Nutzerkontext sichtbar bleiben muss.
 - **Doppeltes Gating**: Jede Domänen-`*-solution` hat ihr eigenes Plan-Freigabe-Gate, und der Router legt ein Domänen-Plan-Gate darüber. Soll die Router-Freigabe das Gate der ersten Domänen-Lösung subsumieren, um Gate-Ermüdung zu vermeiden, oder getrennt bleiben? Aktuell getrennt — der Router plant Domänen, jede Lösung plant ihre eigenen Artefakte.
-- **Anforderungs-Konfidenz**: Wie soll der Router eine unterspezifizierte domänenübergreifende Anforderung behandeln — mit eigenem leichtem Clarify oder erst `requirements-elicit` dispatchen? (Siehe die Schwester-Arbeit am `ha-*-solution`-requirements-elicit-Gate.)
+- **Anforderungs-Konfidenz (entschieden)**: Eine unterspezifizierte domänenübergreifende Anforderung dispatcht `requirements-elicit` vor der Klassifikation, und eine klar spezifizierte nutzt den leichten 1–3-Fragen-Pfad — dasselbe Konfidenz-Gate wie die Schwester-`ha-*-solution`s, analog zum `issue-orchestrate`-Upstream-Gate.
 - **Identitäts-Source-of-Truth**: Wenn mehrere Domänen je eine `entity_id` definieren könnten, welche Domäne besitzt sie? Aktuell ist die Backend-/Integrations-Domäne die Quelle und spätere Domänen konsumieren sie.

@@ -33,12 +33,13 @@ Use this skill when the user describes a **Pixoo display result** that likely ne
 
 1. **Never generate inline.** Every artifact is produced by its owning skill, resolved at runtime from the live Pixoo `ha-pixoo-*` inventory (see [Runtime skill resolution](#runtime-skill-resolution)) rather than a frozen name list — the skill names in the decomposition heuristic are illustrative anchors. This skill plans and dispatches; it does not write artifacts.
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
-3. **One requirement, one run.** No multi-requirement batches.
-4. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; a plain info page does not need a pixel-art or animation add-on.
-5. **Thread identities.** Dispatch in dependency order and pass the identities produced in earlier steps — the `pages_data` page structure, component positions, the chosen palette/ramps, and the target `sensor.<name>_current_page` entity (the service target per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)) — as inputs to dependent steps.
-6. **Stop on NEEDS-WORK.** If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent artifact on an unfinished predecessor.
-7. **Generation only.** Never deploy to a live HA instance and never modify the device or its config entry.
-8. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)); for the integration's own contract read the grounding specs above, not memory.
+3. **Confidence-gate the requirement.** Before planning, gauge requirement confidence. When it is clearly specified, use the lightweight path (1–3 clarifying questions — which info, static vs. animated, target device entity, palette). When it is below a confidence threshold (vague display, unnamed entities, unclear scope), dispatch `requirements-elicit` first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding.
+4. **One requirement, one run.** No multi-requirement batches.
+5. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; a plain info page does not need a pixel-art or animation add-on.
+6. **Thread identities.** Dispatch in dependency order and pass the identities produced in earlier steps — the `pages_data` page structure, component positions, the chosen palette/ramps, and the target `sensor.<name>_current_page` entity (the service target per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)) — as inputs to dependent steps.
+7. **Stop on NEEDS-WORK.** If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent artifact on an unfinished predecessor.
+8. **Generation only.** Never deploy to a live HA instance and never modify the device or its config entry.
+9. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)); for the integration's own contract read the grounding specs above, not memory.
 
 ## Inputs
 

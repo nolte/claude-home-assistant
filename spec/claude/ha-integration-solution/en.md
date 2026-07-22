@@ -46,7 +46,7 @@ Planning and orchestration across the integration backend cluster. One requireme
 
 ### Pre-flight
 
-- **MUST** check `requirement` is non-empty; on underspecification ask 1–3 targeted questions (which protocol, which auth type, which entity domains, which quality features) before planning
+- **MUST** check `requirement` is non-empty; then gauge requirement confidence — a clearly-specified requirement uses the lightweight path (ask 1–3 targeted questions: which protocol, which auth type, which entity domains, which quality features), while a requirement below a confidence threshold (vague target, unnamed device/API, unclear scope) **MUST** dispatch `requirements-elicit` first and plan against the confirmed requirement artifact, mirroring the `issue-orchestrate` upstream gate — before planning
 - **MUST** check whether the requirement is actually YAML-automation-shaped (no own protocol, no config-flow integration); if so, mark it in the plan and point at `ha-automation-solution` instead of forcing an integration
 - **MUST** check whether an integration already exists under `target_dir/custom_components/<domain>/`; if so, skip the scaffold step and build on the existing one
 
@@ -88,6 +88,7 @@ Planning and orchestration across the integration backend cluster. One requireme
 
 - [ ] Owning skills are resolved against the live integration `ha-*` inventory each run (a newly added or renamed family skill is dispatchable without editing the orchestrator); the decomposition mappings are illustrative, not a frozen closed set
 - [ ] Skill asks for missing essentials (protocol, auth type, entity domains, quality features) before planning
+- [ ] An under-specified requirement dispatches `requirements-elicit` before planning; a clearly-specified one uses the fast 1–3-question clarify path
 - [ ] Skill presents a dependency-ordered skill plan and waits for confirmation
 - [ ] Skill dispatches the owning individual skills instead of generating itself
 - [ ] `ha-integration-scaffold` is step 1 for a new integration; an existing one is built upon

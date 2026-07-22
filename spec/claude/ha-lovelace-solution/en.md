@@ -45,7 +45,7 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 
 ### Pre-flight
 
-- **MUST** check `requirement` is non-empty; on underspecification ask 1–3 targeted questions (which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed) before planning
+- **MUST** check `requirement` is non-empty; then gauge requirement confidence — a clearly-specified requirement uses the lightweight path (ask 1–3 targeted questions: which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed), while a requirement below a confidence threshold (vague result, unnamed entities, unclear scope) **MUST** dispatch `requirements-elicit` first and plan against the confirmed requirement artifact, mirroring the `issue-orchestrate` upstream gate — before planning
 - **MUST** check whether the requirement needs a backend endpoint (WebSocket command); if so, mark it in the plan — and when no custom integration exists (yet), name `ha-integration-scaffold` as the prerequisite instead of forcing the backend work into a frontend skill
 
 ### Decomposition heuristic (requirement → artifact type → skill)
@@ -83,6 +83,7 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 
 - [ ] Owning skills are resolved against the live frontend `ha-*` inventory each run (a newly added or renamed family skill is dispatchable without editing the orchestrator); the decomposition mappings are illustrative, not a frozen closed set
 - [ ] Skill asks for missing essentials (target entity, JS vs. Lit/TS, tag name, backend need) before planning
+- [ ] An under-specified requirement dispatches `requirements-elicit` before planning; a clearly-specified one uses the fast 1–3-question clarify path
 - [ ] Skill presents an artifact plan in dependency order and waits for confirmation
 - [ ] Skill dispatches the owning individual skills instead of generating itself
 - [ ] Identities (card tag, file path, module resource, `<domain>`, command `type`) of earlier artifacts are threaded into the inputs of dependent steps

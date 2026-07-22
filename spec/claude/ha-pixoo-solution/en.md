@@ -45,7 +45,7 @@ Planning and orchestration across the Divoom Pixoo skill family: `ha-pixoo-page-
 
 ### Pre-flight
 
-- **MUST** check `requirement` is non-empty; on underspecification ask 1–3 targeted questions (which info, static vs. animated, target device entity, palette) before planning
+- **MUST** check `requirement` is non-empty; then gauge requirement confidence — a clearly-specified requirement uses the lightweight path (ask 1–3 targeted questions: which info, static vs. animated, target device entity, palette), while a requirement below a confidence threshold (vague display, unnamed entities, unclear scope) **MUST** dispatch `requirements-elicit` first and plan against the confirmed requirement artifact, mirroring the `issue-orchestrate` upstream gate — before planning
 - **MUST** distinguish an authoring requirement from mere integration setup; when the request is device setup / config flow / `scan_interval` / entity wiring, name it as **using** the existing integration per `ha/divoom-pixoo` and stop instead of planning artifacts
 
 ### Decomposition heuristic (requirement → artifact type → skill)
@@ -80,6 +80,7 @@ Planning and orchestration across the Divoom Pixoo skill family: `ha-pixoo-page-
 
 - [ ] Owning skills are resolved against the live Pixoo `ha-pixoo-*` inventory each run (a newly added or renamed family skill is dispatchable without editing the orchestrator); the decomposition mappings are illustrative, not a frozen closed set
 - [ ] Skill asks for missing essentials (which info, static vs. animated, target entity, palette) before planning
+- [ ] An under-specified requirement dispatches `requirements-elicit` before planning; a clearly-specified one uses the fast 1–3-question clarify path
 - [ ] Skill presents an artifact plan in dependency order and waits for confirmation
 - [ ] Skill dispatches the owning individual skills instead of generating itself
 - [ ] Identities (page structure, component positions, palette/ramps, target `sensor.<name>_current_page` entity) of earlier artifacts are threaded into the inputs of dependent steps

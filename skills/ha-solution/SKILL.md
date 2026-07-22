@@ -65,7 +65,7 @@ A cross-domain requirement maps to several rows; the typical order is **integrat
 
 ### 1) Classify
 
-Bucket the requirement into its domain parts. If it is single-domain, route straight to the owning `*-solution`. If underspecified, ask 1–3 targeted questions (which device/entity target, whether a dashboard surface is wanted, whether an automation should react) before classifying. Do not classify on guesses.
+Bucket the requirement into its domain parts. If it is single-domain, route straight to the owning `*-solution`. First gauge requirement confidence: when clearly specified, use the lightweight path — ask 1–3 targeted questions (which device/entity target, whether a dashboard surface is wanted, whether an automation should react) before classifying. When it is below a confidence threshold (vague or broad cross-domain result, unnamed targets, unclear scope), dispatch `requirements-elicit` first and classify against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate. Do not classify on guesses.
 
 ### 2) Plan
 

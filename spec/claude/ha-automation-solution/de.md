@@ -44,7 +44,7 @@ Planung und Orchestrierung über die `ha-automation/`-Skill-Familie plus `ha-blu
 
 ### Pre-Flight
 
-- **MUSS [MUST]** `requirement` als nichtleer prüfen; bei Unterspezifikation gezielt 1–3 Rückfragen stellen (welche Quell-Entity, welcher Schwellwert, welche Zeitfenster), bevor er plant
+- **MUSS [MUST]** `requirement` als nichtleer prüfen; dann die Anforderungs-Konfidenz einschätzen — eine klar spezifizierte Anforderung nutzt den leichten Pfad (1–3 gezielte Rückfragen: welche Quell-Entity, welcher Schwellwert, welche Zeitfenster), während eine Anforderung unterhalb einer Konfidenzschwelle (vager Trigger, ungenannte Entities, unklarer Scope) **MUSS [MUST]** zuerst `requirements-elicit` dispatchen und gegen das bestätigte Anforderungs-Artefakt planen, analog zum `issue-orchestrate`-Upstream-Gate — bevor er plant
 - **MUSS [MUST]** prüfen, ob die Anforderung eine Custom-Integration verlangt; wenn ja, das im Plan ausweisen und an `ha-integration-scaffold` verweisen statt es zu erzwingen
 
 ### Zerlegungs-Heuristik (Anforderung → Artefakt-Typ → Skill)
@@ -79,6 +79,7 @@ Planung und Orchestrierung über die `ha-automation/`-Skill-Familie plus `ha-blu
 
 - [ ] Zuständige Skills werden pro Lauf gegen das aktive Inventar der `ha-automation`-Familie aufgelöst (ein neu hinzugefügter oder umbenannter Familien-Skill ist dispatchbar, ohne den Orchestrator zu editieren); die Zerlegungs-Zuordnungen sind illustrativ, keine eingefrorene geschlossene Menge
 - [ ] Skill erfragt fehlende Eckdaten (Quelle, Schwellwert, Zeitfenster), bevor er plant
+- [ ] Eine unterspezifizierte Anforderung dispatcht `requirements-elicit` vor der Planung; eine klar spezifizierte nutzt den schnellen 1–3-Fragen-Clarify-Pfad
 - [ ] Skill präsentiert einen Artefakt-Plan in Abhängigkeits-Reihenfolge und wartet auf Bestätigung
 - [ ] Skill dispatcht die zuständigen Einzel-Skills statt selbst zu generieren
 - [ ] `entity_id`s früherer Artefakte werden als Eingaben der abhängigen Schritte durchgereicht
