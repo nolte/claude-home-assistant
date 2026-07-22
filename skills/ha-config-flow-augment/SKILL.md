@@ -23,12 +23,13 @@ Use this skill when the user wants to:
 - greenfield integration scaffolding → `ha-integration-scaffold`
 - pure schema edits (rename a field, change a default) → manual code edit
 - destructive refactors (remove a step, rewrite a step) → manual code edit with explicit user approval
-- schema migration of `entry.data` across versions → `ha-schema-migration` (planned)
+- schema migration of `entry.data` across versions → `ha-config-entry-migrate`
+- DHCP/SSDP/USB/HomeKit/MQTT discovery (any transport other than Zeroconf) → `ha-discovery-augment`; this skill's `zeroconf` pattern owns only the mDNS/Zeroconf retrofit
 
 ## Hard rules
 
 1. **Never overwrite existing flow steps.** Augment is additive. If the requested pattern already exists in `config_flow.py`, abort with "pattern already present".
-2. **Never touch unrelated modules.** Allowed targets: `config_flow.py`, `strings.json`, `translations/<lang>.json`, `tests/test_config_flow.py`, and (for zeroconf) `manifest.json`. The only exception is `oauth`, which also writes a registration block in `__init__.py`.
+2. **Never touch unrelated modules.** Allowed targets: `config_flow.py`, `strings.json`, `translations/<lang>.json`, `tests/test_config_flow.py`, and (for zeroconf) `manifest.json`. The `oauth` pattern additionally writes a registration block in `__init__.py`, adds `application_credentials` to `manifest.json:dependencies`, and scaffolds `application_credentials.py` (`async_get_authorization_server`) — modern HA OAuth is Application-Credentials-based.
 3. **Never split the augment.** Code, strings, translations, manifest entry (where applicable), and tests land together in a single commit-ready state. Half augments where code exists but strings are missing are forbidden.
 4. **Never invent backend specifics.** For `oauth`, the skill scaffolds the flow skeleton — token endpoint, authorize endpoint, scopes, client ID/secret stay user-fed. Surface them in the output as an explicit checklist.
 5. **Always state the quality-scale impact.** The output names which Quality Scale tier the augment unlocks (Bronze → Silver for reauth, Silver → Gold for reconfigure, …).
