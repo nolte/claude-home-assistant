@@ -72,6 +72,7 @@ Resolve the owning skill for each building block **at runtime**, by matching the
 | device grouping / hub-child `via_device` hierarchy / stale-device removal | device registry | `ha-device-registry-augment` |
 | a registered service action | service | `ha-service-definition-generator` |
 | firing/listening on the HA event bus | integration events | `ha-integration-events-add` |
+| a WebSocket command a frontend card/panel calls (Python-side backend endpoint) | WebSocket command | `ha-websocket-command-add` |
 | a device trigger/condition/action | device automation | `ha-device-automation-add` |
 | DHCP/SSDP/USB/HomeKit/Zeroconf network discovery | discovery matcher | `ha-discovery-augment` |
 | BLE advertisements / Bluetooth support | bluetooth | `ha-bluetooth-augment` |
