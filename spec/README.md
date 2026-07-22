@@ -94,6 +94,8 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha-automation/filter`](ha-automation/filter/en.md) | HA Automation: Using the Filter Sensor | HA-Automation: Filter-Sensor nutzen | draft | unversioned |
 | [`ha-automation/legacy-trigger-helpers`](ha-automation/legacy-trigger-helpers/en.md) | HA Automation: Avoiding Legacy Trigger Helpers | HA-Automation: Legacy-Trigger-Helfer vermeiden | draft | unversioned |
 | [`claude/ha-integration-scaffold`](claude/ha-integration-scaffold/en.md) | Skill: `ha-integration-scaffold` | Skill: `ha-integration-scaffold` | draft | unversioned |
+| [`claude/ha-integration-ci-scaffold`](claude/ha-integration-ci-scaffold/en.md) | Skill: `ha-integration-ci-scaffold` | Skill: `ha-integration-ci-scaffold` | draft | unversioned |
+| [`claude/ha-hacs-release`](claude/ha-hacs-release/en.md) | Skill: `ha-hacs-release` | Skill: `ha-hacs-release` | draft | unversioned |
 | [`claude/ha-config-flow-augment`](claude/ha-config-flow-augment/en.md) | Skill: `ha-config-flow-augment` | Skill: `ha-config-flow-augment` | draft | unversioned |
 | [`claude/ha-options-flow-augment`](claude/ha-options-flow-augment/en.md) | Skill: `ha-options-flow-augment` | Skill: `ha-options-flow-augment` | draft | unversioned |
 | [`claude/ha-config-entry-migrate`](claude/ha-config-entry-migrate/en.md) | Skill: `ha-config-entry-migrate` | Skill: `ha-config-entry-migrate` | draft | unversioned |
