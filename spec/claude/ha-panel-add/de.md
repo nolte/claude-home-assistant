@@ -62,6 +62,7 @@ Ergänzung genau eines Custom-Panels pro Lauf in einem bestehenden Repo: das Pan
 - **KANN [MAY]** über den `config`-Block beliebige Daten an das Panel durchreichen (zur Laufzeit als `panel.config`) und **KANN [MAY]** `embed_iframe` setzen, wenn das Panel im Iframe statt direkt im Frontend ausgeliefert werden soll
 - **SOLLTE [SHOULD]** ohne ES5-Support ausliefern, solange keine breitere Browser-Unterstützung nötig ist; **MUSS [MUST]** bei nötigem ES5-Support den ES5-Adapter vor dem Definieren laden, via `window.loadES5Adapter().then(function() { customElements.define('my-panel', MyCustomPanel) })`
 - **MUSS [MUST]** Bezeichner nach `ha/naming-conventions` benennen und HA-Interna gegen die offizielle Doku verifizieren (`ha/upstream-docs-verification`)
+- **MUSS [MUST]** das generierte Panel/View an `ha/lovelace-layout-antipatterns` konformieren — ein Panel-Mode-View hält genau eine Card und keine Badges (A1/A2), das Panel respektiert `narrow` und den Mobile-Single-Column-Collapse (E1) und nutzt kein React (B5)
 
 ### Validierung & Bericht
 

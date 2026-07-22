@@ -72,6 +72,7 @@ Der Skill scaffold **eine** Card pro Aufruf. Er löscht keine Cards, mergt keine
 - **MUSS [MUST]** in `__init__.py` einen Auto-Registrierungs-Block ergänzen, der `await hass.http.async_register_static_paths([StaticPathConfig(url_path=..., path=..., cache_headers=False)])` für die Card-Datei aufruft
 - **MUSS [MUST]** `cache_headers=False` setzen — ohne diesen Wert landen aktualisierte Cards für Browser mit gecachten Resources im Stale-Zustand
 - **MUSS NICHT [MUST NOT]** Hardcoded-Hex-Farben oder Pixel-Werte ohne CSS-Custom-Property-Wrap ins Skelett schreiben
+- **MUSS [MUST]** die generierte Card an `ha/lovelace-layout-antipatterns` konformieren — `grid_options.columns` auf ein Vielfaches von 3 defaulten (`3`/`6`/`9`/`12`; B3), nie eine feste äußere Pixelbreite oder absolute Positionierung hardcodieren, um den Grid-Footprint zu erzwingen (B4), `columns: full` nur setzen, wenn die Card wirklich die Sektion überspannt (B4), und kein React nutzen (B5)
 
 ### Test-Erweiterung
 

@@ -64,6 +64,7 @@ Ergänzung genau einer Strategy pro Lauf (`dashboard` oder `view`) in einem best
 - **SOLLTE [SHOULD]** bei grafischer Konfiguration ein `static getConfigElement()` definieren, dessen Config-Element ein `setConfig(config)` implementiert und Änderungen über ein `config-changed`-CustomEvent (`bubbles: true, composed: true, detail: { config: newConfig }`) zurückmeldet; `configRequired = true` setzen, wenn die Strategy ohne Config nicht funktioniert, sonst `noEditor = true`
 - **SOLLTE [SHOULD]** eine Dashboard-Strategy über `window.customStrategies.push({...})` für den Community-Dashboard-Dialog registrieren; der Push **MUSS [MUST]** `type` (Strategy-Type ohne `custom:`-Präfix) und `strategyType: "dashboard"` setzen und **KANN [MAY]** `name`/`description`/`documentationURL` sowie ein `static getCreateSuggestions(hass)` (Default-`title`/`icon`) ergänzen
 - **MUSS [MUST]** Bezeichner nach `ha/naming-conventions` benennen und HA-Interna gegen die offizielle Doku verifizieren (`ha/upstream-docs-verification`)
+- **MUSS [MUST]** generierte Views/Cards an `ha/lovelace-layout-antipatterns` konformieren — den `type` jedes Views explizit setzen (bevorzugt `sections`, nie der form-abgeleitete Default; A3), nie einen Panel-View mit mehr als einer Card oder Badges in einem Panel-/Sidebar-View emittieren (A1/A2) und nie von Third-Party-Layout-Tooling abhängen (D1)
 
 ### Validierung & Bericht
 

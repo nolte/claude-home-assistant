@@ -64,6 +64,7 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 - **MUST** dispatch the skills in dependency order (card before its add-ons; badges/strategies/panels independent; a WebSocket command as the backend the card/panel consumes) and thread the identities (card tag/`custom:<type>`, file path, module resource, `<domain>`, command `type`) into the inputs of dependent steps
 - **MUST** stop and report when a dispatched skill returns a NEEDS-WORK report, rather than building on an unfinished predecessor artifact
 - **MUST** keep all identifiers consistent across artifacts per `ha/naming-conventions` and verify HA internals against the official docs (`ha/upstream-docs-verification`)
+- **MUST** hold every dispatched artifact to `ha/lovelace-layout-antipatterns` and fold its acceptance checklist into each artifact's conformance gate
 
 ### Aggregate report
 

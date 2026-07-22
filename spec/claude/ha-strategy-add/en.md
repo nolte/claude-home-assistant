@@ -64,6 +64,7 @@ Augmenting exactly one strategy per run (`dashboard` or `view`) into an existing
 - **SHOULD** for graphical configuration define a `static getConfigElement()` whose config element implements a `setConfig(config)` and communicates changes back through a `config-changed` custom event (`bubbles: true, composed: true, detail: { config: newConfig }`); set `configRequired = true` when the strategy does not work without config, otherwise `noEditor = true`
 - **SHOULD** register a dashboard strategy via `window.customStrategies.push({...})` for the community-dashboard dialog; the push **MUST** set `type` (the strategy type without the `custom:` prefix) and `strategyType: "dashboard"` and **MAY** add `name`/`description`/`documentationURL` plus a `static getCreateSuggestions(hass)` (default `title`/`icon`)
 - **MUST** name identifiers per `ha/naming-conventions` and verify HA internals against the official docs (`ha/upstream-docs-verification`)
+- **MUST** conform generated views/cards to `ha/lovelace-layout-antipatterns` — set each view's `type` explicitly (prefer `sections`, never the shape-inferred default; A3), never emit a panel view with more than one card or badges in a panel/sidebar view (A1/A2), and never depend on third-party layout tooling (D1)
 
 ### Validation & report
 

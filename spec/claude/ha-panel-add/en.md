@@ -62,6 +62,7 @@ Augmenting exactly one custom panel per run into an existing repo: the panel cus
 - **MAY** pass arbitrary data to the panel through the `config` block (at runtime as `panel.config`) and **MAY** set `embed_iframe` when the panel should be served in an iframe instead of loaded directly into the frontend
 - **SHOULD** ship without ES5 support as long as no wider browser support is required; **MUST** load the ES5 adapter before defining the element when ES5 support is required, via `window.loadES5Adapter().then(function() { customElements.define('my-panel', MyCustomPanel) })`
 - **MUST** name identifiers per `ha/naming-conventions` and verify HA internals against the official docs (`ha/upstream-docs-verification`)
+- **MUST** conform the generated panel/view to `ha/lovelace-layout-antipatterns` — a panel-mode view holds exactly one card and no badges (A1/A2), the panel honours `narrow` and the mobile single-column collapse (E1), and uses no React (B5)
 
 ### Validation & report
 

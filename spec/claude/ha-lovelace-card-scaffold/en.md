@@ -72,6 +72,7 @@ The skill scaffolds **one** card per call. It does not delete cards, does not me
 - **MUST** add an auto-registration block in `__init__.py` that calls `await hass.http.async_register_static_paths([StaticPathConfig(url_path=..., path=..., cache_headers=False)])` for the card file
 - **MUST** set `cache_headers=False` — without it, updated cards stay stale for browsers with cached resources
 - **MUST NOT** write hard-coded hex colours or pixel values without CSS-custom-property wrap into the skeleton
+- **MUST** conform the generated card to `ha/lovelace-layout-antipatterns` — default `grid_options.columns` to a multiple of 3 (`3`/`6`/`9`/`12`; B3), never hardcode a fixed outer pixel width or absolute positioning to force the grid footprint (B4), set `columns: full` only when the card truly spans the section (B4), and use no React (B5)
 
 ### Test extension
 

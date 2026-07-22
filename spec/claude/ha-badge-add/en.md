@@ -47,6 +47,7 @@ Augmenting exactly one custom badge per run into an existing frontend module (an
 - **MUST** check that `target_dir` is an existing frontend module (a `www/` directory or an existing Lovelace module); otherwise point at `ha-lovelace-card-scaffold` for greenfield
 - **MUST** resolve the `badge_type` tag name (infer + confirm) and check it against `ha/naming-conventions`
 - **MUST** read the `ha/lovelace-badges` spec
+- **MUST** note that badges do not render in `panel` or `sidebar` views (`ha/lovelace-layout-antipatterns` A2) when documenting the badge wiring
 - **MUST NOT** overwrite an existing badge module or an existing `badge_type`; on collision abort
 
 ### Generation rules (from `ha/lovelace-badges`)

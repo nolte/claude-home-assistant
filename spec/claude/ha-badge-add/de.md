@@ -47,6 +47,7 @@ Ergänzung genau eines Custom Badge pro Lauf in ein bestehendes Frontend-Modul (
 - **MUSS [MUST]** prüfen, dass `target_dir` ein bestehendes Frontend-Modul ist (ein `www/`-Verzeichnis bzw. ein vorhandenes Lovelace-Modul); andernfalls auf `ha-lovelace-card-scaffold` für Greenfield verweisen
 - **MUSS [MUST]** den `badge_type`-Tag-Namen auflösen (ableiten + bestätigen) und gegen `ha/naming-conventions` prüfen
 - **MUSS [MUST]** die `ha/lovelace-badges`-Spec lesen
+- **MUSS [MUST]** beim Dokumentieren der Badge-Verdrahtung darauf hinweisen, dass Badges in `panel`- oder `sidebar`-Views nicht rendern (`ha/lovelace-layout-antipatterns` A2)
 - **MUSS NICHT [MUST NOT]** ein bestehendes Badge-Modul oder einen bestehenden `badge_type` überschreiben; bei Kollision abbrechen
 
 ### Generierungs-Regeln (aus `ha/lovelace-badges`)
