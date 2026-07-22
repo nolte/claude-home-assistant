@@ -67,9 +67,9 @@ Der Skill ergänzt einen oder mehrere Services in `services.yaml` plus Handler i
   2. die Eingaben aus `call.data` über das Schema validiert (HA macht das vor dem Handler-Aufruf, aber der Stub dokumentiert die Felder)
   3. die Backend-API-Methode aufruft, mit Try-Except auf API-spezifische Auth-/Connection-Exceptions
   4. bei `mutating=true`: `await entry.runtime_data.coordinators[<coordinator_role>].async_request_refresh()`
-  5. Auth-Fehler in `ServiceValidationError("invalid_auth")` umwandelt
-- **MUSS [MUST]** in `async_setup_entry` (oder einer dedizierten Service-Setup-Funktion) `hass.services.async_register(DOMAIN, "<service_name>", _async_handle_<service_name>, schema=<SERVICE>_SCHEMA)` aufrufen
-- **MUSS [MUST]** in `strings.json` und allen `translations/<lang>.json` die Translation-Keys für `services.<service_name>.name`, `services.<service_name>.description`, `services.<service_name>.fields.<field>.name`, `services.<service_name>.fields.<field>.description` anlegen
+  5. Auth-Fehler in eine übersetzte `ServiceValidationError(translation_domain=DOMAIN, translation_key="invalid_auth")` umwandelt — nie ein Bare-Message-String (Gold `exception-translations`)
+- **MUSS [MUST]** in `async_setup` `hass.services.async_register(DOMAIN, "<service_name>", _async_handle_<service_name>, schema=<SERVICE>_SCHEMA)` aufrufen (einmal auf Integrations-Ebene, gegen Doppel-Registrierung geguardet — Bronze `action-setup`; nie per-Entry in `async_setup_entry`)
+- **MUSS [MUST]** in `strings.json` und allen `translations/<lang>.json` die Translation-Keys für `services.<service_name>.name`, `services.<service_name>.description`, `services.<service_name>.fields.<field>.name`, `services.<service_name>.fields.<field>.description` anlegen, plus eine `exceptions.<key>`-Message für jede übersetzte Exception, die der Handler raised
 - **MUSS [MUST]** in `icons.json` `services.<service_name>.service` mit einem passenden Material-Design-Icon ergänzen
 - **MUSS [MUST]** in `tests/` einen Test-Block für den Service ergänzen — typisch in `tests/test_services.py` (anlegen falls noch nicht da) — mit Tests für: erfolgreichen Aufruf, fehlende Disambiguation, Auth-Fehler
 
@@ -84,8 +84,9 @@ Der Skill ergänzt einen oder mehrere Services in `services.yaml` plus Handler i
 - [ ] `services.yaml` enthält den neuen Service-Eintrag mit allen Feldern und Selectors
 - [ ] `__init__.py` (oder `services.py`) enthält das `<SERVICE>_SCHEMA` und den Handler-Stub
 - [ ] `_resolve_entry`-Helper ist verfügbar (anlegen, falls noch nicht vorhanden)
-- [ ] `hass.services.async_register(...)` ist aufgerufen
+- [ ] `hass.services.async_register(...)` ist in `async_setup` aufgerufen (einmal, gegen Doppel-Registrierung geguardet)
 - [ ] Translation-Keys sind in `strings.json` und allen `translations/<lang>.json`
+- [ ] Geworfene Exceptions nutzen `translation_key` + `translation_domain`; passende `exceptions.<key>`-Einträge existieren in `strings.json`
 - [ ] `services.<service>.service`-Icon ist in `icons.json`
 - [ ] Tests für den Service laufen fehlerfrei
 - [ ] `ruff check custom_components/<domain>/` läuft fehlerfrei

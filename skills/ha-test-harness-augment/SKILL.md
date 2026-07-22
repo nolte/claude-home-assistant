@@ -52,7 +52,7 @@ Read `domain` from `manifest.json`. Identify the source module to test against. 
 
 | `kind` | Files |
 |---|---|
-| `platform` | `tests/test_<platform>.py`; possibly `tests/conftest.py` (additional fixtures); possibly `tests/fixtures/<platform>.json` |
+| `platform` | `tests/test_<platform>.py` (incl. a `snapshot_platform` entity/registry snapshot test via `syrupy` + the `snapshot` / `entity_registry` fixtures); possibly `tests/conftest.py` (additional fixtures); possibly `tests/fixtures/<platform>.json`; `tests/snapshots/*.ambr` for the syrupy snapshot |
 | `service` | `tests/test_services.py` (create or extend) |
 | `helpers` | `tests/test_helpers.py` (create or extend) |
 | `lovelace_cleanup` | `tests/test_lovelace_cleanup.py` (create) |
@@ -76,4 +76,5 @@ pytest --cov=custom_components.<domain> --cov-report=term-missing
 - E2E tests against real HA → separate spec planned
 - Test refactoring → manual code edit
 - Coverage threshold enforcement → CI configuration
-- Snapshot testing (`syrupy`) → not in scope
+- `test-before-setup` / `test-before-configure` coverage → owned by the config-flow tests scaffolded at greenfield (`ha-integration-scaffold`), not this skill
+- Deep `syrupy` diffing of arbitrary non-entity structures → out of scope; entity/registry snapshots via `snapshot_platform` **are** in scope (the dominant HA-core platform-test pattern — see the `platform` kind)
