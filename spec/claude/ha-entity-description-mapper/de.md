@@ -56,12 +56,14 @@ Der Skill ergänzt eine **bestehende** Plattform-Datei (typisch `sensor.py`) um 
   - `device_class` (sofern gesetzt) ist eine HA-bekannte Klasse für die jeweilige Plattform — z. B. `SensorDeviceClass.TEMPERATURE` für `sensor`
   - `state_class` (sofern gesetzt) ist `MEASUREMENT`, `TOTAL_INCREASING`, oder `TOTAL`
   - `native_unit_of_measurement` (sofern gesetzt) ist konsistent mit `device_class` (z. B. `°C`/`K` für `TEMPERATURE`)
+  - `entity_category` (sofern gesetzt) ist ein Member von `EntityCategory` (`CONFIG` / `DIAGNOSTIC`)
 - **MUSS [MUST]** Validierungs-Verstöße als ausführliche Liste melden und den Lauf abbrechen, statt halb generierte Datapoints zu schreiben
 
 ### Generator-Choreographie
 
 - **MUSS [MUST]** in `<platform>.py` die `EntityDescription`-Tupel-Liste anhängen — Konstanten-Name typisch `<DOMAIN>_<PLATFORM>_DESCRIPTIONS` (PascalCase mit `_DESCRIPTIONS`-Suffix)
 - **MUSS [MUST]** sicherstellen, dass eine generische Entity-Klasse existiert, die die Tupel-Liste konsumiert; falls noch nicht vorhanden, anhängen
+- **MUSS [MUST]** sicherstellen, dass `<platform>.py` eine modul-globale `PARALLEL_UPDATES`-Konstante deklariert (Silver-`parallel-updates`-Regel); den Wert gegen die HA-`parallel-updates`-Regel-Seite verifizieren (`0` für coordinator-gestützte read-only Plattformen)
 - **MUSS [MUST]** in `strings.json` und allen `translations/<lang>.json` `entity.<platform>.<translation_key>.name` für jeden Datapoint ergänzen — Englisch in `strings.json`, Übersetzungen als TODO-Markierung in nicht-EN-Sprachen, sofern der User sie nicht mit­liefert
 - **MUSS [MUST]** in `icons.json` `entity.<platform>.<translation_key>.default` (plus `state.<value>` falls Datapoint-Spec State-Icons enthält) ergänzen
 - **SOLLTE [SHOULD]** im Plattform-Code einen Kommentar mit der HA-Quality-Scale-Stufe pro Datapoint setzen, sofern die Spec sie definiert (typisch Bronze für Datapoints ohne `device_class`, Silver für Datapoints mit korrektem `device_class`+`state_class`)
@@ -78,9 +80,12 @@ Der Skill ergänzt eine **bestehende** Plattform-Datei (typisch `sensor.py`) um 
 - [ ] `strings.json` enthält jeden Datapoint unter `entity.<platform>.<translation_key>.name`
 - [ ] Jede `translations/<lang>.json` enthält jeden Datapoint mit Übersetzung oder `<TODO: …>`-Marker
 - [ ] `icons.json` enthält jeden Datapoint unter `entity.<platform>.<translation_key>.default`; falls State-Icons gegeben, auch der `state:`-Block
+- [ ] `<platform>.py` deklariert eine modul-globale `PARALLEL_UPDATES`-Konstante
+- [ ] Ein gesetztes `entity_category` wird als `EntityCategory`-Member validiert; ein ungültiger Wert blockiert den Lauf
 - [ ] `ruff check custom_components/<domain>/<platform>.py` läuft fehlerfrei
 - [ ] Validierungs-Verstöße werden als Liste gemeldet und blockieren den Lauf
 - [ ] Existierende Datapoints bleiben unverändert
+- [ ] Der Report verweist auf `ha-test-harness-augment` für Test-Coverage der neuen Descriptions
 
 ## Offene Fragen
 
