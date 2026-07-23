@@ -16,7 +16,7 @@ description: >-
   production. Returns a structured report with the port-forward command and
   the deploy follow-up.
 distribution: plugin
-tools: Read, Glob, Grep, Bash
+tools: Bash
 tags: [home-assistant, dev-environment, provisioning]
 phase: build
 summary: "Provisions a disposable dev Home Assistant instance into a local Kubernetes cluster from a self-generated manifest, prepares /config/custom_components, and can tear it down."
@@ -47,7 +47,7 @@ This is an agent rather than a skill because:
 
 - **Multi-stage orchestration with own failure modes** — context check, storage-class resolution, manifest apply, rollout wait, `/config` bootstrap; each stage has distinct error signatures (wrong/absent context, no default StorageClass, image pull failure, PVC unbound, rollout timeout).
 - **Latency-bound tool session** — image pull and first-boot rollout can take minutes; running inline would block the main conversation.
-- **Narrow tool surface** — Bash for `kubectl`, Read/Glob/Grep only to read inputs; no write access to any repo.
+- **Narrow tool surface** — `Bash` only, for the `kubectl`-driven provisioning lifecycle; the procedure reads no repository files, so no file-read tools are declared. No write access to any repo.
 - **Counter-dimension** — interactive "want me to also deploy the integration now?" is given up; the follow-up (`ha-integration-deploy`) is a caller decision.
 
 ## Scope and boundaries

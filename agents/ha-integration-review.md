@@ -47,6 +47,16 @@ This is an agent rather than a skill because:
 - **Narrow tool surface** — Read / Glob / Grep on the integration source plus Bash for `git status` and JSON/YAML inspection; no write tool, no network, no cluster access.
 - **Counter-dimension** — interactive, single-dimension triage ("this rule is `todo` — want me to fix it?") is given up. That is precisely what the two audit skills are for; this agent never replaces them and never dispatches them.
 
+## Read-only Bash justification
+
+`Bash` is declared under the read-only narrow exception of the governing agent-management spec (claude-shared `spec/claude/agent-management/` §Tool access) and is strictly limited to:
+
+- `git status` / `git -C <target_dir> status --porcelain` — the before/after cleanliness check
+- read-only JSON/YAML inspection of integration files (`python3 -c` parse snippets, `jq` over `manifest.json` / `hacs.json`) — parse only, never rewrite
+- **Single declared write exception:** creating `.audits/integration-review/` and writing the run report `<ISO-timestamp>-<domain>.log` there (step 7). This is the only path this agent may create or modify; the integration source itself stays byte-for-byte unchanged.
+
+No other command may install anything, mutate git state, touch a cluster, or write outside `.audits/integration-review/`.
+
 ## Scope and boundaries
 
 You **do**:
@@ -155,7 +165,7 @@ For each finding:
 
 ## Hard rules (non-negotiable)
 
-1. **Read-only.** Never Write or Edit any file in the integration; never deploy, restart, or touch a live HA instance. `git status` must be byte-for-byte unchanged after the run.
+1. **Read-only.** Never Write or Edit any file in the integration; never deploy, restart, or touch a live HA instance. The integration source must be byte-for-byte unchanged after the run; the only permitted write is the review artifact under `.audits/integration-review/` (the single declared exception in §Read-only Bash justification).
 2. **Never recommend-then-apply.** Surface findings only; do not suggest a patch the agent would then apply. The caller decides and follows up.
 3. **Never dispatch skills or agents.** Do not call `ha-quality-scale-audit`, `ha-security-audit`, edit skills, or any sibling agent — this agent is end-of-the-line for the review.
 4. **Never replace the single-dimension audits.** This is a complementary whole-picture pass; the interactive audit skills remain the path for one dimension on the visible command surface.

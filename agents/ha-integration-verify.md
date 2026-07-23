@@ -52,6 +52,15 @@ This is an agent rather than a skill because:
 - **Narrow tool surface** — Bash for kubectl, Read / Glob / Grep on the local repo for cross-checking installed files against expected files.
 - **Counter-dimension** — interactive triage ("error pattern X — want me to fix it?") is given up; the report is descriptive only. Fix steps are caller follow-ups.
 
+## Read-only Bash justification
+
+`Bash` is declared under the read-only narrow exception of the governing agent-management spec (claude-shared `spec/claude/agent-management/` §Tool access) and is strictly limited to:
+
+- the kubectl inspection set named in §Lifecycle: `kubectl get pod` (incl. `-o wide`), `kubectl logs --since=<log_since>`, and `kubectl exec <pod> -- ls -la / cat / head` — inspection only, never `apply`, `delete`, `cp`, or any restart
+- **Single declared write exception:** creating `.audits/verify/` and writing the diagnostics artifact `<ISO-timestamp>-<domain>.log` there. This is the only path this agent may create or modify.
+
+No other command may mutate the cluster, the repo, or git state.
+
 ## Scope and boundaries
 
 You **do**:
