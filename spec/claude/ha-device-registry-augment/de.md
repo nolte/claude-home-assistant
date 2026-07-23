@@ -4,7 +4,7 @@ Status: draft
 
 ## Kontext
 
-`ha/device-registry` und `ha/entity-architecture` beschreiben, wie Entitäten über `DeviceInfo` (Identifiers, Manufacturer, Model, Name) zu physischen **Geräten** gruppieren, wie ein Kindgerät über `via_device` an seinen Hub verlinkt, wie neu entdeckte Geräte zur Laufzeit ergänzt werden und wie verschwundene Geräte entfernt werden. Das sind die Gold-Quality-Scale-Regeln `devices`, `stale-devices` und `dynamic-devices`. Aber kein Skill verdrahtet sie: Der Scaffold und `ha-entity-platform-add` erzeugen Entitäten, `ha-entity-description-mapper` mappt Datenpunkte, und beide delegieren die Geräte-Hierarchie an `ha/entity-architecture`, ohne dass ein Skill sie besitzt. Die häufigen Fehler sind flache Entitäten ohne Gerät, ein fehlendes `via_device` (sodass Hub und Kinder unverbunden sind) und veraltete Geräte, die hängen bleiben, weil `async_remove_config_entry_device` nie implementiert wurde.
+`ha/device-registry` und `ha/entity-architecture` beschreiben, wie Entitäten über `DeviceInfo` (Identifiers, Manufacturer, Model, Name) zu physischen **Geräten** gruppieren, wie ein Kindgerät über `via_device` an seinen Hub verlinkt, wie neu entdeckte Geräte zur Laufzeit ergänzt werden und wie verschwundene Geräte entfernt werden. Das sind die Gold-Quality-Scale-Regeln `devices`, `stale-devices` und `dynamic-devices`. Aber kein Skill verdrahtet sie: Der Scaffold und `ha-entity-platform-add` erzeugen Entitäten, `ha-entity-description-map` mappt Datenpunkte, und beide delegieren die Geräte-Hierarchie an `ha/entity-architecture`, ohne dass ein Skill sie besitzt. Die häufigen Fehler sind flache Entitäten ohne Gerät, ein fehlendes `via_device` (sodass Hub und Kinder unverbunden sind) und veraltete Geräte, die hängen bleiben, weil `async_remove_config_entry_device` nie implementiert wurde.
 
 Dieser Skill schließt die Lücke: Er verdrahtet die Device-Registry-Hierarchie einer bestehenden Integration — `DeviceInfo`, `via_device`, dynamisches Hinzufügen, Stale-Removal und optionale Geräte-Diagnostics — non-destruktiv zu den bestehenden Entitäten. Er ist die Geräte-Hierarchie-Schwester von `ha-entity-platform-add` (das die Entität besitzt) und hebt eine Integration Richtung Gold-Geräte-Regeln.
 
@@ -22,7 +22,7 @@ Verdrahtung der Device-Registry-Hierarchie genau einer bestehenden `custom_compo
 
 ## Nicht-Ziele
 
-- Die Entity-Plattform selbst erzeugen — `ha-entity-platform-add` / `ha-entity-description-mapper`
+- Die Entity-Plattform selbst erzeugen — `ha-entity-platform-add` / `ha-entity-description-map`
 - Der Config-Entry-Diagnostics-JSON-Dump — `ha-diagnostics-augment`
 - Device-Trigger- / Condition- / Action-Automation-Plattformen — `ha-device-automation-add`
 - Greenfield-Scaffold — `ha-integration-scaffold`

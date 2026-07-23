@@ -72,7 +72,7 @@ Der Skill fügt **einen** weiteren Coordinator pro Aufruf hinzu. Er entfernt kei
 - **MUSS [MUST]** in `strings.json` und allen `translations/<lang>.json` den `options.step.init.data.poll_interval_<role>`-String ergänzen
 - **MUSS [MUST]** in `tests/test_coordinator.py` Tests ergänzen: Auth-Error → `ConfigEntryAuthFailed`, Connection-Error → `UpdateFailed`, Happy-Path mit JSON-Fixture
 - **KANN [MAY]** ein neues Fixture-File in `tests/fixtures/<role>.json` anlegen, falls die API-Methode strukturierte Antworten liefert
-- **SOLLTE [SHOULD]** im Report ausweisen, dass jede Plattform, die den neuen Coordinator liest, ein modul-globales `PARALLEL_UPDATES` (Silver `parallel-updates`) braucht, mit Verweis auf `ha-entity-platform-add` / `ha-entity-description-mapper`
+- **SOLLTE [SHOULD]** im Report ausweisen, dass jede Plattform, die den neuen Coordinator liest, ein modul-globales `PARALLEL_UPDATES` (Silver `parallel-updates`) braucht, mit Verweis auf `ha-entity-platform-add` / `ha-entity-description-map`
 - **KANN [MAY]** eine Push-Style-Coordinator-Variante (`async_set_updated_data`, kein `update_interval`) statt einer Polling-Variante erzeugen, wenn die iot_class der Integration `local_push` / `cloud_push` ist
 
 ### Verbote

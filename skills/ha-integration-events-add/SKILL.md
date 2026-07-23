@@ -1,6 +1,6 @@
 ---
 name: ha-integration-events-add
-description: Augments an existing Home Assistant Custom Integration with event firing and/or listening on the HA event bus, conforming to spec/ha/integration-events. For firing it generates hass.bus.async_fire("<domain>_event", event_data) with a domain-prefixed event type and a documented JSON-serializable data shape, placed in async_setup_entry (__init__.py) and never in entity logic. For listening it generates hass.bus.async_listen / async_listen_once, holds the returned unsubscribe callable, registers it via entry.async_on_unload (or tears it down in async_unload_entry), and decorates non-blocking listeners with @callback. Decides fire vs. listen vs. both with the user first and runs an event-vs-state check. Activate on "fire a custom event", "listen for an event", "feuere/lausche ein Integration-Event". Do not activate for registered services (ha-service-definition-generator), device triggers off events (ha-device-automation-add), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
+description: Augments an existing Home Assistant Custom Integration with event firing and/or listening on the HA event bus, conforming to spec/ha/integration-events. For firing it generates hass.bus.async_fire("<domain>_event", event_data) with a domain-prefixed event type and a documented JSON-serializable data shape, placed in async_setup_entry (__init__.py) and never in entity logic. For listening it generates hass.bus.async_listen / async_listen_once, holds the returned unsubscribe callable, registers it via entry.async_on_unload (or tears it down in async_unload_entry), and decorates non-blocking listeners with @callback. Decides fire vs. listen vs. both with the user first and runs an event-vs-state check. Activate on "fire a custom event", "listen for an event", "feuere/lausche ein Integration-Event". Do not activate for registered services (ha-service-definition-add), device triggers off events (ha-device-automation-add), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, events]
 phase: design
 summary: "Adds event firing and/or listening on the HA event bus to an existing Home Assistant Custom Integration."
@@ -11,14 +11,14 @@ use_when:
   - "you want to add both firing and listening for an integration event"
 dont_use_when:
   - situation: "You need a registered service with its own schema"
-    alternative: ha-service-definition-generator
+    alternative: ha-service-definition-add
   - situation: "You need a device trigger built on top of a fired event"
     alternative: ha-device-automation-add
   - situation: "You are scaffolding a brand-new integration from scratch"
     alternative: ha-integration-scaffold
 see_also:
   - ha-device-automation-add
-  - ha-service-definition-generator
+  - ha-service-definition-add
   - ha-coordinator-add
   - ha-integration-scaffold
 ---
@@ -40,7 +40,7 @@ Use this skill to add event **firing** and/or **listening** to an existing integ
 
 ## When NOT to activate
 
-- a user-driven action with its own schema → `ha-service-definition-generator` / `ha/services`
+- a user-driven action with its own schema → `ha-service-definition-add` / `ha/services`
 - a device trigger built on top of a fired event → `ha-device-automation-add` / `ha/device-automations`
 - greenfield integration scaffolding → `ha-integration-scaffold`
 - deploying/importing into a running HA instance → out of scope
@@ -104,7 +104,7 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 ## Boundaries
 
-- Registered services / user-driven actions → `ha-service-definition-generator` / `ha/services`
+- Registered services / user-driven actions → `ha-service-definition-add` / `ha/services`
 - Device triggers off events → `ha-device-automation-add` / `ha/device-automations`
 - `@callback` mechanics / setup lifecycle → `ha/async-patterns` / `ha/setup-lifecycle`
 - Greenfield scaffold → `ha-integration-scaffold`

@@ -4,6 +4,8 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 
 **Design-Spec-Konvention:** Jeder **Skill** trägt einen per-Artefakt-Design-Spec unter `spec/claude/<skill-name>/` (Kontrakt des Skills, getrennt von den `ha/`-Domänen-Specs, die er konsumiert). **Agents** tragen bewusst *keinen* eigenen Design-Spec: sie sind per geerbter agent-management-Konvention einzelne, in sich geschlossene Dateien, deren Kontrakt (Rolle, Scope, Inputs, Output-Shape, Hard Rules) vollständig im Agent-Body lebt — ein separater Spec würde den Body nur duplizieren und drift-anfällig machen. Diese Festlegung schließt die im Skills-&-Agents-Audit 2026-07 offene Frage.
 
+**Naming-Bindung:** Dieses Plugin erbt die Namensform-Konvention aus `spec/claude/skill-agent-naming/` (claude-shared): Skills `<object-noun>-<action>`, Agents `<subject>-<role-noun>`, jeweils mit dem festen Domänen-Präfix `ha-`. **Geschlossene HA-Ausnahmeliste** (Familien-Suffix-Ausnahme gemäß §Inherited surfaces; ein Reviewer DARF sie NICHT flaggen; die Liste ist abschließend): die `*-solution`-Front-Door-Familie — `ha-solution`, `ha-integration-solution`, `ha-lovelace-solution`, `ha-automation-solution`, `ha-pixoo-solution` — deren bewusstes, uniformes Suffix den Orchestrierungs-Einstieg der jeweiligen Domäne benennt. Alle übrigen Artefakte folgen der Konvention ohne Ausnahme (Naming-Uniformitäts-Pass 2026-07: sechs Altnamen zu `-map`/`-add`/`-provisioner`/`-deployer`/`-verifier`/`-reviewer` umbenannt, Deprecation-Stubs bis zum übernächsten Minor).
+
 ## Index
 
 | Slug | Titel (EN) | Titel (DE) | Status | Zuletzt aktualisiert |
@@ -106,8 +108,8 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-options-flow-augment`](claude/ha-options-flow-augment/en.md) | Skill: `ha-options-flow-augment` | Skill: `ha-options-flow-augment` | draft | unversioned |
 | [`claude/ha-config-entry-migrate`](claude/ha-config-entry-migrate/en.md) | Skill: `ha-config-entry-migrate` | Skill: `ha-config-entry-migrate` | draft | unversioned |
 | [`claude/ha-coordinator-add`](claude/ha-coordinator-add/en.md) | Skill: `ha-coordinator-add` | Skill: `ha-coordinator-add` | draft | unversioned |
-| [`claude/ha-entity-description-mapper`](claude/ha-entity-description-mapper/en.md) | Skill: `ha-entity-description-mapper` | Skill: `ha-entity-description-mapper` | draft | unversioned |
-| [`claude/ha-service-definition-generator`](claude/ha-service-definition-generator/en.md) | Skill: `ha-service-definition-generator` | Skill: `ha-service-definition-generator` | draft | unversioned |
+| [`claude/ha-entity-description-map`](claude/ha-entity-description-map/en.md) | Skill: `ha-entity-description-map` | Skill: `ha-entity-description-map` | draft | unversioned |
+| [`claude/ha-service-definition-add`](claude/ha-service-definition-add/en.md) | Skill: `ha-service-definition-add` | Skill: `ha-service-definition-add` | draft | unversioned |
 | [`claude/ha-test-harness-augment`](claude/ha-test-harness-augment/en.md) | Skill: `ha-test-harness-augment` | Skill: `ha-test-harness-augment` | draft | unversioned |
 | [`claude/ha-lovelace-card-scaffold`](claude/ha-lovelace-card-scaffold/en.md) | Skill: `ha-lovelace-card-scaffold` | Skill: `ha-lovelace-card-scaffold` | draft | unversioned |
 | [`claude/ha-translation-sync`](claude/ha-translation-sync/en.md) | Skill: `ha-translation-sync` | Skill: `ha-translation-sync` | draft | unversioned |

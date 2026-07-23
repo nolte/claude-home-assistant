@@ -55,7 +55,7 @@ Der Skill ergänzt **eine** Test-Klasse (Plattform-Tests, Service-Tests, Helper-
 
 - **MUSS [MUST]** je nach `kind` die passende Test-Datei anlegen oder erweitern:
   - `kind=platform` → `tests/test_<platform>.py`: Plattform-Setup-Test (asserts dass async_setup_entry für die Plattform die erwartete Anzahl Entitäten registriert), `_handle_coordinator_update`-Test (asserts dass `native_value` korrekt aus den Coordinator-Daten extrahiert wird), pro `EntityDescription` aus der Tupel-Liste mindestens einen Happy-Path-Test, und einen `snapshot_platform`-Entity-/Registry-Snapshot-Test via `syrupy` (`tests/snapshots/*.ambr`) — das dominante HA-Core-Plattform-Test-Pattern
-  - `kind=service` → `tests/test_services.py`: Service-Test mit Happy-Path, fehlender Disambiguation, Auth-Fehler (siehe `ha-service-definition-generator`-Test-Pattern)
+  - `kind=service` → `tests/test_services.py`: Service-Test mit Happy-Path, fehlender Disambiguation, Auth-Fehler (siehe `ha-service-definition-add`-Test-Pattern)
   - `kind=helpers` → `tests/test_helpers.py`: pro Helper-Funktion in `helpers.py` mindestens einen Test
   - `kind=lovelace_cleanup` → `tests/test_lovelace_cleanup.py`: testet die Lovelace-Card-Auto-Registrierung in `__init__.py` (StaticPathConfig-Aufruf, korrekte URLs, korrekte Pfade)
 - **MUSS [MUST]** in `tests/conftest.py` zusätzliche Fixtures ergänzen, falls die neuen Tests sie brauchen — typisch: ein erweitertes `mock_api`-Fixture mit zusätzlichen Mock-Methoden

@@ -27,7 +27,7 @@ Anwenden und Validieren der `spec/ha/dev-workflow`-MUST-Regeln gegen eine besteh
 - Devcontainer- / Kind- / `script/setup`- / venv-Setup — `ha/dev-environment`
 - Async- / Event-Loop-Patterns — `ha/async-patterns`
 - Manifest-Schema-Authoring im Detail — `ha/integration-manifest`; dieser Skill verlangt nur, dass `hassfest` es validiert
-- Deployment / Verifikation gegen eine laufende HA-Instanz — die `ha-integration-deploy`- / `ha-integration-verify`-Agenten
+- Deployment / Verifikation gegen eine laufende HA-Instanz — die `ha-integration-deployer`- / `ha-integration-verifier`-Agenten
 
 ## Anforderungen
 

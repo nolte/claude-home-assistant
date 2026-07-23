@@ -13,11 +13,11 @@ dont_use_when:
   - situation: "You need to change actual string content, not sync structure"
     alternative: ha-integration-scaffold
   - situation: "Entity string content changed and needs re-mapping"
-    alternative: ha-entity-description-mapper
+    alternative: ha-entity-description-map
 see_also:
   - ha-integration-scaffold
-  - ha-entity-description-mapper
-  - ha-service-definition-generator
+  - ha-entity-description-map
+  - ha-service-definition-add
   - ha-integration-solution
 ---
 
@@ -38,9 +38,9 @@ Use this skill to align `strings.json` with every `translations/<lang>.json` fil
 ## When NOT to activate
 
 - machine translation → out of scope
-- changing existing translation values → manual edit (no owning skill; `ha-entity-description-mapper` when entity strings need re-mapping)
+- changing existing translation values → manual edit (no owning skill; `ha-entity-description-map` when entity strings need re-mapping)
 - creating a new language file from scratch → user decision; not this skill
-- string content changes → covered by the producing skill (`ha-integration-scaffold`, `ha-entity-description-mapper`, …)
+- string content changes → covered by the producing skill (`ha-integration-scaffold`, `ha-entity-description-map`, …)
 
 ## Hard rules
 

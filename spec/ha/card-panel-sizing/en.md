@@ -71,8 +71,8 @@ quality scale** — this is a nolte-portfolio guardrail and lives outside the sc
 - The full layout/arrangement antipattern catalogue — see
   `ha/lovelace-layout-antipatterns` (this spec references it, does not restate it).
 - A build stack, TypeScript, or Lit migration — separate concern.
-- Runtime verification on a live HA instance — `ha-integration-deploy` /
-  `ha-integration-verify`.
+- Runtime verification on a live HA instance — `ha-integration-deployer` /
+  `ha-integration-verifier`.
 
 ## Field reference (source of truth)
 

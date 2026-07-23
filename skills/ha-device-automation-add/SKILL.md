@@ -1,6 +1,6 @@
 ---
 name: ha-device-automation-add
-description: Augments an existing Home Assistant Custom Integration with one device-automation kind — a device trigger, condition, or action — conforming to spec/ha/device-automations. Creates the matching platform module (device_trigger.py / device_condition.py / device_action.py) with its async_get_* list (CONF_PLATFORM/CONF_DOMAIN/CONF_DEVICE_ID/CONF_TYPE fields), a module-constant *_SCHEMA the core applies (never manually), the attach/check/call function, optional capabilities, and the device_automation strings.json entries. Runs an entity-vs-device value check and flags HA's stance that no new device automations are accepted. Activate on "add a device trigger for…", "expose a remote button press as a device trigger", "füge eine Device-Action hinzu". Do not activate for entity automations (ha/entity-architecture), registered services (ha-service-definition-generator), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
+description: Augments an existing Home Assistant Custom Integration with one device-automation kind — a device trigger, condition, or action — conforming to spec/ha/device-automations. Creates the matching platform module (device_trigger.py / device_condition.py / device_action.py) with its async_get_* list (CONF_PLATFORM/CONF_DOMAIN/CONF_DEVICE_ID/CONF_TYPE fields), a module-constant *_SCHEMA the core applies (never manually), the attach/check/call function, optional capabilities, and the device_automation strings.json entries. Runs an entity-vs-device value check and flags HA's stance that no new device automations are accepted. Activate on "add a device trigger for…", "expose a remote button press as a device trigger", "füge eine Device-Action hinzu". Do not activate for entity automations (ha/entity-architecture), registered services (ha-service-definition-add), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, device-automation]
 phase: design
 summary: "Adds one device-automation kind — a device trigger, condition, or action — to an existing Home Assistant Custom Integration."
@@ -11,12 +11,12 @@ use_when:
   - "you want to add a device condition or device action"
 dont_use_when:
   - situation: "You need a registered service with its own schema"
-    alternative: ha-service-definition-generator
+    alternative: ha-service-definition-add
   - situation: "You are scaffolding a brand-new integration from scratch"
     alternative: ha-integration-scaffold
 see_also:
   - ha-integration-events-add
-  - ha-service-definition-generator
+  - ha-service-definition-add
   - ha-integration-scaffold
   - ha-entity-platform-add
 ---
@@ -39,7 +39,7 @@ Use this skill to add **one** device-automation kind — a device trigger, condi
 ## When NOT to activate
 
 - entity automations (state/event model without device indirection) → `ha/entity-architecture`
-- a registered service with its own schema → `ha-service-definition-generator` / `ha/services`
+- a registered service with its own schema → `ha-service-definition-add` / `ha/services`
 - greenfield integration scaffolding → `ha-integration-scaffold`
 - deploying/importing into a running HA instance → out of scope
 
@@ -101,6 +101,6 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 ## Boundaries
 
 - Entity automations → `ha/entity-architecture`
-- Registered services → `ha-service-definition-generator`
+- Registered services → `ha-service-definition-add`
 - Greenfield scaffold → `ha-integration-scaffold`
 - Deploy to live HA → out of scope

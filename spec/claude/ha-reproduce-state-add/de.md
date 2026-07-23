@@ -23,7 +23,7 @@ Ergänzung des Reproduce-State-Plattform-Moduls in einer bestehenden `custom_com
 ## Nicht-Ziele
 
 - Das Schreiben/Definieren von Scenes selbst — `ha-automation/scene` (Scenes sind eine HA-Kern-Komponente; hier wird nur das Reproduzieren durch die Domain ergänzt)
-- Die Service-Actions / das `services.yaml`, die das Mapping aufruft — `ha-service-definition-generator` / `ha/services` (hier nur konsumiert)
+- Die Service-Actions / das `services.yaml`, die das Mapping aufruft — `ha-service-definition-add` / `ha/services` (hier nur konsumiert)
 - Die Entity-Command-Methoden selbst (`async_turn_on` etc.), die die States tatsächlich setzen — die jeweilige Entity-Plattform
 - Significant-Change und Diagnostics — eigene kleine HA-Plattform-Module, eigene Specs
 - Greenfield-Scaffolding einer Integration — `ha-integration-scaffold`

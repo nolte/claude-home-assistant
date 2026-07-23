@@ -23,7 +23,7 @@ Ergänzung von Event-Feuern und/oder -Lauschen in einer bestehenden `custom_comp
 
 ## Nicht-Ziele
 
-- Benutzergesteuerte Aktionen (Service-Aufrufe aus Frontend, Automation, Skript) — `ha-service-definition-generator` / `ha/services`
+- Benutzergesteuerte Aktionen (Service-Aufrufe aus Frontend, Automation, Skript) — `ha-service-definition-add` / `ha/services`
 - Device-Trigger, die auf einem gefeuerten Event aufsetzen — `ha-device-automation-add` / `ha/device-automations`
 - `@callback`-Mechanik und Loop-vs-Executor-Regeln im Detail — `ha/async-patterns`
 - Das `async_on_unload`-Teardown-Pattern und der Setup-Lifecycle insgesamt — `ha/setup-lifecycle`

@@ -24,7 +24,7 @@ Statically auditing exactly one panel-level artifact per run — a custom sideba
 
 - Building, developing, or fixing a panel — `ha-panel-author` (which may consume this report as `ux_audit_report`)
 - Scaffolding a bare panel — `ha-panel-add`
-- A whole-integration review (quality-scale, security, consistency) — `ha-integration-review`
+- A whole-integration review (quality-scale, security, consistency) — `ha-integration-reviewer`
 - A single custom card's internals as an artifact — `ha/lovelace-card-patterns` scope
 - Auto-fixing findings — this skill is read-only
 - Rendering the panel, driving a live HA instance, or on-device testing — static audit only; live verification is a complementary manual step
@@ -37,7 +37,7 @@ Statically auditing exactly one panel-level artifact per run — a custom sideba
 - **MUST** activate on phrasings like:
   - "audit my panel's UX", "is this panel usable on mobile", "review the panel for usability and accessibility"
   - "auditiere die UX meines Panels", "ist das Panel auf dem Handy gut nutzbar", "prüfe das Panel auf Barrierefreiheit"
-- **MUST NOT** activate for building/fixing a panel (`ha-panel-author`), scaffolding one (`ha-panel-add`), or a whole-integration review (`ha-integration-review`)
+- **MUST NOT** activate for building/fixing a panel (`ha-panel-author`), scaffolding one (`ha-panel-add`), or a whole-integration review (`ha-integration-reviewer`)
 
 ### Inputs
 

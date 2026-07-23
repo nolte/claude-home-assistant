@@ -1,6 +1,6 @@
 ---
 name: ha-conversation-agent-augment
-description: "Augments an existing Home Assistant Custom Integration with one or more Voice & AI surfaces — intent handlers, a conversation agent, and/or LLM API tools — conforming to spec/ha/intents-conversation plus spec/ha/llm-api. Decides with the user which surfaces are in scope, then generates the registered intent handlers, the conversation platform entity, and/or the LLM tools and API registration, implementing domain-appropriate built-in intents, avoiding deprecated ones, and signalling tool errors as HomeAssistantError; the full class-and-signature contracts live in the skill body and specs. Activate on \"add a conversation agent\", \"register intents\", \"expose tools to the assistant via the LLM API\", or equivalent German requests. Do not activate for assist_satellite/stt/tts/wake_word entities (ha/entity-platforms-voice), registered services (ha-service-definition-generator), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance."
+description: "Augments an existing Home Assistant Custom Integration with one or more Voice & AI surfaces — intent handlers, a conversation agent, and/or LLM API tools — conforming to spec/ha/intents-conversation plus spec/ha/llm-api. Decides with the user which surfaces are in scope, then generates the registered intent handlers, the conversation platform entity, and/or the LLM tools and API registration, implementing domain-appropriate built-in intents, avoiding deprecated ones, and signalling tool errors as HomeAssistantError; the full class-and-signature contracts live in the skill body and specs. Activate on \"add a conversation agent\", \"register intents\", \"expose tools to the assistant via the LLM API\", or equivalent German requests. Do not activate for assist_satellite/stt/tts/wake_word entities (ha/entity-platforms-voice), registered services (ha-service-definition-add), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance."
 tags: [home-assistant, custom-integration, voice-ai]
 phase: design
 summary: "Augments an existing integration with Voice & AI surfaces — intent handlers, a conversation agent, and/or LLM API tools — deciding scope with the user then generating the chosen ones."
@@ -11,11 +11,11 @@ use_when:
   - "you want to expose tools to the assistant via the LLM API"
 dont_use_when:
   - situation: "You need a registered service with its own schema, not a Voice surface"
-    alternative: ha-service-definition-generator
+    alternative: ha-service-definition-add
   - situation: "You are scaffolding a brand-new integration from scratch"
     alternative: ha-integration-scaffold
 see_also:
-  - ha-service-definition-generator
+  - ha-service-definition-add
   - ha-integration-scaffold
   - ha-config-flow-augment
   - ha-coordinator-add
@@ -40,7 +40,7 @@ Use this skill to add **one or more** Voice & AI surfaces — intent handlers, a
 ## When NOT to activate
 
 - Assist satellite / STT / TTS / wake-word **entities** → `ha/entity-platforms-voice`
-- a registered service with its own schema → `ha-service-definition-generator` / `ha/services`
+- a registered service with its own schema → `ha-service-definition-add` / `ha/services`
 - translation of intent sentences / response / prompt texts → `ha/translations`
 - greenfield integration scaffolding → `ha-integration-scaffold`
 - deploying/importing into a running HA instance → out of scope
@@ -105,7 +105,7 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 ## Boundaries
 
 - Assist satellite / STT / TTS / wake-word entities → `ha/entity-platforms-voice`
-- Registered services → `ha-service-definition-generator`
+- Registered services → `ha-service-definition-add`
 - Intent sentence / prompt translations → `ha/translations`
 - Greenfield scaffold → `ha-integration-scaffold`
 - Deploy to live HA → out of scope

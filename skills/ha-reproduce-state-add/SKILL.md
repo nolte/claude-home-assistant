@@ -1,6 +1,6 @@
 ---
 name: ha-reproduce-state-add
-description: "Augments an existing Home Assistant Custom Integration with scene / reproduce-state support, conforming to spec/ha/reproduce-state. Creates a reproduce_state.py platform module exporting async_reproduce_states, gathering per-entity coroutines that map a target State (state string plus relevant attributes) onto the domain's own service actions, skip entities already in the desired state, and pass the supplied context through. Never manipulates state directly via hass.states.async_set, and reports the Bronze quality-scale marker. Activate on \"add reproduce_state\", \"make my entities scene-capable\", or equivalent German requests. Do not activate for writing or using scenes in config (ha-automation-author), for the called service actions themselves (ha-service-definition-generator), for the entity command methods that set the states (ha-entity-platform-add), or for deploying to a live HA instance."
+description: "Augments an existing Home Assistant Custom Integration with scene / reproduce-state support, conforming to spec/ha/reproduce-state. Creates a reproduce_state.py platform module exporting async_reproduce_states, gathering per-entity coroutines that map a target State (state string plus relevant attributes) onto the domain's own service actions, skip entities already in the desired state, and pass the supplied context through. Never manipulates state directly via hass.states.async_set, and reports the Bronze quality-scale marker. Activate on \"add reproduce_state\", \"make my entities scene-capable\", or equivalent German requests. Do not activate for writing or using scenes in config (ha-automation-author), for the called service actions themselves (ha-service-definition-add), for the entity command methods that set the states (ha-entity-platform-add), or for deploying to a live HA instance."
 tags: [home-assistant, custom-integration, reproduce-state]
 phase: design
 summary: "Adds a reproduce_state.py platform so an integration's entities can be captured in scenes and restored through the domain's own service actions."
@@ -11,11 +11,11 @@ use_when:
   - "you want entities restored when a scene is activated"
 dont_use_when:
   - situation: "You need the service actions the mapping calls"
-    alternative: ha-service-definition-generator
+    alternative: ha-service-definition-add
   - situation: "You are scaffolding a brand-new integration from scratch"
     alternative: ha-integration-scaffold
 see_also:
-  - ha-service-definition-generator
+  - ha-service-definition-add
   - ha-coordinator-add
   - ha-significant-change-add
   - ha-integration-scaffold
@@ -39,7 +39,7 @@ Use this skill to add scene / reproduce-state support to an existing integration
 ## When NOT to activate
 
 - writing or using scenes in config / automations → `ha-automation-author` (scene helper family)
-- the service actions or `services.yaml` the mapping calls → `ha-service-definition-generator` / `ha/services`
+- the service actions or `services.yaml` the mapping calls → `ha-service-definition-add` / `ha/services`
 - the entity command methods that actually set the states (`async_turn_on` etc.) → the entity platform
 - greenfield integration scaffolding → `ha-integration-scaffold`
 - deploying/importing into a running HA instance → out of scope
@@ -100,7 +100,7 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 ## Boundaries
 
 - Writing / using scenes → `ha-automation-author` (scene helper family)
-- Called service actions → `ha-service-definition-generator` / `ha/services`
+- Called service actions → `ha-service-definition-add` / `ha/services`
 - Entity command methods that set the states → the entity platform
 - Greenfield scaffold → `ha-integration-scaffold`
 - Deploy to live HA → out of scope

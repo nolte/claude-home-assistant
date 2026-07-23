@@ -1,6 +1,6 @@
 ---
 name: ha-panel-ux-audit
-description: "Runs a read-only panel-level UX audit of an existing panel artifact (custom sidebar panel, panel-mode view, or custom view) — with mobile-device usability as a mandatory first-class dimension. Audits against spec/ha/lovelace-views-panels, spec/ha/lovelace-layout-antipatterns, spec/ha/lovelace-card-patterns, and spec/ha/frontend-data-api plus UX/accessibility heuristics, and produces a severity-sorted improvement report — mobile usability, responsive/narrow behaviour, touch targets, information hierarchy, readability, accessibility, perceived performance — that ha-panel-author can consume as a prioritized work-list. Never modifies code. Activate on \"audit my panel's UX\", \"is this panel usable on mobile\", \"review the panel for usability and accessibility\", or equivalent German requests. Do not activate for building or fixing a panel (ha-panel-author), scaffolding one (ha-panel-add), a whole-integration review (ha-integration-review), or deploying to a live HA instance."
+description: "Runs a read-only panel-level UX audit of an existing panel artifact (custom sidebar panel, panel-mode view, or custom view) — with mobile-device usability as a mandatory first-class dimension. Audits against spec/ha/lovelace-views-panels, spec/ha/lovelace-layout-antipatterns, spec/ha/lovelace-card-patterns, and spec/ha/frontend-data-api plus UX/accessibility heuristics, and produces a severity-sorted improvement report — mobile usability, responsive/narrow behaviour, touch targets, information hierarchy, readability, accessibility, perceived performance — that ha-panel-author can consume as a prioritized work-list. Never modifies code. Activate on \"audit my panel's UX\", \"is this panel usable on mobile\", \"review the panel for usability and accessibility\", or equivalent German requests. Do not activate for building or fixing a panel (ha-panel-author), scaffolding one (ha-panel-add), a whole-integration review (ha-integration-reviewer), or deploying to a live HA instance."
 tags: [home-assistant, frontend, custom-panel, ux, audit]
 phase: quality
 summary: "Runs a read-only, mobile-first UX audit of an HA panel artifact against the Lovelace specs and UX heuristics, producing a severity-sorted improvement report ha-panel-author can consume."
@@ -15,14 +15,14 @@ dont_use_when:
   - situation: "You want to scaffold a bare panel"
     alternative: ha-panel-add
   - situation: "You want a whole-integration review, not a panel UX audit"
-    alternative: ha-integration-review
+    alternative: ha-integration-reviewer
 see_also:
   - ha-panel-author
   - ha-panel-add
   - ha-panel-config-view-add
   - ha-quality-scale-audit
   - ha-security-audit
-  - ha-integration-review
+  - ha-integration-reviewer
 ---
 
 # HA Panel UX Audit
@@ -36,7 +36,7 @@ This skill is the **UX expert** of the panel family. It statically audits an exi
 - **Human-visible audit surface** — like the sibling audit skills `ha-quality-scale-audit` and `ha-security-audit`, this is an interactive audit the user invokes directly and reads the report from; a skill keeps it on the visible command surface.
 - **Mid-flow interactivity** — the target devices (mobile is mandatory, but which else), the audience, and severity threshold are per-run inputs the user confirms before the audit.
 - **Orchestrator-leaning** — findings route to `ha-panel-author` for the fix; the skill-orchestrates-fixes default keeps the entry point in skill form.
-- Counter-dimension considered: a read-only one-shot review could be an agent (cf. `ha-integration-review`), but the report is meant to be read and acted on interactively and to feed `ha-panel-author`, and consistency with the `ha-*-audit` skills wins.
+- Counter-dimension considered: a read-only one-shot review could be an agent (cf. `ha-integration-reviewer`), but the report is meant to be read and acted on interactively and to feed `ha-panel-author`, and consistency with the `ha-*-audit` skills wins.
 
 ## When this skill activates
 
@@ -46,7 +46,7 @@ Use this skill to audit an existing **panel-level** artifact — a custom sideba
 
 - building, developing, or fixing a panel → `ha-panel-author` (which may consume this skill's report)
 - scaffolding a bare panel → `ha-panel-add`
-- a whole-integration review (quality/security/consistency) → `ha-integration-review`
+- a whole-integration review (quality/security/consistency) → `ha-integration-reviewer`
 - a single custom card's internals → `ha/lovelace-card-patterns` scope
 - auto-fixing findings → this skill is read-only; hand findings to `ha-panel-author`
 - deploying/importing into a running HA instance, or live on-device testing → out of scope (static audit only)

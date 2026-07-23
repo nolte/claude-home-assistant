@@ -24,7 +24,7 @@ Statisches Audit genau eines Panel-Ebenen-Artefakts pro Lauf — ein Custom-Side
 
 - Ein Panel bauen, entwickeln oder fixen — `ha-panel-author` (das diesen Report als `ux_audit_report` konsumieren kann)
 - Ein bloßes Panel-Grundgerüst scaffolden — `ha-panel-add`
-- Ein Gesamt-Integrations-Review (Quality-Scale, Security, Konsistenz) — `ha-integration-review`
+- Ein Gesamt-Integrations-Review (Quality-Scale, Security, Konsistenz) — `ha-integration-reviewer`
 - Die Interna einer einzelnen Custom-Card als Artefakt — `ha/lovelace-card-patterns`-Scope
 - Findings automatisch fixen — dieser Skill ist read-only
 - Das Panel rendern, eine Live-HA-Instanz treiben oder On-Device-Testing — nur statisches Audit; Live-Verifikation ist ein ergänzender manueller Schritt
@@ -37,7 +37,7 @@ Statisches Audit genau eines Panel-Ebenen-Artefakts pro Lauf — ein Custom-Side
 - **MUSS [MUST]** auf folgende Phrasen aktivieren:
   - „audit my panel's UX", „is this panel usable on mobile", „review the panel for usability and accessibility"
   - „auditiere die UX meines Panels", „ist das Panel auf dem Handy gut nutzbar", „prüfe das Panel auf Barrierefreiheit"
-- **MUSS NICHT [MUST NOT]** für Bauen/Fixen eines Panels (`ha-panel-author`), Scaffolding (`ha-panel-add`) oder ein Gesamt-Integrations-Review (`ha-integration-review`) aktivieren
+- **MUSS NICHT [MUST NOT]** für Bauen/Fixen eines Panels (`ha-panel-author`), Scaffolding (`ha-panel-add`) oder ein Gesamt-Integrations-Review (`ha-integration-reviewer`) aktivieren
 
 ### Eingaben
 

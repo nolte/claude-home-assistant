@@ -1,6 +1,6 @@
 ---
 name: ha-entity-platform-add
-description: "Scaffolds one active platform entity into an existing Home Assistant Custom Integration — a command-driven domain (climate, cover, light, fan, lock, media_player, and peers) whose entity exposes async command methods — conforming to spec/ha/entity-platform-types plus the matching ha/entity-platforms-* family spec. Creates the platform module with the entity subclass, its EntityDescription where the family uses one, the supported_features bitmask, the async command methods, and the async_setup_entry wiring. The operator names the target domain and confirms the family first. Activate on \"add a climate/cover/light entity\", \"scaffold an active platform entity\", or equivalent German requests. Do not activate for declarative read-type entities via EntityDescription tables (ha-entity-description-mapper), the coordinator itself (ha-coordinator-add), greenfield scaffolding (ha-integration-scaffold), device-automation triggers (ha-device-automation-add), or deploying to a live HA instance."
+description: "Scaffolds one active platform entity into an existing Home Assistant Custom Integration — a command-driven domain (climate, cover, light, fan, lock, media_player, and peers) whose entity exposes async command methods — conforming to spec/ha/entity-platform-types plus the matching ha/entity-platforms-* family spec. Creates the platform module with the entity subclass, its EntityDescription where the family uses one, the supported_features bitmask, the async command methods, and the async_setup_entry wiring. The operator names the target domain and confirms the family first. Activate on \"add a climate/cover/light entity\", \"scaffold an active platform entity\", or equivalent German requests. Do not activate for declarative read-type entities via EntityDescription tables (ha-entity-description-map), the coordinator itself (ha-coordinator-add), greenfield scaffolding (ha-integration-scaffold), device-automation triggers (ha-device-automation-add), or deploying to a live HA instance."
 tags: [home-assistant, custom-integration, entity-platform]
 phase: design
 summary: "Scaffolds one active command-driven platform entity (climate, cover, light, fan, lock, media_player, …) into an existing integration — entity class, feature bitmask, command methods, and setup."
@@ -10,7 +10,7 @@ use_when:
   - "you want to implement async command methods for a domain entity"
 dont_use_when:
   - situation: "You author read-type entities as EntityDescription tables"
-    alternative: ha-entity-description-mapper
+    alternative: ha-entity-description-map
   - situation: "You need the coordinator itself"
     alternative: ha-coordinator-add
   - situation: "You are scaffolding a brand-new integration"
@@ -18,7 +18,7 @@ dont_use_when:
   - situation: "You need device-automation triggers or conditions"
     alternative: ha-device-automation-add
 see_also:
-  - ha-entity-description-mapper
+  - ha-entity-description-map
   - ha-coordinator-add
   - ha-integration-scaffold
   - ha-device-automation-add
@@ -30,7 +30,7 @@ Spec: `spec/claude/ha-entity-platform-add/en.md` (EN canonical) / `spec/claude/h
 
 ## Why this is a skill, not an agent
 
-- **Human-visible scaffolding surface** — the operator describes a device capability and reads back the platform module, the feature bitmask, the command methods, and the conformance report; a skill keeps this on the visible command surface, like the sibling augment skills (`ha-coordinator-add`, `ha-entity-description-mapper`, `ha-device-automation-add`).
+- **Human-visible scaffolding surface** — the operator describes a device capability and reads back the platform module, the feature bitmask, the command methods, and the conformance report; a skill keeps this on the visible command surface, like the sibling augment skills (`ha-coordinator-add`, `ha-entity-description-map`, `ha-device-automation-add`).
 - **Mid-flow interactivity** — the platform/domain decision and the family confirmation are per-run dialogues the operator approves before generation.
 - **Bounded, inline generation** — one platform module plus its description and setup fit inline; no isolated agent context is needed.
 - Counter-dimension considered: the draft→validate loop could be an agent, but the domain decision and the active-vs-declarative gate belong in the operator's working context; skill wins.
@@ -41,7 +41,7 @@ Use this skill to scaffold **one** active platform entity — a command-driven d
 
 ## When NOT to activate
 
-- datapoints authored declaratively as `EntityDescription` tables — read-type `sensor`/`binary_sensor`/`button`, and the description-table form of `number`/`select`/`switch`/`calendar`/`todo` with no hand-written command/set method → `ha-entity-description-mapper`
+- datapoints authored declaratively as `EntityDescription` tables — read-type `sensor`/`binary_sensor`/`button`, and the description-table form of `number`/`select`/`switch`/`calendar`/`todo` with no hand-written command/set method → `ha-entity-description-map`
 - the coordinator itself → `ha-coordinator-add`
 - greenfield integration scaffolding → `ha-integration-scaffold`
 - device-automation triggers/conditions/actions → `ha-device-automation-add`
@@ -51,7 +51,7 @@ Use this skill to scaffold **one** active platform entity — a command-driven d
 
 1. **One platform entity, one run.** No multi-platform batches.
 2. **Read the operationalized spec first.** Read `spec/ha/entity-platform-types/en.md` to pick active-vs-declarative and the family, **then** read the matching family spec (`spec/ha/entity-platforms-controls/en.md` / `spec/ha/entity-platforms-climate/en.md` / `spec/ha/entity-platforms-devices/en.md` / `spec/ha/entity-platforms-media/en.md` / `spec/ha/entity-platforms-voice/en.md` / `spec/ha/entity-platforms-inputs/en.md` / `spec/ha/entity-platforms-sensors/en.md`) in full. Do not generate from memory.
-3. **Active platforms only.** This skill scaffolds command-driven entities authored as a full entity class with hand-written async command/set methods. The boundary is the **authoring form**, not the domain: a read-type datapoint (`sensor`/`binary_sensor`/`button`) or any entity expressed purely as an `EntityDescription` table without a hand-written command/set method → point at `ha-entity-description-mapper` and abort. Active platforms whose command/set method this skill writes — including the `inputs` family (`number`/`select`/`text`/`date`/`time`/`datetime`) and `calendar`/`todo` — stay in scope.
+3. **Active platforms only.** This skill scaffolds command-driven entities authored as a full entity class with hand-written async command/set methods. The boundary is the **authoring form**, not the domain: a read-type datapoint (`sensor`/`binary_sensor`/`button`) or any entity expressed purely as an `EntityDescription` table without a hand-written command/set method → point at `ha-entity-description-map` and abort. Active platforms whose command/set method this skill writes — including the `inputs` family (`number`/`select`/`text`/`date`/`time`/`datetime`) and `calendar`/`todo` — stay in scope.
 4. **Name the domain, confirm the family.** Require the operator to name the target domain and confirm the resolved family before generating.
 5. **Base class from the family spec.** Derive the entity from the documented platform base class (`ClimateEntity`/`CoverEntity`/`LightEntity`/`FanEntity`/`LockEntity`/`MediaPlayerEntity`/`StateVacuumEntity`/`ValveEntity`/`HumidifierEntity`/`WaterHeaterEntity`/`SirenEntity`/`LawnMowerEntity` …).
 6. **Feature bitmask from the enum.** Set `supported_features` as a bitwise `|` combination of the platform-native `*EntityFeature` enum — **never** a raw integer.
@@ -77,7 +77,7 @@ If the operator is silent on an optional field, use the default but state it exp
 ## Pre-flight (in order — abort on first failure)
 
 1. `target_dir/custom_components/<domain>/manifest.json` exists; read `domain`.
-2. The entity is authored as an **active** platform class that implements its async command/set method(s). If it is a read-type datapoint or a pure `EntityDescription`-table mapping with no hand-written command/set method, point at `ha-entity-description-mapper` and abort.
+2. The entity is authored as an **active** platform class that implements its async command/set method(s). If it is a read-type datapoint or a pure `EntityDescription`-table mapping with no hand-written command/set method, point at `ha-entity-description-map` and abort.
 3. Read `ha/entity-platform-types`; resolve the platform + family (infer + confirm); read the matching family spec in full.
 4. A coordinator or a `config_entry.runtime_data` binding is reachable for `async_setup_entry`; if absent, point at `ha-coordinator-add`.
 5. `<platform>.py` is not already present. If it is, abort.
@@ -112,7 +112,7 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 ## Boundaries
 
-- Declarative `EntityDescription`-table datapoints (read-type, or the table form of `number`/`select`/`switch`/`calendar`/`todo`) → `ha-entity-description-mapper`
+- Declarative `EntityDescription`-table datapoints (read-type, or the table form of `number`/`select`/`switch`/`calendar`/`todo`) → `ha-entity-description-map`
 - The coordinator itself → `ha-coordinator-add`
 - Greenfield scaffold → `ha-integration-scaffold`
 - Device-automation triggers/conditions/actions → `ha-device-automation-add`

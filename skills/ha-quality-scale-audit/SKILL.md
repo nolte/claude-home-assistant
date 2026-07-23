@@ -32,7 +32,7 @@ Spec: `spec/claude/ha-quality-scale-audit/en.md` (EN canonical) / `spec/claude/h
 - **Human-visible audit surface** — like its sibling `ha-security-audit`, this is an interactive audit the user invokes directly and reads the report from; a skill keeps it on the visible command surface rather than behind an agent's fire-and-forget contract.
 - **Orchestrator that may dispatch fixes** — findings route to edit skills (`ha-config-flow-augment`, `ha-coordinator-add`, `ha-translation-sync`, `ha-test-harness-augment`); the skill-orchestrates-agent-executes default keeps the orchestrator in skill form.
 - **Bounded read volume** — `manifest.json`, `quality_scale.yaml`, and a handful of code files fit inline, so the context-window pressure that would bias toward an isolated agent does not apply.
-- Counter-dimension considered: a read-only one-shot audit could be an agent (cf. `ha-integration-verify`), but the report is meant to be read and acted on interactively, and consistency with the `ha-security-audit` skill wins.
+- Counter-dimension considered: a read-only one-shot audit could be an agent (cf. `ha-integration-verifier`), but the report is meant to be read and acted on interactively, and consistency with the `ha-security-audit` skill wins.
 
 ## When this skill activates
 
@@ -99,7 +99,7 @@ Emit Markdown findings (one per rule, even when several call sites match):
 - **Severity:** high / medium / low
 - **Path:** custom_components/<domain>/<file>:<line> (or the missing artifact)
 - **Evidence:** <code snippet or quality_scale.yaml excerpt, max 5 lines>
-- **Remediation:** the concrete dispatchable edit skill when skill-fixable (`parallel-updates`/`entity-unavailable` → `ha-entity-platform-add`; `reauthentication-flow`/`reconfiguration-flow` → `ha-config-flow-augment`; `diagnostics` → `ha-diagnostics-augment`; `repair-issues` → `ha-repairs-add`; `exception-translations`/`entity-translations` → `ha-service-definition-generator`/`ha-translation-sync`; `test-coverage` → `ha-test-harness-augment`), else a manual edit
+- **Remediation:** the concrete dispatchable edit skill when skill-fixable (`parallel-updates`/`entity-unavailable` → `ha-entity-platform-add`; `reauthentication-flow`/`reconfiguration-flow` → `ha-config-flow-augment`; `diagnostics` → `ha-diagnostics-augment`; `repair-issues` → `ha-repairs-add`; `exception-translations`/`entity-translations` → `ha-service-definition-add`/`ha-translation-sync`; `test-coverage` → `ha-test-harness-augment`), else a manual edit
 ```
 
 End with a summary table:

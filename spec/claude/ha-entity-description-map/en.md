@@ -1,4 +1,4 @@
-# Skill: `ha-entity-description-mapper`
+# Skill: `ha-entity-description-map`
 
 Status: draft
 

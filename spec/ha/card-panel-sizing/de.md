@@ -74,8 +74,8 @@ Scale.
 - Der vollständige Layout-/Arrangement-Antipattern-Katalog — siehe
   `ha/lovelace-layout-antipatterns` (dieser Spec referenziert ihn, wiederholt ihn nicht).
 - Ein Build-Stack, TypeScript oder eine Lit-Migration — separates Anliegen.
-- Runtime-Verifikation auf einer laufenden HA-Instanz — `ha-integration-deploy` /
-  `ha-integration-verify`.
+- Runtime-Verifikation auf einer laufenden HA-Instanz — `ha-integration-deployer` /
+  `ha-integration-verifier`.
 
 ## Feld-Referenz (Source of Truth)
 

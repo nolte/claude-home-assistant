@@ -22,18 +22,18 @@ Dieser Anwendungsfall hat keine `*-solution`-Front-Door — er ist ein kleiner C
 
 ```mermaid
 flowchart TD
-    dev(["Integration developer"]) --> prov["ha-dev-instance-provision<br/>agent: provision dev HA"]
-    prov --> deploy["ha-integration-deploy<br/>agent: kubectl cp + kill 1 restart"]
-    deploy --> verify["ha-integration-verify<br/>agent: read-only diagnosis"]
+    dev(["Integration developer"]) --> prov["ha-dev-instance-provisioner<br/>agent: provision dev HA"]
+    prov --> deploy["ha-integration-deployer<br/>agent: kubectl cp + kill 1 restart"]
+    deploy --> verify["ha-integration-verifier<br/>agent: read-only diagnosis"]
     deploy --> tests["ha-test-harness-augment<br/>pytest coverage"]
     verify -.-> review["Review and harden"]
 ```
 
-`ha-dev-instance-provision` zieht die wegwerfbare HA in Kind hoch (oder reißt sie ab); `ha-integration-deploy` rollt Deine Integration mit `kubectl cp` und einem In-Place-`kill 1`-Restart in den laufenden Pod — ohne den Pod je zu löschen; `ha-integration-verify` macht anschließend eine Read-only-Diagnose von Logs, States und Config-Entry-Status. Parallel wächst `ha-test-harness-augment` das pytest-Harness so, dass es die Zweige abdeckt, die die UI nicht erreicht. Was Du hier deployst, stammt aus [Eine Custom Integration bauen (Python)](custom-integration.md); sobald es sauber läuft, ist das nächste natürliche Gate [Review und Härtung vor dem Release](review-hardening.md).
+`ha-dev-instance-provisioner` zieht die wegwerfbare HA in Kind hoch (oder reißt sie ab); `ha-integration-deployer` rollt Deine Integration mit `kubectl cp` und einem In-Place-`kill 1`-Restart in den laufenden Pod — ohne den Pod je zu löschen; `ha-integration-verifier` macht anschließend eine Read-only-Diagnose von Logs, States und Config-Entry-Status. Parallel wächst `ha-test-harness-augment` das pytest-Harness so, dass es die Zweige abdeckt, die die UI nicht erreicht. Was Du hier deployst, stammt aus [Eine Custom Integration bauen (Python)](custom-integration.md); sobald es sauber läuft, ist das nächste natürliche Gate [Review und Härtung vor dem Release](review-hardening.md).
 
 ## Eingesetzte Skills und Agents
 
-- **Bausteine:** `ha-dev-instance-provision` (Agent: Dev-HA provisionieren / abreißen), `ha-integration-deploy` (Agent: Rollout via `kubectl cp`, `kill 1`-Restart — nie den Pod löschen), `ha-integration-verify` (Agent: Read-only-Pod-Diagnose); `ha-test-harness-augment` (Skill: pytest-Coverage für sekundäre Codepfade)
+- **Bausteine:** `ha-dev-instance-provisioner` (Agent: Dev-HA provisionieren / abreißen), `ha-integration-deployer` (Agent: Rollout via `kubectl cp`, `kill 1`-Restart — nie den Pod löschen), `ha-integration-verifier` (Agent: Read-only-Pod-Diagnose); `ha-test-harness-augment` (Skill: pytest-Coverage für sekundäre Codepfade)
 - **Verwandte Anwendungsfälle:** [Eine Custom Integration bauen (Python)](custom-integration.md), [Review und Härtung vor dem Release](review-hardening.md)
 
 Den vollständigen Katalog findest Du unter [Skills](../skills/index.md) und [Agents](../agents/index.md).

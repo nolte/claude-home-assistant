@@ -23,7 +23,7 @@ Augmenting the reproduce-state platform module into an existing `custom_componen
 ## Non-Goals
 
 - Writing/defining scenes themselves — `ha-automation/scene` (scenes are an HA core component; only the reproduction by the domain is augmented here)
-- The service actions / `services.yaml` the mapping calls — `ha-service-definition-generator` / `ha/services` (here only consumed)
+- The service actions / `services.yaml` the mapping calls — `ha-service-definition-add` / `ha/services` (here only consumed)
 - The entity command methods themselves (`async_turn_on` etc.) that actually set the states — the respective entity platform
 - Significant change and diagnostics — separate small HA platform modules, separate specs
 - Greenfield scaffolding of an integration — `ha-integration-scaffold`

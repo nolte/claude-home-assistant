@@ -1,6 +1,6 @@
 ---
 name: ha-card-sizing-determine
-description: "Determines the optimal size declaration for an existing custom Lovelace card or panel — getGridOptions() (sections) and getCardSize() (masonry/panel/stacks) — so it renders correctly across devices in view and edit mode, then hands the result to an implementation step patching both callbacks. Classifies as content-dependent (rows:\"auto\" + min_columns) or deterministic (numeric rows + min_rows:rows), verifies the rows:\"auto\" CSS preconditions, and treats edit-mode overlay overlap as a sizing defect, per spec/ha/card-panel-sizing. Activate on \"size this card correctly\", \"fix the edit-mode overlay overlap\", \"determine getGridOptions/getCardSize\", or equivalent German requests. Do not activate for scaffolding a new card (ha-lovelace-card-scaffold), a full frontend solution (ha-lovelace-solution), panels/UX (ha-panel-add/-author/-ux-audit), feature rows (ha-card-features-add), or live-instance deploy/verify (ha-integration-deploy/-verify)."
+description: "Determines the optimal size declaration for an existing custom Lovelace card or panel — getGridOptions() (sections) and getCardSize() (masonry/panel/stacks) — so it renders correctly across devices in view and edit mode, then hands the result to an implementation step patching both callbacks. Classifies as content-dependent (rows:\"auto\" + min_columns) or deterministic (numeric rows + min_rows:rows), verifies the rows:\"auto\" CSS preconditions, and treats edit-mode overlay overlap as a sizing defect, per spec/ha/card-panel-sizing. Activate on \"size this card correctly\", \"fix the edit-mode overlay overlap\", \"determine getGridOptions/getCardSize\", or equivalent German requests. Do not activate for scaffolding a new card (ha-lovelace-card-scaffold), a full frontend solution (ha-lovelace-solution), panels/UX (ha-panel-add/-author/-ux-audit), feature rows (ha-card-features-add), or live-instance deploy/verify (ha-integration-deployer/-verify)."
 tags: [home-assistant, frontend, lovelace, sizing]
 phase: design
 summary: "Determines the optimal getGridOptions()/getCardSize() size declaration for an existing Lovelace card or panel and hands it to a step that patches both callbacks."
@@ -19,7 +19,7 @@ dont_use_when:
   - situation: "You are working on panels, panel-mode views, or panel UX"
     alternative: ha-panel-ux-audit
   - situation: "You are deploying or runtime-verifying on a live HA instance"
-    alternative: ha-integration-deploy
+    alternative: ha-integration-deployer
 see_also:
   - ha-lovelace-card-scaffold
   - ha-lovelace-solution
@@ -52,7 +52,7 @@ Use this skill when an **existing** custom Lovelace card or panel needs its size
 - panels, panel-mode views, custom views, or panel UX → `ha-panel-add` / `ha-panel-author` / `ha-panel-ux-audit`
 - adding a feature control row to a card → `ha-card-features-add`
 - the card lifecycle / rendering framework or the full layout-antipattern catalogue → `ha/lovelace-card-patterns` / `ha/lovelace-layout-antipatterns`
-- deploying or runtime-verifying on a live HA instance → `ha-integration-deploy` / `ha-integration-verify`
+- deploying or runtime-verifying on a live HA instance → `ha-integration-deployer` / `ha-integration-verifier`
 
 ## Hard rules
 
@@ -62,7 +62,7 @@ Use this skill when an **existing** custom Lovelace card or panel needs its size
 4. **Verify the `rows:"auto"` preconditions before recommending it.** Confirm the card root has no fixed/`100%` height, no clipping `overflow:hidden`, and no `position:absolute` root; a fixed inner-content height is fine. If a precondition fails, either fix the CSS as part of the hand-off or fall back to the deterministic branch — do not ship `rows:"auto"` over a root that defeats measurement.
 5. **Never resolve edit-mode overlap by tuning a guessed fixed `rows`.** Overlap is a sizing defect: fix it with `rows:"auto"` (content-dependent) or a correctly computed numeric `rows` + `min_rows:rows` (deterministic).
 6. **Responsive columns.** Declare a `columns` default (multiple of 3) and a `min_columns` floor; set `max_columns` when the card has an upper useful width; use `columns:"full"` only when the card genuinely spans the section.
-7. **No live deploy or verify.** This skill determines and patches source only; deploying or verifying on a running HA instance is out of scope (`ha-integration-deploy` / `ha-integration-verify`).
+7. **No live deploy or verify.** This skill determines and patches source only; deploying or verifying on a running HA instance is out of scope (`ha-integration-deployer` / `ha-integration-verifier`).
 
 ## Inputs
 
@@ -119,4 +119,4 @@ Validate offline against the spec's Acceptance Criteria: matching branch used; b
 - feature control rows → `ha-card-features-add`
 - card lifecycle / rendering framework → `ha/lovelace-card-patterns`
 - the full layout-antipattern catalogue → `ha/lovelace-layout-antipatterns`
-- deploy / runtime verify on live HA → `ha-integration-deploy` / `ha-integration-verify`
+- deploy / runtime verify on live HA → `ha-integration-deployer` / `ha-integration-verifier`

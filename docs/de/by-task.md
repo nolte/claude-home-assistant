@@ -57,9 +57,9 @@ _Hinweis: Dieses Skelett wurde vom Katalog-Generator aus `use_when`-Frontmatter-
 - [`ha-derived-sensor-author`](skills/claude-home-assistant/ha-derived-sensor-author.md) — _you want a rate-of-change, energy-from-power, or moving-average sensor_
 - [`ha-derived-sensor-author`](skills/claude-home-assistant/ha-derived-sensor-author.md) — _you want a utility_meter, statistics, or bayesian sensor_
 - [`ha-derived-sensor-author`](skills/claude-home-assistant/ha-derived-sensor-author.md) — _you want a threshold or trend sensor from a source entity_
-- [`ha-dev-instance-provision`](agents/claude-home-assistant/ha-dev-instance-provision.md) — _you want to spin up a disposable dev HA instance_
-- [`ha-dev-instance-provision`](agents/claude-home-assistant/ha-dev-instance-provision.md) — _you want to provision a dev HA when there is no HA pod yet_
-- [`ha-dev-instance-provision`](agents/claude-home-assistant/ha-dev-instance-provision.md) — _you want to deploy a dev HA to the Kind cluster_
+- [`ha-dev-instance-provisioner`](agents/claude-home-assistant/ha-dev-instance-provisioner.md) — _you want to spin up a disposable dev HA instance_
+- [`ha-dev-instance-provisioner`](agents/claude-home-assistant/ha-dev-instance-provisioner.md) — _you want to provision a dev HA when there is no HA pod yet_
+- [`ha-dev-instance-provisioner`](agents/claude-home-assistant/ha-dev-instance-provisioner.md) — _you want to deploy a dev HA to the Kind cluster_
 - [`ha-dev-workflow-apply`](skills/claude-home-assistant/ha-dev-workflow-apply.md) — _you want to apply the HA dev workflow to an integration_
 - [`ha-dev-workflow-apply`](skills/claude-home-assistant/ha-dev-workflow-apply.md) — _you want to make an integration strict-typing / platinum-ready_
 - [`ha-dev-workflow-apply`](skills/claude-home-assistant/ha-dev-workflow-apply.md) — _you want to run ruff + mypy strict + hassfest on an integration_
@@ -76,10 +76,10 @@ _Hinweis: Dieses Skelett wurde vom Katalog-Generator aus `use_when`-Frontmatter-
 - [`ha-discovery-augment`](skills/claude-home-assistant/ha-discovery-augment.md) — _you want to add DHCP, SSDP, USB, HomeKit, or MQTT discovery_
 - [`ha-discovery-augment`](skills/claude-home-assistant/ha-discovery-augment.md) — _you want to discover a device by MAC, vid:pid, or model_
 - [`ha-discovery-augment`](skills/claude-home-assistant/ha-discovery-augment.md) — _you want users to skip typing a host or picking the integration_
-- [`ha-entity-description-mapper`](skills/claude-home-assistant/ha-entity-description-mapper.md) — _you want to add sensors from a datapoint list_
-- [`ha-entity-description-mapper`](skills/claude-home-assistant/ha-entity-description-mapper.md) — _you want to generate EntityDescriptions from a CSV_
-- [`ha-entity-description-mapper`](skills/claude-home-assistant/ha-entity-description-mapper.md) — _you want to add binary_sensors for alert types_
-- [`ha-entity-description-mapper`](skills/claude-home-assistant/ha-entity-description-mapper.md) — _you want to extend a platform with more datapoints_
+- [`ha-entity-description-map`](skills/claude-home-assistant/ha-entity-description-map.md) — _you want to add sensors from a datapoint list_
+- [`ha-entity-description-map`](skills/claude-home-assistant/ha-entity-description-map.md) — _you want to generate EntityDescriptions from a CSV_
+- [`ha-entity-description-map`](skills/claude-home-assistant/ha-entity-description-map.md) — _you want to add binary_sensors for alert types_
+- [`ha-entity-description-map`](skills/claude-home-assistant/ha-entity-description-map.md) — _you want to extend a platform with more datapoints_
 - [`ha-entity-platform-add`](skills/claude-home-assistant/ha-entity-platform-add.md) — _you want to add a climate, cover, light, fan, or lock entity_
 - [`ha-entity-platform-add`](skills/claude-home-assistant/ha-entity-platform-add.md) — _you want to implement async command methods for a domain entity_
 - [`ha-hacs-release`](skills/claude-home-assistant/ha-hacs-release.md) — _you want to make an integration installable through HACS_
@@ -89,24 +89,24 @@ _Hinweis: Dieses Skelett wurde vom Katalog-Generator aus `use_when`-Frontmatter-
 - [`ha-helper-scaffold`](skills/claude-home-assistant/ha-helper-scaffold.md) — _you want to create a timer, counter, or schedule helper_
 - [`ha-integration-ci-scaffold`](skills/claude-home-assistant/ha-integration-ci-scaffold.md) — _you want to add hassfest and HACS validation to CI_
 - [`ha-integration-ci-scaffold`](skills/claude-home-assistant/ha-integration-ci-scaffold.md) — _you want a pytest matrix job for the integration_
-- [`ha-integration-deploy`](agents/claude-home-assistant/ha-integration-deploy.md) — _you want to deploy an integration to a dev HA instance_
-- [`ha-integration-deploy`](agents/claude-home-assistant/ha-integration-deploy.md) — _you want to roll the latest code out to the Kind cluster_
-- [`ha-integration-deploy`](agents/claude-home-assistant/ha-integration-deploy.md) — _you want to kubectl-cp an integration into a running HA pod_
+- [`ha-integration-deployer`](agents/claude-home-assistant/ha-integration-deployer.md) — _you want to deploy an integration to a dev HA instance_
+- [`ha-integration-deployer`](agents/claude-home-assistant/ha-integration-deployer.md) — _you want to roll the latest code out to the Kind cluster_
+- [`ha-integration-deployer`](agents/claude-home-assistant/ha-integration-deployer.md) — _you want to kubectl-cp an integration into a running HA pod_
 - [`ha-integration-events-add`](skills/claude-home-assistant/ha-integration-events-add.md) — _you want to fire a custom event on the HA event bus_
 - [`ha-integration-events-add`](skills/claude-home-assistant/ha-integration-events-add.md) — _you want to listen for an event on the HA event bus_
 - [`ha-integration-events-add`](skills/claude-home-assistant/ha-integration-events-add.md) — _you want to add both firing and listening for an integration event_
-- [`ha-integration-review`](agents/claude-home-assistant/ha-integration-review.md) — _you want a full integration review before opening the PR_
-- [`ha-integration-review`](agents/claude-home-assistant/ha-integration-review.md) — _you want a combined quality-scale plus security review_
-- [`ha-integration-review`](agents/claude-home-assistant/ha-integration-review.md) — _you want a whole-picture pre-release integration check_
+- [`ha-integration-reviewer`](agents/claude-home-assistant/ha-integration-reviewer.md) — _you want a full integration review before opening the PR_
+- [`ha-integration-reviewer`](agents/claude-home-assistant/ha-integration-reviewer.md) — _you want a combined quality-scale plus security review_
+- [`ha-integration-reviewer`](agents/claude-home-assistant/ha-integration-reviewer.md) — _you want a whole-picture pre-release integration check_
 - [`ha-integration-scaffold`](skills/claude-home-assistant/ha-integration-scaffold.md) — _you want to bootstrap a brand-new HA Custom Integration from scratch_
 - [`ha-integration-scaffold`](skills/claude-home-assistant/ha-integration-scaffold.md) — _you want a runnable, lint-clean, test-passing integration skeleton_
 - [`ha-integration-scaffold`](skills/claude-home-assistant/ha-integration-scaffold.md) — _you want to start an integration targeting HACS distribution_
 - [`ha-integration-solution`](skills/claude-home-assistant/ha-integration-solution.md) — _you want a complete integration built for a device, cloud, or API_
 - [`ha-integration-solution`](skills/claude-home-assistant/ha-integration-solution.md) — _you want a full custom integration wired up end to end_
 - [`ha-integration-solution`](skills/claude-home-assistant/ha-integration-solution.md) — _you want an integration built to a specific quality-scale tier_
-- [`ha-integration-verify`](agents/claude-home-assistant/ha-integration-verify.md) — _you want to verify a deployed integration on the local HA pod_
-- [`ha-integration-verify`](agents/claude-home-assistant/ha-integration-verify.md) — _you want to diagnose the Kind-cluster HA pod_
-- [`ha-integration-verify`](agents/claude-home-assistant/ha-integration-verify.md) — _you want to check whether the integration is loaded_
+- [`ha-integration-verifier`](agents/claude-home-assistant/ha-integration-verifier.md) — _you want to verify a deployed integration on the local HA pod_
+- [`ha-integration-verifier`](agents/claude-home-assistant/ha-integration-verifier.md) — _you want to diagnose the Kind-cluster HA pod_
+- [`ha-integration-verifier`](agents/claude-home-assistant/ha-integration-verifier.md) — _you want to check whether the integration is loaded_
 - [`ha-lovelace-card-scaffold`](skills/claude-home-assistant/ha-lovelace-card-scaffold.md) — _you want to add a custom Lovelace card to an existing integration_
 - [`ha-lovelace-card-scaffold`](skills/claude-home-assistant/ha-lovelace-card-scaffold.md) — _you want a vanilla-JS card auto-registered through __init__.py_
 - [`ha-lovelace-solution`](skills/claude-home-assistant/ha-lovelace-solution.md) — _you want a custom card together with its editor and a feature_
@@ -157,8 +157,8 @@ _Hinweis: Dieses Skelett wurde vom Katalog-Generator aus `use_when`-Frontmatter-
 - [`ha-security-audit`](skills/claude-home-assistant/ha-security-audit.md) — _you want to run a security audit on an integration_
 - [`ha-security-audit`](skills/claude-home-assistant/ha-security-audit.md) — _you want to audit an integration's security hardening_
 - [`ha-security-audit`](skills/claude-home-assistant/ha-security-audit.md) — _you want to check an integration against the security-hardening MUST rules_
-- [`ha-service-definition-generator`](skills/claude-home-assistant/ha-service-definition-generator.md) — _you want to add a named service to an integration_
-- [`ha-service-definition-generator`](skills/claude-home-assistant/ha-service-definition-generator.md) — _you want to add a refresh_data service that re-polls coordinators_
+- [`ha-service-definition-add`](skills/claude-home-assistant/ha-service-definition-add.md) — _you want to add a named service to an integration_
+- [`ha-service-definition-add`](skills/claude-home-assistant/ha-service-definition-add.md) — _you want to add a refresh_data service that re-polls coordinators_
 - [`ha-significant-change-add`](skills/claude-home-assistant/ha-significant-change-add.md) — _you want to add significant-change logic to an integration_
 - [`ha-significant-change-add`](skills/claude-home-assistant/ha-significant-change-add.md) — _you want to throttle insignificant updates to consumers_
 - [`ha-significant-change-add`](skills/claude-home-assistant/ha-significant-change-add.md) — _you want to stop reporting micro-changes to HomeKit_

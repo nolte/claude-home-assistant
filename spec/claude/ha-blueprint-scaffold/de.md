@@ -25,7 +25,7 @@ Der Skill erzeugt **ein** Blueprint pro Aufruf für **eine** Domain (`automation
 ## Nicht-Ziele
 
 - Die generative Logik selbst — die liegt vollständig im `ha-blueprint-author`-Agent und in `ha/blueprint-patterns`
-- Custom-Integration-Scaffolding (`ha-integration-scaffold`), Lovelace-Cards (`ha-lovelace-card-scaffold`), Integration-Services (`ha-service-definition-generator`)
+- Custom-Integration-Scaffolding (`ha-integration-scaffold`), Lovelace-Cards (`ha-lovelace-card-scaffold`), Integration-Services (`ha-service-definition-add`)
 - Import, Deployment oder Push eines Blueprints in eine laufende HA-Instanz
 - Editieren/Versionieren eines bereits veröffentlichten Blueprints jenseits eines Neu-Drafts — rückwärtskompatible Updates regelt `ha/blueprint-patterns`; ein dedizierter Augment-Skill kann später folgen
 - Mehrere Blueprints in einem Aufruf
@@ -45,7 +45,7 @@ Der Skill erzeugt **ein** Blueprint pro Aufruf für **eine** Domain (`automation
 - **MUSS NICHT [MUST NOT]** aktivieren bei:
   - Custom-Integration-Scaffolding (`ha-integration-scaffold`)
   - Lovelace-Card-Scaffolding (`ha-lovelace-card-scaffold`)
-  - Integration-Service-Definition (`ha-service-definition-generator`)
+  - Integration-Service-Definition (`ha-service-definition-add`)
   - Import/Deployment in eine laufende HA-Instanz
 
 ### Eingabe-Sammlung

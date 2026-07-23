@@ -4,7 +4,7 @@ Status: draft
 
 ## Context
 
-`ha/device-registry` and `ha/entity-architecture` describe how entities group into physical **devices** via `DeviceInfo` (identifiers, manufacturer, model, name), how a child device links to its hub via `via_device`, how newly discovered devices are added at runtime, and how devices that disappear are removed. These are the Gold quality-scale rules `devices`, `stale-devices`, and `dynamic-devices`. But no skill wires them: the scaffold and `ha-entity-platform-add` produce entities, `ha-entity-description-mapper` maps datapoints, and both delegate the device hierarchy to `ha/entity-architecture` without a skill that owns it. The common failures are flat entities with no device, a missing `via_device` so a hub and its children are unrelated, and stale devices that linger because `async_remove_config_entry_device` was never implemented.
+`ha/device-registry` and `ha/entity-architecture` describe how entities group into physical **devices** via `DeviceInfo` (identifiers, manufacturer, model, name), how a child device links to its hub via `via_device`, how newly discovered devices are added at runtime, and how devices that disappear are removed. These are the Gold quality-scale rules `devices`, `stale-devices`, and `dynamic-devices`. But no skill wires them: the scaffold and `ha-entity-platform-add` produce entities, `ha-entity-description-map` maps datapoints, and both delegate the device hierarchy to `ha/entity-architecture` without a skill that owns it. The common failures are flat entities with no device, a missing `via_device` so a hub and its children are unrelated, and stale devices that linger because `async_remove_config_entry_device` was never implemented.
 
 This skill closes that gap: it wires the device-registry hierarchy of an existing integration — `DeviceInfo`, `via_device`, dynamic add, stale removal, and optional device diagnostics — non-destructively to the existing entities. It is the device-hierarchy sibling of `ha-entity-platform-add` (which owns the entity), lifting an integration toward the Gold device rules.
 
@@ -22,7 +22,7 @@ Wiring the device-registry hierarchy of exactly one existing `custom_components/
 
 ## Non-Goals
 
-- Creating the entity platform itself — `ha-entity-platform-add` / `ha-entity-description-mapper`
+- Creating the entity platform itself — `ha-entity-platform-add` / `ha-entity-description-map`
 - The config-entry diagnostics JSON dump — `ha-diagnostics-augment`
 - Device trigger / condition / action automation platforms — `ha-device-automation-add`
 - Greenfield scaffold — `ha-integration-scaffold`

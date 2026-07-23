@@ -14,8 +14,8 @@ Wofür das Plugin gedacht ist, jeweils mit der Front-Door-Skill:
 - **Lovelace-Frontend bauen (TypeScript / JavaScript)** — `ha-lovelace-solution`: Custom Cards, visuelle Config-Editoren, Tile-Features, Badges, Dashboard-Strategien, Custom-Panels und ihre WebSocket-Command-Backends.
 - **Automations & Blueprints (YAML)** — `ha-automation-solution`: Automations, Scripts, Helper, abgeleitete/statistische Sensoren, Device-Automations und teilbare Blueprints.
 - **Divoom-Pixoo-Display bauen** — `ha-pixoo-solution`: Info-Pages, detaillierte 64×64-Pixel-Art (Schattierung & Konturen) und Animationen aus einer Anforderung.
-- **Auf einer Dev-HA betreiben & testen** — Agents `ha-dev-instance-provision`, `ha-integration-deploy`, `ha-integration-verify` (lokales Kubernetes / Kind) plus `ha-test-harness-augment` für pytest-Abdeckung.
-- **Vor dem Release prüfen & härten** — `ha-quality-scale-audit`, `ha-security-audit` und der gebündelte Agent `ha-integration-review`.
+- **Auf einer Dev-HA betreiben & testen** — Agents `ha-dev-instance-provisioner`, `ha-integration-deployer`, `ha-integration-verifier` (lokales Kubernetes / Kind) plus `ha-test-harness-augment` für pytest-Abdeckung.
+- **Vor dem Release prüfen & härten** — `ha-quality-scale-audit`, `ha-security-audit` und der gebündelte Agent `ha-integration-reviewer`.
 
 Die vollständige Übersicht — jeder Anwendungsfall auf seine Skills, Agents und Specs abgebildet — steht unter [Anwendungsfälle](use-cases/index.md).
 

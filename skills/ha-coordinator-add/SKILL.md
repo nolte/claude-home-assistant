@@ -16,7 +16,7 @@ dont_use_when:
 see_also:
   - ha-integration-scaffold
   - ha-entity-platform-add
-  - ha-entity-description-mapper
+  - ha-entity-description-map
 ---
 
 # HA Coordinator Add
@@ -47,7 +47,7 @@ Use this skill when the user wants to add a new `DataUpdateCoordinator` to an ex
 4. **Always update the options flow.** A new coordinator without a configurable interval defeats the user's ability to tune polling. The new `CONF_POLL_<ROLE>` lands in `OPTIONS_SCHEMA` plus `strings.json` plus translations.
 5. **Always ship tests.** Three tests for the new coordinator (auth error, connection error, happy path) are mandatory.
 6. **Store the new coordinator on a typed `runtime_data`.** The coordinator lands in the `RuntimeData.coordinators` mapping on a **typed** config entry (a typed alias such as `type <Domain>ConfigEntry = ConfigEntry[RuntimeData]`, used throughout); re-verify the `RuntimeData` dataclass field type when the mapping key is added so the typed entry stays sound (`ha/runtime-data-pattern`).
-7. **Surface `PARALLEL_UPDATES` for the backed platforms.** This skill adds the coordinator, not the entity-platform modules — but every platform that reads the new coordinator needs a module-level `PARALLEL_UPDATES` (Silver `parallel-updates` rule). Surface this in the report and point the user at `ha-entity-platform-add` / `ha-entity-description-mapper` to emit it.
+7. **Surface `PARALLEL_UPDATES` for the backed platforms.** This skill adds the coordinator, not the entity-platform modules — but every platform that reads the new coordinator needs a module-level `PARALLEL_UPDATES` (Silver `parallel-updates` rule). Surface this in the report and point the user at `ha-entity-platform-add` / `ha-entity-description-map` to emit it.
 8. **Push-style variant for `local_push` / `cloud_push`.** For a push iot_class a poll-based coordinator is the wrong shape — a push-style coordinator (`async_set_updated_data`, no `update_interval`) MAY be produced instead; the bespoke transport wiring (webhook server, MQTT broker) stays out of scope.
 9. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see `spec/ha/upstream-docs-verification/en.md`).
 
@@ -101,7 +101,7 @@ Both must run cleanly. On failure, surface the tool output and abort.
 - files touched (counted)
 - min cap warning (if `min_interval` < 30 s)
 - next-step hint: which platforms could benefit from binding to the new coordinator (reading the platform code is the user's job)
-- reminder: each platform bound to the new coordinator needs a module-level `PARALLEL_UPDATES` — point at `ha-entity-platform-add` / `ha-entity-description-mapper`
+- reminder: each platform bound to the new coordinator needs a module-level `PARALLEL_UPDATES` — point at `ha-entity-platform-add` / `ha-entity-description-map`
 
 ## Boundaries
 

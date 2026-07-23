@@ -23,7 +23,7 @@ Ergänzung genau einer Device-Automation-Art pro Lauf (`trigger`, `condition` od
 ## Nicht-Ziele
 
 - Entity-Automations (das State-/Event-Modell ohne Device-Indirektion) — `ha/entity-architecture`
-- Registrierte Services mit eigenem Schema — `ha-service-definition-generator` / `ha/services` (Device-Actions delegieren intern, sind aber kein Service-Ersatz)
+- Registrierte Services mit eigenem Schema — `ha-service-definition-add` / `ha/services` (Device-Actions delegieren intern, sind aber kein Service-Ersatz)
 - Die UI-Editor-Logik des Frontends — nur der Backend-Vertrag ist hier definiert
 - Greenfield-Scaffolding einer Integration — `ha-integration-scaffold`
 - Migration zu den von HA explorierten Device-Automation-Alternativen — eigene Folge-Spec

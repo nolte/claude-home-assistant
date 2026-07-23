@@ -128,7 +128,7 @@ Der Skill schreibt diese Dateien in einem Aufwasch (kein User-Approval pro Datei
 - **Coordinator-Topologie-Erweiterung** über den Single-Coordinator hinaus → eigener Skill `ha-coordinator-add`
 - **Lovelace-Card-Scaffold** → eigener Skill `ha-lovelace-card-scaffold`
 - **Test-Coverage über das Default-Skelett hinaus** → eigener Skill `ha-test-harness-augment`
-- **Deploy/Verify in den Kind-Cluster** → Agent `ha-integration-deploy` / `ha-integration-verify`
+- **Deploy/Verify in den Kind-Cluster** → Agent `ha-integration-deployer` / `ha-integration-verifier`
 - **HA-spezifischer CI-Workflow** (hassfest / hacs-validate / pytest-Matrix) → eigener Skill `ha-integration-ci-scaffold` (geplant); das generische `nolte-shared:project-structure-apply` emittiert keine HA-spezifische CI
 
 ## Akzeptanzkriterien

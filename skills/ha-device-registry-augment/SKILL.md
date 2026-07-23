@@ -20,7 +20,7 @@ dont_use_when:
     alternative: ha-integration-scaffold
 see_also:
   - ha-entity-platform-add
-  - ha-entity-description-mapper
+  - ha-entity-description-map
   - ha-diagnostics-augment
   - ha-device-automation-add
   - ha-coordinator-add
@@ -45,7 +45,7 @@ Use this skill when an existing integration's entities should group into one or 
 
 ## When NOT to activate
 
-- creating the entity platform itself → `ha-entity-platform-add` / `ha-entity-description-mapper`
+- creating the entity platform itself → `ha-entity-platform-add` / `ha-entity-description-map`
 - config-entry diagnostics (the JSON dump) → `ha-diagnostics-augment`
 - device trigger / condition / action automation platforms → `ha-device-automation-add`
 - greenfield integration setup → `ha-integration-scaffold`
@@ -97,6 +97,6 @@ Validate offline (`DeviceInfo` identifiers/manufacturer/model/name present; `via
 
 ## Boundaries
 
-- Entity platform creation → `ha-entity-platform-add` / `ha-entity-description-mapper`
+- Entity platform creation → `ha-entity-platform-add` / `ha-entity-description-map`
 - Config-entry diagnostics dump → `ha-diagnostics-augment`
 - Device trigger/condition/action automations → `ha-device-automation-add`
