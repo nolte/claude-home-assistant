@@ -2,6 +2,22 @@
 name: ha-pixoo-animation-author
 description: Author an animated 64×64 display for the Divoom Pixoo 64 from a described motion/effect, conforming to the pixoo-pixel-art-animation spec — a phase-driven components page (motion as position=f(phase), color animation as color=f(phase) within the ramps) plus the driving automation, or a pre-rendered GIF embedding. Builds the phase/time base, integer-grid stepwise motion with a seamless loop, palette-cycling/value-pulsing/hue-shift color animation, and a crash-safe frame driver (short duration vs. an update_page loop), accounting for the single-frame-push ~1 fps ceiling. Returns the artifacts plus a conformance report. Activate on "animate a bouncing icon on the Pixoo", "make the Pixoo pulse red when X", "scrolling/moving Pixoo display for…", "lass das Pixoo-Icon wandern", "animierte Pixoo-Page für…". Do not activate for a static page (ha-pixoo-page-author), a still graphic (ha-pixoo-pixel-art-author), device setup, or deploying to a live HA instance.
 tags: [home-assistant, divoom-pixoo, animation, yaml]
+phase: build
+summary: "Authors an animated 64×64 Divoom Pixoo 64 display — phase-driven motion and color animation plus a crash-safe frame driver — with a conformance report."
+summary_de: "Erzeugt eine animierte 64×64-Anzeige für den Divoom Pixoo 64 — phasengesteuerte Bewegung und Farbanimation plus absturzsicheren Frame-Treiber — mit Konformitätsbericht."
+use_when:
+  - "you want to animate a bouncing or moving icon on the Pixoo"
+  - "you want the Pixoo to pulse or color-shift on a condition"
+  - "you want a scrolling or motion Pixoo display"
+dont_use_when:
+  - situation: "You need a static information page"
+    alternative: ha-pixoo-page-author
+  - situation: "You need a single still graphic"
+    alternative: ha-pixoo-pixel-art-author
+see_also:
+  - ha-pixoo-page-author
+  - ha-pixoo-pixel-art-author
+  - ha-pixoo-solution
 ---
 
 # HA Pixoo Animation Author

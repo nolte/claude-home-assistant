@@ -2,6 +2,25 @@
 name: ha-pixoo-solution
 description: Plan and orchestrate a complete Divoom Pixoo 64 display from a result-oriented requirement, so the user never has to pick which Pixoo skill to use. Decomposes the requirement into the minimal combination of artifacts across the Pixoo skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-pixoo-page-author, ha-pixoo-pixel-art-author, and ha-pixoo-animation-author in order — threading the page structure, component positions, palette, and the target sensor.<name>_current_page entity between steps. Generation only; never deploys. Activate on "build me a Pixoo display for…", "show X's status on the Divoom", "I want an animated Pixoo page", "baue mir eine Pixoo-Anzeige für…", "zeig den Status von X auf dem Divoom". Do not activate for a single clear artifact (let the owning skill handle it), device setup / config flow (using the existing integration, not authoring), or deploying to a live HA instance.
 tags: [home-assistant, divoom-pixoo, display, orchestration]
+phase: plan
+summary: "Plans and orchestrates a complete Divoom Pixoo 64 display from a result-oriented requirement, dispatching the Pixoo authoring skills in dependency order."
+summary_de: "Plant und orchestriert ein vollständiges Divoom-Pixoo-64-Display aus einer Anforderung und dispatcht die Pixoo-Authoring-Skills in Abhängigkeitsreihenfolge."
+use_when:
+  - "you want a Pixoo display built for some status or data"
+  - "you want to show an entity's status on the Divoom Pixoo"
+  - "you want an animated Pixoo page"
+dont_use_when:
+  - situation: "You need only a single Pixoo page"
+    alternative: ha-pixoo-page-author
+  - situation: "You need only a single pixel-art graphic"
+    alternative: ha-pixoo-pixel-art-author
+  - situation: "You need only a single animation"
+    alternative: ha-pixoo-animation-author
+see_also:
+  - ha-pixoo-page-author
+  - ha-pixoo-pixel-art-author
+  - ha-pixoo-animation-author
+  - ha-solution
 ---
 
 # HA Pixoo Solution

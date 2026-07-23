@@ -2,6 +2,29 @@
 name: ha-solution
 description: The top-level front door for any Home Assistant requirement — classify a result-oriented request into one or more domains (integration/backend, Lovelace/frontend, YAML automation, Divoom Pixoo) and route it to the correct domain solution(s), so the user never has to pick a domain themselves. For a single-domain request it hands off to the owning ha-{integration,lovelace,automation,pixoo}-solution; for a genuinely cross-domain request (e.g. a custom card + its backing integration + an automation) it decomposes across the relevant solutions in dependency order and threads the shared identities (domain, entity_ids, card tags, command types) across domain boundaries. Resolves the domain solutions at runtime. Activate on "build me an X for Home Assistant" when the domain is unclear or spans several, "a custom card plus the integration behind it and an automation", "baue mir eine komplette HA-Lösung für …", "ich brauche Integration, Dashboard und Automation für …". Do not activate when the domain is already unambiguous and single (let the owning ha-*-solution activate directly), for a single clear artifact (the owning individual skill), or for deploying to a live HA instance.
 tags: [home-assistant, orchestration, cross-domain, router]
+phase: plan
+summary: "Top-level router that classifies a Home Assistant requirement into one or more domains and routes each part to the owning ha-*-solution."
+summary_de: "Oberster Router, der eine Home-Assistant-Anforderung in eine oder mehrere Domänen klassifiziert und jeden Teil an die zuständige ha-*-solution weiterleitet."
+use_when:
+  - "you want a full Home Assistant solution but aren't sure which domain it belongs to"
+  - "you want a cross-domain result: a card plus its backing integration plus an automation"
+  - "you want an integration, dashboard, and automation for one requirement"
+dont_use_when:
+  - situation: "The requirement is clearly a single integration/backend result"
+    alternative: ha-integration-solution
+  - situation: "The requirement is clearly a single Lovelace/frontend result"
+    alternative: ha-lovelace-solution
+  - situation: "The requirement is clearly a single YAML automation result"
+    alternative: ha-automation-solution
+  - situation: "The requirement is clearly a single Pixoo display result"
+    alternative: ha-pixoo-solution
+  - situation: "You are deploying or importing into a live HA instance"
+    alternative: ha-integration-deploy
+see_also:
+  - ha-integration-solution
+  - ha-lovelace-solution
+  - ha-automation-solution
+  - ha-pixoo-solution
 ---
 
 # HA Solution

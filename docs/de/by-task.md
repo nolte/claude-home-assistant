@@ -1,0 +1,183 @@
+---
+title: Nach Aufgabe
+audience: [maintainer]
+content_mode: meta
+track: developer-docs
+last_updated: generated
+---
+
+# Nach Aufgabe
+
+Aufgaben-orientierte Einstiegs-Seite: gruppiert Skills und Agents nach Nutzer-Absicht statt nach Phase. Hand-kuratiert; erweitern, sobald neue Use-Case-Muster sichtbar werden.
+
+_Hinweis: Dieses Skelett wurde vom Katalog-Generator aus `use_when`-Frontmatter-Einträgen vorbefüllt. Es wird in Folgeläufen NICHT überschrieben — gerne Rubriken ergänzen, umsortieren oder Einträge mit Disambiguierungs-Notizen versehen._
+
+- [`ha-automation-author`](skills/claude-home-assistant/ha-automation-author.md) — _you want to write an automation from a described intent_
+- [`ha-automation-author`](skills/claude-home-assistant/ha-automation-author.md) — _you want to create a script, scene, or template sensor_
+- [`ha-automation-author`](skills/claude-home-assistant/ha-automation-author.md) — _you want to add a rest_command, shell_command, or python_script_
+- [`ha-automation-solution`](skills/claude-home-assistant/ha-automation-solution.md) — _you want a multi-part automation result and don't know which skill to use_
+- [`ha-automation-solution`](skills/claude-home-assistant/ha-automation-solution.md) — _you want a derived sensor plus an automation that reacts to it_
+- [`ha-automation-solution`](skills/claude-home-assistant/ha-automation-solution.md) — _you want presence-based lighting scoped to a time window_
+- [`ha-backup-platform-add`](skills/claude-home-assistant/ha-backup-platform-add.md) — _you want to add pre/post backup hooks to your integration_
+- [`ha-backup-platform-add`](skills/claude-home-assistant/ha-backup-platform-add.md) — _you want to provide a backup agent for a storage integration_
+- [`ha-badge-add`](skills/claude-home-assistant/ha-badge-add.md) — _you want to add a custom Lovelace badge_
+- [`ha-badge-add`](skills/claude-home-assistant/ha-badge-add.md) — _you want to register a custom badge in the badge picker_
+- [`ha-blueprint-author`](agents/claude-home-assistant/ha-blueprint-author.md) — _you want to write a blueprint for an automation, script, or template_
+- [`ha-blueprint-author`](agents/claude-home-assistant/ha-blueprint-author.md) — _you want to turn an existing automation into a blueprint_
+- [`ha-blueprint-author`](agents/claude-home-assistant/ha-blueprint-author.md) — _you want to draft a motion-light or similar blueprint_
+- [`ha-blueprint-scaffold`](skills/claude-home-assistant/ha-blueprint-scaffold.md) — _you want to create a Home Assistant blueprint from a described intent_
+- [`ha-blueprint-scaffold`](skills/claude-home-assistant/ha-blueprint-scaffold.md) — _you want to turn an existing automation into a shareable blueprint_
+- [`ha-bluetooth-augment`](skills/claude-home-assistant/ha-bluetooth-augment.md) — _you want to add Bluetooth discovery or support to an integration_
+- [`ha-bluetooth-augment`](skills/claude-home-assistant/ha-bluetooth-augment.md) — _you want to listen for BLE advertisements from a device_
+- [`ha-bluetooth-augment`](skills/claude-home-assistant/ha-bluetooth-augment.md) — _you want to pick the right Bluetooth coordinator family_
+- [`ha-card-editor-add`](skills/claude-home-assistant/ha-card-editor-add.md) — _you want to add a config editor to your card_
+- [`ha-card-editor-add`](skills/claude-home-assistant/ha-card-editor-add.md) — _you want to wire up the ha-form editor_
+- [`ha-card-editor-add`](skills/claude-home-assistant/ha-card-editor-add.md) — _you want to make your card configurable in the UI_
+- [`ha-card-features-add`](skills/claude-home-assistant/ha-card-features-add.md) — _you want to add a tile feature_
+- [`ha-card-features-add`](skills/claude-home-assistant/ha-card-features-add.md) — _you want to create a custom card feature_
+- [`ha-card-features-add`](skills/claude-home-assistant/ha-card-features-add.md) — _you want to add a control row to the tile card_
+- [`ha-card-preview-add`](skills/claude-home-assistant/ha-card-preview-add.md) — _you want your card to show a preview in the card picker_
+- [`ha-card-preview-add`](skills/claude-home-assistant/ha-card-preview-add.md) — _the card preview is broken or empty and you want it fixed_
+- [`ha-card-preview-add`](skills/claude-home-assistant/ha-card-preview-add.md) — _you want to ensure the card preview is implemented correctly_
+- [`ha-card-sizing-determine`](skills/claude-home-assistant/ha-card-sizing-determine.md) — _you want to size an existing Lovelace card correctly_
+- [`ha-card-sizing-determine`](skills/claude-home-assistant/ha-card-sizing-determine.md) — _you want to fix an edit-mode overlay overlap on a card_
+- [`ha-card-sizing-determine`](skills/claude-home-assistant/ha-card-sizing-determine.md) — _you want to determine the right getGridOptions/getCardSize values_
+- [`ha-config-entry-migrate`](skills/claude-home-assistant/ha-config-entry-migrate.md) — _you want to migrate a config entry to a new schema_
+- [`ha-config-entry-migrate`](skills/claude-home-assistant/ha-config-entry-migrate.md) — _you renamed a config key and need a migration_
+- [`ha-config-entry-migrate`](skills/claude-home-assistant/ha-config-entry-migrate.md) — _you want to bump the config entry version_
+- [`ha-config-flow-augment`](skills/claude-home-assistant/ha-config-flow-augment.md) — _you want to add a multi-step tenant or account selection to the config flow_
+- [`ha-config-flow-augment`](skills/claude-home-assistant/ha-config-flow-augment.md) — _you want to add zeroconf discovery to an existing config flow_
+- [`ha-config-flow-augment`](skills/claude-home-assistant/ha-config-flow-augment.md) — _you want to add a reauth or reconfigure flow_
+- [`ha-config-flow-augment`](skills/claude-home-assistant/ha-config-flow-augment.md) — _you want to add OAuth login alongside an existing API-key path_
+- [`ha-conversation-agent-augment`](skills/claude-home-assistant/ha-conversation-agent-augment.md) — _you want to add a conversation agent to an integration_
+- [`ha-conversation-agent-augment`](skills/claude-home-assistant/ha-conversation-agent-augment.md) — _you want to register intents for an integration's devices_
+- [`ha-conversation-agent-augment`](skills/claude-home-assistant/ha-conversation-agent-augment.md) — _you want to expose tools to the assistant via the LLM API_
+- [`ha-coordinator-add`](skills/claude-home-assistant/ha-coordinator-add.md) — _you want to add a coordinator with a faster or slower update interval_
+- [`ha-coordinator-add`](skills/claude-home-assistant/ha-coordinator-add.md) — _you want to split polling of an integration's data into a new coordinator_
+- [`ha-derived-sensor-author`](skills/claude-home-assistant/ha-derived-sensor-author.md) — _you want a rate-of-change, energy-from-power, or moving-average sensor_
+- [`ha-derived-sensor-author`](skills/claude-home-assistant/ha-derived-sensor-author.md) — _you want a utility_meter, statistics, or bayesian sensor_
+- [`ha-derived-sensor-author`](skills/claude-home-assistant/ha-derived-sensor-author.md) — _you want a threshold or trend sensor from a source entity_
+- [`ha-dev-instance-provision`](agents/claude-home-assistant/ha-dev-instance-provision.md) — _you want to spin up a disposable dev HA instance_
+- [`ha-dev-instance-provision`](agents/claude-home-assistant/ha-dev-instance-provision.md) — _you want to provision a dev HA when there is no HA pod yet_
+- [`ha-dev-instance-provision`](agents/claude-home-assistant/ha-dev-instance-provision.md) — _you want to deploy a dev HA to the Kind cluster_
+- [`ha-dev-workflow-apply`](skills/claude-home-assistant/ha-dev-workflow-apply.md) — _you want to apply the HA dev workflow to an integration_
+- [`ha-dev-workflow-apply`](skills/claude-home-assistant/ha-dev-workflow-apply.md) — _you want to make an integration strict-typing / platinum-ready_
+- [`ha-dev-workflow-apply`](skills/claude-home-assistant/ha-dev-workflow-apply.md) — _you want to run ruff + mypy strict + hassfest on an integration_
+- [`ha-dev-workflow-apply`](skills/claude-home-assistant/ha-dev-workflow-apply.md) — _you want to enforce HA code style on an integration_
+- [`ha-device-automation-add`](skills/claude-home-assistant/ha-device-automation-add.md) — _you want to add a device trigger for a device-native event_
+- [`ha-device-automation-add`](skills/claude-home-assistant/ha-device-automation-add.md) — _you want to expose a remote button press as a device trigger_
+- [`ha-device-automation-add`](skills/claude-home-assistant/ha-device-automation-add.md) — _you want to add a device condition or device action_
+- [`ha-device-registry-augment`](skills/claude-home-assistant/ha-device-registry-augment.md) — _you want to group entities into a device_
+- [`ha-device-registry-augment`](skills/claude-home-assistant/ha-device-registry-augment.md) — _you want a hub device with via_device child devices_
+- [`ha-device-registry-augment`](skills/claude-home-assistant/ha-device-registry-augment.md) — _you want stale devices removed when they disappear_
+- [`ha-diagnostics-augment`](skills/claude-home-assistant/ha-diagnostics-augment.md) — _you want to enrich an integration's diagnostics dump_
+- [`ha-diagnostics-augment`](skills/claude-home-assistant/ha-diagnostics-augment.md) — _you want to add device diagnostics_
+- [`ha-diagnostics-augment`](skills/claude-home-assistant/ha-diagnostics-augment.md) — _you want to ensure diagnostics redacts every secret_
+- [`ha-discovery-augment`](skills/claude-home-assistant/ha-discovery-augment.md) — _you want to add DHCP, SSDP, USB, HomeKit, or MQTT discovery_
+- [`ha-discovery-augment`](skills/claude-home-assistant/ha-discovery-augment.md) — _you want to discover a device by MAC, vid:pid, or model_
+- [`ha-discovery-augment`](skills/claude-home-assistant/ha-discovery-augment.md) — _you want users to skip typing a host or picking the integration_
+- [`ha-entity-description-mapper`](skills/claude-home-assistant/ha-entity-description-mapper.md) — _you want to add sensors from a datapoint list_
+- [`ha-entity-description-mapper`](skills/claude-home-assistant/ha-entity-description-mapper.md) — _you want to generate EntityDescriptions from a CSV_
+- [`ha-entity-description-mapper`](skills/claude-home-assistant/ha-entity-description-mapper.md) — _you want to add binary_sensors for alert types_
+- [`ha-entity-description-mapper`](skills/claude-home-assistant/ha-entity-description-mapper.md) — _you want to extend a platform with more datapoints_
+- [`ha-entity-platform-add`](skills/claude-home-assistant/ha-entity-platform-add.md) — _you want to add a climate, cover, light, fan, or lock entity_
+- [`ha-entity-platform-add`](skills/claude-home-assistant/ha-entity-platform-add.md) — _you want to implement async command methods for a domain entity_
+- [`ha-hacs-release`](skills/claude-home-assistant/ha-hacs-release.md) — _you want to make an integration installable through HACS_
+- [`ha-hacs-release`](skills/claude-home-assistant/ha-hacs-release.md) — _you want to add a hacs.json to the integration_
+- [`ha-hacs-release`](skills/claude-home-assistant/ha-hacs-release.md) — _you want to set up a ZIP release for HACS_
+- [`ha-helper-scaffold`](skills/claude-home-assistant/ha-helper-scaffold.md) — _you want to add an input_number or input_select helper_
+- [`ha-helper-scaffold`](skills/claude-home-assistant/ha-helper-scaffold.md) — _you want to create a timer, counter, or schedule helper_
+- [`ha-integration-ci-scaffold`](skills/claude-home-assistant/ha-integration-ci-scaffold.md) — _you want to add hassfest and HACS validation to CI_
+- [`ha-integration-ci-scaffold`](skills/claude-home-assistant/ha-integration-ci-scaffold.md) — _you want a pytest matrix job for the integration_
+- [`ha-integration-deploy`](agents/claude-home-assistant/ha-integration-deploy.md) — _you want to deploy an integration to a dev HA instance_
+- [`ha-integration-deploy`](agents/claude-home-assistant/ha-integration-deploy.md) — _you want to roll the latest code out to the Kind cluster_
+- [`ha-integration-deploy`](agents/claude-home-assistant/ha-integration-deploy.md) — _you want to kubectl-cp an integration into a running HA pod_
+- [`ha-integration-events-add`](skills/claude-home-assistant/ha-integration-events-add.md) — _you want to fire a custom event on the HA event bus_
+- [`ha-integration-events-add`](skills/claude-home-assistant/ha-integration-events-add.md) — _you want to listen for an event on the HA event bus_
+- [`ha-integration-events-add`](skills/claude-home-assistant/ha-integration-events-add.md) — _you want to add both firing and listening for an integration event_
+- [`ha-integration-review`](agents/claude-home-assistant/ha-integration-review.md) — _you want a full integration review before opening the PR_
+- [`ha-integration-review`](agents/claude-home-assistant/ha-integration-review.md) — _you want a combined quality-scale plus security review_
+- [`ha-integration-review`](agents/claude-home-assistant/ha-integration-review.md) — _you want a whole-picture pre-release integration check_
+- [`ha-integration-scaffold`](skills/claude-home-assistant/ha-integration-scaffold.md) — _you want to bootstrap a brand-new HA Custom Integration from scratch_
+- [`ha-integration-scaffold`](skills/claude-home-assistant/ha-integration-scaffold.md) — _you want a runnable, lint-clean, test-passing integration skeleton_
+- [`ha-integration-scaffold`](skills/claude-home-assistant/ha-integration-scaffold.md) — _you want to start an integration targeting HACS distribution_
+- [`ha-integration-solution`](skills/claude-home-assistant/ha-integration-solution.md) — _you want a complete integration built for a device, cloud, or API_
+- [`ha-integration-solution`](skills/claude-home-assistant/ha-integration-solution.md) — _you want a full custom integration wired up end to end_
+- [`ha-integration-solution`](skills/claude-home-assistant/ha-integration-solution.md) — _you want an integration built to a specific quality-scale tier_
+- [`ha-integration-verify`](agents/claude-home-assistant/ha-integration-verify.md) — _you want to verify a deployed integration on the local HA pod_
+- [`ha-integration-verify`](agents/claude-home-assistant/ha-integration-verify.md) — _you want to diagnose the Kind-cluster HA pod_
+- [`ha-integration-verify`](agents/claude-home-assistant/ha-integration-verify.md) — _you want to check whether the integration is loaded_
+- [`ha-lovelace-card-scaffold`](skills/claude-home-assistant/ha-lovelace-card-scaffold.md) — _you want to add a custom Lovelace card to an existing integration_
+- [`ha-lovelace-card-scaffold`](skills/claude-home-assistant/ha-lovelace-card-scaffold.md) — _you want a vanilla-JS card auto-registered through __init__.py_
+- [`ha-lovelace-solution`](skills/claude-home-assistant/ha-lovelace-solution.md) — _you want a custom card together with its editor and a feature_
+- [`ha-lovelace-solution`](skills/claude-home-assistant/ha-lovelace-solution.md) — _you want a dashboard strategy plus a badge_
+- [`ha-lovelace-solution`](skills/claude-home-assistant/ha-lovelace-solution.md) — _you want a custom panel backed by a WebSocket command_
+- [`ha-media-source-add`](skills/claude-home-assistant/ha-media-source-add.md) — _you want to add a media source to your integration_
+- [`ha-media-source-add`](skills/claude-home-assistant/ha-media-source-add.md) — _you want users to browse your media in the media browser_
+- [`ha-oauth2-credentials-augment`](skills/claude-home-assistant/ha-oauth2-credentials-augment.md) — _you want to add OAuth2 to your integration_
+- [`ha-oauth2-credentials-augment`](skills/claude-home-assistant/ha-oauth2-credentials-augment.md) — _you want to wire up Application Credentials_
+- [`ha-oauth2-credentials-augment`](skills/claude-home-assistant/ha-oauth2-credentials-augment.md) — _you want to set up the OAuth2 config flow_
+- [`ha-options-flow-augment`](skills/claude-home-assistant/ha-options-flow-augment.md) — _you want to add a post-setup option to an existing integration_
+- [`ha-options-flow-augment`](skills/claude-home-assistant/ha-options-flow-augment.md) — _you want to let a user configure a threshold or toggle after setup_
+- [`ha-options-flow-augment`](skills/claude-home-assistant/ha-options-flow-augment.md) — _you want to retrofit an OptionsFlow into an integration_
+- [`ha-panel-add`](skills/claude-home-assistant/ha-panel-add.md) — _you want to add a custom panel_
+- [`ha-panel-add`](skills/claude-home-assistant/ha-panel-add.md) — _you want to register a full-page panel in the sidebar_
+- [`ha-panel-add`](skills/claude-home-assistant/ha-panel-add.md) — _you want to create a full-page custom panel_
+- [`ha-panel-author`](skills/claude-home-assistant/ha-panel-author.md) — _you want a complete, production-grade custom panel built_
+- [`ha-panel-author`](skills/claude-home-assistant/ha-panel-author.md) — _you want a full-page sidebar page or panel-mode view developed_
+- [`ha-panel-author`](skills/claude-home-assistant/ha-panel-author.md) — _you want senior-grade dashboard-surface judgement, not a bare scaffold_
+- [`ha-panel-config-view-add`](skills/claude-home-assistant/ha-panel-config-view-add.md) — _you want to add a settings view to your panel_
+- [`ha-panel-config-view-add`](skills/claude-home-assistant/ha-panel-config-view-add.md) — _you want to let users configure your panel_
+- [`ha-panel-config-view-add`](skills/claude-home-assistant/ha-panel-config-view-add.md) — _you want to persist your panel's options_
+- [`ha-panel-config-view-add`](skills/claude-home-assistant/ha-panel-config-view-add.md) — _you want to add an options page to the custom panel_
+- [`ha-panel-ux-audit`](skills/claude-home-assistant/ha-panel-ux-audit.md) — _you want to audit a panel's UX_
+- [`ha-panel-ux-audit`](skills/claude-home-assistant/ha-panel-ux-audit.md) — _you want to know whether a panel is usable on mobile_
+- [`ha-panel-ux-audit`](skills/claude-home-assistant/ha-panel-ux-audit.md) — _you want to review a panel for usability and accessibility_
+- [`ha-pixoo-animation-author`](skills/claude-home-assistant/ha-pixoo-animation-author.md) — _you want to animate a bouncing or moving icon on the Pixoo_
+- [`ha-pixoo-animation-author`](skills/claude-home-assistant/ha-pixoo-animation-author.md) — _you want the Pixoo to pulse or color-shift on a condition_
+- [`ha-pixoo-animation-author`](skills/claude-home-assistant/ha-pixoo-animation-author.md) — _you want a scrolling or motion Pixoo display_
+- [`ha-pixoo-page-author`](skills/claude-home-assistant/ha-pixoo-page-author.md) — _you want to show entity state or data on the Pixoo as a page_
+- [`ha-pixoo-page-author`](skills/claude-home-assistant/ha-pixoo-page-author.md) — _you want a Pixoo page with progress, power, or weather_
+- [`ha-pixoo-page-author`](skills/claude-home-assistant/ha-pixoo-page-author.md) — _you want a components, special, or native Pixoo page_
+- [`ha-pixoo-pixel-art-author`](skills/claude-home-assistant/ha-pixoo-pixel-art-author.md) — _you want a pixel-art icon or illustration for the Pixoo_
+- [`ha-pixoo-pixel-art-author`](skills/claude-home-assistant/ha-pixoo-pixel-art-author.md) — _you want a 64×64 graphic with shading and contours_
+- [`ha-pixoo-pixel-art-author`](skills/claude-home-assistant/ha-pixoo-pixel-art-author.md) — _you want procedural components or a PNG build plan for the Pixoo_
+- [`ha-pixoo-solution`](skills/claude-home-assistant/ha-pixoo-solution.md) — _you want a Pixoo display built for some status or data_
+- [`ha-pixoo-solution`](skills/claude-home-assistant/ha-pixoo-solution.md) — _you want to show an entity's status on the Divoom Pixoo_
+- [`ha-pixoo-solution`](skills/claude-home-assistant/ha-pixoo-solution.md) — _you want an animated Pixoo page_
+- [`ha-quality-scale-audit`](skills/claude-home-assistant/ha-quality-scale-audit.md) — _you want to run a quality-scale audit on an integration_
+- [`ha-quality-scale-audit`](skills/claude-home-assistant/ha-quality-scale-audit.md) — _you want to know which quality-scale tier an integration reaches_
+- [`ha-quality-scale-audit`](skills/claude-home-assistant/ha-quality-scale-audit.md) — _you want to check an integration against the HA quality-scale_
+- [`ha-repairs-add`](skills/claude-home-assistant/ha-repairs-add.md) — _you want to add a repair issue for a problem situation_
+- [`ha-repairs-add`](skills/claude-home-assistant/ha-repairs-add.md) — _you want to create a fixable repair flow_
+- [`ha-repairs-add`](skills/claude-home-assistant/ha-repairs-add.md) — _you want to warn the user about a deprecation_
+- [`ha-reproduce-state-add`](skills/claude-home-assistant/ha-reproduce-state-add.md) — _you want to add reproduce_state support to an integration_
+- [`ha-reproduce-state-add`](skills/claude-home-assistant/ha-reproduce-state-add.md) — _you want to make your entities scene-capable_
+- [`ha-reproduce-state-add`](skills/claude-home-assistant/ha-reproduce-state-add.md) — _you want entities restored when a scene is activated_
+- [`ha-security-audit`](skills/claude-home-assistant/ha-security-audit.md) — _you want to run a security audit on an integration_
+- [`ha-security-audit`](skills/claude-home-assistant/ha-security-audit.md) — _you want to audit an integration's security hardening_
+- [`ha-security-audit`](skills/claude-home-assistant/ha-security-audit.md) — _you want to check an integration against the security-hardening MUST rules_
+- [`ha-service-definition-generator`](skills/claude-home-assistant/ha-service-definition-generator.md) — _you want to add a named service to an integration_
+- [`ha-service-definition-generator`](skills/claude-home-assistant/ha-service-definition-generator.md) — _you want to add a refresh_data service that re-polls coordinators_
+- [`ha-significant-change-add`](skills/claude-home-assistant/ha-significant-change-add.md) — _you want to add significant-change logic to an integration_
+- [`ha-significant-change-add`](skills/claude-home-assistant/ha-significant-change-add.md) — _you want to throttle insignificant updates to consumers_
+- [`ha-significant-change-add`](skills/claude-home-assistant/ha-significant-change-add.md) — _you want to stop reporting micro-changes to HomeKit_
+- [`ha-solution`](skills/claude-home-assistant/ha-solution.md) — _you want a full Home Assistant solution but aren't sure which domain it belongs to_
+- [`ha-solution`](skills/claude-home-assistant/ha-solution.md) — _you want a cross-domain result: a card plus its backing integration plus an automation_
+- [`ha-solution`](skills/claude-home-assistant/ha-solution.md) — _you want an integration, dashboard, and automation for one requirement_
+- [`ha-strategy-add`](skills/claude-home-assistant/ha-strategy-add.md) — _you want to add a dashboard or view strategy_
+- [`ha-strategy-add`](skills/claude-home-assistant/ha-strategy-add.md) — _you want to auto-generate views or cards programmatically_
+- [`ha-strategy-add`](skills/claude-home-assistant/ha-strategy-add.md) — _you want to create a custom Lovelace strategy_
+- [`ha-system-health-add`](skills/claude-home-assistant/ha-system-health-add.md) — _you want to add system health info to an integration_
+- [`ha-system-health-add`](skills/claude-home-assistant/ha-system-health-add.md) — _you want to show your integration on the system health page_
+- [`ha-system-health-add`](skills/claude-home-assistant/ha-system-health-add.md) — _you want to surface backend reachability or remaining quota_
+- [`ha-test-harness-augment`](skills/claude-home-assistant/ha-test-harness-augment.md) — _you want to add tests for an integration's platform_
+- [`ha-test-harness-augment`](skills/claude-home-assistant/ha-test-harness-augment.md) — _you want to add tests for a specific service_
+- [`ha-test-harness-augment`](skills/claude-home-assistant/ha-test-harness-augment.md) — _you want to add tests for the helpers module_
+- [`ha-test-harness-augment`](skills/claude-home-assistant/ha-test-harness-augment.md) — _you want to extend an integration's test suite additively_
+- [`ha-translation-sync`](skills/claude-home-assistant/ha-translation-sync.md) — _you want to sync an integration's translations_
+- [`ha-translation-sync`](skills/claude-home-assistant/ha-translation-sync.md) — _you want to check for translation drift_
+- [`ha-translation-sync`](skills/claude-home-assistant/ha-translation-sync.md) — _you want to align strings.json with the translation files_
+- [`ha-websocket-command-add`](skills/claude-home-assistant/ha-websocket-command-add.md) — _you want to add a WebSocket command to an integration_
+- [`ha-websocket-command-add`](skills/claude-home-assistant/ha-websocket-command-add.md) — _you want to expose a backend endpoint to your card_
+- [`ha-websocket-command-add`](skills/claude-home-assistant/ha-websocket-command-add.md) — _you want a card to load integration-specific backend data_

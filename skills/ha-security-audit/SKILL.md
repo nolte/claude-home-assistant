@@ -2,6 +2,20 @@
 name: ha-security-audit
 description: Read-only security audit of an existing HA Custom Integration against every MUST rule in spec/ha/security-hardening — API path whitelist, bearer gating, config-flow input validation, multi-instance service disambiguation, diagnostics redaction, logging discipline. Produces a severity-sorted findings report; never modifies code. Activate on phrasings like "run a security audit on the integration", "audit security hardening", "prüfe die Integration gegen das Security-Hardening". Do not activate for auto-fix, backend penetration testing, or general code-quality audit.
 tags: [home-assistant, custom-integration, security, audit]
+phase: quality
+summary: "Runs a read-only security audit of an HA Custom Integration against every MUST rule in ha/security-hardening and produces a severity-sorted findings report."
+summary_de: "Führt ein Read-only-Security-Audit einer HA-Custom-Integration gegen alle MUST-Regeln aus ha/security-hardening durch und erzeugt einen nach Schweregrad sortierten Findings-Report."
+use_when:
+  - "you want to run a security audit on an integration"
+  - "you want to audit an integration's security hardening"
+  - "you want to check an integration against the security-hardening MUST rules"
+dont_use_when: []
+see_also:
+  - ha-quality-scale-audit
+  - ha-dev-workflow-apply
+  - ha-diagnostics-augment
+  - ha-config-flow-augment
+  - ha-service-definition-generator
 ---
 
 # HA Security Audit

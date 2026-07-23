@@ -2,6 +2,23 @@
 name: ha-hacs-release
 description: Make an existing Home Assistant Custom Integration HACS-release-ready by scaffolding and verifying the HACS-specific distribution layer defined in spec/ha/hacs-release — a valid hacs.json (name, zip_release plus filename, homeassistant floor, hide_default_branch, render_readme), the manifest.json version aligned to the GitHub release tag scheme vMAJOR.MINOR.PATCH, the ZIP-release CD obligation (build and attach the domain.zip asset), and the brands registration pointer. Operationalizes the HACS layer on top of the generic release-automation flow (release-drafter, chore(release) alignment, reusable-release-publish) without redefining it. Activate on phrasings like "make this integration HACS-release-ready", "add a hacs.json", "set up ZIP release for HACS", "mach die Integration HACS-release-fertig", "füge eine hacs.json hinzu". Do not activate for the generic release publish flow itself (release-automation), the CI validation workflow (ha-integration-ci-scaffold), the integration code (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, hacs, release]
+phase: close-release
+summary: "Makes an existing HA Custom Integration HACS-release-ready — valid hacs.json, tag-aligned manifest version, ZIP-release CD obligation, and brands pointer."
+summary_de: "Macht eine bestehende HA-Custom-Integration HACS-release-fertig — valide hacs.json, tag-abgeglichene Manifest-Version, ZIP-Release-CD-Pflicht und brands-Pointer."
+use_when:
+  - "you want to make an integration installable through HACS"
+  - "you want to add a hacs.json to the integration"
+  - "you want to set up a ZIP release for HACS"
+dont_use_when:
+  - situation: "You need the CI validation workflow (hassfest / HACS action / pytest)"
+    alternative: ha-integration-ci-scaffold
+  - situation: "You need to generate the integration code itself"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-integration-ci-scaffold
+  - ha-integration-scaffold
+  - ha-integration-solution
+  - ha-integration-review
 ---
 
 # HA HACS Release

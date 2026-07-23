@@ -2,6 +2,31 @@
 name: ha-panel-add
 description: Augment an existing Home Assistant integration or frontend repo with one custom panel — a full-page custom element registered in the sidebar that takes over the whole content area — conforming to spec/ha/lovelace-views-panels (custom-panel part). Creates the panel custom element (Lit or another non-React framework receiving hass / narrow / route / panel, registered via customElements.define), the JS-module wiring, and the panel_custom registration in configuration.yaml (unique url_path, module_url, optional sidebar_title/sidebar_icon/config/embed_iframe). Distinguishes a custom panel from a panel-mode view (single-card layout) and a custom view (layout container). Activate on "add a custom panel", "register a sidebar panel", "create a full-page custom panel", "füge ein Custom-Panel hinzu", "registriere ein Sidebar-Panel". Do not activate for a single card (ha-lovelace-card-scaffold), a panel-mode view (ha-panel-author, which owns the panel-mode-view delivery-shape decision), a dashboard strategy (ha/lovelace-strategies), a websocket command the panel calls (ha/frontend-websocket-commands), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, frontend, lovelace, custom-panel]
+phase: design
+summary: "Adds one custom panel — a full-page custom element registered in the sidebar — to an existing Home Assistant integration or frontend repo."
+summary_de: "Fügt einer bestehenden Home-Assistant-Integration oder einem Frontend-Repo ein Custom-Panel hinzu — ein ganzseitiges Custom-Element in der Seitenleiste."
+use_when:
+  - "you want to add a custom panel"
+  - "you want to register a full-page panel in the sidebar"
+  - "you want to create a full-page custom panel"
+dont_use_when:
+  - situation: "You need a single card, not a full-page panel"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You need a panel-mode view (a type: panel view with one card)"
+    alternative: ha-panel-author
+  - situation: "You need a programmatic dashboard strategy"
+    alternative: ha-strategy-add
+  - situation: "You need a WebSocket command the panel calls"
+    alternative: ha-websocket-command-add
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-panel-author
+  - ha-panel-config-view-add
+  - ha-lovelace-card-scaffold
+  - ha-strategy-add
+  - ha-websocket-command-add
+  - ha-panel-ux-audit
 ---
 
 # HA Panel Add

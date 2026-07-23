@@ -2,6 +2,26 @@
 name: ha-entity-platform-add
 description: Scaffold one active platform entity into an existing Home Assistant Custom Integration — a command-driven domain (climate, cover, light, fan, lock, media_player, vacuum, valve, humidifier, water_heater, siren, lawn_mower, …) whose entity exposes async command methods — conforming to spec/ha/entity-platform-types plus the matching ha/entity-platforms-* family spec. Creates the platform module <platform>.py with the entity subclass (ClimateEntity / CoverEntity / LightEntity / …), its EntityDescription where the family uses one, the supported_features bitmask from the domain's *EntityFeature enum, the mandated async command methods (async_turn_on, async_set_temperature, async_open_cover, async_set_hvac_mode), the async_setup_entry platform setup adding entities to the coordinator, and the state/attribute properties. Requires the operator to name the target domain and confirm the family first. Activate on "add a climate/cover/light/fan/lock entity", "scaffold an active platform entity", "implement async command methods for my <domain> entity", "scaffolde eine aktive <Domain>-Entity", "füge eine Cover-Entity hinzu". Do not activate for declarative read-type entities via EntityDescription tables (ha-entity-description-mapper), the coordinator itself (ha-coordinator-add), greenfield integration scaffolding (ha-integration-scaffold), device-automation triggers (ha-device-automation-add), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, entity-platform]
+phase: design
+summary: "Scaffolds one active command-driven platform entity (climate, cover, light, fan, lock, media_player, …) into an existing integration — entity class, feature bitmask, command methods, and setup."
+summary_de: "Scaffolded eine aktive, befehlsgesteuerte Plattform-Entity (climate, cover, light, fan, lock, …) in eine bestehende Integration — Entity-Klasse, Feature-Bitmaske, Command-Methoden und Setup."
+use_when:
+  - "you want to add a climate, cover, light, fan, or lock entity"
+  - "you want to implement async command methods for a domain entity"
+dont_use_when:
+  - situation: "You author read-type entities as EntityDescription tables"
+    alternative: ha-entity-description-mapper
+  - situation: "You need the coordinator itself"
+    alternative: ha-coordinator-add
+  - situation: "You are scaffolding a brand-new integration"
+    alternative: ha-integration-scaffold
+  - situation: "You need device-automation triggers or conditions"
+    alternative: ha-device-automation-add
+see_also:
+  - ha-entity-description-mapper
+  - ha-coordinator-add
+  - ha-integration-scaffold
+  - ha-device-automation-add
 ---
 
 # HA Entity Platform Add

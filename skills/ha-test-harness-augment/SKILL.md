@@ -2,6 +2,21 @@
 name: ha-test-harness-augment
 description: Add tests for one secondary code path (platform, service, helpers, Lovelace cleanup) to an existing HA Custom Integration test suite, including fixtures and JSON snapshots, without disturbing existing tests. Activate on phrasings like "add tests for the sensor platform", "add tests for the `<service>` service", "add tests for the helpers module", "erweitere die Test-Suite um Plattform-Tests". Do not activate for E2E tests, test refactoring, or coverage-threshold tooling.
 tags: [home-assistant, custom-integration, testing]
+phase: quality
+summary: "Adds tests for one secondary code path (platform, service, helpers, Lovelace cleanup) to an existing HA Custom Integration suite, including fixtures and snapshots, without disturbing existing tests."
+summary_de: "Fügt Tests für einen sekundären Code-Pfad (Plattform, Service, Helpers, Lovelace-Cleanup) zu einer bestehenden HA-Integration-Test-Suite hinzu, ohne bestehende Tests anzutasten."
+use_when:
+  - "you want to add tests for an integration's platform"
+  - "you want to add tests for a specific service"
+  - "you want to add tests for the helpers module"
+  - "you want to extend an integration's test suite additively"
+dont_use_when: []
+see_also:
+  - ha-quality-scale-audit
+  - ha-dev-workflow-apply
+  - ha-integration-scaffold
+  - ha-integration-ci-scaffold
+  - ha-integration-verify
 ---
 
 # HA Test Harness Augment

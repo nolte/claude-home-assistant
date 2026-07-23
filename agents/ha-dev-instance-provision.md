@@ -18,6 +18,19 @@ description: >-
 distribution: plugin
 tools: Read, Glob, Grep, Bash
 tags: [home-assistant, dev-environment, provisioning]
+phase: build
+summary: "Provisions a disposable dev Home Assistant instance into a local Kubernetes cluster from a self-generated manifest, prepares /config/custom_components, and can tear it down."
+summary_de: "Stellt eine wegwerfbare Dev-Home-Assistant-Instanz aus einem selbst erzeugten Manifest in einen lokalen Kubernetes-Cluster bereit und richtet /config/custom_components ein."
+use_when:
+  - "you want to spin up a disposable dev HA instance"
+  - "you want to provision a dev HA when there is no HA pod yet"
+  - "you want to deploy a dev HA to the Kind cluster"
+dont_use_when:
+  - situation: "You want to deploy integration code into HA"
+    alternative: ha-integration-deploy
+see_also:
+  - ha-integration-deploy
+  - ha-integration-verify
 ---
 
 # HA Dev Instance Provision

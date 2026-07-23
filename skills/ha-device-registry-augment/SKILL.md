@@ -2,6 +2,28 @@
 name: ha-device-registry-augment
 description: Wire the device-registry hierarchy of an existing Home Assistant Custom Integration so entities group into proper devices — DeviceInfo with identifiers / manufacturer / model / name, a via_device hub-to-child parent link, runtime addition of newly discovered devices, and removal of stale devices via async_remove_config_entry_device. Optionally adds async_get_device_diagnostics. Targets the Gold devices, stale-devices, dynamic-devices rules. Non-destructive to existing entities. Activate on phrasings like "group these entities into a device", "add a hub device with child devices via_device", "remove stale devices when they disappear", "gruppiere die Entitäten zu einem Gerät", "füge ein Hub-Gerät mit Kindgeräten hinzu". Do not activate for creating entity platforms (ha-entity-platform-add), config-entry diagnostics (ha-diagnostics-augment), device trigger/condition/action automations (ha-device-automation-add), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, device-registry]
+phase: design
+summary: "Wires the device-registry hierarchy — DeviceInfo, via_device hub-to-child links, runtime device add, and stale-device removal — so entities group into proper devices."
+summary_de: "Verdrahtet die Device-Registry-Hierarchie — DeviceInfo, via_device-Hub-zu-Kind-Links, Laufzeit-Geräte und Entfernen veralteter Geräte — sodass Entities zu echten Geräten gruppieren."
+use_when:
+  - "you want to group entities into a device"
+  - "you want a hub device with via_device child devices"
+  - "you want stale devices removed when they disappear"
+dont_use_when:
+  - situation: "You are creating the entity platform itself"
+    alternative: ha-entity-platform-add
+  - situation: "You want config-entry diagnostics, not device wiring"
+    alternative: ha-diagnostics-augment
+  - situation: "You want device trigger/condition/action automations"
+    alternative: ha-device-automation-add
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-entity-platform-add
+  - ha-entity-description-mapper
+  - ha-diagnostics-augment
+  - ha-device-automation-add
+  - ha-coordinator-add
 ---
 
 # HA Device Registry Augment

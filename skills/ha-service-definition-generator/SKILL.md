@@ -2,6 +2,20 @@
 name: ha-service-definition-generator
 description: Add an HA service to an existing Custom Integration — services.yaml entry with typed selectors, voluptuous schema, handler stub with multi-instance disambiguation and coordinator refresh, translations, icon, and tests. Activate on phrasings like "add a service `<name>`", "add a `refresh_data` service", "füge einen Service `<name>` hinzu". Do not activate for service removal, service-schema migration, or greenfield scaffolding.
 tags: [home-assistant, custom-integration, services]
+phase: design
+summary: "Adds an HA service to an existing integration — a services.yaml entry with typed selectors, a voluptuous schema, a handler stub, translations, an icon, and tests."
+summary_de: "Fügt einer bestehenden Integration einen HA-Service hinzu — services.yaml-Eintrag mit typisierten Selectors, Voluptuous-Schema, Handler-Stub, Übersetzungen, Icon und Tests."
+use_when:
+  - "you want to add a named service to an integration"
+  - "you want to add a refresh_data service that re-polls coordinators"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-integration-scaffold
+  - ha-coordinator-add
+  - ha-integration-events-add
+  - ha-translation-sync
 ---
 
 # HA Service Definition Generator

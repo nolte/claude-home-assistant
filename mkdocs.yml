@@ -125,8 +125,12 @@ extra:
       link: https://github.com/nolte/claude-home-assistant
 
 nav:
-  - Home: index.md
-  - Use cases: use-cases.md
-  - Skills: skills/SUMMARY.md
-  - Agents: agents/SUMMARY.md
-  - Tags: tags.md
+  - Home: en/index.md
+  - Use cases: en/use-cases.md
+  # Directory references so mkdocs-literate-nav expands each SUMMARY.md into the
+  # left sidebar as a grouped tree (by delivery-lifecycle phase), matching the
+  # claude-shared catalog. A file reference (skills/SUMMARY.md) renders the list
+  # only in the page body and leaves the sidebar empty.
+  - Skills: en/skills/
+  - Agents: en/agents/
+  - Tags: en/references/tags.md

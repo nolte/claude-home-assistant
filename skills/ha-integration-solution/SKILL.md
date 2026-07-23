@@ -2,6 +2,29 @@
 name: ha-integration-solution
 description: Plan and orchestrate a complete Home Assistant Python custom-integration backend from a result-oriented device/cloud/API requirement, driven by a chosen quality-scale target tier (Bronze through Platinum) and optionally finishing with CI validation and HACS-release readiness, so the user never has to pick which integration skill to use. The integration-side counterpart to ha-automation-solution. Decomposes the requirement into the minimal dependency-ordered set of integration skills for the target tier, presents the plan for approval, then dispatches ha-integration-scaffold, ha-config-flow-augment, ha-options-flow-augment, ha-config-entry-migrate, ha-oauth2-credentials-augment, ha-coordinator-add, ha-entity-description-mapper, ha-entity-platform-add, ha-device-registry-augment, ha-service-definition-generator, ha-integration-events-add, ha-device-automation-add, ha-discovery-augment, ha-bluetooth-augment, ha-diagnostics-augment, ha-repairs-add, ha-system-health-add, ha-significant-change-add, ha-backup-platform-add, ha-media-source-add, ha-reproduce-state-add, ha-conversation-agent-augment, ha-translation-sync, ha-test-harness-augment, ha-dev-workflow-apply, ha-quality-scale-audit, ha-security-audit, ha-integration-ci-scaffold, and ha-hacs-release in order — threading the integration domain and entity_ids between steps. Activate on "build an integration for device/API X", "scaffold and wire up a full custom integration for …", "build a Gold-tier integration for my Acme thermostat cloud API", "baue mir eine vollständige Integration für …", "richte eine Custom-Integration für … ein". Do not activate for a single clear augment (let the owning skill handle it), a pure YAML automation/helper solution (ha-automation-solution), a Lovelace frontend (ha-lovelace-card-scaffold), or deploying to a live HA instance (ha-integration-deploy agent).
 tags: [home-assistant, integration, orchestration, planning]
+phase: plan
+summary: "Plans and orchestrates a complete Python custom-integration backend from a device/cloud/API requirement, driven by a chosen quality-scale target tier."
+summary_de: "Plant und orchestriert ein vollständiges Python-Custom-Integration-Backend aus einer Geräte-/Cloud-/API-Anforderung, gesteuert durch eine gewählte Quality-Scale-Zielstufe."
+use_when:
+  - "you want a complete integration built for a device, cloud, or API"
+  - "you want a full custom integration wired up end to end"
+  - "you want an integration built to a specific quality-scale tier"
+dont_use_when:
+  - situation: "The requirement is a pure YAML automation/helper solution"
+    alternative: ha-automation-solution
+  - situation: "You need a Lovelace/frontend card, not the backend"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You are deploying the integration to a live HA instance"
+    alternative: ha-integration-deploy
+see_also:
+  - ha-integration-scaffold
+  - ha-automation-solution
+  - ha-lovelace-solution
+  - ha-quality-scale-audit
+  - ha-security-audit
+  - ha-integration-review
+  - ha-integration-ci-scaffold
+  - ha-hacs-release
 ---
 
 # HA Integration Solution

@@ -2,6 +2,29 @@
 name: ha-panel-config-view-add
 description: Add or complete the configuration/options view of an existing Home Assistant custom panel, conforming to spec/ha/lovelace-panel-config-view — separating deploy-time panel.config from runtime-editable options, composing the options form from ha-form plus ha-selector selectors, persisting domain/shared state through a custom WebSocket command (hass.callWS with a matching read/subscribe command) and per-user UI preferences through the frontend user-data store, and gating admin-only options in the UI (require_admin, hass.user.is_admin) while enforcing them server-side in the command handler. Completes the missing config-view pieces on an existing panel and validates them, producing a CONFORMANT / NEEDS-WORK report. Activate on phrasings like "add a settings view to my panel", "let users configure my panel", "persist my panel options", "add an options page to the custom panel", "füge dem Panel eine Konfigurationsansicht hinzu", "das Panel soll Einstellungen speichern". Do not activate for scaffolding a new panel (ha-panel-add), defining the WebSocket command itself (ha-websocket-command-add), the card config editor (ha-card-editor-add), the backend integration options flow (config-flow-patterns), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, lovelace, panel]
+phase: design
+summary: "Adds or completes the configuration/options view of an existing Home Assistant custom panel, with correct persistence and admin gating."
+summary_de: "Fügt einer bestehenden Home-Assistant-Custom-Panel die Konfigurations-/Optionsansicht hinzu oder vervollständigt sie — mit korrekter Persistenz und Admin-Gating."
+use_when:
+  - "you want to add a settings view to your panel"
+  - "you want to let users configure your panel"
+  - "you want to persist your panel's options"
+  - "you want to add an options page to the custom panel"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new panel"
+    alternative: ha-panel-add
+  - situation: "You need to define the backend WebSocket command itself"
+    alternative: ha-websocket-command-add
+  - situation: "You need the card graphical config editor"
+    alternative: ha-card-editor-add
+  - situation: "You need the backend integration config/options flow"
+    alternative: ha-options-flow-augment
+see_also:
+  - ha-panel-add
+  - ha-websocket-command-add
+  - ha-card-editor-add
+  - ha-options-flow-augment
+  - ha-panel-author
 ---
 
 # HA Panel Config View Add

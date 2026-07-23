@@ -2,6 +2,28 @@
 name: ha-repairs-add
 description: Augment an existing Home Assistant Custom Integration with one Repairs issue (fixable or informative) conforming to spec/ha/repairs — the async_create_issue call site, a repairs.py with async_create_fix_flow + RepairsFlow/ConfirmRepairFlow for fixable issues, the strings.json issues entry (title/description), and the async_delete_issue lifecycle path. Decides fixable vs. informative and severity, redirects transient connection errors to the coordinator's UpdateFailed handling, and forbids hard-coded user strings. Activate on "add a repair issue for…", "create a fixable repair flow for…", "warn the user about a deprecation", "füge ein Repair-Issue für… hinzu". Do not activate for greenfield scaffolding (ha-integration-scaffold), system_health, whole-integration quality grading (ha-quality-scale-audit), transient error handling (ha-coordinator-add), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, repairs]
+phase: design
+summary: "Adds one Repairs issue (fixable or informative) — call site, repair flow, translations, and delete lifecycle — to an existing HA Custom Integration."
+summary_de: "Fügt einer bestehenden HA-Custom-Integration ein Repairs-Issue (fixable oder informativ) hinzu — Aufrufstelle, Repair-Flow, Übersetzungen und Delete-Lifecycle."
+use_when:
+  - "you want to add a repair issue for a problem situation"
+  - "you want to create a fixable repair flow"
+  - "you want to warn the user about a deprecation"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+  - situation: "You need integration system health (system_health.py)"
+    alternative: ha-system-health-add
+  - situation: "You want to grade the whole integration against the quality scale"
+    alternative: ha-quality-scale-audit
+  - situation: "You need transient connection/API error handling"
+    alternative: ha-coordinator-add
+see_also:
+  - ha-coordinator-add
+  - ha-quality-scale-audit
+  - ha-system-health-add
+  - ha-integration-scaffold
+  - ha-translation-sync
 ---
 
 # HA Repairs Add

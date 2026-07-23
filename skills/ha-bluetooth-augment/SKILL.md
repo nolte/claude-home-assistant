@@ -2,6 +2,25 @@
 name: ha-bluetooth-augment
 description: Augment an existing Home Assistant Custom Integration with Bluetooth support, conforming to spec/ha/bluetooth. Sets the manifest.json bluetooth matcher list (connectable, service_uuid, service_data_uuid, manufacturer_id, local_name) plus bluetooth_adapters in dependencies on adapter use, subscribes to advertisements via bluetooth.async_register_callback with a BluetoothCallbackMatcher and an explicit BluetoothScanningMode (@callback bound through entry.async_on_unload), picks the right Bluetooth coordinator family (PassiveBluetoothProcessorCoordinator / ActiveBluetoothProcessorCoordinator or the DataUpdate variants), and wires async_ble_device_from_address / async_last_service_info lookups over the shared scanner. Keeps passive (connectable=False) as the default. Part of the Gold discovery family, sibling of ha-discovery-augment. Activate on "add bluetooth discovery/support", "listen for BLE advertisements", "füge Bluetooth-Unterstützung hinzu". Do not activate for DHCP/SSDP/USB/HomeKit/Zeroconf network discovery (ha-discovery-augment), the config-flow discovery step (ha-config-flow-augment), the generic polling DataUpdateCoordinator (ha/coordinator-patterns), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, bluetooth]
+phase: design
+summary: "Augments an existing integration with Bluetooth support — manifest matchers, advertisement callbacks, the right Bluetooth coordinator family, and BLE lookups over the shared scanner."
+summary_de: "Erweitert eine bestehende Integration um Bluetooth — Manifest-Matcher, Advertisement-Callbacks, die passende Bluetooth-Coordinator-Familie und BLE-Lookups über den geteilten Scanner."
+use_when:
+  - "you want to add Bluetooth discovery or support to an integration"
+  - "you want to listen for BLE advertisements from a device"
+  - "you want to pick the right Bluetooth coordinator family"
+dont_use_when:
+  - situation: "You need DHCP/SSDP/USB/HomeKit/Zeroconf network discovery"
+    alternative: ha-discovery-augment
+  - situation: "You need the config-flow discovery or auth step"
+    alternative: ha-config-flow-augment
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-discovery-augment
+  - ha-config-flow-augment
+  - ha-coordinator-add
+  - ha-integration-scaffold
 ---
 
 # HA Bluetooth Augment

@@ -2,6 +2,27 @@
 name: ha-lovelace-solution
 description: Plan and orchestrate a complete Home Assistant Lovelace/frontend solution from a result-oriented requirement, so the user never has to pick which frontend skill to use. Decomposes the requirement into the minimal combination of artifacts across the Lovelace skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-lovelace-card-scaffold, ha-card-editor-add, ha-card-features-add, ha-badge-add, ha-strategy-add, ha-panel-author, and ha-websocket-command-add in order — threading the card tag, file path, module resource, and domain between steps — and surfaces a WebSocket backend's Python-integration dependency in the plan instead of folding it into a frontend skill. Activate on "build a custom card with an editor and a feature", "create a dashboard strategy plus a badge", "set up a custom panel with a WebSocket backend", "baue mir eine Lovelace-Card mit Editor", "richte ein Custom-Panel mit WebSocket-Backend ein". Do not activate for a single clear frontend artifact (let the owning skill handle it), the Python integration backend (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, lovelace, frontend, orchestration]
+phase: plan
+summary: "Plans and orchestrates a complete Lovelace/frontend solution from a result-oriented requirement, dispatching the frontend skill family in dependency order."
+summary_de: "Plant und orchestriert eine vollständige Lovelace-/Frontend-Lösung aus einer Anforderung und dispatcht die Frontend-Skill-Familie in Abhängigkeitsreihenfolge."
+use_when:
+  - "you want a custom card together with its editor and a feature"
+  - "you want a dashboard strategy plus a badge"
+  - "you want a custom panel backed by a WebSocket command"
+dont_use_when:
+  - situation: "You need the Python integration backend, not the frontend"
+    alternative: ha-integration-scaffold
+  - situation: "You need only one frontend artifact, e.g. a single card"
+    alternative: ha-lovelace-card-scaffold
+see_also:
+  - ha-lovelace-card-scaffold
+  - ha-card-editor-add
+  - ha-card-features-add
+  - ha-badge-add
+  - ha-strategy-add
+  - ha-panel-author
+  - ha-websocket-command-add
+  - ha-integration-solution
 ---
 
 # HA Lovelace Solution

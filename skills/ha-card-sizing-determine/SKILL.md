@@ -2,6 +2,32 @@
 name: ha-card-sizing-determine
 description: Determine the optimal size declaration for an existing custom Lovelace card or panel — getGridOptions() (sections) and getCardSize() (masonry/panel/stacks) — so it renders correctly across devices in view and edit mode, then hand the result to an implementation step patching both callbacks. Classifies as content-dependent (rows:"auto" + min_columns) or deterministic (numeric rows + min_rows:rows), verifies the rows:"auto" CSS preconditions, and treats edit-mode overlay overlap as a sizing defect, per spec/ha/card-panel-sizing. Activate on "size this card correctly", "fix the edit-mode overlay overlap", "determine getGridOptions/getCardSize", "bestimme die optimale Card-Größe", "die Card überlappt im Edit-Mode", "richtige rows/columns für die Card". Do not activate for scaffolding a new card (ha-lovelace-card-scaffold), a full frontend solution (ha-lovelace-solution), panels/UX (ha-panel-add/-author/-ux-audit), feature rows (ha-card-features-add), or live-instance deploy/verify (ha-integration-deploy/-verify).
 tags: [home-assistant, frontend, lovelace, sizing]
+phase: design
+summary: "Determines the optimal getGridOptions()/getCardSize() size declaration for an existing Lovelace card or panel and hands it to a step that patches both callbacks."
+summary_de: "Bestimmt die optimale getGridOptions()/getCardSize()-Größendeklaration für eine bestehende Lovelace-Card oder ein Panel und übergibt sie einem Schritt, der beide Callbacks patcht."
+use_when:
+  - "you want to size an existing Lovelace card correctly"
+  - "you want to fix an edit-mode overlay overlap on a card"
+  - "you want to determine the right getGridOptions/getCardSize values"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new card with its full lifecycle"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You are orchestrating a whole frontend solution across the card family"
+    alternative: ha-lovelace-solution
+  - situation: "You are adding a feature control row to a card"
+    alternative: ha-card-features-add
+  - situation: "You are working on panels, panel-mode views, or panel UX"
+    alternative: ha-panel-ux-audit
+  - situation: "You are deploying or runtime-verifying on a live HA instance"
+    alternative: ha-integration-deploy
+see_also:
+  - ha-lovelace-card-scaffold
+  - ha-lovelace-solution
+  - ha-card-features-add
+  - ha-card-editor-add
+  - ha-card-preview-add
+  - ha-panel-author
+  - ha-panel-ux-audit
 ---
 
 # HA Card Sizing Determine

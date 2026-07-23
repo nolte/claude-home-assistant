@@ -2,6 +2,25 @@
 name: ha-blueprint-scaffold
 description: Scaffold a single Home Assistant blueprint (automation, script, or template domain) as a self-contained, spec-conformant YAML file — by gathering the intent, running a pre-flight, and dispatching the ha-blueprint-author agent for the draft-validate-iterate loop, then relaying its conformance report. Activate on phrasings like "scaffold a blueprint for X", "create an automation blueprint", "turn this automation into a blueprint", "draft a motion-light blueprint", "schreibe ein Blueprint für X", "erstelle ein Automations-Blueprint", "mach aus dieser Automation ein Blueprint". Do not activate for custom-integration scaffolding (ha-integration-scaffold), Lovelace cards (ha-lovelace-card-scaffold), integration services (ha-service-definition-generator), or importing/deploying into a running HA instance.
 tags: [home-assistant, blueprint, automation, yaml, scaffolding]
+phase: design
+summary: "Scaffolds a single Home Assistant blueprint (automation, script, or template) as a spec-conformant YAML file by gathering intent and dispatching the ha-blueprint-author agent."
+summary_de: "Scaffolded ein einzelnes Home-Assistant-Blueprint (Automation, Script oder Template) als spec-konforme YAML-Datei, sammelt die Absicht und delegiert an den ha-blueprint-author-Agenten."
+use_when:
+  - "you want to create a Home Assistant blueprint from a described intent"
+  - "you want to turn an existing automation into a shareable blueprint"
+dont_use_when:
+  - situation: "You are scaffolding a Python custom integration"
+    alternative: ha-integration-scaffold
+  - situation: "You are scaffolding a Lovelace card"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You are defining an integration service"
+    alternative: ha-service-definition-generator
+see_also:
+  - ha-blueprint-author
+  - ha-automation-author
+  - ha-automation-solution
+  - ha-helper-scaffold
+  - ha-service-definition-generator
 ---
 
 # HA Blueprint Scaffold

@@ -21,6 +21,24 @@ description: >-
 distribution: plugin
 tools: Read, Write, Edit, Glob, Grep, Bash
 tags: [home-assistant, blueprint, automation, yaml, authoring]
+phase: build
+summary: "Authors one Home Assistant blueprint (automation, script, or template domain) as a single self-contained, spec-conformant YAML file, validates it, and returns a report."
+summary_de: "Erzeugt ein Home-Assistant-Blueprint (Automation, Script oder Template-Domain) als einzelne, in sich geschlossene spec-konforme YAML-Datei, validiert es und liefert einen Bericht."
+use_when:
+  - "you want to write a blueprint for an automation, script, or template"
+  - "you want to turn an existing automation into a blueprint"
+  - "you want to draft a motion-light or similar blueprint"
+dont_use_when:
+  - situation: "You are scaffolding a Python custom integration"
+    alternative: ha-integration-scaffold
+  - situation: "You want to author a Lovelace card"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You want to define an integration service"
+    alternative: ha-service-definition-generator
+see_also:
+  - ha-blueprint-scaffold
+  - ha-automation-author
+  - ha-helper-scaffold
 ---
 
 # HA Blueprint Author

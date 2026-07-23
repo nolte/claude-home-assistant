@@ -2,6 +2,22 @@
 name: ha-card-preview-add
 description: Ensure an existing custom Lovelace card's preview is completely and correctly implemented, conforming to spec/ha/lovelace-card-preview — the card-picker gallery preview (preview true on the window.customCards entry plus a getStubConfig that renders a real non-error tile), the editor live preview (render deterministic from setConfig/hass, re-rendered on config-changed), reading the preview element property (and legacy editMode) for the editor-preview context, and preview correctness (no real service calls / actions while previewing, a graceful placeholder over a thrown render for a missing or incomplete config). Completes the missing preview pieces on an existing card and validates them; produces a CONFORMANT / NEEDS-WORK report. Activate on phrasings like "make my card show a preview in the card picker", "the card preview is broken / empty", "ensure the card preview is implemented correctly", "füge eine Vorschau für die Card hinzu", "die Card-Vorschau funktioniert nicht". Do not activate for scaffolding a new card (ha-lovelace-card-scaffold), the config editor itself (ha-card-editor-add), card layout/sizing (ha/lovelace-layout-antipatterns), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, lovelace, preview]
+phase: design
+summary: "Completes and validates the preview of an existing custom Lovelace card — picker gallery preview, editor live preview, and preview-mode correctness."
+summary_de: "Vervollständigt und validiert die Vorschau einer bestehenden Custom-Lovelace-Card — Picker-Galerie-Vorschau, Editor-Live-Vorschau und Vorschau-Korrektheit."
+use_when:
+  - "you want your card to show a preview in the card picker"
+  - "the card preview is broken or empty and you want it fixed"
+  - "you want to ensure the card preview is implemented correctly"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new card"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You want to build the card's graphical config editor"
+    alternative: ha-card-editor-add
+see_also:
+  - ha-lovelace-card-scaffold
+  - ha-card-editor-add
+  - ha-card-features-add
 ---
 
 # HA Card Preview Add

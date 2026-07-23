@@ -2,6 +2,25 @@
 name: ha-quality-scale-audit
 description: Read-only quality-scale audit of an existing HA Custom Integration against ha/quality-scale — reads the declared tier from manifest.json, parses quality_scale.yaml, checks cumulative tier satisfaction (a tier requires all rules below it), verifies key rules against code evidence via the tier-to-spec mapping, and flags exempt rules missing a comment. Produces a severity-sorted findings report contrasting declared / documented / verified tier; never modifies code. Activate on phrasings like "run a quality-scale audit", "which tier does this integration reach", "prüfe die Integration gegen die Quality-Scale". Do not activate for auto-fix, security audit (ha-security-audit), or a hassfest-grade full rule prover.
 tags: [home-assistant, custom-integration, quality-scale, audit]
+phase: quality
+summary: "Runs a read-only quality-scale audit of an HA Custom Integration against ha/quality-scale, contrasting declared/documented/verified tier in a severity-sorted report."
+summary_de: "Führt ein Read-only-Quality-Scale-Audit einer HA-Custom-Integration durch und stellt deklarierte, dokumentierte und verifizierte Tier in einem nach Schweregrad sortierten Report gegenüber."
+use_when:
+  - "you want to run a quality-scale audit on an integration"
+  - "you want to know which quality-scale tier an integration reaches"
+  - "you want to check an integration against the HA quality-scale"
+dont_use_when:
+  - situation: "You want a security-hardening audit, not a quality-scale tier check"
+    alternative: ha-security-audit
+see_also:
+  - ha-security-audit
+  - ha-dev-workflow-apply
+  - ha-config-flow-augment
+  - ha-coordinator-add
+  - ha-translation-sync
+  - ha-test-harness-augment
+  - ha-diagnostics-augment
+  - ha-repairs-add
 ---
 
 # HA Quality-Scale Audit

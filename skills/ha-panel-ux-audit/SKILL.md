@@ -1,7 +1,28 @@
 ---
 name: ha-panel-ux-audit
 description: Act as a UX expert for Home Assistant panels and run a comprehensive read-only panel-level UX audit of an existing panel artifact (custom sidebar panel, panel-mode view, or custom view) — with mobile-device usability as a mandatory first-class dimension. Audits against the existing specs (spec/ha/lovelace-views-panels, spec/ha/lovelace-layout-antipatterns, spec/ha/lovelace-card-patterns, spec/ha/frontend-data-api) plus UX/accessibility heuristics, and produces a severity-sorted improvement report — mobile usability, responsive/narrow behaviour, touch targets, information hierarchy, readability/contrast, interaction feedback, state coverage, accessibility, and perceived performance — that ha-panel-author can consume as a prioritized work-list. Never modifies code. Activate on "audit my panel's UX", "is this panel usable on mobile", "review the panel for usability and accessibility", "auditiere die UX meines Panels", "ist das Panel auf dem Handy gut nutzbar". Do not activate for building or fixing a panel (ha-panel-author), scaffolding one (ha-panel-add), a whole-integration review (ha-integration-review), or deploying to a live HA instance.
-tags: [home-assistant, frontend, lovelace, custom-panel, ux, audit]
+tags: [home-assistant, frontend, custom-panel, ux, audit]
+phase: quality
+summary: "Runs a read-only, mobile-first UX audit of an HA panel artifact against the Lovelace specs and UX heuristics, producing a severity-sorted improvement report ha-panel-author can consume."
+summary_de: "Führt ein Read-only-UX-Audit eines HA-Panels mit Mobile-Fokus gegen die Lovelace-Specs und UX-Heuristiken durch und erzeugt einen nach Schweregrad sortierten Verbesserungs-Report."
+use_when:
+  - "you want to audit a panel's UX"
+  - "you want to know whether a panel is usable on mobile"
+  - "you want to review a panel for usability and accessibility"
+dont_use_when:
+  - situation: "You want to build or fix a panel, not audit it"
+    alternative: ha-panel-author
+  - situation: "You want to scaffold a bare panel"
+    alternative: ha-panel-add
+  - situation: "You want a whole-integration review, not a panel UX audit"
+    alternative: ha-integration-review
+see_also:
+  - ha-panel-author
+  - ha-panel-add
+  - ha-panel-config-view-add
+  - ha-quality-scale-audit
+  - ha-security-audit
+  - ha-integration-review
 ---
 
 # HA Panel UX Audit
