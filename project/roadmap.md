@@ -31,3 +31,38 @@ The Claude Code skills and agents that author Home Assistant custom integrations
 Lovelace cards, blueprints and automations, and ESPHome / add-on work against
 Home Assistant Core and HACS conventions. Capability
 `claude-code-skills-and-agents-for-home-assistant` in `project/portfolio.yml`.
+
+## Phase 2 — Audience-aligned plugin split
+
+### R-2 — Split into three audience-aligned plugins (ha-esphome / ha-automation / ha-dev)
+
+```yaml
+id: R-2
+title: Split into three audience-aligned plugins (ha-esphome / ha-automation / ha-dev)
+detail: fine
+outcomes: [O-1, O-2]
+target_sprint: null
+mvp: false
+status: proposed
+```
+
+The single `claude-home-assistant` marketplace entry is replaced by three
+audience-aligned plugins — `ha-esphome` (ESPHome device-config author),
+`ha-automation` (HA power user incl. the Pixoo family), and `ha-dev` (custom
+integration + Lovelace/frontend developer) — in one monorepo with lockstep
+versioning, one plugin-local router each, and a shared spec base package
+referenced via `inherits:`. Requirements:
+`project/requirements/three-plugin-split.md` (R1–R9 confirmed); decision record:
+`AUDIENCES.md` §"Offene Fragen → Plugin-Schnitt"; work item: issue #90. The
+legacy marketplace entry is removed with a documented namespace migration
+mapping (hard cut).
+
+Feature checklist:
+
+- [ ] Multi-plugin marketplace schema verified against current Claude Code plugin docs (R9)
+- [ ] Directory restructure: per-plugin skills/agents trees + three marketplace entries (R1, R2)
+- [ ] Shared spec base package wired via `inherits:` (R5, R7)
+- [ ] Router rework: remove `ha-solution`, one plugin-local router per plugin (R3)
+- [ ] Cross-reference repair across plugin boundaries (pattern from #86)
+- [ ] Docs and artefacts: per-plugin AUDIENCES.md, README/MkDocs/catalog, migration mapping (R6)
+- [ ] CI/release adapted: lockstep versioning, green lint/test/docs, per-plugin dogfooding (R4, R8)
