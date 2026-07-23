@@ -11,7 +11,7 @@ see_also:
 
 # ha-entity-description-mapper (deprecated)
 
-Renamed to [`ha-entity-description-map`](../ha-entity-description-map/SKILL.md) in the 2026-07 naming-uniformity pass — the trailing token now follows `spec/claude/skill-agent-naming` (claude-shared). This stub exists per the rename policy (new artifact plus deprecation note, never a silent flip) and will be removed in a future minor release.
+Renamed to `ha-entity-description-map` in the 2026-07 naming-uniformity pass — the trailing token now follows `spec/claude/skill-agent-naming` (claude-shared). This stub exists per the rename policy (new artifact plus deprecation note, never a silent flip) and will be removed in a future minor release.
 
 ## Why this is a skill, not an agent
 
