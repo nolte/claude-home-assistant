@@ -40,7 +40,7 @@ Use this skill to make an existing integration installable and updatable through
 
 ## When NOT to activate
 
-- the generic release publish flow (Draft → Published, `chore(release)` alignment, version-bearing files) → `release-automation`
+- the generic release publish flow (Draft → Published, `chore(release)` alignment, version-bearing files) → `spec/project/release-automation` (operationalized by `nolte-shared:release-publish-trigger`)
 - the CI validation workflow (hassfest / HACS action / pytest) → `ha-integration-ci-scaffold`
 - generating the Python integration code → `ha-integration-scaffold`
 - deploying/importing into a running HA instance → out of scope
@@ -88,6 +88,6 @@ Validate offline (`hacs.json` valid; `zip_release` paired with `filename`; `mani
 
 ## Boundaries
 
-- Generic release publish flow → `release-automation`
+- Generic release publish flow → `spec/project/release-automation` / `nolte-shared:release-publish-trigger`
 - CI validation workflow (hassfest / HACS action / pytest) → `ha-integration-ci-scaffold`
 - `manifest.json` field substance → `ha/integration-manifest`

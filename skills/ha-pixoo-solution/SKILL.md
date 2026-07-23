@@ -1,6 +1,6 @@
 ---
 name: ha-pixoo-solution
-description: Plans and orchestrates a complete Divoom Pixoo 64 display from a result-oriented requirement, so the user never has to pick which Pixoo skill to use. Decomposes the requirement into the minimal combination of artifacts across the Pixoo skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-pixoo-page-author, ha-pixoo-pixel-art-author, and ha-pixoo-animation-author in order — threading the page structure, component positions, palette, and the target sensor.<name>_current_page entity between steps. Generation only; never deploys. Activate on "build me a Pixoo display for…", "show X's status on the Divoom", "I want an animated Pixoo page", "baue mir eine Pixoo-Anzeige für…", "zeig den Status von X auf dem Divoom". Do not activate for a single clear artifact (let the owning skill handle it), device setup / config flow (using the existing integration, not authoring), or deploying to a live HA instance.
+description: "Plans and orchestrates a complete Divoom Pixoo 64 display from a result-oriented requirement, so the user never has to pick which Pixoo skill to use. Decomposes the requirement into the minimal combination of artifacts across the Pixoo skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-pixoo-page-author, ha-pixoo-pixel-art-author, and ha-pixoo-animation-author in order — threading the page structure, component positions, palette, and the target sensor.<name>_current_page entity between steps. Generation only; never deploys. Activate on \"build me a Pixoo display for…\", \"show X's status on the Divoom\", \"I want an animated Pixoo page\", \"baue mir eine Pixoo-Anzeige für…\", \"zeig den Status von X auf dem Divoom\". Do not activate for a single clear artifact (let the owning skill handle it), device setup / config flow (using the existing integration, not authoring), or deploying to a live HA instance. Supports resume on re-invocation."
 tags: [home-assistant, divoom-pixoo, display, orchestration]
 phase: plan
 summary: "Plans and orchestrates a complete Divoom Pixoo 64 display from a result-oriented requirement, dispatching the Pixoo authoring skills in dependency order."
@@ -21,6 +21,7 @@ see_also:
   - ha-pixoo-pixel-art-author
   - ha-pixoo-animation-author
   - ha-solution
+resumable: true
 ---
 
 # HA Pixoo Solution
@@ -52,7 +53,7 @@ Use this skill when the user describes a **Pixoo display result** that likely ne
 
 1. **Never generate inline.** Every artifact is produced by its owning skill, resolved at runtime from the live Pixoo `ha-pixoo-*` inventory (see [Runtime skill resolution](#runtime-skill-resolution)) rather than a frozen name list — the skill names in the decomposition heuristic are illustrative anchors. This skill plans and dispatches; it does not write artifacts.
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
-3. **Confidence-gate the requirement.** Before planning, gauge requirement confidence. When it is clearly specified, use the lightweight path (1–3 clarifying questions — which info, static vs. animated, target device entity, palette). When it is below a confidence threshold (vague display, unnamed entities, unclear scope), dispatch `requirements-elicit` first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding.
+3. **Confidence-gate the requirement.** Before planning, gauge requirement confidence. When it is clearly specified, use the lightweight path (1–3 clarifying questions — which info, static vs. animated, target device entity, palette). When it is below a confidence threshold (vague display, unnamed entities, unclear scope), dispatch `requirements-elicit` (from the nolte-shared plugin; when it is not installed, reach the same rigor via a structured series of targeted questions) first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding.
 4. **One requirement, one run.** No multi-requirement batches.
 5. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; a plain info page does not need a pixel-art or animation add-on.
 6. **Thread identities.** Dispatch in dependency order and pass the identities produced in earlier steps — the `pages_data` page structure, component positions, the chosen palette/ramps, and the target `sensor.<name>_current_page` entity (the service target per `spec/ha/divoom-pixoo/en.md`) — as inputs to dependent steps.
@@ -90,3 +91,7 @@ Dispatch order is page → pixel-art → animation: the page defines the canvas 
 - Single pixel-art graphic → `ha-pixoo-pixel-art-author`
 - Single animation → `ha-pixoo-animation-author`
 - Deploy to live HA → out of scope
+
+## Resumability
+
+Re-invoking this skill with the same requirement resumes per `spec/claude/resumable-work/`: the checkpoint under `.resume/<skill-name>/` records the approved plan and per-step dispatch status, so an interrupted orchestration continues at the first incomplete step instead of re-planning from scratch.

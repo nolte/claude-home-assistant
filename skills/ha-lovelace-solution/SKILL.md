@@ -1,6 +1,6 @@
 ---
 name: ha-lovelace-solution
-description: "Plans and orchestrates a complete Home Assistant Lovelace/frontend solution from a result-oriented requirement, so the user never has to pick which frontend skill to use. Decomposes the requirement into the minimal combination of artifacts across the Lovelace skill family (cards, editors, features, badges, strategies, panels, WebSocket backends), presents a dependency-ordered artifact plan for approval, then dispatches the owning skills — resolved from the live inventory at runtime — threading the card tag, file path, module resource, and domain between steps, surfacing a WebSocket backend's Python-integration dependency in the plan. Activate on \"build a custom card with an editor and a feature\", \"create a dashboard strategy plus a badge\", \"set up a custom panel with a WebSocket backend\", or equivalent German requests. Do not activate for a single clear frontend artifact (the owning skill), the Python integration backend (ha-integration-solution), or deploying to a live HA instance."
+description: "Plans and orchestrates a complete Home Assistant Lovelace/frontend solution from a result-oriented requirement, so the user never picks individual frontend skills. Decomposes the requirement into the minimal combination of artifacts across the Lovelace skill family (cards, editors, features, badges, strategies, panels, WebSocket backends), presents a dependency-ordered artifact plan for approval, then dispatches the owning skills — resolved from the live inventory at runtime — threading the card tag, file path, module resource, and domain between steps, surfacing a WebSocket backend's Python-integration dependency in the plan. Activate on \"build a custom card with an editor and a feature\", \"create a dashboard strategy plus a badge\", \"set up a custom panel with a WebSocket backend\", or equivalent German requests. Do not activate for a single clear frontend artifact (the owning skill), the Python integration backend (ha-integration-solution), or deploying to a live HA instance. Supports resume on re-invocation."
 tags: [home-assistant, lovelace, frontend, orchestration]
 phase: plan
 summary: "Plans and orchestrates a complete Lovelace/frontend solution from a result-oriented requirement, dispatching the frontend skill family in dependency order."
@@ -23,6 +23,7 @@ see_also:
   - ha-panel-author
   - ha-websocket-command-add
   - ha-integration-solution
+resumable: true
 ---
 
 # HA Lovelace Solution
@@ -92,7 +93,7 @@ Resolve the owning skill for each artifact **at runtime**, by matching the requi
 
 ### 1) Clarify
 
-First gauge requirement confidence. When the requirement is clearly specified, use the lightweight path: ask 1–3 targeted questions (which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed) before planning. When it is below a confidence threshold (vague result, unnamed entities, unclear scope), dispatch `requirements-elicit` first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding. Do not plan on guesses.
+First gauge requirement confidence. When the requirement is clearly specified, use the lightweight path: ask 1–3 targeted questions (which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed) before planning. When it is below a confidence threshold (vague result, unnamed entities, unclear scope), dispatch `requirements-elicit` (from the nolte-shared plugin; when it is not installed, reach the same rigor via a structured series of targeted questions) first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding. Do not plan on guesses.
 
 ### 2) Plan
 
@@ -124,3 +125,7 @@ List every produced file, its artifact, and the wiring (which element references
 - Single-artifact generation + spec conformance → the owning frontend skill
 - The WebSocket-command backend → `ha-websocket-command-add`; the hosting custom integration → `ha-integration-scaffold` (this skill only recognizes and points)
 - Deploy to live HA / write dashboard/resource config → out of scope
+
+## Resumability
+
+Re-invoking this skill with the same requirement resumes per `spec/claude/resumable-work/`: the checkpoint under `.resume/<skill-name>/` records the approved plan and per-step dispatch status, so an interrupted orchestration continues at the first incomplete step instead of re-planning from scratch.

@@ -1,6 +1,6 @@
 ---
 name: ha-automation-solution
-description: Plans and orchestrates a complete Home Assistant YAML solution from a result-oriented requirement, so the user never has to pick which authoring skill to use. Decomposes the requirement into the minimal combination of artifacts across the ha-automation skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-automation-author, ha-helper-scaffold, ha-derived-sensor-author, and ha-blueprint-scaffold in order — threading entity_ids between steps — and flags requirements that actually need a custom integration. Activate on "I want my heat pump's daily energy on the dashboard and an alert when it's high", "set up presence-based lighting that only runs in the evening", "baue mir eine Lösung, die…", "richte… ein". Do not activate for a single clear artifact (let the owning skill handle it), Python custom integrations (ha-integration-scaffold), or deploying to a live HA instance.
+description: "Plans and orchestrates a complete Home Assistant YAML solution from a result-oriented requirement, so the user never has to pick which authoring skill to use. Decomposes the requirement into the minimal combination of artifacts across the ha-automation skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-automation-author, ha-helper-scaffold, ha-derived-sensor-author, and ha-blueprint-scaffold in order — threading entity_ids between steps — and flags requirements that actually need a custom integration. Activate on \"I want my heat pump's daily energy on the dashboard and an alert when it's high\", \"set up presence-based lighting that only runs in the evening\", \"baue mir eine Lösung, die…\", \"richte… ein\". Do not activate for a single clear artifact (let the owning skill handle it), Python custom integrations (ha-integration-scaffold), or deploying to a live HA instance. Supports resume on re-invocation."
 tags: [home-assistant, automation, orchestration, planning]
 phase: plan
 summary: "Plans and orchestrates a complete Home Assistant YAML solution from a result-oriented requirement, dispatching the ha-automation authoring skills in dependency order."
@@ -21,6 +21,7 @@ see_also:
   - ha-blueprint-scaffold
   - ha-integration-scaffold
   - ha-integration-solution
+resumable: true
 ---
 
 # HA Automation Solution
@@ -87,7 +88,7 @@ Resolve the owning skill for each artifact **at runtime**, by matching the requi
 
 ### 1) Clarify
 
-First gauge requirement confidence. When the requirement is clearly specified, use the lightweight path: ask 1–3 targeted questions (which source entity, which threshold, which time windows) before planning. When it is below a confidence threshold (vague trigger, unnamed entities, unclear scope), dispatch `requirements-elicit` first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding. Do not plan on guesses.
+First gauge requirement confidence. When the requirement is clearly specified, use the lightweight path: ask 1–3 targeted questions (which source entity, which threshold, which time windows) before planning. When it is below a confidence threshold (vague trigger, unnamed entities, unclear scope), dispatch `requirements-elicit` (from the nolte-shared plugin; when it is not installed, reach the same rigor via a structured series of targeted questions) first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding. Do not plan on guesses.
 
 ### 2) Plan
 
@@ -117,3 +118,7 @@ List every produced file, its artifact, and the wiring (which `entity_id` refere
 - Single-artifact generation + spec conformance → the owning authoring skill
 - Custom integration → `ha-integration-scaffold` (this skill only recognizes and points)
 - Deploy to live HA → out of scope
+
+## Resumability
+
+Re-invoking this skill with the same requirement resumes per `spec/claude/resumable-work/`: the checkpoint under `.resume/<skill-name>/` records the approved plan and per-step dispatch status, so an interrupted orchestration continues at the first incomplete step instead of re-planning from scratch.

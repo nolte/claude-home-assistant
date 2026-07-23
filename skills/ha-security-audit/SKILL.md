@@ -9,7 +9,11 @@ use_when:
   - "you want to run a security audit on an integration"
   - "you want to audit an integration's security hardening"
   - "you want to check an integration against the security-hardening MUST rules"
-dont_use_when: []
+dont_use_when:
+  - situation: "You want the whole-picture bundled pre-release review (quality + security + consistency)"
+    alternative: ha-integration-review
+  - situation: "You want the quality-scale tier assessment rather than security hardening"
+    alternative: ha-quality-scale-audit
 see_also:
   - ha-quality-scale-audit
   - ha-dev-workflow-apply

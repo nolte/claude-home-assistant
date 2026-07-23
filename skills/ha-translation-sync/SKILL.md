@@ -38,7 +38,7 @@ Use this skill to align `strings.json` with every `translations/<lang>.json` fil
 ## When NOT to activate
 
 - machine translation → out of scope
-- changing existing translation values → manual code edit
+- changing existing translation values → manual edit (no owning skill; `ha-entity-description-mapper` when entity strings need re-mapping)
 - creating a new language file from scratch → user decision; not this skill
 - string content changes → covered by the producing skill (`ha-integration-scaffold`, `ha-entity-description-mapper`, …)
 

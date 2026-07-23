@@ -94,4 +94,4 @@ Surface the agent's report verbatim plus the relative path to the written file. 
 - The generative loop and all spec conformance → `ha-blueprint-author` agent
 - Blueprint authoring rules (schema, selectors, templating, modes, versioning) → `ha/blueprint-patterns`
 - Custom-integration scaffold → `ha-integration-scaffold`
-- Backward-compatible edits to an existing blueprint → `ha-blueprint-augment` (planned, on demand)
+- Backward-compatible edits to an existing blueprint → no owning skill yet; edit manually against `spec/ha/blueprint-patterns/en.md`

@@ -42,7 +42,7 @@ Use this skill to add **one** custom card feature — an interactive control row
 
 - a full custom card (card file layout, `set hass` lifecycle, `getCardSize`/`getGridOptions`) → `ha-lovelace-card-scaffold` / `ha/lovelace-card-patterns`
 - the feature's graphical config editor mechanics → `ha/lovelace-card-editor`
-- badges as a separate dashboard delivery shape → separate follow-up spec
+- badges as a separate dashboard delivery shape → `ha-badge-add`
 - deploying/importing into a running HA instance → out of scope
 
 ## Hard rules
@@ -100,6 +100,6 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 - A full custom card → `ha-lovelace-card-scaffold` / `ha/lovelace-card-patterns`
 - The feature's graphical config editor → `ha/lovelace-card-editor`
-- Badges → separate follow-up spec
+- Badges → `ha-badge-add`
 - Feature JS delivery / frontend loading (`StaticPathConfig`) → `ha/lovelace-card-patterns`
 - Deploy to live HA → out of scope

@@ -1,6 +1,6 @@
 ---
 name: ha-solution
-description: "Top-level front door for any Home Assistant requirement: classifies a result-oriented request into one or more domains (integration/backend, Lovelace/frontend, YAML automation, Divoom Pixoo) and routes it to the correct domain solution(s), so the user never has to pick a domain. For a single-domain request it hands off to the owning ha-{integration,lovelace,automation,pixoo}-solution; for a genuinely cross-domain request it decomposes across the relevant solutions in dependency order and threads the shared identities (domain, entity_ids, card tags, command types) across boundaries. Resolves the domain solutions at runtime. Activate on \"build me an X for Home Assistant\" when the domain is unclear or spans several, \"a custom card plus the integration behind it and an automation\", or equivalent German requests. Do not activate when the domain is already unambiguous and single (the owning ha-*-solution), for a single clear artifact (the owning individual skill), or for deploying to a live HA instance."
+description: "Top-level front door for any Home Assistant requirement: classifies a result-oriented request into one or more domains (integration/backend, Lovelace/frontend, YAML automation, Divoom Pixoo) and routes it to the correct domain solution(s), so the user never has to pick a domain. For a single-domain request it hands off to the owning ha-{integration,lovelace,automation,pixoo}-solution; for a genuinely cross-domain request it decomposes across the relevant solutions in dependency order and threads the shared identities (domain, entity_ids, card tags, command types) across boundaries. Resolves the domain solutions at runtime. Activate on \"build me an X\" when the domain is unclear or spans several, \"a custom card plus the integration behind it and an automation\", or equivalent German requests. Do not activate when the domain is already unambiguous and single (owning ha-*-solution), for a single clear artifact (owning skill), or for deploying to a live HA instance. Supports resume on re-invocation."
 tags: [home-assistant, orchestration, cross-domain, router]
 phase: plan
 summary: "Top-level router that classifies a Home Assistant requirement into one or more domains and routes each part to the owning ha-*-solution."
@@ -25,6 +25,7 @@ see_also:
   - ha-lovelace-solution
   - ha-automation-solution
   - ha-pixoo-solution
+resumable: true
 ---
 
 # HA Solution
@@ -88,7 +89,7 @@ A cross-domain requirement maps to several rows; the typical order is **integrat
 
 ### 1) Classify
 
-Bucket the requirement into its domain parts. If it is single-domain, route straight to the owning `*-solution`. First gauge requirement confidence: when clearly specified, use the lightweight path — ask 1–3 targeted questions (which device/entity target, whether a dashboard surface is wanted, whether an automation should react) before classifying. When it is below a confidence threshold (vague or broad cross-domain result, unnamed targets, unclear scope), dispatch `requirements-elicit` first and classify against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate. Do not classify on guesses.
+Bucket the requirement into its domain parts. If it is single-domain, route straight to the owning `*-solution`. First gauge requirement confidence: when clearly specified, use the lightweight path — ask 1–3 targeted questions (which device/entity target, whether a dashboard surface is wanted, whether an automation should react) before classifying. When it is below a confidence threshold (vague or broad cross-domain result, unnamed targets, unclear scope), dispatch `requirements-elicit` (from the nolte-shared plugin; when it is not installed, reach the same rigor via a structured series of targeted questions) first and classify against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate. Do not classify on guesses.
 
 ### 2) Plan
 
@@ -116,3 +117,11 @@ List each domain, the `*-solution` that ran, and the identities threaded across 
 - A single artifact → the owning individual skill
 - A domain's internal artifact decomposition, generation, and conformance → the owning `*-solution` and its family
 - Deploy / import into a live HA instance → out of scope; the domain solutions and their agents own that
+
+## Nested approval gates
+
+When this skill dispatches a `*-solution` skill that itself dispatches further skills, the approval gate applies at the highest level that presented a plan: once the operator approves this skill's cross-domain plan, the dispatched solutions execute their slice under that approved plan and only surface a fresh gate when their own decomposition materially deviates from the approved plan (a new artifact, a changed dependency order). Re-asking for an identical, already-approved step is noise, not diligence.
+
+## Resumability
+
+Re-invoking this skill with the same requirement resumes per `spec/claude/resumable-work/`: the checkpoint under `.resume/<skill-name>/` records the approved plan and per-step dispatch status, so an interrupted orchestration continues at the first incomplete step instead of re-planning from scratch.
