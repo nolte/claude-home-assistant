@@ -19,7 +19,7 @@ dont_use_when:
   - situation: "The requirement is clearly a single Pixoo display result"
     alternative: ha-pixoo-solution
   - situation: "You are deploying or importing into a live HA instance"
-    alternative: ha-integration-deploy
+    alternative: ha-integration-deployer
 see_also:
   - ha-integration-solution
   - ha-lovelace-solution

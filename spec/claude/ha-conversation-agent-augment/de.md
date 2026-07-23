@@ -24,7 +24,7 @@ Ergänzung einer oder mehrerer Voice-&-AI-Oberflächen in einer bestehenden `cus
 ## Nicht-Ziele
 
 - Assist-Satelliten-, STT-, TTS- oder Wake-Word-**Entitäten** (`assist_satellite`/`stt`/`tts`/`wake_word`) — `ha/entity-platforms-voice`
-- Registrierte Services mit eigenem Schema — `ha-service-definition-generator` / `ha/services` (Tools werden vom LLM aufgerufen, Services sind benutzergesteuert)
+- Registrierte Services mit eigenem Schema — `ha-service-definition-add` / `ha/services` (Tools werden vom LLM aufgerufen, Services sind benutzergesteuert)
 - Übersetzung der Intent-Sätze (`intents/<lang>.yaml`) und Response-/Prompt-Texte — `ha/translations`
 - End-User-Konfiguration von Assist (Exposing von Entitäten im UI, Voice-Pipeline-Setup) — Nutzer-Dokumentation, nicht Entwickler-API
 - Greenfield-Scaffolding einer Integration — `ha-integration-scaffold`

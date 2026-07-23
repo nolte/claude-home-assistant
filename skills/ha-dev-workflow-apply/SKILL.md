@@ -18,15 +18,15 @@ dont_use_when:
   - situation: "You want the pytest test harness"
     alternative: ha-test-harness-augment
   - situation: "You want to deploy or verify against a live HA instance"
-    alternative: ha-integration-deploy
+    alternative: ha-integration-deployer
 see_also:
   - ha-quality-scale-audit
   - ha-security-audit
   - ha-test-harness-augment
   - ha-translation-sync
   - ha-integration-solution
-  - ha-integration-deploy
-  - ha-integration-verify
+  - ha-integration-deployer
+  - ha-integration-verifier
 ---
 
 # HA Dev-Workflow Apply
@@ -53,7 +53,7 @@ Use this skill to bring an existing Custom Integration under `custom_components/
 - the pytest harness (fixtures, `MockConfigEntry`, snapshot tests, coverage) → `ha-test-harness-augment` / `ha/test-harness`
 - devcontainer / Kind / `script/setup` / venv bootstrap → `ha/dev-environment`
 - async / event-loop patterns → `ha/async-patterns`
-- deploying / verifying against a running HA instance → the `ha-integration-deploy` / `ha-integration-verify` agents
+- deploying / verifying against a running HA instance → the `ha-integration-deployer` / `ha-integration-verifier` agents
 
 ## Hard rules
 
@@ -122,4 +122,4 @@ Emit a CONFORMANT / NEEDS-WORK report keyed to the `spec/ha/dev-workflow` accept
 - Pytest harness → `ha-test-harness-augment` / `ha/test-harness`
 - Setup mechanics (devcontainer, Kind, `kill 1`, `kubectl cp`) → `ha/dev-environment`
 - Async / event-loop patterns → `ha/async-patterns`
-- Deploy / verify on a live HA instance → the `ha-integration-deploy` / `ha-integration-verify` agents
+- Deploy / verify on a live HA instance → the `ha-integration-deployer` / `ha-integration-verifier` agents

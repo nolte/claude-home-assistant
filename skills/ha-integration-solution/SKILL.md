@@ -1,6 +1,6 @@
 ---
 name: ha-integration-solution
-description: "Plans and orchestrates a complete Home Assistant Python custom-integration backend from a result-oriented device/cloud/API requirement, driven by a chosen quality-scale target tier (Bronze–Platinum), so the user never picks individual skills. Decomposes the requirement into a minimal dependency-ordered plan for the target tier, presents it for approval, then dispatches the owning integration ha-* skills — resolved from the live skill inventory at runtime, never from a frozen list — threading the domain and entity_ids between steps, optionally closing with CI validation and HACS-release readiness. Activate on \"build an integration for device/API X\", \"build a Gold-tier integration for my Acme thermostat cloud API\", or equivalent German requests. Do not activate for a single clear augment (the owning skill), a YAML automation solution (ha-automation-solution), a Lovelace frontend (ha-lovelace-solution), or deploying to a live HA instance (ha-integration-deploy agent). Supports resume on re-invocation."
+description: "Plans and orchestrates a complete Home Assistant Python custom-integration backend from a result-oriented device/cloud/API requirement, driven by a chosen quality-scale target tier (Bronze–Platinum), so the user never picks individual skills. Decomposes the requirement into a minimal dependency-ordered plan for the target tier, presents it for approval, then dispatches the owning integration ha-* skills — resolved from the live skill inventory at runtime, never from a frozen list — threading the domain and entity_ids between steps, optionally closing with CI validation and HACS-release readiness. Activate on \"build an integration for device/API X\", \"build a Gold-tier integration for my Acme thermostat cloud API\", or equivalent German requests. Do not activate for a single clear augment (the owning skill), a YAML automation solution (ha-automation-solution), a Lovelace frontend (ha-lovelace-solution), or deploying to a live HA instance (ha-integration-deployer agent). Supports resume on re-invocation."
 tags: [home-assistant, integration, orchestration, planning]
 phase: plan
 summary: "Plans and orchestrates a complete Python custom-integration backend from a device/cloud/API requirement, driven by a chosen quality-scale target tier."
@@ -15,14 +15,14 @@ dont_use_when:
   - situation: "You need a Lovelace/frontend card, not the backend"
     alternative: ha-lovelace-card-scaffold
   - situation: "You are deploying the integration to a live HA instance"
-    alternative: ha-integration-deploy
+    alternative: ha-integration-deployer
 see_also:
   - ha-integration-scaffold
   - ha-automation-solution
   - ha-lovelace-solution
   - ha-quality-scale-audit
   - ha-security-audit
-  - ha-integration-review
+  - ha-integration-reviewer
   - ha-integration-ci-scaffold
   - ha-hacs-release
 resumable: true
@@ -50,7 +50,7 @@ Use this skill when the user describes a **device/cloud/API integration result**
 - a single clear augment (one config-flow pattern, one coordinator, one platform, one diagnostics enrichment) → let the owning skill activate directly
 - a pure YAML automation/helper/template/blueprint solution (no own protocol, no config flow) → `ha-automation-solution`
 - a Lovelace frontend card → `ha-lovelace-card-scaffold` (and the Lovelace skill family)
-- deploying/verifying against a running HA instance as a standalone task → not an activation reason; deploy/verify happens only inside the opt-in `deploy_ready` lifecycle phase (§5) of a build run, behind a second gate, via the `ha-integration-deploy` / `ha-integration-verify` agents
+- deploying/verifying against a running HA instance as a standalone task → not an activation reason; deploy/verify happens only inside the opt-in `deploy_ready` lifecycle phase (§5) of a build run, behind a second gate, via the `ha-integration-deployer` / `ha-integration-verifier` agents
 
 ## Hard rules
 
@@ -64,8 +64,8 @@ Use this skill when the user describes a **device/cloud/API integration result**
 8. **Relay reports verbatim.** Pass through each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings without re-judging them.
 9. **Recognize automation-shaped work.** When the requirement is really a YAML automation/helper solution rather than a custom integration, say so in the plan and point at `ha-automation-solution` instead of forcing an integration.
 10. **Verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
-11. **Tier-driven completeness, audit-gated.** Plan the building blocks the `target_tier` requires (cumulative Bronze→Platinum); finish `release_ready` runs with `ha-integration-ci-scaffold` + `ha-hacs-release`; run `ha-quality-scale-audit` + `ha-security-audit` last as the acceptance gate, routing any shortfall back to the named remediation skill per finding. These two audits are the **in-flow acceptance gate** — run once, here, against the freshly generated code. They deliberately overlap with the bundled `ha-integration-review` agent, which re-runs quality-scale + security *plus* cross-cutting + drift; the split is **temporal, not additive**. A run that clears this in-flow gate **MUST NOT** also dispatch `ha-integration-review` for the same two dimensions in the same pass — the bundled agent is the separate **release / pre-PR whole-picture pass** (see the closing report), pointed at as a follow-up, never run on top of a green in-flow gate.
-12. **Deploy-ready is opt-in, behind a second gate.** Generation stays the default and the plan approval (rule 2) remains the single gate for it. Only when `deploy_ready` is set does the deploy→verify→review lifecycle phase run (§5) — and only after a **second explicit human gate** — chaining `ha-dev-instance-provision` (only if no dev-HA pod exists) → `ha-integration-deploy` → `ha-integration-verify` → `ha-integration-review`. On an `ha-integration-verify` FAIL or an `ha-integration-review` NEEDS-WORK, **route the finding back to the owning authoring/remediation skill** (the rule-11 pattern), re-dispatch the fix, then re-deploy and re-verify — a closed feedback loop, not a terminal report. The `ha-integration-review` executed here is exactly the release/pre-PR whole-picture pass of rule 11, legitimately run at this separate post-gate time and never on top of the in-flow gate in the generation pass. Never `kubectl delete pod`; a code refresh is `kill 1` (the `ha-integration-deploy` agent owns that).
+11. **Tier-driven completeness, audit-gated.** Plan the building blocks the `target_tier` requires (cumulative Bronze→Platinum); finish `release_ready` runs with `ha-integration-ci-scaffold` + `ha-hacs-release`; run `ha-quality-scale-audit` + `ha-security-audit` last as the acceptance gate, routing any shortfall back to the named remediation skill per finding. These two audits are the **in-flow acceptance gate** — run once, here, against the freshly generated code. They deliberately overlap with the bundled `ha-integration-reviewer` agent, which re-runs quality-scale + security *plus* cross-cutting + drift; the split is **temporal, not additive**. A run that clears this in-flow gate **MUST NOT** also dispatch `ha-integration-reviewer` for the same two dimensions in the same pass — the bundled agent is the separate **release / pre-PR whole-picture pass** (see the closing report), pointed at as a follow-up, never run on top of a green in-flow gate.
+12. **Deploy-ready is opt-in, behind a second gate.** Generation stays the default and the plan approval (rule 2) remains the single gate for it. Only when `deploy_ready` is set does the deploy→verify→review lifecycle phase run (§5) — and only after a **second explicit human gate** — chaining `ha-dev-instance-provisioner` (only if no dev-HA pod exists) → `ha-integration-deployer` → `ha-integration-verifier` → `ha-integration-reviewer`. On an `ha-integration-verifier` FAIL or an `ha-integration-reviewer` NEEDS-WORK, **route the finding back to the owning authoring/remediation skill** (the rule-11 pattern), re-dispatch the fix, then re-deploy and re-verify — a closed feedback loop, not a terminal report. The `ha-integration-reviewer` executed here is exactly the release/pre-PR whole-picture pass of rule 11, legitimately run at this separate post-gate time and never on top of the in-flow gate in the generation pass. Never `kubectl delete pod`; a code refresh is `kill 1` (the `ha-integration-deployer` agent owns that).
 
 ## Inputs
 
@@ -93,10 +93,10 @@ Resolve the owning skill for each building block **at runtime**, by matching the
 | a stored config-entry schema migration + version bump | config-entry migration | `ha-config-entry-migrate` |
 | OAuth2 / Application Credentials cloud auth | OAuth2 flow | `ha-oauth2-credentials-augment` |
 | a separate polling role / update interval | DataUpdateCoordinator | `ha-coordinator-add` |
-| declarative read-type entities from a datapoint/schema table | EntityDescription lists | `ha-entity-description-mapper` |
+| declarative read-type entities from a datapoint/schema table | EntityDescription lists | `ha-entity-description-map` |
 | an active command-driven platform (climate/cover/light/fan/lock/media_player/…) | platform entity | `ha-entity-platform-add` |
 | device grouping / hub-child `via_device` hierarchy / stale-device removal | device registry | `ha-device-registry-augment` |
-| a registered service action | service | `ha-service-definition-generator` |
+| a registered service action | service | `ha-service-definition-add` |
 | firing/listening on the HA event bus | integration events | `ha-integration-events-add` |
 | a WebSocket command a frontend card/panel calls (Python-side backend endpoint) | WebSocket command | `ha-websocket-command-add` |
 | a device trigger/condition/action | device automation | `ha-device-automation-add` |
@@ -125,7 +125,7 @@ The requirement **plus a `target_tier`** drives *which* building blocks the plan
 
 - **Bronze** (baseline): `ha-integration-scaffold` (config flow, `runtime_data`, `has_entity_name`), the config flow (`ha-config-flow-augment`), and platform tests (`ha-test-harness-augment`).
 - **Silver**: + reauth (`ha-config-flow-augment`), coordinator error handling + `PARALLEL_UPDATES` + `entity-unavailable` (`ha-coordinator-add`, `ha-entity-platform-add`), and options where post-setup config is needed (`ha-options-flow-augment`).
-- **Gold**: + diagnostics (`ha-diagnostics-augment`), discovery (`ha-discovery-augment`), the device hierarchy (`ha-device-registry-augment`), repairs (`ha-repairs-add`), reconfigure (`ha-config-flow-augment`), and entity/exception translations (`ha-translation-sync`, `ha-service-definition-generator`).
+- **Gold**: + diagnostics (`ha-diagnostics-augment`), discovery (`ha-discovery-augment`), the device hierarchy (`ha-device-registry-augment`), repairs (`ha-repairs-add`), reconfigure (`ha-config-flow-augment`), and entity/exception translations (`ha-translation-sync`, `ha-service-definition-add`).
 - **Platinum**: strict typing / fully-async — dispatch `ha-dev-workflow-apply` (the owning skill of `ha/dev-workflow`) to apply and validate the code-style + strict-typing + `hassfest` rules against the generated integration; it reports CONFORMANT / NEEDS-WORK and its findings route back like any other building block, instead of surfacing a bare checklist item.
 - **Release-ready** (any tier): + CI validation (`ha-integration-ci-scaffold`) and HACS-release readiness (`ha-hacs-release`).
 
@@ -164,25 +164,25 @@ Invoke each owning skill in plan order, passing the `domain` and the `entity_id`
 
 ### 4) Aggregate report
 
-List every produced/changed file, its building block, and the wiring (the `domain`, which `entity_id` references which). Relay each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings verbatim — do not re-judge them. Point at the operator follow-ups (a bundled whole-picture pass via the `ha-integration-review` agent, deploy via the `ha-integration-deploy` agent, runtime verify via the `ha-integration-verify` agent) without executing them. The `ha-integration-review` follow-up is the **release / pre-PR** review — it adds cross-cutting + drift *on top of* quality-scale + security and must **not** re-run this run's in-flow quality+security gate; a caller who cleared the in-flow gate does not run it again for the same two dimensions in the same pass. In the default generation-only run, stop here and do not deploy. When `deploy_ready` is set, continue into §5 after a second explicit gate.
+List every produced/changed file, its building block, and the wiring (the `domain`, which `entity_id` references which). Relay each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings verbatim — do not re-judge them. Point at the operator follow-ups (a bundled whole-picture pass via the `ha-integration-reviewer` agent, deploy via the `ha-integration-deployer` agent, runtime verify via the `ha-integration-verifier` agent) without executing them. The `ha-integration-reviewer` follow-up is the **release / pre-PR** review — it adds cross-cutting + drift *on top of* quality-scale + security and must **not** re-run this run's in-flow quality+security gate; a caller who cleared the in-flow gate does not run it again for the same two dimensions in the same pass. In the default generation-only run, stop here and do not deploy. When `deploy_ready` is set, continue into §5 after a second explicit gate.
 
 ### 5) Deploy-ready lifecycle phase (opt-in)
 
 Runs **only** when `deploy_ready` is set, and **only** after a second explicit human approval distinct from the plan gate — so the generation-only default and its single gate are preserved. This turns the former set of manual agent islands (build → deploy → verify → review with no feedback loop) into one autonomous flow:
 
-1. **Provision (if needed).** If no dev-HA pod exists in the local Kind cluster, dispatch `ha-dev-instance-provision`; otherwise skip.
-2. **Deploy.** Dispatch `ha-integration-deploy` (lint pre-flight → `kubectl cp` → bytecode-cache cleanup → `kill 1` restart → wait-on-ready → log tail). Never `kubectl delete pod`.
-3. **Verify.** Dispatch `ha-integration-verify` (pod status, log error-pattern scan, installed-files check).
-4. **Review.** Dispatch the bundled `ha-integration-review` agent — the release/pre-PR whole-picture pass (quality-scale + security + cross-cutting + drift).
+1. **Provision (if needed).** If no dev-HA pod exists in the local Kind cluster, dispatch `ha-dev-instance-provisioner`; otherwise skip.
+2. **Deploy.** Dispatch `ha-integration-deployer` (lint pre-flight → `kubectl cp` → bytecode-cache cleanup → `kill 1` restart → wait-on-ready → log tail). Never `kubectl delete pod`.
+3. **Verify.** Dispatch `ha-integration-verifier` (pod status, log error-pattern scan, installed-files check).
+4. **Review.** Dispatch the bundled `ha-integration-reviewer` agent — the release/pre-PR whole-picture pass (quality-scale + security + cross-cutting + drift).
 
-**Feedback loop.** On an `ha-integration-verify` FAIL or an `ha-integration-review` NEEDS-WORK, do not terminate with a descriptive report: route each finding back to the owning authoring/remediation skill (the rule-11 pattern), re-dispatch the fix, then re-run from step 2 (re-deploy → re-verify), until verify passes and review is CONFORMANT or the operator stops the loop. Report the deploy/verify/review outcome and every fix cycle at the end.
+**Feedback loop.** On an `ha-integration-verifier` FAIL or an `ha-integration-reviewer` NEEDS-WORK, do not terminate with a descriptive report: route each finding back to the owning authoring/remediation skill (the rule-11 pattern), re-dispatch the fix, then re-run from step 2 (re-deploy → re-verify), until verify passes and review is CONFORMANT or the operator stops the loop. Report the deploy/verify/review outcome and every fix cycle at the end.
 
 ## Boundaries
 
 - Single-building-block generation + spec conformance → the owning individual skill
 - A YAML automation/helper solution → `ha-automation-solution` (this skill only recognizes and points)
 - A Lovelace frontend card → `ha-lovelace-card-scaffold`
-- Deploy / runtime verify against a live HA instance → generation-only by default; available only via the opt-in `deploy_ready` lifecycle phase (§5), which drives the `ha-integration-deploy` / `ha-integration-verify` / `ha-integration-review` agents behind a second gate with a fix feedback loop
+- Deploy / runtime verify against a live HA instance → generation-only by default; available only via the opt-in `deploy_ready` lifecycle phase (§5), which drives the `ha-integration-deployer` / `ha-integration-verifier` / `ha-integration-reviewer` agents behind a second gate with a fix feedback loop
 
 ## Resumability
 

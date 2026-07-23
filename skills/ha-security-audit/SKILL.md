@@ -11,7 +11,7 @@ use_when:
   - "you want to check an integration against the security-hardening MUST rules"
 dont_use_when:
   - situation: "You want the whole-picture bundled pre-release review (quality + security + consistency)"
-    alternative: ha-integration-review
+    alternative: ha-integration-reviewer
   - situation: "You want the quality-scale tier assessment rather than security hardening"
     alternative: ha-quality-scale-audit
 see_also:
@@ -19,7 +19,7 @@ see_also:
   - ha-dev-workflow-apply
   - ha-diagnostics-augment
   - ha-config-flow-augment
-  - ha-service-definition-generator
+  - ha-service-definition-add
 ---
 
 # HA Security Audit
@@ -29,8 +29,8 @@ Spec: `spec/claude/ha-security-audit/en.md` (EN canonical) / `spec/claude/ha-sec
 ## Why this is a skill, not an agent
 
 - **Interactive audit with fix routing (decisive):** findings are triaged with the operator one dimension at a time and route into the owning edit skills; that mid-flow dialogue is the point of the single-topic audit, mirroring the sibling `ha-quality-scale-audit`.
-- **Consistency of the `ha-*-audit` family:** all single-dimension audits are skills; the bundled fire-and-forget release pass is deliberately delegated to the `ha-integration-review` agent instead.
-- **Counter-dimension considered:** a read-only audit is agent-shaped (tool restriction, isolation) — that shape exists as `ha-integration-review`; this skill covers the interactive, single-dimension slice.
+- **Consistency of the `ha-*-audit` family:** all single-dimension audits are skills; the bundled fire-and-forget release pass is deliberately delegated to the `ha-integration-reviewer` agent instead.
+- **Counter-dimension considered:** a read-only audit is agent-shaped (tool restriction, isolation) — that shape exists as `ha-integration-reviewer`; this skill covers the interactive, single-dimension slice.
 
 ## When this skill activates
 

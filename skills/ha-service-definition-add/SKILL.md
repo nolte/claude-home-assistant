@@ -1,0 +1,104 @@
+---
+name: ha-service-definition-add
+description: Adds an HA service to an existing Custom Integration — services.yaml entry with typed selectors, voluptuous schema, handler stub with multi-instance disambiguation and coordinator refresh, translations, icon, and tests. Activate on phrasings like "add a service `<name>`", "add a `refresh_data` service", "füge einen Service `<name>` hinzu". Do not activate for service removal, service-schema migration, or greenfield scaffolding.
+tags: [home-assistant, custom-integration, services]
+phase: design
+summary: "Adds an HA service to an existing integration — a services.yaml entry with typed selectors, a voluptuous schema, a handler stub, translations, an icon, and tests."
+summary_de: "Fügt einer bestehenden Integration einen HA-Service hinzu — services.yaml-Eintrag mit typisierten Selectors, Voluptuous-Schema, Handler-Stub, Übersetzungen, Icon und Tests."
+use_when:
+  - "you want to add a named service to an integration"
+  - "you want to add a refresh_data service that re-polls coordinators"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-integration-scaffold
+  - ha-coordinator-add
+  - ha-integration-events-add
+  - ha-translation-sync
+---
+
+# HA Service Definition Generator
+
+Spec: `spec/claude/ha-service-definition-add/en.md` (EN canonical) / `spec/claude/ha-service-definition-add/de.md` (DE translation).
+
+## Why this is a skill, not an agent
+
+- **Quick, targeted addition in the current context (decisive):** one service touches services.yaml, the handler module, translations, and icons of the integration already in scope; the change-scope and latency dimensions route it to the main thread.
+- **Mid-flow approval:** service name, fields, and selector types are confirmed with the operator before writing.
+- **Counter-dimension considered:** the generation follows a fixed recipe (agent bias), but the naming and schema decisions are operator-facing and the diff is small — isolation would cost more than it protects.
+
+## When this skill activates
+
+Use this skill to add one HA service per call to an existing Custom Integration. Examples: a refresh button that re-polls all coordinators, a confirmation service that marks a notification as handled, a record-event service.
+
+## When NOT to activate
+
+- removing a service → manual code edit
+- migrating a service schema → manual code edit with explicit user approval
+- greenfield scaffold → `ha-integration-scaffold`
+
+## Hard rules
+
+1. **Never overwrite existing services.** Conflict on `service` key aborts with the conflicting key quoted.
+2. **Always use typed selectors.** `entity` with `integration: <DOMAIN>`, `select` with `options` list, `number` with `min`/`max`/`step`. Never free string fields.
+3. **Always raise translated exceptions.** `ServiceValidationError` on user error, `HomeAssistantError` on internal — each raised with `translation_key` + `translation_domain=DOMAIN` (never a bare message string), with the matching `exceptions.<key>` entry added to `strings.json`, so messages are translatable (Gold `exception-translations`). Generic `except Exception:` is forbidden in the handler.
+4. **Always include `_resolve_entry` for multi-instance safety.** The handler must abort with a clear error when multiple config entries match.
+5. **Always refresh coordinator after mutation.** `mutating=true` services call `await entry.runtime_data.coordinators[<role>].async_request_refresh()` before returning.
+6. **Name services per `ha/naming-conventions`.** The `service` key is `snake_case` under the integration `domain`, with matching `services.yaml`/translation keys and English field labels (see `spec/ha/naming-conventions/en.md`).
+7. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see `spec/ha/upstream-docs-verification/en.md`).
+
+## Inputs
+
+| Field | Required | Default | Notes |
+|---|---|---|---|
+| `target_dir` | yes | — | repo root |
+| `service_name` | yes | — | lowercase snake_case ASCII |
+| `description` | yes | — | 1–2 sentences |
+| `mutating` | yes | — | bool; affects idempotency + refresh stub |
+| `fields` | yes | — | list of `{name, selector_type, required, default?, options?, min?, max?, step?}` |
+| `coordinator_role` | when `mutating=true` | — | key in `RuntimeData.coordinators` to refresh |
+| `api_method` | yes | — | backend method on `api.py` the handler calls |
+
+## Pre-flight
+
+1. `git -C <target_dir> rev-parse --is-inside-work-tree` and clean working tree
+2. Read `domain` from `manifest.json`
+3. `<target_dir>/custom_components/<domain>/services.yaml` exists or will be created
+4. Service key `<service_name>` is not in `services.yaml`
+5. `api.py` contains `api_method` (or surface a user todo)
+
+## Workflow
+
+### 1) Resolve and confirm
+
+Print the resolved service definition, the field selectors, the icon choice. Wait for user confirmation.
+
+### 2) Apply edits
+
+- `services.yaml` — append the service entry
+- `__init__.py` (or `services.py` when ≥5 services exist) — `<SERVICE>_SCHEMA` (voluptuous), `_async_handle_<service_name>(call)` stub, and `hass.services.async_register(...)` in `async_setup` (registered **once** at integration level, guarded against duplicate registration — Bronze `action-setup`; never per-entry in `async_setup_entry`)
+- `_resolve_entry` helper — create when absent
+- `strings.json` and every `translations/<lang>.json` — service + field labels, plus an `exceptions.<key>` message for every translated exception the handler raises
+- `icons.json` — `services.<service>.service`
+- `tests/test_services.py` (create when absent) — happy path, missing disambiguation, auth error
+
+### 3) Verify
+
+```bash
+ruff check custom_components/<domain>/
+pytest tests/test_services.py -v
+```
+
+### 4) Report
+
+- files touched
+- placeholder backend method call (if `api_method` was missing — user must implement it)
+- icon used (and let the user override if needed)
+
+## Boundaries
+
+- Greenfield scaffold → `ha-integration-scaffold`
+- Backend method implementation → user task
+- Service removal → manual code edit
+- Service-response (`return_response=True`) pattern → separate spec planned

@@ -18,7 +18,7 @@ see_also:
   - ha-integration-ci-scaffold
   - ha-integration-scaffold
   - ha-integration-solution
-  - ha-integration-review
+  - ha-integration-reviewer
 ---
 
 # HA HACS Release

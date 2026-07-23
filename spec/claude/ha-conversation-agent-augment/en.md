@@ -24,7 +24,7 @@ Augmenting one or more Voice & AI surfaces into an existing `custom_components/<
 ## Non-Goals
 
 - Assist satellite, STT, TTS, or wake-word **entities** (`assist_satellite`/`stt`/`tts`/`wake_word`) — `ha/entity-platforms-voice`
-- Registered services with their own schema — `ha-service-definition-generator` / `ha/services` (tools are called by the LLM, services are user-driven)
+- Registered services with their own schema — `ha-service-definition-add` / `ha/services` (tools are called by the LLM, services are user-driven)
 - Translation of intent sentences (`intents/<lang>.yaml`) and response/prompt texts — `ha/translations`
 - End-user Assist configuration (exposing entities in the UI, voice pipeline setup) — user documentation, not developer API
 - Greenfield scaffolding of an integration — `ha-integration-scaffold`

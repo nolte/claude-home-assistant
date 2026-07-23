@@ -26,7 +26,7 @@ Generierung genau eines Artefakts pro Lauf aus dem Logik-/Command-Teil von `ha-a
 - Zustands-Helfer (`input_*`, `counter`, `timer`, `schedule`) — das ist `ha-helper-scaffold`
 - Abgeleitete/statistische Helfer-Sensoren (`bayesian`, `derivative`, `filter`, `min_max`, `statistics`, `threshold`, `trend`, `history_stats`, `integration`, `utility_meter`, `group`) — das ist `ha-derived-sensor-author`
 - Python-Custom-Integrationen — das ist `ha-integration-scaffold`
-- Deployment in eine laufende HA-Instanz — Generierung only; Deploy ist `ha-integration-deploy` / manuell
+- Deployment in eine laufende HA-Instanz — Generierung only; Deploy ist `ha-integration-deployer` / manuell
 - Migration einer bestehenden Automation in einen Blueprint — `ha-blueprint-scaffold`
 
 ## Anforderungen

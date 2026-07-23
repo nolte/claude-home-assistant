@@ -1,6 +1,6 @@
 ---
 name: ha-websocket-command-add
-description: "Augments an existing Home Assistant Custom Integration with one custom WebSocket API command — the backend endpoint a frontend card or panel calls — conforming to spec/ha/frontend-websocket-commands. Creates the decorated handler (@websocket_api.websocket_command with a vol schema, @callback for in-memory or @websocket_api.async_response for I/O), a \"<domain>/<name>\" namespaced type, typed input fields, connection.send_result/send_error delivery with correct msg id correlation, optional require_admin, and the async_register_command wiring in async_setup. Runs a command-vs-service check first. Activate on \"add a websocket command\", \"expose a backend endpoint to my card\", \"register a custom ws command\", or equivalent German requests. Do not activate for user-driven actions/mutations (ha-service-definition-generator), the frontend consumer side (ha/frontend-data-api), a custom panel (ha-panel-add), or deploying to a live HA instance."
+description: "Augments an existing Home Assistant Custom Integration with one custom WebSocket API command — the backend endpoint a frontend card or panel calls — conforming to spec/ha/frontend-websocket-commands. Creates the decorated handler (@websocket_api.websocket_command with a vol schema, @callback for in-memory or @websocket_api.async_response for I/O), a \"<domain>/<name>\" namespaced type, typed input fields, connection.send_result/send_error delivery with correct msg id correlation, optional require_admin, and the async_register_command wiring in async_setup. Runs a command-vs-service check first. Activate on \"add a websocket command\", \"expose a backend endpoint to my card\", \"register a custom ws command\", or equivalent German requests. Do not activate for user-driven actions/mutations (ha-service-definition-add), the frontend consumer side (ha/frontend-data-api), a custom panel (ha-panel-add), or deploying to a live HA instance."
 tags: [home-assistant, custom-integration, frontend, websocket]
 phase: design
 summary: "Adds one custom WebSocket API command — the backend endpoint a card or panel calls via hass.callWS — with vol schema, sync/async handler, and setup registration."
@@ -11,11 +11,11 @@ use_when:
   - "you want a card to load integration-specific backend data"
 dont_use_when:
   - situation: "You need a user-driven action or backend mutation"
-    alternative: ha-service-definition-generator
+    alternative: ha-service-definition-add
   - situation: "You are building the custom panel that consumes the command"
     alternative: ha-panel-add
 see_also:
-  - ha-service-definition-generator
+  - ha-service-definition-add
   - ha-panel-add
   - ha-panel-author
   - ha-coordinator-add
@@ -38,7 +38,7 @@ Use this skill to add **one** custom WebSocket API command to an existing integr
 
 ## When NOT to activate
 
-- a user-driven action / backend mutation with its own schema → `ha-service-definition-generator` / `ha/services`
+- a user-driven action / backend mutation with its own schema → `ha-service-definition-add` / `ha/services`
 - the frontend consumer side (TypeScript typing, `callWS` error handling in the card) → `ha/frontend-data-api`
 - a custom panel that consumes the command → `ha-panel-add`
 - deploying/importing into a running HA instance → out of scope
@@ -47,7 +47,7 @@ Use this skill to add **one** custom WebSocket API command to an existing integr
 
 1. **One command, one run.** No multi-command batches.
 2. **Read `spec/ha/frontend-websocket-commands/en.md` first.** Do not generate from memory.
-3. **Command vs. service.** Run the choice first: a data fetch into the frontend is a command; a user-driven action/mutation is a service. On action/mutation, point at `ha-service-definition-generator` and abort.
+3. **Command vs. service.** Run the choice first: a data fetch into the frontend is a command; a user-driven action/mutation is a service. On action/mutation, point at `ha-service-definition-add` and abort.
 4. **Three-part contract.** Declare type and schema via `@websocket_api.websocket_command({...})` on a handler with signature `(hass, connection, msg)`; namespace the type as `vol.Required("type"): "<domain>/<name>"` (docs example: `"camera/get_thumbnail"`); declare input fields via `vol.Required`/`vol.Optional` with a type annotation, kept minimal.
 5. **Sync vs. async.** A pure in-memory handler is a synchronous function with `@callback`; a handler doing network/device/computation work is `async def` decorated with `@websocket_api.async_response`. **Never** run blocking I/O in a `@callback` handler.
 6. **Results and errors.** Deliver success via `connection.send_result(msg["id"], result)` using the incoming `msg["id"]`; report errors via `connection.send_error(msg["id"], "<code>", "<message>")` instead of letting an exception propagate, and **return** after every `send_error`. Never substitute the `msg["id"]`.
@@ -71,7 +71,7 @@ If the user is silent on an optional field, use the default but state it explici
 ## Pre-flight (in order — abort on first failure)
 
 1. `target_dir/custom_components/<domain>/manifest.json` exists; read `domain`.
-2. Settle command vs. service: data fetch into the frontend → command; action/mutation → point at `ha-service-definition-generator` and abort.
+2. Settle command vs. service: data fetch into the frontend → command; action/mutation → point at `ha-service-definition-add` and abort.
 3. Read `ha/frontend-websocket-commands`.
 4. The command `type` is not already declared. If it is, abort.
 
@@ -100,7 +100,7 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 ## Boundaries
 
-- User-driven actions / mutations → `ha-service-definition-generator`
+- User-driven actions / mutations → `ha-service-definition-add`
 - Frontend consumer side (`callWS`, response typing) → `ha/frontend-data-api`
 - A custom panel consuming the command → `ha-panel-add`
 - Deploy to live HA → out of scope

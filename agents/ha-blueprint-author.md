@@ -1,6 +1,6 @@
 ---
 name: ha-blueprint-author
-description: "Authors one Home Assistant blueprint (automation, script, or template domain) as a single self-contained YAML file conforming to the ha/blueprint-patterns spec — correct blueprint: header, declared inputs with type-appropriate selectors, the !input to variables / trigger_variables templating bridge, a deliberate mode, and unavailable-state-guarded templates — then validates it and returns the written .yaml plus a CONFORMANT / NEEDS-WORK report keyed to the spec's acceptance criteria. Dispatched by the ha-blueprint-scaffold skill after its intent gathering and pre-flight; the skill owns the user-facing triggers and dialogue, this agent owns the self-contained authoring pass. Don't use to gather blueprint intent interactively (ha-blueprint-scaffold), to scaffold a Python custom integration (ha-integration-scaffold), to author a Lovelace card (ha-lovelace-card-scaffold), to define an integration service (ha-service-definition-generator), or to deploy anything to a running HA instance."
+description: "Authors one Home Assistant blueprint (automation, script, or template domain) as a single self-contained YAML file conforming to the ha/blueprint-patterns spec — correct blueprint: header, declared inputs with type-appropriate selectors, the !input to variables / trigger_variables templating bridge, a deliberate mode, and unavailable-state-guarded templates — then validates it and returns the written .yaml plus a CONFORMANT / NEEDS-WORK report keyed to the spec's acceptance criteria. Dispatched by the ha-blueprint-scaffold skill after its intent gathering and pre-flight; the skill owns the user-facing triggers and dialogue, this agent owns the self-contained authoring pass. Don't use to gather blueprint intent interactively (ha-blueprint-scaffold), to scaffold a Python custom integration (ha-integration-scaffold), to author a Lovelace card (ha-lovelace-card-scaffold), to define an integration service (ha-service-definition-add), or to deploy anything to a running HA instance."
 distribution: plugin
 tools: Read, Write, Edit, Glob, Grep, Bash
 tags: [home-assistant, blueprint, automation, yaml, authoring]
@@ -17,7 +17,7 @@ dont_use_when:
   - situation: "You want to author a Lovelace card"
     alternative: ha-lovelace-card-scaffold
   - situation: "You want to define an integration service"
-    alternative: ha-service-definition-generator
+    alternative: ha-service-definition-add
 see_also:
   - ha-blueprint-scaffold
   - ha-automation-author
@@ -56,7 +56,7 @@ You **do**:
 You **don't**:
 
 - scaffold or edit a Python custom integration — that is `ha-integration-scaffold` and the integration skills
-- author a Lovelace card (`ha-lovelace-card-scaffold`) or an integration service (`ha-service-definition-generator`)
+- author a Lovelace card (`ha-lovelace-card-scaffold`) or an integration service (`ha-service-definition-add`)
 - import, deploy, or otherwise push the blueprint to a running HA instance — generation only
 - invent installation-specific entity IDs, area names, or device IDs — everything configurable goes through `!input`
 - author more than one blueprint per invocation, or dispatch sibling agents/skills

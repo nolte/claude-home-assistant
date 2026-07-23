@@ -128,7 +128,7 @@ The skill writes these files in one go (no per-file user approval — bulk appro
 - **Coordinator topology extension** beyond the single coordinator → separate skill `ha-coordinator-add`
 - **Lovelace card scaffold** → separate skill `ha-lovelace-card-scaffold`
 - **Test coverage beyond the default skeleton** → separate skill `ha-test-harness-augment`
-- **Deploy / verify into the Kind cluster** → agents `ha-integration-deploy` / `ha-integration-verify`
+- **Deploy / verify into the Kind cluster** → agents `ha-integration-deployer` / `ha-integration-verifier`
 - **HA-specific CI workflow** (hassfest / hacs-validate / pytest matrix) → separate skill `ha-integration-ci-scaffold` (planned); the generic `nolte-shared:project-structure-apply` does not emit HA-specific CI
 
 ## Acceptance Criteria

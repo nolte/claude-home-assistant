@@ -173,5 +173,5 @@ Return a brief summary listing:
 - Add a second coordinator → `ha-coordinator-add`
 - Lovelace card scaffold → `ha-lovelace-card-scaffold`
 - Test coverage augmentation → `ha-test-harness-augment`
-- Deploy and verify against a Kind cluster → agents `ha-integration-deploy` / `ha-integration-verify`
+- Deploy and verify against a Kind cluster → agents `ha-integration-deployer` / `ha-integration-verifier`
 - Repo project structure (Taskfile, pre-commit, .github/workflows, mkdocs) → `nolte-shared:project-structure-apply`

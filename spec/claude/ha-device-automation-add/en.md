@@ -23,7 +23,7 @@ Augmenting exactly one device-automation kind per run (`trigger`, `condition`, o
 ## Non-Goals
 
 - Entity automations (the state/event model without device indirection) — `ha/entity-architecture`
-- Registered services with their own schema — `ha-service-definition-generator` / `ha/services` (device actions delegate internally but are not a service replacement)
+- Registered services with their own schema — `ha-service-definition-add` / `ha/services` (device actions delegate internally but are not a service replacement)
 - The frontend UI-editor logic — only the backend contract is defined here
 - Greenfield scaffolding of an integration — `ha-integration-scaffold`
 - Migration to HA's explored device-automation alternatives — a separate follow-up spec

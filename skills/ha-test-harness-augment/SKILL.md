@@ -16,7 +16,7 @@ see_also:
   - ha-dev-workflow-apply
   - ha-integration-scaffold
   - ha-integration-ci-scaffold
-  - ha-integration-verify
+  - ha-integration-verifier
 ---
 
 # HA Test Harness Augment

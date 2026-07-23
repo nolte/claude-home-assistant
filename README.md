@@ -26,8 +26,8 @@ What the plugin helps you accomplish, each with its front-door skill:
 - **Build a Lovelace frontend (TypeScript / JavaScript)** — `ha-lovelace-solution`: custom cards, visual config editors, tile features, badges, dashboard strategies, custom panels, and their WebSocket-command backends.
 - **Author automations & blueprints (YAML)** — `ha-automation-solution`: automations, scripts, helpers, derived/statistical sensors, device automations, and shareable blueprints.
 - **Drive a Divoom Pixoo display** — `ha-pixoo-solution`: information pages, detailed 64×64 pixel art (shading & contours), and animations, from a described requirement.
-- **Run & test on a dev HA** — agents `ha-dev-instance-provision`, `ha-integration-deploy`, `ha-integration-verify` (local Kubernetes / Kind), plus `ha-test-harness-augment` for pytest coverage.
-- **Review & harden before release** — `ha-quality-scale-audit`, `ha-security-audit`, and the bundled `ha-integration-review` agent.
+- **Run & test on a dev HA** — agents `ha-dev-instance-provisioner`, `ha-integration-deployer`, `ha-integration-verifier` (local Kubernetes / Kind), plus `ha-test-harness-augment` for pytest coverage.
+- **Review & harden before release** — `ha-quality-scale-audit`, `ha-security-audit`, and the bundled `ha-integration-reviewer` agent.
 
 > ESPHome custom components and Home Assistant add-on (Docker / s6) workflows are on the roadmap; no skills ship for them yet.
 

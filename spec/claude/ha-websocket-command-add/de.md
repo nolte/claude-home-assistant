@@ -23,7 +23,7 @@ Ergänzung genau eines WebSocket-Commands pro Lauf in einer bestehenden `custom_
 
 ## Nicht-Ziele
 
-- Benutzergesteuerte Aktionen / Backend-Mutationen mit eigenem Schema — das sind Services; `ha-service-definition-generator` / `ha/services`
+- Benutzergesteuerte Aktionen / Backend-Mutationen mit eigenem Schema — das sind Services; `ha-service-definition-add` / `ha/services`
 - Die Frontend-Konsumentenseite im Detail (TypeScript-Typisierung der Antwort, `callWS`-Fehlerbehandlung in der Karte) — `ha/frontend-data-api`
 - Ein eigenes Panel, das den Command konsumiert — `ha-panel-add`
 - Die generische Sync/Async-Disziplin im Event-Loop (Blocking-I/O, Executor-Jobs) — `ha/async-patterns`
@@ -46,7 +46,7 @@ Ergänzung genau eines WebSocket-Commands pro Lauf in einer bestehenden `custom_
 ### Pre-Flight (in Reihenfolge, Abbruch beim ersten Fehler)
 
 - **MUSS [MUST]** prüfen, dass `target_dir/custom_components/<domain>/manifest.json` existiert; `domain` lesen
-- **MUSS [MUST]** die Command-vs-Service-Wahl klären: ist das Ziel ein Datenabruf ins Frontend, ist ein Command richtig; ist es eine benutzergesteuerte Aktion/Mutation, **MUSS [MUST]** der Skill auf `ha-service-definition-generator` verweisen und abbrechen
+- **MUSS [MUST]** die Command-vs-Service-Wahl klären: ist das Ziel ein Datenabruf ins Frontend, ist ein Command richtig; ist es eine benutzergesteuerte Aktion/Mutation, **MUSS [MUST]** der Skill auf `ha-service-definition-add` verweisen und abbrechen
 - **MUSS [MUST]** die `ha/frontend-websocket-commands`-Spec lesen
 - **MUSS NICHT [MUST NOT]** einen bestehenden Command-Type überschreiben; bei Kollision abbrechen
 
@@ -77,7 +77,7 @@ Ergänzung genau eines WebSocket-Commands pro Lauf in einer bestehenden `custom_
 
 ## Akzeptanzkriterien
 
-- [ ] Skill fährt die Command-vs-Service-Wahl und bricht bei Aktion/Mutation zugunsten `ha-service-definition-generator` ab
+- [ ] Skill fährt die Command-vs-Service-Wahl und bricht bei Aktion/Mutation zugunsten `ha-service-definition-add` ab
 - [ ] Der Handler trägt `@websocket_api.websocket_command({...})`; der `type` ist als `"<domain>/<name>"` genamespaced
 - [ ] Eingabefelder nutzen `vol.Required`/`vol.Optional` mit Typ-Annotation und das Schema ist minimal
 - [ ] Die Sync-/Async-Form passt zur Arbeit: `@callback` für In-Memory, `@websocket_api.async_response` mit `async def` für I/O/Geräte/Berechnung

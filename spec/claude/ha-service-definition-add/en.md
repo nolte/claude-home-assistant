@@ -1,4 +1,4 @@
-# Skill: `ha-service-definition-generator`
+# Skill: `ha-service-definition-add`
 
 Status: draft
 

@@ -23,7 +23,7 @@ Augmenting exactly one WebSocket command per run into an existing `custom_compon
 
 ## Non-Goals
 
-- User-driven actions / backend mutations with their own schema — those are services; `ha-service-definition-generator` / `ha/services`
+- User-driven actions / backend mutations with their own schema — those are services; `ha-service-definition-add` / `ha/services`
 - The frontend consumer side in detail (TypeScript typing of the response, `callWS` error handling in the card) — `ha/frontend-data-api`
 - A custom panel that consumes the command — `ha-panel-add`
 - The generic sync/async discipline in the event loop (blocking I/O, executor jobs) — `ha/async-patterns`
@@ -46,7 +46,7 @@ Augmenting exactly one WebSocket command per run into an existing `custom_compon
 ### Pre-flight (in order — abort on first failure)
 
 - **MUST** check that `target_dir/custom_components/<domain>/manifest.json` exists; read `domain`
-- **MUST** settle the command-vs-service choice: if the goal is a data fetch into the frontend, a command is correct; if it is a user-driven action/mutation, the skill **MUST** point at `ha-service-definition-generator` and abort
+- **MUST** settle the command-vs-service choice: if the goal is a data fetch into the frontend, a command is correct; if it is a user-driven action/mutation, the skill **MUST** point at `ha-service-definition-add` and abort
 - **MUST** read the `ha/frontend-websocket-commands` spec
 - **MUST NOT** overwrite an existing command type; on collision abort
 
@@ -77,7 +77,7 @@ Augmenting exactly one WebSocket command per run into an existing `custom_compon
 
 ## Acceptance criteria
 
-- [ ] Skill runs the command-vs-service choice and aborts on action/mutation in favour of `ha-service-definition-generator`
+- [ ] Skill runs the command-vs-service choice and aborts on action/mutation in favour of `ha-service-definition-add`
 - [ ] The handler carries `@websocket_api.websocket_command({...})`; the `type` is namespaced as `"<domain>/<name>"`
 - [ ] Input fields use `vol.Required`/`vol.Optional` with a type annotation and the schema is minimal
 - [ ] The sync/async shape matches the work: `@callback` for in-memory, `@websocket_api.async_response` with `async def` for I/O/device/computation

@@ -26,7 +26,7 @@ Generation of exactly one artifact per run from the logic/command part of `ha-au
 - State helpers (`input_*`, `counter`, `timer`, `schedule`) — that is `ha-helper-scaffold`
 - Derived/statistical helper sensors (`bayesian`, `derivative`, `filter`, `min_max`, `statistics`, `threshold`, `trend`, `history_stats`, `integration`, `utility_meter`, `group`) — that is `ha-derived-sensor-author`
 - Python custom integrations — that is `ha-integration-scaffold`
-- Deployment into a running HA instance — generation only; deploy is `ha-integration-deploy` / manual
+- Deployment into a running HA instance — generation only; deploy is `ha-integration-deployer` / manual
 - Migrating an existing automation into a blueprint — `ha-blueprint-scaffold`
 
 ## Requirements

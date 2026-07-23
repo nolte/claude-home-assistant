@@ -23,7 +23,7 @@ Augmenting event firing and/or listening into an existing `custom_components/<do
 
 ## Non-Goals
 
-- User-driven actions (service calls from frontend, automation, script) — `ha-service-definition-generator` / `ha/services`
+- User-driven actions (service calls from frontend, automation, script) — `ha-service-definition-add` / `ha/services`
 - Device triggers built on top of a fired event — `ha-device-automation-add` / `ha/device-automations`
 - `@callback` mechanics and loop-vs-executor rules in detail — `ha/async-patterns`
 - The `async_on_unload` teardown pattern and the setup lifecycle as a whole — `ha/setup-lifecycle`

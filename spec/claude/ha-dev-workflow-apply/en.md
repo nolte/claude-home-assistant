@@ -27,7 +27,7 @@ Applying and validating the `spec/ha/dev-workflow` MUST rules against one existi
 - Devcontainer / Kind / `script/setup` / venv setup — `ha/dev-environment`
 - Async / event-loop patterns — `ha/async-patterns`
 - Manifest-schema authoring in detail — `ha/integration-manifest`; this skill only requires that `hassfest` validates it
-- Deploying / verifying against a running HA instance — the `ha-integration-deploy` / `ha-integration-verify` agents
+- Deploying / verifying against a running HA instance — the `ha-integration-deployer` / `ha-integration-verifier` agents
 
 ## Requirements
 

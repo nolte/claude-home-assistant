@@ -72,7 +72,7 @@ The skill adds **one** additional coordinator per call. It does not remove one, 
 - **MUST** add the `options.step.init.data.poll_interval_<role>` string in `strings.json` and every `translations/<lang>.json`
 - **MUST** add tests in `tests/test_coordinator.py`: auth error → `ConfigEntryAuthFailed`, connection error → `UpdateFailed`, happy path with a JSON fixture
 - **MAY** create a new fixture file `tests/fixtures/<role>.json` when the API method returns structured responses
-- **SHOULD** surface in the report that every platform reading the new coordinator needs a module-level `PARALLEL_UPDATES` (Silver `parallel-updates`), pointing at `ha-entity-platform-add` / `ha-entity-description-mapper`
+- **SHOULD** surface in the report that every platform reading the new coordinator needs a module-level `PARALLEL_UPDATES` (Silver `parallel-updates`), pointing at `ha-entity-platform-add` / `ha-entity-description-map`
 - **MAY** produce a push-style coordinator variant (`async_set_updated_data`, no `update_interval`) instead of a polling one when the integration's iot_class is `local_push` / `cloud_push`
 
 ### Forbidden

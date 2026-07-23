@@ -22,18 +22,18 @@ This use case has no `*-solution` front door — it is a small cluster of agents
 
 ```mermaid
 flowchart TD
-    dev(["Integration developer"]) --> prov["ha-dev-instance-provision<br/>agent: provision dev HA"]
-    prov --> deploy["ha-integration-deploy<br/>agent: kubectl cp + kill 1 restart"]
-    deploy --> verify["ha-integration-verify<br/>agent: read-only diagnosis"]
+    dev(["Integration developer"]) --> prov["ha-dev-instance-provisioner<br/>agent: provision dev HA"]
+    prov --> deploy["ha-integration-deployer<br/>agent: kubectl cp + kill 1 restart"]
+    deploy --> verify["ha-integration-verifier<br/>agent: read-only diagnosis"]
     deploy --> tests["ha-test-harness-augment<br/>pytest coverage"]
     verify -.-> review["Review and harden"]
 ```
 
-`ha-dev-instance-provision` stands up (or tears down) the disposable HA in Kind; `ha-integration-deploy` rolls your integration into the running pod with `kubectl cp` and an in-place `kill 1` restart — never deleting the pod; `ha-integration-verify` then does a read-only diagnosis of logs, states, and config-entry status. In parallel, `ha-test-harness-augment` grows the pytest harness to cover the branches the UI can't reach. What you deploy here comes from [Build a custom integration (Python)](custom-integration.md); once it runs clean, the natural next gate is [Review and harden before release](review-hardening.md).
+`ha-dev-instance-provisioner` stands up (or tears down) the disposable HA in Kind; `ha-integration-deployer` rolls your integration into the running pod with `kubectl cp` and an in-place `kill 1` restart — never deleting the pod; `ha-integration-verifier` then does a read-only diagnosis of logs, states, and config-entry status. In parallel, `ha-test-harness-augment` grows the pytest harness to cover the branches the UI can't reach. What you deploy here comes from [Build a custom integration (Python)](custom-integration.md); once it runs clean, the natural next gate is [Review and harden before release](review-hardening.md).
 
 ## Skills and agents in play
 
-- **Building blocks:** `ha-dev-instance-provision` (agent: provision / tear down a dev HA), `ha-integration-deploy` (agent: roll out via `kubectl cp`, `kill 1` restart — never delete the pod), `ha-integration-verify` (agent: read-only pod diagnosis); `ha-test-harness-augment` (skill: pytest coverage for secondary code paths)
+- **Building blocks:** `ha-dev-instance-provisioner` (agent: provision / tear down a dev HA), `ha-integration-deployer` (agent: roll out via `kubectl cp`, `kill 1` restart — never delete the pod), `ha-integration-verifier` (agent: read-only pod diagnosis); `ha-test-harness-augment` (skill: pytest coverage for secondary code paths)
 - **Related use cases:** [Build a custom integration (Python)](custom-integration.md), [Review and harden before release](review-hardening.md)
 
 See the full catalog under [Skills](../skills/index.md) and [Agents](../agents/index.md).

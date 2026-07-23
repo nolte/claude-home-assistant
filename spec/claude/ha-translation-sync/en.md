@@ -10,7 +10,7 @@ This skill synchronises `strings.json` with every `translations/<lang>.json` fil
 
 ## Scope
 
-The skill performs **sync operations** on an existing translation structure. It does not produce new strings (that is the job of `ha-integration-scaffold`, `ha-entity-description-mapper`, `ha-service-definition-generator`, `ha-config-flow-augment`, `ha-coordinator-add`); it only ensures that whatever is already there stays consistent across languages.
+The skill performs **sync operations** on an existing translation structure. It does not produce new strings (that is the job of `ha-integration-scaffold`, `ha-entity-description-map`, `ha-service-definition-add`, `ha-config-flow-augment`, `ha-coordinator-add`); it only ensures that whatever is already there stays consistent across languages.
 
 ## Goals
 
