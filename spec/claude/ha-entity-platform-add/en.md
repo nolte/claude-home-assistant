@@ -60,13 +60,16 @@ Scaffolding exactly one active platform entity per run into an existing `custom_
 - **MUST NOT** set a feature flag "on spec" whose command method is not (yet) implemented — an advertised but non-operable feature breaks the UI and voice binding
 - **MUST** provide the state/attribute properties the domain marks as **Required** (e.g. `hvac_mode`/`hvac_modes` for `climate`, `is_closed` for `cover`, `color_mode`/`supported_color_modes` for `light`, `activity` for `vacuum`/`lawn_mower`, `alarm_state` for `alarm_control_panel`) and use only the built-in state/mode enums (e.g. only built-in `HVACMode` members; `VacuumActivity`/`LawnMowerActivity`)
 - **MUST** set the `device_class` from the closed platform-native enum where a matching member exists (`CoverDeviceClass`, `ValveDeviceClass`, `HumidifierDeviceClass`, `MediaPlayerDeviceClass`, …) — never a free-chosen string
+- **MUST** handle availability (Silver `entity-unavailable`) — subclass `CoordinatorEntity` (deriving `available` from `coordinator.last_update_success`) or override the `available` property to return `False` when the datapoint can't be read or controlled; an active entity that never reports unavailable misses the rule `ha-quality-scale-audit` checks
+- **MUST** declare a module-level `PARALLEL_UPDATES` constant in `<platform>.py` (Silver `parallel-updates`; a coordinator-backed read path typically uses `0`, command platforms bound their concurrency) and verify the value against the HA `parallel-updates` rule page
 - **MAY** create an `EntityDescription` when the family uses the `EntityDescription` pattern for the platform, and set `supported_features`/`device_class` there instead of via `_attr_*` (setting mechanics see `ha/entity-architecture`)
 - **MUST** name identifiers per `ha/naming-conventions`, not duplicate the generic entity pattern (delegate to `ha/entity-architecture`), and verify HA internals against the official docs (`ha/upstream-docs-verification`)
 
 ### Validation & report
 
-- **MUST** validate offline: `<platform>.py` exists; the entity derives from the documented base class; `async_setup_entry` registers entities via `async_add_entities`; `supported_features` is a `*EntityFeature` bitmask (not a raw integer); every set flag has its async command method; all **Required** properties are implemented; state/mode enums are built-in; a set `device_class` comes from the platform-native enum
+- **MUST** validate offline: `<platform>.py` exists; the entity derives from the documented base class; `async_setup_entry` registers entities via `async_add_entities`; `supported_features` is a `*EntityFeature` bitmask (not a raw integer); every set flag has its async command method; all **Required** properties are implemented; availability is handled (`CoordinatorEntity` or an `available` override); a module-level `PARALLEL_UPDATES` is declared; state/mode enums are built-in; a set `device_class` comes from the platform-native enum
 - **MUST** deliver a CONFORMANT / NEEDS-WORK report against the acceptance criteria of `ha/entity-platform-types` and the chosen family spec, plus the changed file paths and the quality-scale marker (**Gold** for correct per-platform device-class coverage, `entity-device-class`)
+- **SHOULD** point the operator at `ha-test-harness-augment` for platform tests in the report — this skill generates the platform module but no tests
 
 ### Prohibitions
 
@@ -82,8 +85,10 @@ Scaffolding exactly one active platform entity per run into an existing `custom_
 - [ ] `supported_features` is a bitwise `|` combination of the platform-native `*EntityFeature` enum, never a raw integer
 - [ ] Every set feature flag has its corresponding async command method; no flag set "on spec"
 - [ ] All state/attribute properties the domain marks as **Required** are implemented; state/mode enums are built-in
+- [ ] Availability is handled (`CoordinatorEntity` or an `available` override) — Silver `entity-unavailable`
+- [ ] A module-level `PARALLEL_UPDATES` constant is declared in `<platform>.py` — Silver `parallel-updates`
 - [ ] A set `device_class` comes from the closed platform-native enum; purely declarative `EntityDescription`-table entities are referred to `ha-entity-description-mapper`
-- [ ] Report names the file paths and the quality-scale marker **Gold** (`entity-device-class`)
+- [ ] Report names the file paths, points at `ha-test-harness-augment` for tests, and states the quality-scale marker **Gold** (`entity-device-class`)
 
 ## Open questions
 

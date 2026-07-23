@@ -2,9 +2,30 @@
 name: ha-pixoo-solution
 description: Plan and orchestrate a complete Divoom Pixoo 64 display from a result-oriented requirement, so the user never has to pick which Pixoo skill to use. Decomposes the requirement into the minimal combination of artifacts across the Pixoo skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-pixoo-page-author, ha-pixoo-pixel-art-author, and ha-pixoo-animation-author in order — threading the page structure, component positions, palette, and the target sensor.<name>_current_page entity between steps. Generation only; never deploys. Activate on "build me a Pixoo display for…", "show X's status on the Divoom", "I want an animated Pixoo page", "baue mir eine Pixoo-Anzeige für…", "zeig den Status von X auf dem Divoom". Do not activate for a single clear artifact (let the owning skill handle it), device setup / config flow (using the existing integration, not authoring), or deploying to a live HA instance.
 tags: [home-assistant, divoom-pixoo, display, orchestration]
+phase: plan
+summary: "Plans and orchestrates a complete Divoom Pixoo 64 display from a result-oriented requirement, dispatching the Pixoo authoring skills in dependency order."
+summary_de: "Plant und orchestriert ein vollständiges Divoom-Pixoo-64-Display aus einer Anforderung und dispatcht die Pixoo-Authoring-Skills in Abhängigkeitsreihenfolge."
+use_when:
+  - "you want a Pixoo display built for some status or data"
+  - "you want to show an entity's status on the Divoom Pixoo"
+  - "you want an animated Pixoo page"
+dont_use_when:
+  - situation: "You need only a single Pixoo page"
+    alternative: ha-pixoo-page-author
+  - situation: "You need only a single pixel-art graphic"
+    alternative: ha-pixoo-pixel-art-author
+  - situation: "You need only a single animation"
+    alternative: ha-pixoo-animation-author
+see_also:
+  - ha-pixoo-page-author
+  - ha-pixoo-pixel-art-author
+  - ha-pixoo-animation-author
+  - ha-solution
 ---
 
 # HA Pixoo Solution
+
+Spec: [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-pixoo-solution/en.md) (EN canonical) / [`de.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-pixoo-solution/de.md). This spec governs the front-door dispatch/plan contract, structurally consistent with its `ha-{integration,lovelace,automation}-solution` siblings; the grounding specs below govern the Pixoo domain artifacts.
 
 Grounding specs: [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md) (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/en.md), [`ha/pixoo-pixel-art`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art/de.md), [`ha/pixoo-pixel-art-animation`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art-animation/de.md).
 
@@ -29,14 +50,15 @@ Use this skill when the user describes a **Pixoo display result** that likely ne
 
 ## Hard rules
 
-1. **Never generate inline.** Every artifact is produced by its owning skill — `ha-pixoo-page-author`, `ha-pixoo-pixel-art-author`, or `ha-pixoo-animation-author`. This skill plans and dispatches; it does not write artifacts.
+1. **Never generate inline.** Every artifact is produced by its owning skill, resolved at runtime from the live Pixoo `ha-pixoo-*` inventory (see [Runtime skill resolution](#runtime-skill-resolution)) rather than a frozen name list — the skill names in the decomposition heuristic are illustrative anchors. This skill plans and dispatches; it does not write artifacts.
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
-3. **One requirement, one run.** No multi-requirement batches.
-4. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; a plain info page does not need a pixel-art or animation add-on.
-5. **Thread identities.** Dispatch in dependency order and pass the identities produced in earlier steps — the `pages_data` page structure, component positions, the chosen palette/ramps, and the target `sensor.<name>_current_page` entity (the service target per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)) — as inputs to dependent steps.
-6. **Stop on NEEDS-WORK.** If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent artifact on an unfinished predecessor.
-7. **Generation only.** Never deploy to a live HA instance and never modify the device or its config entry.
-8. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)); for the integration's own contract read the grounding specs above, not memory.
+3. **Confidence-gate the requirement.** Before planning, gauge requirement confidence. When it is clearly specified, use the lightweight path (1–3 clarifying questions — which info, static vs. animated, target device entity, palette). When it is below a confidence threshold (vague display, unnamed entities, unclear scope), dispatch `requirements-elicit` first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding.
+4. **One requirement, one run.** No multi-requirement batches.
+5. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; a plain info page does not need a pixel-art or animation add-on.
+6. **Thread identities.** Dispatch in dependency order and pass the identities produced in earlier steps — the `pages_data` page structure, component positions, the chosen palette/ramps, and the target `sensor.<name>_current_page` entity (the service target per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)) — as inputs to dependent steps.
+7. **Stop on NEEDS-WORK.** If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent artifact on an unfinished predecessor.
+8. **Generation only.** Never deploy to a live HA instance and never modify the device or its config entry.
+9. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)); for the integration's own contract read the grounding specs above, not memory.
 
 ## Inputs
 
@@ -46,6 +68,10 @@ Use this skill when the user describes a **Pixoo display result** that likely ne
 | `target_dir` | no | working dir | repo / HA config root, passed through to dispatched skills |
 | `device_entity` | no | asked when needed | the target `sensor.<name>_current_page` entity (service target) |
 | `palette` | no | asked / derived | a shared palette/ramp set to keep pages coherent (per `ha/pixoo-pixel-art`) |
+
+## Runtime skill resolution
+
+Resolve the owning skill for each artifact **at runtime**, by matching the requirement against the live inventory of this plugin's Pixoo `ha-pixoo-*` skills — read each candidate's stated responsibility from your available-skills registry, or, when running inside the plugin source tree, `Glob skills/ha-pixoo-*/SKILL.md` and read its `description:`. Match on responsibility, not on a remembered name. The decomposition heuristic below is an **illustrative anchor** of the typical mappings, **not** an authoritative or exhaustive list: re-resolve against the current inventory on every run, so a skill newly added to (or renamed within) the family is dispatchable immediately and a removed one is not — without editing this skill (the runtime-lookup pattern of `issue-orchestrate`). If you genuinely cannot enumerate the live inventory, fall back to the anchor table and note the degraded resolution.
 
 ## Decomposition heuristic (requirement → artifact → skill)
 

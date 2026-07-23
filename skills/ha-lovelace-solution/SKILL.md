@@ -1,7 +1,28 @@
 ---
 name: ha-lovelace-solution
-description: Plan and orchestrate a complete Home Assistant Lovelace/frontend solution from a result-oriented requirement, so the user never has to pick which frontend skill to use. Decomposes the requirement into the minimal combination of artifacts across the Lovelace skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-lovelace-card-scaffold, ha-card-editor-add, ha-card-features-add, ha-badge-add, ha-strategy-add, ha-panel-add, and ha-websocket-command-add in order — threading the card tag, file path, module resource, and domain between steps — and surfaces a WebSocket backend's Python-integration dependency in the plan instead of folding it into a frontend skill. Activate on "build a custom card with an editor and a feature", "create a dashboard strategy plus a badge", "set up a custom panel with a WebSocket backend", "baue mir eine Lovelace-Card mit Editor", "richte ein Custom-Panel mit WebSocket-Backend ein". Do not activate for a single clear frontend artifact (let the owning skill handle it), the Python integration backend (ha-integration-scaffold), or deploying to a live HA instance.
+description: Plan and orchestrate a complete Home Assistant Lovelace/frontend solution from a result-oriented requirement, so the user never has to pick which frontend skill to use. Decomposes the requirement into the minimal combination of artifacts across the Lovelace skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-lovelace-card-scaffold, ha-card-editor-add, ha-card-features-add, ha-badge-add, ha-strategy-add, ha-panel-author, and ha-websocket-command-add in order — threading the card tag, file path, module resource, and domain between steps — and surfaces a WebSocket backend's Python-integration dependency in the plan instead of folding it into a frontend skill. Activate on "build a custom card with an editor and a feature", "create a dashboard strategy plus a badge", "set up a custom panel with a WebSocket backend", "baue mir eine Lovelace-Card mit Editor", "richte ein Custom-Panel mit WebSocket-Backend ein". Do not activate for a single clear frontend artifact (let the owning skill handle it), the Python integration backend (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, lovelace, frontend, orchestration]
+phase: plan
+summary: "Plans and orchestrates a complete Lovelace/frontend solution from a result-oriented requirement, dispatching the frontend skill family in dependency order."
+summary_de: "Plant und orchestriert eine vollständige Lovelace-/Frontend-Lösung aus einer Anforderung und dispatcht die Frontend-Skill-Familie in Abhängigkeitsreihenfolge."
+use_when:
+  - "you want a custom card together with its editor and a feature"
+  - "you want a dashboard strategy plus a badge"
+  - "you want a custom panel backed by a WebSocket command"
+dont_use_when:
+  - situation: "You need the Python integration backend, not the frontend"
+    alternative: ha-integration-scaffold
+  - situation: "You need only one frontend artifact, e.g. a single card"
+    alternative: ha-lovelace-card-scaffold
+see_also:
+  - ha-lovelace-card-scaffold
+  - ha-card-editor-add
+  - ha-card-features-add
+  - ha-badge-add
+  - ha-strategy-add
+  - ha-panel-author
+  - ha-websocket-command-add
+  - ha-integration-solution
 ---
 
 # HA Lovelace Solution
@@ -29,7 +50,7 @@ Use this skill when the user describes a **frontend result** that likely needs m
 
 ## Hard rules
 
-1. **Never generate inline.** Every artifact is produced by its owning skill — `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-add`, or `ha-websocket-command-add`. This skill plans and dispatches; it does not write artifacts.
+1. **Never generate inline.** Every artifact is produced by its owning skill, resolved at runtime from the live frontend `ha-*` inventory (see [Runtime skill resolution](#runtime-skill-resolution)) rather than a frozen name list — the skill names in the decomposition heuristic are illustrative anchors. This skill plans and dispatches; it does not write artifacts.
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
 3. **One requirement, one run.** No multi-requirement batches.
 4. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; never add an add-on a single artifact already covers.
@@ -37,6 +58,7 @@ Use this skill when the user describes a **frontend result** that likely needs m
 6. **Stop on NEEDS-WORK.** If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent artifact on an unfinished predecessor.
 7. **Backend lives in a Python integration.** A WebSocket command's backend belongs to a custom integration — dispatch the command via `ha-websocket-command-add`, surface a missing integration as a prerequisite (`ha-integration-scaffold`), and never fold backend work into a frontend skill.
 8. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Layout-antipattern catalogue governs every artifact.** Every dispatched card/panel/strategy/badge must conform to [`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md); fold its acceptance checklist into each artifact's conformance gate and stop on a violation as with any NEEDS-WORK (rule 6).
 
 ## Inputs
 
@@ -47,6 +69,10 @@ Use this skill when the user describes a **frontend result** that likely needs m
 | `domain` | no | asked when needed | the existing integration's domain (for `www/` placement and the WS command) |
 | `known_sources` | no | asked when needed | existing card tag / module resource to build on |
 
+## Runtime skill resolution
+
+Resolve the owning skill for each artifact **at runtime**, by matching the requirement against the live inventory of this plugin's frontend `ha-*` skills (`ha-lovelace-*`, `ha-card-*`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-*`, `ha-websocket-command-add`) — read each candidate's stated responsibility from your available-skills registry, or, when running inside the plugin source tree, `Glob skills/ha-*/SKILL.md` and read its `description:`. Match on responsibility, not on a remembered name. The decomposition heuristic below is an **illustrative anchor** of the typical mappings, **not** an authoritative or exhaustive list: re-resolve against the current inventory on every run, so a skill newly added to (or renamed within) the family is dispatchable immediately and a removed one is not — without editing this skill (the runtime-lookup pattern of `issue-orchestrate`). If you genuinely cannot enumerate the live inventory, fall back to the anchor table and note the degraded resolution.
+
 ## Decomposition heuristic (requirement → artifact type → skill)
 
 | The requirement needs… | Artifact | Owning skill |
@@ -54,9 +80,11 @@ Use this skill when the user describes a **frontend result** that likely needs m
 | a standalone custom card (the visible card element) | custom card (`www/<card>.js`) | `ha-lovelace-card-scaffold` (step 1 when a card is needed) |
 | a visual config editor for a card (`ha-form` via `getConfigElement`) | card editor element | `ha-card-editor-add` (depends on the card) |
 | a tile/card feature (interactive control row in the tile card and other host cards) | card-feature element | `ha-card-features-add` (depends on a frontend module) |
+| correct sizing across all view types and edit mode (`getGridOptions`/`getCardSize`; fixes the edit-mode overlay overlap and view/masonry/panel misfit) | size declaration | `ha-card-sizing-determine` (depends on any scaffolded card/panel; post-generation completion step) |
+| a correct card-picker / editor live preview | preview wiring | `ha-card-preview-add` (depends on the card) |
 | a custom badge in the dashboard badge picker | badge element | `ha-badge-add` (independent top-level) |
 | auto-generated views/cards (dashboard or view strategy) | strategy class | `ha-strategy-add` (independent top-level) |
-| a full-page custom panel in the sidebar | custom panel | `ha-panel-add` (independent top-level) |
+| a full-page custom panel in the sidebar | custom panel | `ha-panel-author` (independent top-level; dispatches `ha-panel-add` for the base scaffold) |
 | a backend endpoint a card/panel calls | WebSocket command (Python) | `ha-websocket-command-add` (backend; needs an integration → `ha-integration-scaffold` if absent) |
 | an own device/cloud protocol, config flow, the integration that hosts the command | custom integration | **out of scope** → `ha-integration-scaffold` |
 
@@ -64,7 +92,7 @@ Use this skill when the user describes a **frontend result** that likely needs m
 
 ### 1) Clarify
 
-If the requirement is underspecified, ask 1–3 targeted questions (which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed) before planning. Do not plan on guesses.
+First gauge requirement confidence. When the requirement is clearly specified, use the lightweight path: ask 1–3 targeted questions (which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed) before planning. When it is below a confidence threshold (vague result, unnamed entities, unclear scope), dispatch `requirements-elicit` first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding. Do not plan on guesses.
 
 ### 2) Plan
 
@@ -84,6 +112,8 @@ Surface any backend / custom-integration prerequisite here. Wait for explicit ap
 ### 3) Dispatch
 
 Invoke each owning skill in plan order, passing the identities resolved in earlier steps (card tag, file path, module resource, `<domain>`, command `type`) as inputs to the dependent steps. After each, check the returned report; stop on NEEDS-WORK.
+
+For every scaffolded card or panel, run the size-declaration completion step by dispatching `ha-card-sizing-determine` (per [`ha/card-panel-sizing`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/card-panel-sizing/en.md)) before the aggregate report, and dispatch `ha-card-preview-add` when a card-picker / editor preview is in scope — these are the default post-generation completion steps, not optional afterthoughts, since wrong sizing and a broken preview are exactly the defects a naive requirement will not name.
 
 ### 4) Aggregate report
 

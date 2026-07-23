@@ -16,6 +16,7 @@ The skill adds **one** additional coordinator per call. It does not remove one, 
 
 - Make the multi-coordinator topology from `ha/coordinator-patterns` introducible after the fact
 - Ensure `RuntimeData.coordinators` mapping as the only lookup path — the new coordinator is not a separate `RuntimeData` field but an additional key in the mapping
+- Keep the coordinator on a typed `runtime_data` config entry and surface the `PARALLEL_UPDATES` requirement for the platforms it backs
 - Configurable update intervals for the new coordinator from the start, with options-flow entry plus min cap
 - Test coverage for the new coordinator (error mapping, happy path) as a mandatory part of delivery
 
@@ -24,7 +25,7 @@ The skill adds **one** additional coordinator per call. It does not remove one, 
 - Coordinator removal or coordinator consolidation — manual task
 - Splitting a mega-coordinator into multiple pieces in one call — step-by-step with the `add` skill
 - Cross-coordinator data aggregation (platform reads from two coordinators) — separate follow-up spec if needed at all
-- Push-based coordinators (webhook, MQTT, WebSocket) — separate follow-up spec
+- Bespoke push transport wiring (webhook server, MQTT broker) — out of scope; a push-style coordinator variant (`async_set_updated_data`) for `local_push` / `cloud_push` is supported (see Generator choreography)
 
 ## Requirements
 
@@ -66,10 +67,13 @@ The skill adds **one** additional coordinator per call. It does not remove one, 
 - **MUST** append a new `<Domain><Role>Coordinator(DataUpdateCoordinator[<DataType>])` class in `coordinator.py` that satisfies `ha/coordinator-patterns`: `config_entry`, `name=f"{DOMAIN}_<role>"`, `update_interval` from `entry.options` with min cap, `always_update=False`, error mapping (`ConfigEntryAuthFailed` / `UpdateFailed`), `async_timeout.timeout(...)` wrap
 - **MUST** add constants in `const.py`: `CONF_POLL_<ROLE>`, `DEFAULT_POLL_<ROLE>`, `MIN_POLL_<ROLE>`
 - **MUST** instantiate the new coordinator in `__init__.py` (`async_setup_entry`), call `async_config_entry_first_refresh()`, and extend the `runtime_data.coordinators` mapping (`{"<existing_role>": existing, "<role>": new}`) — the `RuntimeData` dataclass itself stays unchanged because the mapping already exists
+- **MUST** keep the mapping on a **typed** config entry (a typed `ConfigEntry[RuntimeData]` alias used throughout) and re-verify the `RuntimeData` dataclass field type when the key is added, so the typed `runtime_data` stays sound (`ha/runtime-data-pattern`)
 - **MUST** add the new `CONF_POLL_<ROLE>` entry in `config_flow.py` (options flow) inside `OPTIONS_SCHEMA` with `vol.All(int, vol.Range(min=MIN_POLL_<ROLE>))`, default `DEFAULT_POLL_<ROLE>`
 - **MUST** add the `options.step.init.data.poll_interval_<role>` string in `strings.json` and every `translations/<lang>.json`
 - **MUST** add tests in `tests/test_coordinator.py`: auth error → `ConfigEntryAuthFailed`, connection error → `UpdateFailed`, happy path with a JSON fixture
 - **MAY** create a new fixture file `tests/fixtures/<role>.json` when the API method returns structured responses
+- **SHOULD** surface in the report that every platform reading the new coordinator needs a module-level `PARALLEL_UPDATES` (Silver `parallel-updates`), pointing at `ha-entity-platform-add` / `ha-entity-description-mapper`
+- **MAY** produce a push-style coordinator variant (`async_set_updated_data`, no `update_interval`) instead of a polling one when the integration's iot_class is `local_push` / `cloud_push`
 
 ### Forbidden
 
@@ -82,6 +86,7 @@ The skill adds **one** additional coordinator per call. It does not remove one, 
 - [ ] A new coordinator class appears in `coordinator.py`
 - [ ] `const.py` carries `CONF_POLL_<ROLE>`, `DEFAULT_POLL_<ROLE>`, `MIN_POLL_<ROLE>`
 - [ ] `__init__.py` instantiates the new coordinator, calls `async_config_entry_first_refresh()`, and extends the `runtime_data.coordinators` mapping
+- [ ] The coordinator is stored on a typed `runtime_data` (typed `ConfigEntry[RuntimeData]`) and the report surfaces the `PARALLEL_UPDATES` requirement for platforms bound to it
 - [ ] `config_flow.py:OPTIONS_SCHEMA` carries the new `CONF_POLL_<ROLE>` entry
 - [ ] `strings.json` and `translations/<lang>.json` carry the new options string
 - [ ] `tests/test_coordinator.py` carries the three new tests (auth error, connection error, happy path)
@@ -91,5 +96,5 @@ The skill adds **one** additional coordinator per call. It does not remove one, 
 ## Open Questions
 
 - **API method lookup**: Should the skill read `api.py` and suggest methods, or must the user name the method?
-- **Push coordinator variant**: When does a follow-up spec require the webhook / MQTT coordinator path?
+- **Push transport wiring**: the push-style *coordinator* variant (`async_set_updated_data`) is supported; when does bespoke transport (webhook server, MQTT broker) warrant its own skill?
 - **Cross-coordinator platforms**: How does the skill handle the case of a platform combining data from two coordinators? Currently excluded as a non-goal.

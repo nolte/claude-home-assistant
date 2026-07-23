@@ -2,6 +2,25 @@
 name: ha-card-features-add
 description: Augment an existing Home Assistant frontend module with one custom tile/card feature — the interactive control row rendered inside the tile card and other host cards — conforming to spec/ha/lovelace-card-features. Creates the feature custom element implementing the card-feature contract (setConfig with an invalid-config reject path, the hass setter, a shared isSupported(hass, context) predicate that resolves stateObj from context.entity_id as the single source of truth, the render() of the control row calling this.hass.callService(domain, service, {entity_id})), optional static getStubConfig / getConfigElement, and registration via window.customCardFeatures.push({type, name, ...}) plus customElements.define. Activate on "add a tile feature", "create a custom card feature", "add a control row to the tile card", "füge ein Tile-Feature hinzu", "erstelle ein Custom-Card-Feature". Do not activate for a full card (ha-lovelace-card-scaffold), a card config editor (ha/lovelace-card-editor), badges (separate spec), or deploying to a live HA instance.
 tags: [home-assistant, frontend, lovelace, card-feature]
+phase: design
+summary: "Adds one custom tile/card feature — an interactive control row rendered inside the tile card or other host cards — to an existing frontend module."
+summary_de: "Fügt einem bestehenden Frontend-Modul ein Custom-Tile-/Card-Feature hinzu — eine interaktive Steuerzeile in der Tile-Card oder anderen Host-Cards."
+use_when:
+  - "you want to add a tile feature"
+  - "you want to create a custom card feature"
+  - "you want to add a control row to the tile card"
+dont_use_when:
+  - situation: "You want a full custom card, not a single feature"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You want the feature's graphical config editor"
+    alternative: ha-card-editor-add
+  - situation: "You want a badge as a dashboard delivery shape"
+    alternative: ha-badge-add
+see_also:
+  - ha-lovelace-card-scaffold
+  - ha-card-editor-add
+  - ha-card-preview-add
+  - ha-badge-add
 ---
 
 # HA Card Features Add

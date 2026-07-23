@@ -2,6 +2,26 @@
 name: ha-entity-platform-add
 description: Scaffold one active platform entity into an existing Home Assistant Custom Integration — a command-driven domain (climate, cover, light, fan, lock, media_player, vacuum, valve, humidifier, water_heater, siren, lawn_mower, …) whose entity exposes async command methods — conforming to spec/ha/entity-platform-types plus the matching ha/entity-platforms-* family spec. Creates the platform module <platform>.py with the entity subclass (ClimateEntity / CoverEntity / LightEntity / …), its EntityDescription where the family uses one, the supported_features bitmask from the domain's *EntityFeature enum, the mandated async command methods (async_turn_on, async_set_temperature, async_open_cover, async_set_hvac_mode), the async_setup_entry platform setup adding entities to the coordinator, and the state/attribute properties. Requires the operator to name the target domain and confirm the family first. Activate on "add a climate/cover/light/fan/lock entity", "scaffold an active platform entity", "implement async command methods for my <domain> entity", "scaffolde eine aktive <Domain>-Entity", "füge eine Cover-Entity hinzu". Do not activate for declarative read-type entities via EntityDescription tables (ha-entity-description-mapper), the coordinator itself (ha-coordinator-add), greenfield integration scaffolding (ha-integration-scaffold), device-automation triggers (ha-device-automation-add), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, entity-platform]
+phase: design
+summary: "Scaffolds one active command-driven platform entity (climate, cover, light, fan, lock, media_player, …) into an existing integration — entity class, feature bitmask, command methods, and setup."
+summary_de: "Scaffolded eine aktive, befehlsgesteuerte Plattform-Entity (climate, cover, light, fan, lock, …) in eine bestehende Integration — Entity-Klasse, Feature-Bitmaske, Command-Methoden und Setup."
+use_when:
+  - "you want to add a climate, cover, light, fan, or lock entity"
+  - "you want to implement async command methods for a domain entity"
+dont_use_when:
+  - situation: "You author read-type entities as EntityDescription tables"
+    alternative: ha-entity-description-mapper
+  - situation: "You need the coordinator itself"
+    alternative: ha-coordinator-add
+  - situation: "You are scaffolding a brand-new integration"
+    alternative: ha-integration-scaffold
+  - situation: "You need device-automation triggers or conditions"
+    alternative: ha-device-automation-add
+see_also:
+  - ha-entity-description-mapper
+  - ha-coordinator-add
+  - ha-integration-scaffold
+  - ha-device-automation-add
 ---
 
 # HA Entity Platform Add
@@ -38,7 +58,9 @@ Use this skill to scaffold **one** active platform entity — a command-driven d
 7. **Flag ↔ method, one-to-one.** Implement the documented async command method for every set flag (e.g. `CoverEntityFeature.OPEN` ↔ `async_open_cover`, `ClimateEntityFeature.TARGET_TEMPERATURE` ↔ `async_set_temperature`, `LockEntityFeature.OPEN` ↔ `async_open`, `FanEntityFeature.SET_SPEED` ↔ `async_set_percentage`). Never set a flag "on spec" whose method is missing.
 8. **Required properties, built-in enums.** Provide every property the domain marks as **Required** (`hvac_mode`/`hvac_modes`, `is_closed`, `color_mode`/`supported_color_modes`, `activity`, `alarm_state`, …) and use only the built-in state/mode enums (only built-in `HVACMode`; `VacuumActivity`/`LawnMowerActivity`). Set `device_class` from the closed platform-native enum where a member exists, never a free string.
 9. **Wire the setup.** Implement `async_setup_entry(hass, entry, async_add_entities)` that builds the entities and registers them via `async_add_entities`, attaching to the coordinator / `config_entry.runtime_data`; if no coordinator exists, point at `ha-coordinator-add`.
-10. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)**, do not duplicate the generic entity pattern (delegate to [`ha/entity-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-architecture/de.md)), and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+10. **Availability (`entity-unavailable`, Silver).** The generated entity handles availability — subclass `CoordinatorEntity` (which derives `available` from `coordinator.last_update_success`) or override the `available` property to return `False` when the datapoint can't be read or controlled. An active entity that never reports unavailable silently misses the Silver `entity-unavailable` rule that `ha-quality-scale-audit` checks.
+11. **Emit `PARALLEL_UPDATES` (`parallel-updates`, Silver).** Declare a module-level `PARALLEL_UPDATES` constant in `<platform>.py` (a coordinator-backed read path typically uses `0`; command platforms bound their concurrency). Verify the value against the HA `parallel-updates` rule page rather than reproducing it from memory.
+12. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)**, do not duplicate the generic entity pattern (delegate to [`ha/entity-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-architecture/de.md)), and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
 
@@ -78,11 +100,11 @@ State `domain`, the resolved platform + family, the `*EntityFeature` flags to se
 | inputs | `ha/entity-platforms-inputs` | `NumberEntity` / `SelectEntity` | (one set method, e.g. `async_set_native_value`) |
 | sensors | `ha/entity-platforms-sensors` | `WeatherEntity` / `UpdateEntity` | `WeatherEntityFeature.FORECAST_DAILY` → `async_forecast_daily` |
 
-Generate `<platform>.py` with the entity subclass, its `supported_features` bitmask, the per-flag async command methods, the **Required** state/attribute properties, the `async_setup_entry` setup, and (where the family uses it) the `EntityDescription`. For `light`, also set `supported_color_modes` + `color_mode`.
+Generate `<platform>.py` with the entity subclass, its `supported_features` bitmask, the per-flag async command methods, the **Required** state/attribute properties, availability handling (`CoordinatorEntity` or an `available` override), the module-level `PARALLEL_UPDATES` constant, the `async_setup_entry` setup, and (where the family uses it) the `EntityDescription`. For `light`, also set `supported_color_modes` + `color_mode`.
 
 ### 3) Validate and report
 
-Validate offline (`<platform>.py` present; correct base class; `async_setup_entry` registers via `async_add_entities`; `supported_features` is a `*EntityFeature` bitmask, not a raw integer; every set flag has its async command method; all **Required** properties implemented; built-in state/mode enums; `device_class` from the platform-native enum). Emit a CONFORMANT / NEEDS-WORK report keyed to the acceptance criteria of `ha/entity-platform-types` and the chosen family spec, plus the changed file paths and the quality-scale marker (**Gold**, `entity-device-class`).
+Validate offline (`<platform>.py` present; correct base class; `async_setup_entry` registers via `async_add_entities`; `supported_features` is a `*EntityFeature` bitmask, not a raw integer; every set flag has its async command method; all **Required** properties implemented; availability handled (`CoordinatorEntity` or `available`); a module-level `PARALLEL_UPDATES` is declared; built-in state/mode enums; `device_class` from the platform-native enum). Emit a CONFORMANT / NEEDS-WORK report keyed to the acceptance criteria of `ha/entity-platform-types` and the chosen family spec, plus the changed file paths and the quality-scale marker (**Gold**, `entity-device-class`). This skill generates no tests — **point the operator at `ha-test-harness-augment`** for platform tests.
 
 ### 4) No deploy
 

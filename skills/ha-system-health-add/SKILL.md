@@ -2,6 +2,25 @@
 name: ha-system-health-add
 description: Augment an existing Home Assistant Custom Integration with a system health info provider, conforming to spec/ha/system-health. Creates system_health.py with a @callback-decorated synchronous async_register(hass, register) that calls register.async_register_info(async_health_info) (optionally with a /config/<domain> manage URL), plus the async async_health_info(hass) -> dict callback returning short at-a-glance values — reachability via system_health.async_check_can_reach_url(hass, url) set as a coroutine so the frontend does not block, remaining quota, connected server — and the system_health strings.json entries. Runs an at-a-glance value check and keeps diagnostic dumps out. Activate on "add system health info", "show my integration on the system health page", "füge System-Health-Infos hinzu". Do not activate for redacted diagnostic dumps (ha-diagnostics-augment), user-facing problems needing an action (ha-repairs-add), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, system-health]
+phase: design
+summary: "Adds a system_health.py provider that surfaces short at-a-glance status — reachability, quota, connected server — on the integration's system health page."
+summary_de: "Fügt einen system_health.py-Provider hinzu, der kurze Status-Werte auf einen Blick — Erreichbarkeit, Kontingent, verbundener Server — auf der System-Health-Seite anzeigt."
+use_when:
+  - "you want to add system health info to an integration"
+  - "you want to show your integration on the system health page"
+  - "you want to surface backend reachability or remaining quota"
+dont_use_when:
+  - situation: "You need a full redacted diagnostic dump"
+    alternative: ha-diagnostics-augment
+  - situation: "You have a user-facing problem that needs an action"
+    alternative: ha-repairs-add
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-diagnostics-augment
+  - ha-repairs-add
+  - ha-coordinator-add
+  - ha-integration-scaffold
 ---
 
 # HA System Health Add

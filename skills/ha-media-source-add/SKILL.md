@@ -2,6 +2,19 @@
 name: ha-media-source-add
 description: Augment an existing Home Assistant Custom Integration with a media source provider, conforming to spec/ha/media-source. Creates media_source.py with a top-level async_get_media_source(hass) -> MediaSource, a MediaSource subclass bound via super().__init__(DOMAIN), async_browse_media(item) returning a BrowseMediaSource tree (root node on empty identifier, children otherwise, BrowseError on failure), and async_resolve_media(item) returning a PlayMedia(url, mime_type) (Unresolvable on failure); sets a MediaClass plus correct can_play/can_expand per node, builds URIs via generate_media_source_id, and wires translatable Unresolvable/BrowseError exceptions. Discovery needs no manifest.json change. Activate on "add a media source", "let users browse my media in the media browser", "füge eine Media-Source hinzu", "lass den User meine Medien im Media-Browser durchsuchen". Do not activate for a media_player entity that consumes media sources (ha/entity-platforms-media), translation mechanics (ha/translations), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, media-source]
+phase: design
+summary: "Adds a media source provider (media_source.py) to an existing HA Custom Integration, exposing a browsable, playable library to the media browser."
+summary_de: "Fügt einer bestehenden HA-Custom-Integration einen Media-Source-Provider (media_source.py) hinzu, der eine durchsuchbare, abspielbare Bibliothek im Media-Browser bereitstellt."
+use_when:
+  - "you want to add a media source to your integration"
+  - "you want users to browse your media in the media browser"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-integration-scaffold
+  - ha-entity-platform-add
+  - ha-translation-sync
 ---
 
 # HA Media Source Add

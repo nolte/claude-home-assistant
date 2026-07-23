@@ -83,7 +83,7 @@ Der Skill schreibt diese Dateien in einem Aufwasch (kein User-Approval pro Datei
   - `custom_components/<domain>/config_flow.py` — User-Flow plus Reauth (sofern `auth=true`) plus Reconfigure plus Options-Flow (siehe `ha/config-flow-patterns`)
   - `custom_components/<domain>/coordinator.py` — eine `<Domain>Coordinator`-Klasse mit Error-Mapping (siehe `ha/coordinator-patterns`)
   - `custom_components/<domain>/entity.py` — Base-Entity-Klasse plus DeviceInfo-Factory-Funktionen (siehe `ha/entity-architecture` und `ha/device-registry`)
-  - `custom_components/<domain>/<platform>.py` für jede Plattform aus `platforms` — `EntityDescription`-Tupel-Liste plus generische Entity-Klasse (siehe `ha/entity-architecture`)
+  - `custom_components/<domain>/<platform>.py` für jede Plattform aus `platforms` — `EntityDescription`-Tupel-Liste plus generische Entity-Klasse und eine modul-weite `PARALLEL_UPDATES`-Konstante (Silver `parallel-updates`) (siehe `ha/entity-architecture`)
   - `custom_components/<domain>/strings.json` — Englische Quell-Strings für Config-Flow, Entitäten, ggf. Services (siehe `ha/translations`)
   - `custom_components/<domain>/translations/en.json` — Spiegel von `strings.json`
   - `custom_components/<domain>/translations/de.json` — Deutsche Übersetzung
@@ -124,11 +124,12 @@ Der Skill schreibt diese Dateien in einem Aufwasch (kein User-Approval pro Datei
 ### Boundaries zu Nachbar-Skills
 
 - **API-Client-Spezifik** (echte Endpoints, echte Schemas, echte Validierungs-Logik) → kein dedizierter Skill geplant; Konsumenten-Aufgabe
-- **Config-Flow-Anpassungen** über das Default hinaus (Multi-Step-Tenants, Custom-Discovery) → eigener Skill `ha-config-flow-augment` (geplant)
-- **Coordinator-Topologie-Erweiterung** über den Single-Coordinator hinaus → eigener Skill `ha-coordinator-add` (geplant)
-- **Lovelace-Card-Scaffold** → eigener Skill `ha-lovelace-card-scaffold` (geplant)
-- **Test-Coverage über das Default-Skelett hinaus** → eigener Skill `ha-test-harness-augment` (geplant)
-- **Deploy/Verify in den Kind-Cluster** → Agent `ha-integration-deploy` / `ha-integration-verify` (geplant)
+- **Config-Flow-Anpassungen** über das Default hinaus (Multi-Step-Tenants, Custom-Discovery) → eigener Skill `ha-config-flow-augment`
+- **Coordinator-Topologie-Erweiterung** über den Single-Coordinator hinaus → eigener Skill `ha-coordinator-add`
+- **Lovelace-Card-Scaffold** → eigener Skill `ha-lovelace-card-scaffold`
+- **Test-Coverage über das Default-Skelett hinaus** → eigener Skill `ha-test-harness-augment`
+- **Deploy/Verify in den Kind-Cluster** → Agent `ha-integration-deploy` / `ha-integration-verify`
+- **HA-spezifischer CI-Workflow** (hassfest / hacs-validate / pytest-Matrix) → eigener Skill `ha-integration-ci-scaffold` (geplant); das generische `nolte-shared:project-structure-apply` emittiert keine HA-spezifische CI
 
 ## Akzeptanzkriterien
 
@@ -143,6 +144,7 @@ Der Skill schreibt diese Dateien in einem Aufwasch (kein User-Approval pro Datei
 - [ ] `runtime_data` ist typisiert via `@dataclass`, kein Vorkommen von `hass.data[DOMAIN]` im Code
 - [ ] `_attr_has_entity_name = True` auf der Base-Entity-Klasse, kein Vorkommen von `_attr_name = "<hardcoded>"` in den Plattform-Modulen
 - [ ] Translation-Keys konsistent zwischen `strings.json`, `translations/<lang>.json`, `icons.json` und Plattform-Code
+- [ ] Jedes generierte Plattform-Modul deklariert eine modul-weite `PARALLEL_UPDATES`-Konstante (Silver `parallel-updates`)
 
 ## Offene Fragen
 
@@ -150,5 +152,5 @@ Der Skill schreibt diese Dateien in einem Aufwasch (kein User-Approval pro Datei
 - **Multi-Coordinator-Default**: Der Skill scaffolded heute einen einzelnen Coordinator. Soll er bei `iot_class=local_polling` und `integration_type=hub` automatisch einen zweiten Coordinator (Alerts mit kürzerem Intervall) anlegen, oder bleibt das Konsumenten-Aufgabe?
 - **`requirements`-Skelett**: Soll der Skill `aiohttp` als Default-Requirement in `manifest.json` setzen, oder bleibt das User-Aufgabe? `kamerplanter-ha` hat ein leeres `requirements`-Array, weil der API-Client `aiohttp` aus HA bereitstellt.
 - **`README.md`-Scaffold**: Soll der Skill eine `README.md` für das Konsumenten-Repo erzeugen oder ist die Konsumenten-README außerhalb? Aktuell nicht in der Pflicht-Liste.
-- **CI-Workflow-Scaffold**: Soll der Skill `.github/workflows/ci.yml` erzeugen, oder ist das Aufgabe von `nolte-shared:project-structure-apply`? Letzteres ist sauberer (Trennung nach Verantwortlichkeit), aber dann muss der User zwei Skills nacheinander aufrufen.
+- **CI-Workflow-Scaffold**: HA-spezifische CI (hassfest / hacs-validate / pytest-Matrix) gehört dem dedizierten Skill `ha-integration-ci-scaffold` (geplant), nicht dem generischen `nolte-shared:project-structure-apply` (das keine HA-spezifische CI emittiert). Die Akzeptanz dieses Skills verlangt nur, dass hassfest *besteht*, nicht dass er den Workflow erzeugt. Ob `ha-integration-scaffold` automatisch in `ha-integration-ci-scaffold` verketten soll, bleibt offen.
 - **`plan.md`-Format-Schwelle**: Wie strukturiert ist `plan.md`? Aktuell als formloses Mapping formuliert; eine Pflicht-Vorlage wäre konkreter, aber starr.

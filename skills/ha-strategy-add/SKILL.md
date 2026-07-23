@@ -2,6 +2,23 @@
 name: ha-strategy-add
 description: Augment an existing Home Assistant frontend module with one custom Lovelace strategy — a dashboard strategy or a view strategy — conforming to spec/ha/lovelace-strategies. Creates the strategy class with the static async generate(config, hass) returning the kind-correct shape (a dashboard strategy returns a views array, a view strategy returns a cards array and never a views array), the customElements.define("ll-strategy-dashboard-<id>"/"ll-strategy-view-<id>", …) registration, the dashboard-resource loading, the strategy.type custom:<id> reference, hass.callWS registry access with Promise.all, optional getConfigElement/getCreateSuggestions, and — for dashboard strategies — the window.customStrategies push for the community-dashboard dialog. Activate on "add a dashboard strategy", "auto-generate views with a strategy", "create a custom Lovelace strategy", "füge eine Strategy hinzu". Do not activate for a static card (ha-lovelace-card-scaffold), custom view-layout elements or panels (ha/lovelace-views-panels), badges (ha/lovelace-badges), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, lovelace]
+phase: design
+summary: "Adds one custom Lovelace strategy — dashboard or view — with its generate() method, customElements registration, resource loading, and optional config element."
+summary_de: "Fügt eine benutzerdefinierte Lovelace-Strategy hinzu — Dashboard oder View — mit generate()-Methode, customElements-Registrierung, Ressourcen-Laden und optionalem Config-Element."
+use_when:
+  - "you want to add a dashboard or view strategy"
+  - "you want to auto-generate views or cards programmatically"
+  - "you want to create a custom Lovelace strategy"
+dont_use_when:
+  - situation: "You want a single static custom card, not a generator"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You want to add custom badges"
+    alternative: ha-badge-add
+see_also:
+  - ha-lovelace-card-scaffold
+  - ha-badge-add
+  - ha-panel-add
+  - ha-lovelace-solution
 ---
 
 # HA Strategy Add
@@ -38,6 +55,7 @@ Use this skill to add **one** custom Lovelace strategy — a dashboard strategy 
 7. **Graphical config, when present.** `static getConfigElement()` returns an element implementing `setConfig(config)` and emitting a `config-changed` custom event (`bubbles: true, composed: true, detail: { config: newConfig }`); set `configRequired = true` when the strategy needs config, otherwise `noEditor = true`.
 8. **Community dashboard, when a dashboard strategy.** A `window.customStrategies.push({...})` carries `type` (without `custom:`) and `strategyType: "dashboard"` (both required); `name`/`description`/`documentationURL` and `static getCreateSuggestions(hass)` (default `title`/`icon`) are optional.
 9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+10. **Honour the layout-antipattern catalogue** ([`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md)). Generated views/cards set each view's `type` explicitly and prefer `sections` — never rely on the shape-inferred default (A3); never emit a panel view with more than one card (A1) or badges in a panel/sidebar view (A2); use only native constructs, never third-party layout tooling (D1).
 
 ## Inputs
 

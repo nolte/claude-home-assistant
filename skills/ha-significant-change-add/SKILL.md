@@ -2,6 +2,21 @@
 name: ha-significant-change-add
 description: Augment an existing Home Assistant Custom Integration with a significant-change checker, conforming to spec/ha/significant-change. Creates significant_change.py with a top-level @callback async_check_significant_change(hass, old_state, old_attrs, new_state, new_attrs, **kwargs) -> bool | None, applying per-domain / per-device-class threshold logic (return True if significant, False if insignificant, None if undecided) so recorder/cloud/Google/Alexa/HomeKit can throttle insignificant updates. Runs a need check (only integrations exporting continuous values qualify) and draws the boundary to coordinator always_update. Activate on "add significant change", "throttle insignificant updates", "stop reporting micro-changes to HomeKit", "füge Significant-Change-Logik hinzu". Do not activate for the entity's native value (ha/entity-architecture), coordinator always_update (ha/coordinator-patterns), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, significant-change]
+phase: design
+summary: "Adds a significant_change.py checker so recorder, cloud, Google, Alexa, and HomeKit throttle insignificant continuous-value updates via per-device-class thresholds."
+summary_de: "Fügt einen significant_change.py-Checker hinzu, damit Recorder, Cloud, Google, Alexa und HomeKit unbedeutende kontinuierliche Wertänderungen über Device-Class-Schwellen drosseln."
+use_when:
+  - "you want to add significant-change logic to an integration"
+  - "you want to throttle insignificant updates to consumers"
+  - "you want to stop reporting micro-changes to HomeKit"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-coordinator-add
+  - ha-reproduce-state-add
+  - ha-entity-platform-add
+  - ha-integration-scaffold
 ---
 
 # HA Significant Change Add

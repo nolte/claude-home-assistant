@@ -2,6 +2,23 @@
 name: ha-websocket-command-add
 description: Augment an existing Home Assistant Custom Integration with one custom WebSocket API command — the backend endpoint a frontend card or panel calls — conforming to spec/ha/frontend-websocket-commands. Creates the handler with signature (hass, connection, msg) decorated with @websocket_api.websocket_command({...vol schema...}) and either @callback (in-memory) or @websocket_api.async_response (I/O/device/computation), a "<domain>/<name>" namespaced type, vol.Required/vol.Optional input fields, connection.send_result / send_error delivery with correct msg["id"] correlation, optional @websocket_api.require_admin, and the async_register_command wiring in async_setup. Runs a command-vs-service check first. Activate on "add a websocket command", "expose a backend endpoint to my card", "register a custom ws command", "füge ein WebSocket-Command hinzu". Do not activate for user-driven actions/mutations (ha-service-definition-generator), the frontend consumer side (ha/frontend-data-api), a custom panel (ha-panel-add), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, frontend, websocket]
+phase: design
+summary: "Adds one custom WebSocket API command — the backend endpoint a card or panel calls via hass.callWS — with vol schema, sync/async handler, and setup registration."
+summary_de: "Fügt ein benutzerdefiniertes WebSocket-API-Command hinzu — den Backend-Endpoint, den eine Karte per hass.callWS aufruft — mit vol-Schema, Sync/Async-Handler und Setup-Registrierung."
+use_when:
+  - "you want to add a WebSocket command to an integration"
+  - "you want to expose a backend endpoint to your card"
+  - "you want a card to load integration-specific backend data"
+dont_use_when:
+  - situation: "You need a user-driven action or backend mutation"
+    alternative: ha-service-definition-generator
+  - situation: "You are building the custom panel that consumes the command"
+    alternative: ha-panel-add
+see_also:
+  - ha-service-definition-generator
+  - ha-panel-add
+  - ha-panel-author
+  - ha-coordinator-add
 ---
 
 # HA WebSocket Command Add

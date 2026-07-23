@@ -2,6 +2,23 @@
 name: ha-translation-sync
 description: Detect and fix structural drift between strings.json and every translations/<lang>.json in an HA Custom Integration. Fill missing keys with TODO markers, surface orphaned keys for confirmation, and additionally report icons.json drift. Activate on phrasings like "sync the translations", "check translation drift", "align strings.json with translations", "prüfe Translation-Drift". Do not activate for machine translation, value changes, or new-language creation.
 tags: [home-assistant, custom-integration, translations]
+phase: cross-cutting
+summary: "Detects and fixes structural drift between strings.json and every translations/<lang>.json in an HA Custom Integration, and reports icons.json drift."
+summary_de: "Erkennt und behebt strukturellen Drift zwischen strings.json und jeder translations/<lang>.json einer HA-Custom-Integration und meldet icons.json-Drift."
+use_when:
+  - "you want to sync an integration's translations"
+  - "you want to check for translation drift"
+  - "you want to align strings.json with the translation files"
+dont_use_when:
+  - situation: "You need to change actual string content, not sync structure"
+    alternative: ha-integration-scaffold
+  - situation: "Entity string content changed and needs re-mapping"
+    alternative: ha-entity-description-mapper
+see_also:
+  - ha-integration-scaffold
+  - ha-entity-description-mapper
+  - ha-service-definition-generator
+  - ha-integration-solution
 ---
 
 # HA Translation Sync
@@ -25,7 +42,7 @@ Use this skill to align `strings.json` with every `translations/<lang>.json` fil
 2. **Never silently delete orphaned keys.** Surface them; ask for confirmation.
 3. **Never apply machine translations.** `<TODO: translate '<EN value>'>` is the only automatic placeholder.
 4. **Always run `report` first.** Default mode is `report`; `apply` is opt-in.
-5. **Always include `icons.json` drift.** A translation key without an icon (or vice versa) is a defect even when both files are internally consistent.
+5. **Always include `icons.json` drift — and fill it.** A translation key without an icon (or vice versa) is a defect even when both files are internally consistent; in `apply` mode, fill a missing `icons.json` entry with a `<TODO: icon>` marker via the same mechanism as `strings.json`, rather than only reporting it.
 6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
@@ -56,6 +73,10 @@ For `icons.json` vs. `strings.json`:
 - list `entity.<platform>.<key>` mismatches
 - list `services.<name>` mismatches
 
+For `strings.json` config-flow completeness:
+
+- flag config-flow steps whose `data` fields lack a matching `data_description` entry (a Bronze config-flow subcheck)
+
 Print the drift report.
 
 ### 2) Confirm (only in `apply` mode)
@@ -71,11 +92,12 @@ Print the drift report.
 ### 4) Report
 
 - counts of missing / orphaned / structural-gap entries per language
-- counts of `icons.json` mismatches
+- counts of `icons.json` mismatches (and `<TODO: icon>` markers filled in `apply` mode)
+- count of config-flow fields missing a `data_description` entry
 - list of `<TODO>` placeholders the user now needs to fill in
 
 ## Boundaries
 
 - New language file → user decision; manual init
 - Machine translation → out of scope
-- `icons.json` sync (auto-fill) → separate spec planned (`ha-icons-sync`)
+- Icon-name choice / value localization (icon names are not translated) → out of scope; structural `icons.json` drift and TODO-fill of missing keys are handled by this skill

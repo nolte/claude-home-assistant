@@ -2,6 +2,20 @@
 name: ha-service-definition-generator
 description: Add an HA service to an existing Custom Integration — services.yaml entry with typed selectors, voluptuous schema, handler stub with multi-instance disambiguation and coordinator refresh, translations, icon, and tests. Activate on phrasings like "add a service `<name>`", "add a `refresh_data` service", "füge einen Service `<name>` hinzu". Do not activate for service removal, service-schema migration, or greenfield scaffolding.
 tags: [home-assistant, custom-integration, services]
+phase: design
+summary: "Adds an HA service to an existing integration — a services.yaml entry with typed selectors, a voluptuous schema, a handler stub, translations, an icon, and tests."
+summary_de: "Fügt einer bestehenden Integration einen HA-Service hinzu — services.yaml-Eintrag mit typisierten Selectors, Voluptuous-Schema, Handler-Stub, Übersetzungen, Icon und Tests."
+use_when:
+  - "you want to add a named service to an integration"
+  - "you want to add a refresh_data service that re-polls coordinators"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-integration-scaffold
+  - ha-coordinator-add
+  - ha-integration-events-add
+  - ha-translation-sync
 ---
 
 # HA Service Definition Generator
@@ -22,7 +36,7 @@ Use this skill to add one HA service per call to an existing Custom Integration.
 
 1. **Never overwrite existing services.** Conflict on `service` key aborts with the conflicting key quoted.
 2. **Always use typed selectors.** `entity` with `integration: <DOMAIN>`, `select` with `options` list, `number` with `min`/`max`/`step`. Never free string fields.
-3. **Always raise `ServiceValidationError` on user error and `HomeAssistantError` on internal.** Generic `except Exception:` is forbidden in the handler.
+3. **Always raise translated exceptions.** `ServiceValidationError` on user error, `HomeAssistantError` on internal — each raised with `translation_key` + `translation_domain=DOMAIN` (never a bare message string), with the matching `exceptions.<key>` entry added to `strings.json`, so messages are translatable (Gold `exception-translations`). Generic `except Exception:` is forbidden in the handler.
 4. **Always include `_resolve_entry` for multi-instance safety.** The handler must abort with a clear error when multiple config entries match.
 5. **Always refresh coordinator after mutation.** `mutating=true` services call `await entry.runtime_data.coordinators[<role>].async_request_refresh()` before returning.
 6. **Name services per `ha/naming-conventions`.** The `service` key is `snake_case` under the integration `domain`, with matching `services.yaml`/translation keys and English field labels (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)).
@@ -57,9 +71,9 @@ Print the resolved service definition, the field selectors, the icon choice. Wai
 ### 2) Apply edits
 
 - `services.yaml` — append the service entry
-- `__init__.py` (or `services.py` when ≥5 services exist) — `<SERVICE>_SCHEMA` (voluptuous), `_async_handle_<service_name>(call)` stub, `hass.services.async_register(...)` in `async_setup_entry`
+- `__init__.py` (or `services.py` when ≥5 services exist) — `<SERVICE>_SCHEMA` (voluptuous), `_async_handle_<service_name>(call)` stub, and `hass.services.async_register(...)` in `async_setup` (registered **once** at integration level, guarded against duplicate registration — Bronze `action-setup`; never per-entry in `async_setup_entry`)
 - `_resolve_entry` helper — create when absent
-- `strings.json` and every `translations/<lang>.json` — service + field labels
+- `strings.json` and every `translations/<lang>.json` — service + field labels, plus an `exceptions.<key>` message for every translated exception the handler raises
 - `icons.json` — `services.<service>.service`
 - `tests/test_services.py` (create when absent) — happy path, missing disambiguation, auth error
 

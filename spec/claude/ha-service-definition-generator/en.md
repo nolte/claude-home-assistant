@@ -67,9 +67,9 @@ The skill adds one or more services to `services.yaml` plus a handler in `__init
   2. validates inputs from `call.data` against the schema (HA does this before the handler call, but the stub documents the fields)
   3. calls the backend API method with try / except on API-specific auth / connection exceptions
   4. on `mutating=true`: `await entry.runtime_data.coordinators[<coordinator_role>].async_request_refresh()`
-  5. converts auth errors into `ServiceValidationError("invalid_auth")`
-- **MUST** call `hass.services.async_register(DOMAIN, "<service_name>", _async_handle_<service_name>, schema=<SERVICE>_SCHEMA)` in `async_setup_entry` (or a dedicated service-setup function)
-- **MUST** add translation keys in `strings.json` and every `translations/<lang>.json` for `services.<service_name>.name`, `services.<service_name>.description`, `services.<service_name>.fields.<field>.name`, `services.<service_name>.fields.<field>.description`
+  5. converts auth errors into a translated `ServiceValidationError(translation_domain=DOMAIN, translation_key="invalid_auth")` — never a bare message string (Gold `exception-translations`)
+- **MUST** call `hass.services.async_register(DOMAIN, "<service_name>", _async_handle_<service_name>, schema=<SERVICE>_SCHEMA)` in `async_setup` (once at integration level, guarded against duplicate registration — Bronze `action-setup`; never per-entry in `async_setup_entry`)
+- **MUST** add translation keys in `strings.json` and every `translations/<lang>.json` for `services.<service_name>.name`, `services.<service_name>.description`, `services.<service_name>.fields.<field>.name`, `services.<service_name>.fields.<field>.description`, plus an `exceptions.<key>` message for every translated exception the handler raises
 - **MUST** add `services.<service_name>.service` with a fitting Material Design icon in `icons.json`
 - **MUST** add a test block for the service in `tests/` — typically in `tests/test_services.py` (create when absent) — with tests for: successful call, missing disambiguation, auth error
 
@@ -84,8 +84,9 @@ The skill adds one or more services to `services.yaml` plus a handler in `__init
 - [ ] `services.yaml` carries the new service entry with every field and selector
 - [ ] `__init__.py` (or `services.py`) carries `<SERVICE>_SCHEMA` and the handler stub
 - [ ] `_resolve_entry` helper is available (create when absent)
-- [ ] `hass.services.async_register(...)` is called
+- [ ] `hass.services.async_register(...)` is called in `async_setup` (once, guarded against duplicate registration)
 - [ ] Translation keys exist in `strings.json` and every `translations/<lang>.json`
+- [ ] Raised exceptions use `translation_key` + `translation_domain`; matching `exceptions.<key>` entries exist in `strings.json`
 - [ ] `services.<service>.service` icon is in `icons.json`
 - [ ] Tests for the service run cleanly
 - [ ] `ruff check custom_components/<domain>/` runs cleanly

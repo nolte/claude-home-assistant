@@ -2,6 +2,22 @@
 name: ha-pixoo-pixel-art-author
 description: Author detailed 64×64 pixel art for the Divoom Pixoo 64 from a described subject, conforming to the pixoo-pixel-art spec — either as a procedural component list (rectangle/templatable, per-pixel, optionally data-driven) or as a precise build plan for an exactly-64×64 PNG. Enforces a limited ramp-based palette, hue shifting, selective outlining (interior vs. exterior contours), light-source-consistent shading with terminator edges, dosed anti-aliasing and dithering, and LED-matrix readability — explicitly addressing shading and contours. Returns the artifact plus a conformance report. Activate on "draw a battery icon for the Pixoo", "make pixel art of a sun for the Divoom", "design a 64×64 plant graphic with shading", "zeichne ein Pixel-Art-Icon für das Pixoo", "entwirf eine 64×64-Grafik mit Schattierung und Konturen". Do not activate for whole info-page layout (ha-pixoo-page-author), animation/motion (ha-pixoo-animation-author), device setup, or deploying to a live HA instance.
 tags: [home-assistant, divoom-pixoo, pixel-art, yaml]
+phase: build
+summary: "Authors detailed 64×64 pixel art for the Divoom Pixoo 64 — procedural components or a precise PNG build plan — with a ramp palette, shading, and contours."
+summary_de: "Erzeugt detaillierte 64×64-Pixel-Art für den Divoom Pixoo 64 — prozedurale Komponenten oder präziser PNG-Bauplan — mit Ramp-Palette, Schattierung und Konturen."
+use_when:
+  - "you want a pixel-art icon or illustration for the Pixoo"
+  - "you want a 64×64 graphic with shading and contours"
+  - "you want procedural components or a PNG build plan for the Pixoo"
+dont_use_when:
+  - situation: "You need a whole information page or data layout"
+    alternative: ha-pixoo-page-author
+  - situation: "You need a moving or animated graphic"
+    alternative: ha-pixoo-animation-author
+see_also:
+  - ha-pixoo-page-author
+  - ha-pixoo-animation-author
+  - ha-pixoo-solution
 ---
 
 # HA Pixoo Pixel Art Author

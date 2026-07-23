@@ -7,9 +7,12 @@
 # change should propagate (new label, changed default, …), edit this file as
 # well — a one-line comment touch is enough — so the App re-runs the merge.
 #
-# Last propagation: 2026-05-08 — initial sync trigger after repo creation, to
-# pull in the commons-settings label set, default_branch=develop, branch
-# protection on develop/main, and the topic list below.
+# Last propagation: 2026-06-26 — refresh the topic list to match shipped
+# capabilities (add claude, anthropic, hacs, blueprints, automation,
+# divoom-pixoo, pixel-art; drop esphome, which has no skills yet).
+# 2026-05-08 — initial sync trigger after repo creation, to pull in the
+# commons-settings label set, default_branch=develop, branch protection on
+# develop/main, and the topic list below.
 
 _extends: nolte/gh-plumbing:.github/commons-settings.yml
 
@@ -21,12 +24,18 @@ repository:
   topics:
     - claude-code
     - claude-code-plugin
+    - claude
+    - anthropic
     - skills
     - agents
     - home-assistant
+    - hacs
     - custom-components
     - lovelace
-    - esphome
+    - blueprints
+    - automation
+    - divoom-pixoo
+    - pixel-art
   allow_squash_merge: true
   allow_merge_commit: false
   allow_rebase_merge: false

@@ -44,6 +44,8 @@ Read-only audit. The skill reads `manifest.json`, `quality_scale.yaml`, and the 
 - **MUST** capture: `target_dir` (repo root)
 - **MAY** capture: `target_tier` (`bronze` / `silver` / `gold` / `platinum`); when absent, the tier declared in `manifest.json` is assumed as target, falling back to `bronze`
 - **MAY** capture: `severity_threshold` (`low` / `medium` / `high`); default `low` (report every finding)
+- **MAY** capture: `mode` (`report` / `gate`); default `report`. In `gate` mode the skill still writes nothing but exits non-zero when a finding at or above `fail_on` remains — a CI drift gate
+- **MAY** capture: `fail_on` (`low` / `medium` / `high`); default `high`; the minimum severity that fails `gate` mode
 
 ### Pre-flight
 
@@ -108,7 +110,7 @@ Read-only audit. The skill reads `manifest.json`, `quality_scale.yaml`, and the 
   - `severity` — high / medium / low
   - `path` — file + line number (or the missing artifact)
   - `evidence` — code snippet or `quality_scale.yaml` excerpt (max 5 lines)
-  - `remediation` — suggested fix; for skill-fixable findings reference the skill name
+  - `remediation` — for skill-fixable findings, the concrete dispatchable edit skill (e.g. `parallel-updates`/`entity-unavailable` → `ha-entity-platform-add`, `diagnostics` → `ha-diagnostics-augment`, `repair-issues` → `ha-repairs-add`, `test-coverage` → `ha-test-harness-augment`), else a manual edit
 - **MUST** end with a summary: finding count per severity, plus a **tier-state line** contrasting the declared, documented, and verified tier (e.g. `declared: silver / documented: silver / verified: bronze ✓ · silver ✗`)
 
 ### Prohibitions
@@ -127,10 +129,11 @@ Read-only audit. The skill reads `manifest.json`, `quality_scale.yaml`, and the 
 - [ ] Findings are sorted by severity (high → low)
 - [ ] Skill makes no file modifications (`git status` unchanged after the run)
 - [ ] Skill output contains the tier-state line (declared / documented / verified)
+- [ ] `gate` mode exits non-zero when a finding at or above `fail_on` remains; `report` mode exits zero
 
 ## Open questions
 
 - **Depth of code verification**: the skill verifies only the key rules with sibling specs against code; the remaining ~30 rules are checked against the `quality_scale.yaml` declaration. When does a deeper, `hassfest`-like check become worthwhile?
-- **`quality_scale.yaml` drift gate**: should the skill be consumable as a CI hook (exit code != 0 when declared ≠ verified tier)? Currently interactive only.
+- **`quality_scale.yaml` drift gate** (resolved): the skill is consumable as a CI hook via `mode: gate` (non-zero exit on findings ≥ `fail_on`).
 - **Marker synchronization**: should the skill also check the quality-scale markers of the sibling specs against HA's `tiers.json`, or does that stay a review task?
-- **Auto-remediation chain**: is a chain that hands high findings straight to the responsible edit skill worthwhile? Currently every finding is dispatched manually.
+- **Auto-remediation chain** (partly resolved): each finding's `remediation` now names the concrete dispatchable edit skill; automatic hand-off (actually invoking the skill) stays manual by design — this is a read-only audit.

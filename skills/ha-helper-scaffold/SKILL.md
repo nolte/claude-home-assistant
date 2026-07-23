@@ -2,6 +2,24 @@
 name: ha-helper-scaffold
 description: Scaffold one Home Assistant stateful helper entity as a spec-conformant YAML block from a described intent — input_boolean, input_button, input_datetime, input_number, input_select, input_text, counter, timer, or schedule — conforming to the matching spec/ha-automation/<topic>. Picks the right helper type, sets every mandatory field (min/max, options, has_date/has_time, duration, weekly windows, restore), redirects measured/derived values to a sensor, names per ha/naming-conventions, and reports the helper's state, trigger events, and mutating services. Activate on "add an input_number/input_select helper for…", "create a timer/counter/schedule for…", "lege einen Helfer für… an". Do not activate for automations/scripts/scenes (ha-automation-author), derived/statistical sensors (ha-derived-sensor-author), real integration sensors, blueprints (ha-blueprint-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, helper, input, yaml, scaffolding]
+phase: design
+summary: "Scaffolds one stateful Home Assistant helper entity (input_*, counter, timer, schedule) as a spec-conformant YAML block, setting every mandatory field and reporting its read/mutate surface."
+summary_de: "Scaffolded eine zustandsbehaftete Home-Assistant-Helper-Entity (input_*, counter, timer, schedule) als spec-konformen YAML-Block, setzt alle Pflichtfelder und berichtet die Read/Mutate-Fläche."
+use_when:
+  - "you want to add an input_number or input_select helper"
+  - "you want to create a timer, counter, or schedule helper"
+dont_use_when:
+  - situation: "You need an automation, script, or scene"
+    alternative: ha-automation-author
+  - situation: "You need a derived or statistical sensor helper"
+    alternative: ha-derived-sensor-author
+  - situation: "You are creating a blueprint"
+    alternative: ha-blueprint-scaffold
+see_also:
+  - ha-automation-author
+  - ha-derived-sensor-author
+  - ha-blueprint-scaffold
+  - ha-automation-solution
 ---
 
 # HA Helper Scaffold

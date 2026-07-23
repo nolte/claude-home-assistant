@@ -4,13 +4,13 @@ Status: draft
 
 ## Kontext
 
-Die Lovelace-/Frontend-Skill-Familie erzeugt je **ein** Artefakt aus einer eng gefassten Absicht: `ha-lovelace-card-scaffold` baut die Custom-Card selbst, `ha-card-editor-add` ergänzt einen `ha-form`-Config-Editor über `getConfigElement`, `ha-card-features-add` ergänzt ein Tile-/Card-Feature, `ha-badge-add` ein Custom-Badge, `ha-strategy-add` eine Dashboard-/View-Strategy und `ha-panel-add` ein vollflächiges Custom-Panel. Reale Frontend-Anforderungen sind aber selten ein einzelnes Artefakt: „eine Custom-Card für meine Pumpe mit visuellem Config-Editor und einem Tile-Feature" ist eine Kette aus `card-scaffold` → `card-editor` + `card-features`, bei der die Add-ons auf die zuvor erzeugte Card aufsetzen. Ein Nutzer, der die Skills nicht kennt, müsste diese Zerlegung selbst leisten — welches Frontend-Element, welcher Add-on, welche Reihenfolge, welche Datei/welches Custom-Element referenziert welches. Genau diese Mapping-Last soll der Nutzer nicht tragen.
+Die Lovelace-/Frontend-Skill-Familie erzeugt je **ein** Artefakt aus einer eng gefassten Absicht: `ha-lovelace-card-scaffold` baut die Custom-Card selbst, `ha-card-editor-add` ergänzt einen `ha-form`-Config-Editor über `getConfigElement`, `ha-card-features-add` ergänzt ein Tile-/Card-Feature, `ha-badge-add` ein Custom-Badge, `ha-strategy-add` eine Dashboard-/View-Strategy und `ha-panel-author` entwickelt ein produktionsreifes Custom-Panel (dispatcht `ha-panel-add` fürs Grundgerüst). Reale Frontend-Anforderungen sind aber selten ein einzelnes Artefakt: „eine Custom-Card für meine Pumpe mit visuellem Config-Editor und einem Tile-Feature" ist eine Kette aus `card-scaffold` → `card-editor` + `card-features`, bei der die Add-ons auf die zuvor erzeugte Card aufsetzen. Ein Nutzer, der die Skills nicht kennt, müsste diese Zerlegung selbst leisten — welches Frontend-Element, welcher Add-on, welche Reihenfolge, welche Datei/welches Custom-Element referenziert welches. Genau diese Mapping-Last soll der Nutzer nicht tragen.
 
 Dieser Skill ist die **vorgelagerte Planungs- und Dispatch-Schicht** des Frontend-Clusters: Er nimmt eine unscharfe Frontend-Anforderung, zerlegt sie in die minimale Kombination von Artefakten, legt die Abhängigkeits-Reihenfolge fest, bestätigt den Plan mit dem Nutzer und dispatcht dann die zuständigen Owning-Skills nacheinander, wobei er die Identitäten (Card-Tag-Name, Datei-Pfad, Modul-Resource, `<domain>`) früherer Schritte als Eingaben der späteren durchreicht. Er generiert **selbst kein** Artefakt — Generierung und Spec-Konformität bleiben bei den Einzel-Skills. Eine Besonderheit des Frontend-Clusters: Wenn eine Card oder ein Panel ein Backend-Endpoint (ein WebSocket-Command) aufruft, lebt dieses Backend in einer Python-Custom-Integration — der Skill weist diese Abhängigkeit im Plan aus, faltet die Backend-Arbeit aber nicht in einen Frontend-Skill.
 
 ## Scope
 
-Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-add` und — als Backend-Endpoint, den eine Card/ein Panel konsumiert — `ha-websocket-command-add`. Eine Anforderung pro Lauf → ein Artefakt-Plan → N dispatchte Owning-Aufrufe → ein Gesamt-Bericht. Der Skill entscheidet die *Kombination* (welche Artefakte, welcher Typ je Artefakt, welche Reihenfolge, welche Verdrahtung), nicht den Inhalt eines einzelnen Artefakts.
+Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author` und — als Backend-Endpoint, den eine Card/ein Panel konsumiert — `ha-websocket-command-add`. Eine Anforderung pro Lauf → ein Artefakt-Plan → N dispatchte Owning-Aufrufe → ein Gesamt-Bericht. Der Skill entscheidet die *Kombination* (welche Artefakte, welcher Typ je Artefakt, welche Reihenfolge, welche Verdrahtung), nicht den Inhalt eines einzelnen Artefakts.
 
 ## Ziele
 
@@ -22,7 +22,7 @@ Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovel
 
 ## Nicht-Ziele
 
-- Die Generierung eines einzelnen Artefakts samt Spec-Konformität — das bleibt bei `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-add`, `ha-websocket-command-add`
+- Die Generierung eines einzelnen Artefakts samt Spec-Konformität — das bleibt bei `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author`, `ha-websocket-command-add`
 - Das Scaffolding der Python-Custom-Integration, in der ein WebSocket-Command-Backend lebt — das ist `ha-integration-scaffold` (der Skill erkennt nur, dass es nötig ist, und verweist)
 - Deployment in eine laufende HA-Instanz oder das Eintragen von Dashboard-/Resource-Konfiguration in eine reale Lovelace-Config — Generierung only
 - Eine eigene Validierungs- oder Konformitäts-Logik — jeder dispatchte Skill validiert sein eigenes Artefakt; dieser Skill aggregiert nur die Berichte
@@ -45,15 +45,16 @@ Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovel
 
 ### Pre-Flight
 
-- **MUSS [MUST]** `requirement` als nichtleer prüfen; bei Unterspezifikation gezielt 1–3 Rückfragen stellen (welches Geräte-/Entity-Ziel, JS oder Lit/TS, welcher Tag-Name, ob ein Backend-Endpoint nötig ist), bevor er plant
+- **MUSS [MUST]** `requirement` als nichtleer prüfen; dann die Anforderungs-Konfidenz einschätzen — eine klar spezifizierte Anforderung nutzt den leichten Pfad (1–3 gezielte Rückfragen: welches Geräte-/Entity-Ziel, JS oder Lit/TS, welcher Tag-Name, ob ein Backend-Endpoint nötig ist), während eine Anforderung unterhalb einer Konfidenzschwelle (vages Ergebnis, ungenannte Entities, unklarer Scope) **MUSS [MUST]** zuerst `requirements-elicit` dispatchen und gegen das bestätigte Anforderungs-Artefakt planen, analog zum `issue-orchestrate`-Upstream-Gate — bevor er plant
 - **MUSS [MUST]** prüfen, ob die Anforderung einen Backend-Endpoint (WebSocket-Command) verlangt; wenn ja, das im Plan ausweisen — und wenn (noch) keine Custom-Integration existiert, `ha-integration-scaffold` als Voraussetzung benennen, statt die Backend-Arbeit in einen Frontend-Skill zu pressen
 
 ### Zerlegungs-Heuristik (Anforderung → Artefakt-Typ → Skill)
 
+- **MUSS [MUST]** jeden zuständigen Skill zur Laufzeit auflösen, indem die Anforderung gegen das aktive Inventar der Frontend-`ha-*`-Skills abgeglichen wird (die formulierte Zuständigkeit jedes Kandidaten), nicht aus einer eingefrorenen Namensliste — die Zuordnungen unten sind ein illustrativer Anker, pro Lauf neu aufgelöst, sodass ein zur Familie hinzugefügter oder entfernter Skill dispatchbar ist, ohne den Orchestrator zu editieren (analog zu `issue-orchestrate`)
 - **MUSS [MUST]** eine eigenständige Custom-Card (das sichtbare Karten-Element) auf `ha-lovelace-card-scaffold` abbilden — Schritt 1, sobald eine Card gebraucht wird
 - **MUSS [MUST]** einen visuellen Config-Editor für eine Card (`ha-form` über `getConfigElement`) auf `ha-card-editor-add` abbilden, abhängig von der Card
 - **MUSS [MUST]** ein Tile-/Card-Feature (interaktive Control-Row in der Tile-Card und anderen Host-Cards) auf `ha-card-features-add` abbilden, abhängig von einem Frontend-Modul
-- **MUSS [MUST]** ein Custom-Badge auf `ha-badge-add`, eine Dashboard-/View-Strategy (Auto-Generierung von Views/Cards) auf `ha-strategy-add` und ein vollflächiges Custom-Panel auf `ha-panel-add` abbilden — jeweils eigenständige Top-Level-Frontend-Elemente
+- **MUSS [MUST]** ein Custom-Badge auf `ha-badge-add`, eine Dashboard-/View-Strategy (Auto-Generierung von Views/Cards) auf `ha-strategy-add` und ein vollflächiges Custom-Panel auf `ha-panel-author` abbilden (das `ha-panel-add` fürs Grundgerüst dispatcht) — jeweils eigenständige Top-Level-Frontend-Elemente
 - **MUSS [MUST]** einen Backend-Endpoint, den eine Card oder ein Panel aufruft, auf `ha-websocket-command-add` (Python-Seite) abbilden; das Command lebt in einer Custom-Integration und ist deren Voraussetzung (`ha-integration-scaffold`, falls nicht vorhanden)
 - **MUSS [MUST]** die Artefakte minimal halten — keine Add-ons erzeugen, die ein einzelnes Artefakt bereits abdeckt
 
@@ -64,6 +65,7 @@ Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovel
 - **MUSS [MUST]** die Skills in Abhängigkeits-Reihenfolge dispatchen (Card vor ihren Add-ons; Badges/Strategies/Panels unabhängig; ein WebSocket-Command als Backend, das die Card/das Panel konsumiert) und die Identitäten (Card-Tag/`custom:<type>`, Datei-Pfad, Modul-Resource, `<domain>`, Command-`type`) als Eingaben der abhängigen Schritte durchreichen
 - **MUSS [MUST]** abbrechen und zurückmelden, wenn ein dispatchter Skill einen NEEDS-WORK-Bericht liefert, statt auf einem unfertigen Vorgänger-Artefakt weiterzubauen
 - **MUSS [MUST]** alle Bezeichner über die Artefakte hinweg konsistent nach `ha/naming-conventions` halten und HA-Interna gegen die offizielle Doku verifizieren (`ha/upstream-docs-verification`)
+- **MUSS [MUST]** jedes dispatchte Artefakt an `ha/lovelace-layout-antipatterns` binden und dessen Acceptance-Checkliste in das Konformitäts-Gate jedes Artefakts einfließen lassen
 
 ### Gesamt-Bericht
 
@@ -79,7 +81,9 @@ Planung und Orchestrierung über die Lovelace-/Frontend-Skill-Familie: `ha-lovel
 
 ## Akzeptanzkriterien
 
+- [ ] Zuständige Skills werden pro Lauf gegen das aktive Frontend-`ha-*`-Inventar aufgelöst (ein neu hinzugefügter oder umbenannter Familien-Skill ist dispatchbar, ohne den Orchestrator zu editieren); die Zerlegungs-Zuordnungen sind illustrativ, keine eingefrorene geschlossene Menge
 - [ ] Skill erfragt fehlende Eckdaten (Ziel-Entity, JS vs. Lit/TS, Tag-Name, Backend-Bedarf), bevor er plant
+- [ ] Eine unterspezifizierte Anforderung dispatcht `requirements-elicit` vor der Planung; eine klar spezifizierte nutzt den schnellen 1–3-Fragen-Clarify-Pfad
 - [ ] Skill präsentiert einen Artefakt-Plan in Abhängigkeits-Reihenfolge und wartet auf Bestätigung
 - [ ] Skill dispatcht die zuständigen Einzel-Skills statt selbst zu generieren
 - [ ] Identitäten (Card-Tag, Datei-Pfad, Modul-Resource, `<domain>`, Command-`type`) früherer Artefakte werden als Eingaben der abhängigen Schritte durchgereicht

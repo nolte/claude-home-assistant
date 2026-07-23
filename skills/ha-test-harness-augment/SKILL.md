@@ -2,6 +2,21 @@
 name: ha-test-harness-augment
 description: Add tests for one secondary code path (platform, service, helpers, Lovelace cleanup) to an existing HA Custom Integration test suite, including fixtures and JSON snapshots, without disturbing existing tests. Activate on phrasings like "add tests for the sensor platform", "add tests for the `<service>` service", "add tests for the helpers module", "erweitere die Test-Suite um Plattform-Tests". Do not activate for E2E tests, test refactoring, or coverage-threshold tooling.
 tags: [home-assistant, custom-integration, testing]
+phase: quality
+summary: "Adds tests for one secondary code path (platform, service, helpers, Lovelace cleanup) to an existing HA Custom Integration suite, including fixtures and snapshots, without disturbing existing tests."
+summary_de: "Fügt Tests für einen sekundären Code-Pfad (Plattform, Service, Helpers, Lovelace-Cleanup) zu einer bestehenden HA-Integration-Test-Suite hinzu, ohne bestehende Tests anzutasten."
+use_when:
+  - "you want to add tests for an integration's platform"
+  - "you want to add tests for a specific service"
+  - "you want to add tests for the helpers module"
+  - "you want to extend an integration's test suite additively"
+dont_use_when: []
+see_also:
+  - ha-quality-scale-audit
+  - ha-dev-workflow-apply
+  - ha-integration-scaffold
+  - ha-integration-ci-scaffold
+  - ha-integration-verify
 ---
 
 # HA Test Harness Augment
@@ -52,7 +67,7 @@ Read `domain` from `manifest.json`. Identify the source module to test against. 
 
 | `kind` | Files |
 |---|---|
-| `platform` | `tests/test_<platform>.py`; possibly `tests/conftest.py` (additional fixtures); possibly `tests/fixtures/<platform>.json` |
+| `platform` | `tests/test_<platform>.py` (incl. a `snapshot_platform` entity/registry snapshot test via `syrupy` + the `snapshot` / `entity_registry` fixtures); possibly `tests/conftest.py` (additional fixtures); possibly `tests/fixtures/<platform>.json`; `tests/snapshots/*.ambr` for the syrupy snapshot |
 | `service` | `tests/test_services.py` (create or extend) |
 | `helpers` | `tests/test_helpers.py` (create or extend) |
 | `lovelace_cleanup` | `tests/test_lovelace_cleanup.py` (create) |
@@ -76,4 +91,5 @@ pytest --cov=custom_components.<domain> --cov-report=term-missing
 - E2E tests against real HA → separate spec planned
 - Test refactoring → manual code edit
 - Coverage threshold enforcement → CI configuration
-- Snapshot testing (`syrupy`) → not in scope
+- `test-before-setup` / `test-before-configure` coverage → owned by the config-flow tests scaffolded at greenfield (`ha-integration-scaffold`), not this skill
+- Deep `syrupy` diffing of arbitrary non-entity structures → out of scope; entity/registry snapshots via `snapshot_platform` **are** in scope (the dominant HA-core platform-test pattern — see the `platform` kind)

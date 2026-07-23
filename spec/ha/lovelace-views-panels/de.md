@@ -10,7 +10,7 @@ Eine **Custom-View** überschreibt das Default-Masonry-Layout (Pinterest-artig) 
 
 Ein **Custom-Panel** ist eine vollflächige Seite, aus der Sidebar verlinkt, mit Echtzeit-Zugriff auf das Home-Assistant-Objekt (Beispiele im Core: Dashboards, Map, Logbook, History). User registrieren eigene Panels über die `panel_custom`-Komponente in der `configuration.yaml`; das Panel-Element empfängt `hass`, `narrow`, `route` und `panel` als Properties.
 
-Diese Spec deckt beide verwandten Flächen ab. Sie grenzt sich gegen die Schwester-Specs ab: `ha/lovelace-card-patterns` deckt die einzelne Card ab, `ha/lovelace-strategies` die programmatische Dashboard-Generierung; die `hass`-Datenkanäle sind in `ha/frontend-data-api` beschrieben.
+Diese Spec deckt beide verwandten Flächen ab. Sie grenzt sich gegen die Schwester-Specs ab: `ha/lovelace-card-patterns` deckt die einzelne Card ab, `ha/lovelace-strategies` die programmatische Dashboard-Generierung; die `hass`-Datenkanäle sind in `ha/frontend-data-api` beschrieben; das Card-/Panel-Sizing-Entscheidungsverfahren (`getGridOptions`/`getCardSize`) ist `ha/card-panel-sizing`.
 
 Quality-Scale-Marker: Custom-Views und Custom-Panels sind **nicht Teil der HA-Quality-Scale** — das Pattern steht außerhalb der Skala.
 

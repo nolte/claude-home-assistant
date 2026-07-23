@@ -61,7 +61,7 @@ Ergänzung genau eines Discovery-Mechanismus pro Lauf (`dhcp`, `ssdp`, `usb`, `h
 - **MUSS [MUST]** bei generischen USB-Bridge-Chips (z. B. `vid: 10C4`/`pid: EA60`) zusätzlich auf `description` o. Ä. matchen, damit keine unerwartete Discovery auslöst
 - **MUSS [MUST]** den passenden typisierten Step in `config_flow.py` implementieren: `async_step_dhcp(self, discovery_info: DhcpServiceInfo)`, `async_step_ssdp(self, discovery_info: SsdpServiceInfo)`, `async_step_usb(self, discovery_info: UsbServiceInfo)`, `async_step_homekit(self, discovery_info: ZeroconfServiceInfo)` bzw. `async_step_mqtt(self, discovery_info: MqttServiceInfo)`
 - **MUSS [MUST]** in einen Bestätigungs-Step weiterleiten (typisch `async_step_discovery_confirm` mit `self._set_confirm_only()`), bevor `async_create_entry` aufgerufen wird — nie ein Entry ohne User-Bestätigung
-- **MUSS [MUST]** im Discovery-Step `await self.async_set_unique_id(<stabiler_id>)` setzen und unmittelbar `self._abort_if_unique_id_configured(updates={CONF_HOST: host})` aufrufen; ein zweiter Entry bei Re-Discovery ist verboten
+- **MUSS [MUST]** im Discovery-Step `await self.async_set_unique_id(<stabiler_id>)` setzen und unmittelbar `self._abort_if_unique_id_configured(updates={CONF_HOST: host})` aufrufen; ein zweiter Entry bei Re-Discovery ist verboten — kanonische `unique_id`-Quelle: DHCP → MAC (`format_mac`), SSDP → `udn`, USB → `serial_number` (sonst `vid:pid`), HomeKit → Accessory-ID, MQTT → Payload-ID; `config.abort.already_configured` / `already_in_progress` in `strings.json` ergänzen
 - **MUSS [MUST]** für DHCP-IP-Update-Flows die MAC über `CONNECTION_NETWORK_MAC` in der Device-Info registrieren und `registered_devices: true` setzen
 - **SOLLTE [SHOULD]** die Backend-Validierung (Test-Connection) im Discovery-Step ausführen und bei Fehlschlag `self.async_abort(reason="cannot_connect")` zurückgeben; für MQTT vor dem Subscribe `await mqtt.async_wait_for_mqtt_client(hass)` nutzen
 - **MUSS [MUST]** Bezeichner nach `ha/naming-conventions` benennen und HA-Interna gegen die offizielle Doku verifizieren (`ha/upstream-docs-verification`)
@@ -90,6 +90,6 @@ Ergänzung genau eines Discovery-Mechanismus pro Lauf (`dhcp`, `ssdp`, `usb`, `h
 
 ## Offene Fragen
 
-- **Stabiler Identifier pro Mechanismus**: Welche `unique_id`-Quelle ist kanonisch je Mechanismus (DHCP-MAC, SSDP-`udn`, USB-`serial_number`, HomeKit-Modell+ID)? Aktuell generisch als „stabiler Identifier"; der Skill fragt im Zweifel nach.
+- **Stabiler Identifier pro Mechanismus** (gelöst): Die kanonische `unique_id`-Quelle ist je Mechanismus kodifiziert (DHCP → MAC, SSDP → `udn`, USB → `serial_number`/`vid:pid`, HomeKit → Accessory-ID, MQTT → Payload-ID); der Skill fragt nur, wenn ein Gerät die kanonische Quelle wirklich nicht hat.
 - **Combined-Discovery**: Wenn eine Integration mehrere Mechanismen anbietet (SSDP + DHCP für IP-Updates) — ein geteilter Bestätigungs-Step oder ein Mechanismus pro Lauf? Aktuell ein Mechanismus pro Lauf.
 - **MQTT-Sonderfall**: MQTT-Discovery ist Topic- statt Netzwerk-basiert. Bleibt sie in diesem Skill oder verdient sie einen eigenen, sobald MQTT-Integrationen häufiger werden?

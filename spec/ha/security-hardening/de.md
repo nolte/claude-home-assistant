@@ -62,6 +62,10 @@ Quality-Scale-Marker: **Silver** (Eingabe-Validierung und sichere Default-Werte 
 
 - **MUSS [MUST]** `async_redact_data` für jeden in `entry.data` / `entry.options` gespeicherten Credential-Eintrag verwenden (siehe `ha/diagnostics`) — Diagnostics-Dumps landen in Foren-Posts und dürfen keine Secrets enthalten
 - **MUSS NICHT [MUST NOT]** Credentials in Coordinator-Daten leaken — wenn das Backend selbst Auth-Material in API-Antworten zurückspielt (z. B. Refresh-Tokens), gehört es ebenfalls in `TO_REDACT`
+- **MUSS [MUST]** Redaction-Keys gegen diesen kanonischen Satz klassifizieren — konsumiert von `ha-diagnostics-augment` (das redactet) und `ha-security-audit` (das Auslassungen flaggt), damit die Beratung nicht divergiert:
+  - **MUSS-redacten** (Credentials, Koordinaten, Kontakt): `password`, `api_key`, `token`, `access_token`, `refresh_token`, `client_secret`, `secret`, `auth`, `bearer`, `encryption_key`, `pin`, `latitude`, `longitude`, `email`
+  - **SOLLTE-redacten** (support-nützlich, kontextabhängig): `host`, `ip_address`, `mac`, `serial_number`, `username`, `unique_id` und Tenant-/Account-Identifier (`tenant_slug`, `tenant_id`, `org_id`)
+- **MUSS [MUST]** die Auslassung eines MUSS-redact-Keys (Koordinaten eingeschlossen) als mindestens **medium** werten, nicht low
 
 ### Logging-Disziplin
 
@@ -69,6 +73,12 @@ Quality-Scale-Marker: **Silver** (Eingabe-Validierung und sichere Default-Werte 
 - **MUSS NICHT [MUST NOT]** vollständige API-Responses unredacted ins DEBUG-Log dumpen, wenn die Antwort sensible Felder enthält
 - **SOLLTE [SHOULD]** für DEBUG-Diagnose eine eigene Helper-Funktion (`_safe_log(payload)`) definieren, die sensible Felder vor dem Logging entfernt
 - **KANN [MAY]** Request-IDs / Correlation-IDs im Log führen — das hilft beim Trace und enthält keine Credentials
+
+### Transport-Sicherheit (TLS & Timeouts)
+
+- **MUSS NICHT [MUST NOT]** die TLS-Zertifikatsverifikation bei ausgehendem HTTP deaktivieren — kein `ssl=False`, `verify=False` oder `aiohttp.TCPConnector(ssl=False)` — außer ein dokumentiertes lokales selbst-signiertes Backend rechtfertigt es in einem Kommentar
+- **MUSS [MUST]** an jedem ausgehenden Request einen expliziten Timeout setzen (`aiohttp.ClientTimeout` / `timeout=`), damit ein hängendes Backend die Event-Loop nicht blockiert
+- **SOLLTE [SHOULD]** jeden `hass.http.register_view(...)` mit `requires_auth = True` absichern, außer die View ist bewusst öffentlich
 
 ### Cross-Referenzen
 
@@ -86,12 +96,15 @@ Quality-Scale-Marker: **Silver** (Eingabe-Validierung und sichere Default-Werte 
 - [ ] Service-Handler rufen den `_resolve_entry`-Helper aus `ha/services` und brechen bei Mehrdeutigkeit mit `ServiceValidationError` ab
 - [ ] `diagnostics.py` redactet alle Credentials und Multi-Tenant-Identifier (siehe `ha/diagnostics`)
 - [ ] Eine `grep`-Suche nach `_LOGGER\.[a-z]+\(.*api_key`, `_LOGGER\.[a-z]+\(.*token`, `_LOGGER\.[a-z]+\(.*password` liefert keine Treffer
+- [ ] Redaction-Keys folgen der kanonischen MUSS-redact-/SOLLTE-redact-Klassifikation; Koordinaten sind MUSS-redact
+- [ ] Ausgehendes HTTP deaktiviert nie die TLS-Verifikation und setzt einen expliziten Request-Timeout
+- [ ] Registrierte HTTP-Views setzen `requires_auth = True`, außer bewusst öffentlich
 - [ ] Quality-Scale-Marker: **Silver**
 
 ## Offene Fragen
 
 - **API-Client-Spec-Reifegrad**: Aktuell ist die HTTP-Client-Form (`api.py`-Layout, Exception-Hierarchie, Path-Whitelist-Form) nur indirekt über kamerplanter-ha-Cross-Referenz definiert. Wann wird daraus eine eigene `ha/api-client-patterns`-Spec?
-- **TLS-Verifikation-Default**: Sollen Skills `verify=True` (TLS-Cert-Validierung) als Default forcen, oder bleibt das Backend-spezifisch (manche selbst-signierte Local-Backends)?
+- **TLS-Verifikation-Default** (gelöst): Ausgehendes HTTP **MUSS NICHT [MUST NOT]** die TLS-Zertifikatsverifikation deaktivieren (siehe § Transport-Sicherheit); ein selbst-signiertes lokales Backend ist die einzige Ausnahme und braucht einen dokumentierten Begründungs-Kommentar.
 - **Whitelist-Granularität**: Wie spezifisch muss die Path-Whitelist sein? Aktuell als „passende Backend-Pfade matchen" formuliert; eine Heuristik (Endpoint-pro-Endpoint vs. Top-Level-Bereich) fehlt.
 - **Bearer-Token-Verbot in Logs Hard-Enforce**: Eine `grep`-basierte CI-Regel als Acceptance-Criterion; soll daraus ein verpflichtender Lint-Hook werden (z. B. ein bandit-/semgrep-Pattern), oder reicht der Code-Review?
 - **Audit-Log-Ergänzung**: Soll die Spec audit-relevante Aktionen (Service-Aufrufe, Reauth-Vorgänge) in HA-System-Events spiegeln, damit User sie im Logbook nachvollziehen können?

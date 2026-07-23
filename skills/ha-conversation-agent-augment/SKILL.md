@@ -2,6 +2,24 @@
 name: ha-conversation-agent-augment
 description: Augment an existing Home Assistant Custom Integration with one or more Voice & AI surfaces — intent handlers, a conversation agent, and/or LLM API tools — conforming to spec/ha/intents-conversation plus spec/ha/llm-api. Decides with the user which surface(s) are in scope, then generates intent handlers (intent.IntentHandler subclasses registered via intent.async_register, with slot_schema and async_handle returning an IntentResponse), a conversation platform (conversation.py with a ConversationEntity declaring supported_languages and _async_handle_message returning a ConversationResult), and/or LLM tools (llm.Tool subclasses with async_call plus an llm.API registered via llm.async_register_api whose async_get_api_instance returns an APIInstance). Implements domain-appropriate built-in intents, avoids deprecated ones, and signals tool errors as HomeAssistantError. Activate on "add a conversation agent", "register intents", "expose tools to the assistant via the LLM API", "füge einen Conversation-Agent / Intents / LLM-Tools hinzu". Do not activate for assist_satellite/stt/tts/wake_word entities (ha/entity-platforms-voice), registered services (ha-service-definition-generator), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, voice-ai]
+phase: design
+summary: "Augments an existing integration with Voice & AI surfaces — intent handlers, a conversation agent, and/or LLM API tools — deciding scope with the user then generating the chosen ones."
+summary_de: "Erweitert eine bestehende Integration um Voice-&-AI-Flächen — Intent-Handler, Conversation-Agent und/oder LLM-API-Tools — Umfang wird mit dem Nutzer festgelegt, dann generiert."
+use_when:
+  - "you want to add a conversation agent to an integration"
+  - "you want to register intents for an integration's devices"
+  - "you want to expose tools to the assistant via the LLM API"
+dont_use_when:
+  - situation: "You need a registered service with its own schema, not a Voice surface"
+    alternative: ha-service-definition-generator
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-service-definition-generator
+  - ha-integration-scaffold
+  - ha-config-flow-augment
+  - ha-coordinator-add
+  - ha-device-automation-add
 ---
 
 # HA Conversation Agent Augment

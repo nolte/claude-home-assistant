@@ -4,13 +4,13 @@ Status: draft
 
 ## Context
 
-The Lovelace/frontend skill family each produces **one** artifact from a narrowly scoped intent: `ha-lovelace-card-scaffold` builds the custom card itself, `ha-card-editor-add` adds an `ha-form` config editor via `getConfigElement`, `ha-card-features-add` adds a tile/card feature, `ha-badge-add` a custom badge, `ha-strategy-add` a dashboard/view strategy, and `ha-panel-add` a full-page custom panel. Real-world frontend requirements are rarely a single artifact: "a custom card for my pump with a visual config editor and a tile feature" is a chain of `card-scaffold` → `card-editor` + `card-features`, where the add-ons build on the previously generated card. A user who doesn't know the skills would have to do that decomposition themselves — which frontend element, which add-on, which order, which file/custom-element references which. That mapping burden is exactly what the user should not have to carry.
+The Lovelace/frontend skill family each produces **one** artifact from a narrowly scoped intent: `ha-lovelace-card-scaffold` builds the custom card itself, `ha-card-editor-add` adds an `ha-form` config editor via `getConfigElement`, `ha-card-features-add` adds a tile/card feature, `ha-badge-add` a custom badge, `ha-strategy-add` a dashboard/view strategy, and `ha-panel-author` develops a production-grade custom panel (dispatching `ha-panel-add` for the base scaffold). Real-world frontend requirements are rarely a single artifact: "a custom card for my pump with a visual config editor and a tile feature" is a chain of `card-scaffold` → `card-editor` + `card-features`, where the add-ons build on the previously generated card. A user who doesn't know the skills would have to do that decomposition themselves — which frontend element, which add-on, which order, which file/custom-element references which. That mapping burden is exactly what the user should not have to carry.
 
 This skill is the **upstream planning and dispatch layer** of the frontend cluster: it takes a fuzzy frontend requirement, decomposes it into the minimal combination of artifacts, fixes the dependency order, confirms the plan with the user, and then dispatches the owning skills one after another, threading the identities (card tag name, file path, module resource, `<domain>`) of earlier steps into the inputs of later ones. It generates **no** artifact itself — generation and spec conformance stay with the individual skills. A frontend-cluster specialty: when a card or panel calls a backend endpoint (a WebSocket command), that backend lives in a Python custom integration — the skill surfaces that dependency in the plan but does not fold backend work into a frontend skill.
 
 ## Scope
 
-Planning and orchestration across the Lovelace/frontend skill family: `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-add`, and — as the backend endpoint a card/panel consumes — `ha-websocket-command-add`. One requirement per run → one artifact plan → N dispatched owning calls → one aggregate report. The skill decides the *combination* (which artifacts, which type per artifact, which order, which wiring), not the content of any single artifact.
+Planning and orchestration across the Lovelace/frontend skill family: `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author`, and — as the backend endpoint a card/panel consumes — `ha-websocket-command-add`. One requirement per run → one artifact plan → N dispatched owning calls → one aggregate report. The skill decides the *combination* (which artifacts, which type per artifact, which order, which wiring), not the content of any single artifact.
 
 ## Goals
 
@@ -22,7 +22,7 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 
 ## Non-Goals
 
-- Generating a single artifact and its spec conformance — that stays with `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-add`, `ha-websocket-command-add`
+- Generating a single artifact and its spec conformance — that stays with `ha-lovelace-card-scaffold`, `ha-card-editor-add`, `ha-card-features-add`, `ha-badge-add`, `ha-strategy-add`, `ha-panel-author`, `ha-websocket-command-add`
 - Scaffolding the Python custom integration that hosts a WebSocket-command backend — that is `ha-integration-scaffold` (the skill only recognizes the need and points)
 - Deploying to a running HA instance or writing dashboard/resource configuration into a real Lovelace config — generation only
 - Its own validation or conformance logic — each dispatched skill validates its own artifact; this skill only aggregates the reports
@@ -45,15 +45,16 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 
 ### Pre-flight
 
-- **MUST** check `requirement` is non-empty; on underspecification ask 1–3 targeted questions (which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed) before planning
+- **MUST** check `requirement` is non-empty; then gauge requirement confidence — a clearly-specified requirement uses the lightweight path (ask 1–3 targeted questions: which device/entity target, JS or Lit/TS, which tag name, whether a backend endpoint is needed), while a requirement below a confidence threshold (vague result, unnamed entities, unclear scope) **MUST** dispatch `requirements-elicit` first and plan against the confirmed requirement artifact, mirroring the `issue-orchestrate` upstream gate — before planning
 - **MUST** check whether the requirement needs a backend endpoint (WebSocket command); if so, mark it in the plan — and when no custom integration exists (yet), name `ha-integration-scaffold` as the prerequisite instead of forcing the backend work into a frontend skill
 
 ### Decomposition heuristic (requirement → artifact type → skill)
 
+- **MUST** resolve each owning skill at runtime by matching the requirement against the live frontend `ha-*` skill inventory (each candidate's stated responsibility), not from a frozen name list — the mappings below are an illustrative anchor, re-resolved each run, so a skill added to or removed from the family is dispatchable without editing the orchestrator (mirroring `issue-orchestrate`)
 - **MUST** map a standalone custom card (the visible card element) to `ha-lovelace-card-scaffold` — step 1 whenever a card is needed
 - **MUST** map a visual config editor for a card (`ha-form` via `getConfigElement`) to `ha-card-editor-add`, depending on the card
 - **MUST** map a tile/card feature (interactive control row inside the tile card and other host cards) to `ha-card-features-add`, depending on a frontend module
-- **MUST** map a custom badge to `ha-badge-add`, a dashboard/view strategy (auto-generation of views/cards) to `ha-strategy-add`, and a full-page custom panel to `ha-panel-add` — each an independent top-level frontend element
+- **MUST** map a custom badge to `ha-badge-add`, a dashboard/view strategy (auto-generation of views/cards) to `ha-strategy-add`, and a full-page custom panel to `ha-panel-author` (which dispatches `ha-panel-add` for the base scaffold) — each an independent top-level frontend element
 - **MUST** map a backend endpoint a card or panel calls to `ha-websocket-command-add` (Python side); the command lives in a custom integration and is its prerequisite (`ha-integration-scaffold` when absent)
 - **MUST** keep artifacts minimal — never create an add-on a single artifact already covers
 
@@ -64,6 +65,7 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 - **MUST** dispatch the skills in dependency order (card before its add-ons; badges/strategies/panels independent; a WebSocket command as the backend the card/panel consumes) and thread the identities (card tag/`custom:<type>`, file path, module resource, `<domain>`, command `type`) into the inputs of dependent steps
 - **MUST** stop and report when a dispatched skill returns a NEEDS-WORK report, rather than building on an unfinished predecessor artifact
 - **MUST** keep all identifiers consistent across artifacts per `ha/naming-conventions` and verify HA internals against the official docs (`ha/upstream-docs-verification`)
+- **MUST** hold every dispatched artifact to `ha/lovelace-layout-antipatterns` and fold its acceptance checklist into each artifact's conformance gate
 
 ### Aggregate report
 
@@ -79,7 +81,9 @@ Planning and orchestration across the Lovelace/frontend skill family: `ha-lovela
 
 ## Acceptance criteria
 
+- [ ] Owning skills are resolved against the live frontend `ha-*` inventory each run (a newly added or renamed family skill is dispatchable without editing the orchestrator); the decomposition mappings are illustrative, not a frozen closed set
 - [ ] Skill asks for missing essentials (target entity, JS vs. Lit/TS, tag name, backend need) before planning
+- [ ] An under-specified requirement dispatches `requirements-elicit` before planning; a clearly-specified one uses the fast 1–3-question clarify path
 - [ ] Skill presents an artifact plan in dependency order and waits for confirmation
 - [ ] Skill dispatches the owning individual skills instead of generating itself
 - [ ] Identities (card tag, file path, module resource, `<domain>`, command `type`) of earlier artifacts are threaded into the inputs of dependent steps

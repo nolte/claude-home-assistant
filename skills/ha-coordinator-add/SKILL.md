@@ -1,7 +1,22 @@
 ---
 name: ha-coordinator-add
-description: Append a new DataUpdateCoordinator to an existing Home Assistant Custom Integration — separate role, separate update interval, full integration with RuntimeData mapping, options-flow entry, translations, and tests. Activate on phrasings like "add a new coordinator for alerts", "split the existing coordinator", "add a faster polling coordinator", "füge einen Coordinator für X hinzu". Do not activate for greenfield scaffolding (use ha-integration-scaffold), coordinator removal, or push-based coordinators.
+description: Append a new DataUpdateCoordinator to an existing Home Assistant Custom Integration — separate role, separate update interval, full integration with RuntimeData mapping, options-flow entry, translations, and tests. Activate on phrasings like "add a new coordinator for alerts", "split the existing coordinator", "add a faster polling coordinator", "füge einen Coordinator für X hinzu". Do not activate for greenfield scaffolding (use ha-integration-scaffold) or coordinator removal; a push-style coordinator variant (async_set_updated_data) is supported for local_push / cloud_push integrations.
 tags: [home-assistant, custom-integration, coordinator]
+phase: design
+summary: "Appends a new DataUpdateCoordinator with its own role and update interval to an existing integration — RuntimeData mapping, options-flow entry, translations, and tests."
+summary_de: "Fügt einer bestehenden Integration einen neuen DataUpdateCoordinator mit eigener Rolle und eigenem Update-Intervall hinzu — RuntimeData-Mapping, Options-Flow-Eintrag, Übersetzungen und Tests."
+use_when:
+  - "you want to add a coordinator with a faster or slower update interval"
+  - "you want to split polling of an integration's data into a new coordinator"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration"
+    alternative: ha-integration-scaffold
+  - situation: "You want to add the entity platforms backed by the coordinator"
+    alternative: ha-entity-platform-add
+see_also:
+  - ha-integration-scaffold
+  - ha-entity-platform-add
+  - ha-entity-description-mapper
 ---
 
 # HA Coordinator Add
@@ -16,7 +31,7 @@ Use this skill when the user wants to add a new `DataUpdateCoordinator` to an ex
 
 - greenfield scaffold → `ha-integration-scaffold`
 - removing or merging coordinators → manual code edit
-- push-based coordinator (webhook / MQTT / WebSocket) → separate spec planned
+- bespoke push transport wiring (webhook server, MQTT broker setup) → out of scope; the push-style *coordinator* variant itself is supported (see Hard rules)
 
 ## Hard rules
 
@@ -25,7 +40,10 @@ Use this skill when the user wants to add a new `DataUpdateCoordinator` to an ex
 3. **Never set min cap below 30 s without warning.** Sub-30s polling risks rate-limiting / DDoS. Warn the user explicitly when they request it.
 4. **Always update the options flow.** A new coordinator without a configurable interval defeats the user's ability to tune polling. The new `CONF_POLL_<ROLE>` lands in `OPTIONS_SCHEMA` plus `strings.json` plus translations.
 5. **Always ship tests.** Three tests for the new coordinator (auth error, connection error, happy path) are mandatory.
-6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+6. **Store the new coordinator on a typed `runtime_data`.** The coordinator lands in the `RuntimeData.coordinators` mapping on a **typed** config entry (a typed alias such as `type <Domain>ConfigEntry = ConfigEntry[RuntimeData]`, used throughout); re-verify the `RuntimeData` dataclass field type when the mapping key is added so the typed entry stays sound (`ha/runtime-data-pattern`).
+7. **Surface `PARALLEL_UPDATES` for the backed platforms.** This skill adds the coordinator, not the entity-platform modules — but every platform that reads the new coordinator needs a module-level `PARALLEL_UPDATES` (Silver `parallel-updates` rule). Surface this in the report and point the user at `ha-entity-platform-add` / `ha-entity-description-mapper` to emit it.
+8. **Push-style variant for `local_push` / `cloud_push`.** For a push iot_class a poll-based coordinator is the wrong shape — a push-style coordinator (`async_set_updated_data`, no `update_interval`) MAY be produced instead; the bespoke transport wiring (webhook server, MQTT broker) stays out of scope.
+9. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs
 
@@ -77,10 +95,11 @@ Both must run cleanly. On failure, surface the tool output and abort.
 - files touched (counted)
 - min cap warning (if `min_interval` < 30 s)
 - next-step hint: which platforms could benefit from binding to the new coordinator (reading the platform code is the user's job)
+- reminder: each platform bound to the new coordinator needs a module-level `PARALLEL_UPDATES` — point at `ha-entity-platform-add` / `ha-entity-description-mapper`
 
 ## Boundaries
 
 - Greenfield scaffold → `ha-integration-scaffold`
 - Config flow extension → `ha-config-flow-augment`
-- Test coverage extension → `ha-test-harness-augment` (planned)
-- Push-based coordinator → separate spec planned
+- Test coverage extension → `ha-test-harness-augment`
+- Push-style coordinator variant (`async_set_updated_data`) → supported as a MAY for `local_push` / `cloud_push`; bespoke transport wiring stays out of scope

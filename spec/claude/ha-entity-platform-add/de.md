@@ -60,13 +60,16 @@ Scaffolding genau einer aktiven Plattform-Entity pro Lauf in einer bestehenden `
 - **MUSS NICHT [MUST NOT]** ein Feature-Flag „auf Vorrat" setzen, dessen Command-Methode (noch) nicht implementiert ist — ein beworbenes, nicht bedienbares Feature bricht UI und Voice-Anbindung
 - **MUSS [MUST]** die je Domäne als **Required** markierten State-/Attribut-Properties bereitstellen (z. B. `hvac_mode`/`hvac_modes` für `climate`, `is_closed` für `cover`, `color_mode`/`supported_color_modes` für `light`, `activity` für `vacuum`/`lawn_mower`, `alarm_state` für `alarm_control_panel`) und ausschließlich die eingebauten Zustands-/Mode-Enums verwenden (z. B. nur eingebaute `HVACMode`-Member; `VacuumActivity`/`LawnMowerActivity`)
 - **MUSS [MUST]** die `device_class` aus dem geschlossenen plattform-eigenen Enum setzen, wo ein passendes Member existiert (`CoverDeviceClass`, `ValveDeviceClass`, `HumidifierDeviceClass`, `MediaPlayerDeviceClass`, …) — nie als frei gewählter String
+- **MUSS [MUST]** Availability behandeln (Silver `entity-unavailable`) — von `CoordinatorEntity` ableiten (`available` aus `coordinator.last_update_success`) oder das `available`-Property überschreiben, sodass es `False` liefert, wenn der Datenpunkt nicht les-/steuerbar ist; eine aktive Entity, die nie Unavailable meldet, verfehlt die Regel, die `ha-quality-scale-audit` prüft
+- **MUSS [MUST]** eine modul-ebene `PARALLEL_UPDATES`-Konstante in `<platform>.py` deklarieren (Silver `parallel-updates`; ein coordinator-gestützter Read-Pfad nutzt typischerweise `0`, Command-Plattformen begrenzen ihre Concurrency) und den Wert gegen die HA-`parallel-updates`-Regel-Seite verifizieren
 - **KANN [MAY]** eine `EntityDescription` erzeugen, wenn die Familie das `EntityDescription`-Pattern für die Plattform nutzt, und `supported_features`/`device_class` dort statt über `_attr_*` setzen (Setz-Mechanik siehe `ha/entity-architecture`)
 - **MUSS [MUST]** Bezeichner nach `ha/naming-conventions` benennen, das generische Entity-Pattern nicht duplizieren (an `ha/entity-architecture` delegieren) und HA-Interna gegen die offizielle Doku verifizieren (`ha/upstream-docs-verification`)
 
 ### Validierung & Bericht
 
-- **MUSS [MUST]** offline validieren: `<platform>.py` existiert; die Entity leitet von der dokumentierten Basisklasse ab; `async_setup_entry` registriert Entities via `async_add_entities`; `supported_features` ist eine `*EntityFeature`-Bitmaske (keine rohe Ganzzahl); jedes gesetzte Flag hat seine async Command-Methode; alle **Required**-Properties sind implementiert; Zustands-/Mode-Enums sind eingebaut; gesetzte `device_class` stammt aus dem plattform-eigenen Enum
+- **MUSS [MUST]** offline validieren: `<platform>.py` existiert; die Entity leitet von der dokumentierten Basisklasse ab; `async_setup_entry` registriert Entities via `async_add_entities`; `supported_features` ist eine `*EntityFeature`-Bitmaske (keine rohe Ganzzahl); jedes gesetzte Flag hat seine async Command-Methode; alle **Required**-Properties sind implementiert; Availability ist behandelt (`CoordinatorEntity` oder ein `available`-Override); eine modul-ebene `PARALLEL_UPDATES` ist deklariert; Zustands-/Mode-Enums sind eingebaut; gesetzte `device_class` stammt aus dem plattform-eigenen Enum
 - **MUSS [MUST]** einen CONFORMANT / NEEDS-WORK-Bericht gegen die Akzeptanzkriterien von `ha/entity-platform-types` und der gewählten Familien-Spec liefern, plus die geänderten Datei-Pfade und den Quality-Scale-Marker (**Gold** für korrekte Device-Class-Abdeckung je Plattform, `entity-device-class`)
+- **SOLLTE [SHOULD]** im Bericht auf `ha-test-harness-augment` für Plattform-Tests verweisen — dieses Skill erzeugt das Plattform-Modul, aber keine Tests
 
 ### Verbote
 
@@ -82,8 +85,10 @@ Scaffolding genau einer aktiven Plattform-Entity pro Lauf in einer bestehenden `
 - [ ] `supported_features` ist eine bitweise-`|`-Kombination aus dem plattform-eigenen `*EntityFeature`-Enum, nie eine rohe Ganzzahl
 - [ ] Für jedes gesetzte Feature-Flag existiert die korrespondierende async Command-Methode; kein „auf Vorrat" gesetztes Flag
 - [ ] Alle je Domäne als **Required** markierten State-/Attribut-Properties sind implementiert; Zustands-/Mode-Enums sind eingebaut
+- [ ] Availability ist behandelt (`CoordinatorEntity` oder ein `available`-Override) — Silver `entity-unavailable`
+- [ ] Eine modul-ebene `PARALLEL_UPDATES`-Konstante ist in `<platform>.py` deklariert — Silver `parallel-updates`
 - [ ] Gesetzte `device_class` stammt aus dem plattform-eigenen geschlossenen Enum; rein deklarative `EntityDescription`-Tabellen-Entities sind an `ha-entity-description-mapper` verwiesen
-- [ ] Bericht nennt Datei-Pfade und den Quality-Scale-Marker **Gold** (`entity-device-class`)
+- [ ] Bericht nennt Datei-Pfade, verweist auf `ha-test-harness-augment` für Tests und nennt den Quality-Scale-Marker **Gold** (`entity-device-class`)
 
 ## Offene Fragen
 

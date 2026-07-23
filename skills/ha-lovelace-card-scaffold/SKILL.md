@@ -2,6 +2,22 @@
 name: ha-lovelace-card-scaffold
 description: Scaffold a vanilla-JS Lovelace card under custom_components/<domain>/www/<card-name>.js with every mandatory lifecycle method, shadow DOM, entity-change detection, HA CSS custom properties, and auto-registration in __init__.py. Activate on phrasings like "scaffold a Lovelace card for the integration", "add a custom Lovelace card called `<name>`", "erstelle eine Custom-Card für `<Resource>`". Do not activate for greenfield setup (use ha-integration-scaffold), TypeScript / Lit cards, or card removal.
 tags: [home-assistant, custom-integration, lovelace]
+phase: design
+summary: "Scaffolds a vanilla-JS Lovelace card under www/ with every mandatory lifecycle method, shadow DOM, entity-change detection, HA CSS properties, and auto-registration."
+summary_de: "Scaffolded eine Vanilla-JS-Lovelace-Card unter www/ mit allen Pflicht-Lifecycle-Methoden, Shadow DOM, Entity-Change-Erkennung, HA-CSS-Properties und Auto-Registrierung."
+use_when:
+  - "you want to add a custom Lovelace card to an existing integration"
+  - "you want a vanilla-JS card auto-registered through __init__.py"
+dont_use_when:
+  - situation: "You are setting up a greenfield integration"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-integration-scaffold
+  - ha-badge-add
+  - ha-card-editor-add
+  - ha-card-features-add
+  - ha-card-preview-add
+  - ha-lovelace-solution
 ---
 
 # HA Lovelace Card Scaffold
@@ -29,6 +45,7 @@ Use this skill when the user wants to add a custom Lovelace card to an existing 
 6. **Never ask the user to add Lovelace resources by hand.** Auto-registration is the contract.
 7. **Name the element, class, and file per `ha/naming-conventions`.** The custom-element tag is `kebab-case` with at least one hyphen, namespaced by the integration `domain` (`<domain>-card`); if a config editor element is provided, its tag is `<tag>-editor`; the class is `PascalCase` ending in `Card`/`CardEditor`; the source file is `kebab-case`; the card `name`/`description` are English (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)).
 8. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Honour the layout-antipattern catalogue.** Conform to [`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md): default `grid_options.columns` to a multiple of 3 (`3`/`6`/`9`/`12`; B3); never hardcode a fixed **outer** pixel width or absolutely position the card to force its grid footprint (fixed inner-content heights are fine — `rows: "auto"` measures them; B4); set `columns: "full"` only when the card truly spans the section (B4); never use React as the render layer (B5).
 
 ## Inputs
 

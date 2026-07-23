@@ -2,6 +2,27 @@
 name: ha-derived-sensor-author
 description: Author one Home Assistant derived or statistical helper sensor as a spec-conformant YAML block from a described intent — bayesian, derivative, filter, min_max, statistics, threshold, trend, history_stats, integration, utility_meter, or group — conforming to the matching spec/ha-automation/<topic>. Picks the right integration, sets the math-bearing parameter (observations/prob_given_*, unit_time, window_size, state_characteristic, lower/upper/hysteresis, min_gradient, method, cycle), types the produced sensor and guards source unavailability, and reports runtime dependencies (recorder retention, integration→utility_meter). Activate on "add a sensor for the rate of change / energy from power / moving average / threshold / trend of…", "make a utility_meter / statistics / bayesian sensor for…". Do not activate for the generic template integration (ha-automation-author), stateful helpers (ha-helper-scaffold), real integration sensors (ha-integration-scaffold), blueprints, or deploying to a live HA instance.
 tags: [home-assistant, sensor, statistics, yaml]
+phase: build
+summary: "Authors one derived or statistical helper sensor — bayesian, derivative, filter, statistics, threshold, trend, utility_meter, and more — as a spec-conformant YAML block."
+summary_de: "Erzeugt einen abgeleiteten oder statistischen Helper-Sensor — bayesian, derivative, filter, statistics, threshold, trend, utility_meter u. a. — als spec-konformen YAML-Block."
+use_when:
+  - "you want a rate-of-change, energy-from-power, or moving-average sensor"
+  - "you want a utility_meter, statistics, or bayesian sensor"
+  - "you want a threshold or trend sensor from a source entity"
+dont_use_when:
+  - situation: "You need the generic template integration (free-form Jinja sensors)"
+    alternative: ha-automation-author
+  - situation: "You need a stateful helper (input_*, counter, timer, schedule)"
+    alternative: ha-helper-scaffold
+  - situation: "You need a real sensor from your own integration"
+    alternative: ha-integration-scaffold
+  - situation: "You need a blueprint"
+    alternative: ha-blueprint-scaffold
+see_also:
+  - ha-automation-author
+  - ha-helper-scaffold
+  - ha-integration-scaffold
+  - ha-blueprint-scaffold
 ---
 
 # HA Derived Sensor Author

@@ -2,6 +2,22 @@
 name: ha-backup-platform-add
 description: Augment an existing Home Assistant Custom Integration with one backup-platform surface — either pre/post backup hooks or a backup agent — conforming to spec/ha/backup-platform. For hooks it generates custom_components/<domain>/backup.py with the top-level async functions async_pre_backup(hass) and async_post_backup(hass) that symmetrically pause and resume stateful operations around a backup. For an agent it generates async_get_backup_agents(hass) (empty list when no config entry is loaded), the async_register_backup_agents_listener @callback, and a BackupAgent subclass setting domain/name/unique_id and implementing the full upload/download/list/get/delete contract with BackupAgentError/BackupNotFound error handling. Disambiguates hooks-vs-agent by integration type before generating. Activate on "add backup hooks", "make my integration backup-aware", "provide a backup agent", "füge Backup-Platform-Hooks hinzu". Do not activate for greenfield scaffolding (ha-integration-scaffold), the sibling diagnostics module (ha/diagnostics), encryption/retention/restore orchestration (owned by the backup manager), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, backup]
+phase: design
+summary: "Augments an existing integration with one backup-platform surface — pre/post backup hooks or a backup agent — conforming to the backup-platform contract."
+summary_de: "Erweitert eine bestehende Integration um eine Backup-Plattform-Fläche — Pre/Post-Backup-Hooks oder einen Backup-Agenten — konform zum Backup-Platform-Vertrag."
+use_when:
+  - "you want to add pre/post backup hooks to your integration"
+  - "you want to provide a backup agent for a storage integration"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration"
+    alternative: ha-integration-scaffold
+  - situation: "You want the sibling diagnostics platform module"
+    alternative: ha-diagnostics-augment
+see_also:
+  - ha-integration-scaffold
+  - ha-diagnostics-augment
+  - ha-coordinator-add
+  - ha-repairs-add
 ---
 
 # HA Backup Platform Add

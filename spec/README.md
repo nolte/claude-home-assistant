@@ -18,6 +18,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/zeroconf-discovery`](ha/zeroconf-discovery/en.md) | HA Integration: Zeroconf Discovery | HA-Integration: Zeroconf-Discovery | draft | unversioned |
 | [`ha/diagnostics`](ha/diagnostics/en.md) | HA Integration: Diagnostics | HA-Integration: Diagnostics | draft | unversioned |
 | [`ha/lovelace-card-patterns`](ha/lovelace-card-patterns/en.md) | HA Integration: Lovelace Card Patterns | HA-Integration: Lovelace-Card-Patterns | draft | unversioned |
+| [`ha/lovelace-card-preview`](ha/lovelace-card-preview/en.md) | HA Integration: Lovelace Card Preview | HA-Integration: Lovelace-Card-Preview | draft | unversioned |
 | [`ha/lovelace-card-entity-selector`](ha/lovelace-card-entity-selector/en.md) | HA Integration: Lovelace Card Entity Selector Filtering | HA-Integration: Lovelace-Card-Entity-Selector-Filter | draft | unversioned |
 | [`ha/blueprint-patterns`](ha/blueprint-patterns/en.md) | HA Blueprint: Authoring Patterns | HA-Blueprint: Authoring-Patterns | draft | unversioned |
 | [`ha/quality-scale`](ha/quality-scale/en.md) | HA Integration: Quality Scale | HA-Integration: Quality-Scale | draft | unversioned |
@@ -52,6 +53,9 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/lovelace-badges`](ha/lovelace-badges/en.md) | HA Integration: Lovelace Badges | HA-Integration: Lovelace-Badges | draft | unversioned |
 | [`ha/lovelace-strategies`](ha/lovelace-strategies/en.md) | HA Integration: Lovelace Strategies | HA-Integration: Lovelace-Strategies | draft | unversioned |
 | [`ha/lovelace-views-panels`](ha/lovelace-views-panels/en.md) | HA Integration: Lovelace Views and Custom Panels | HA-Integration: Lovelace-Views und Custom-Panels | draft | unversioned |
+| [`ha/lovelace-panel-config-view`](ha/lovelace-panel-config-view/en.md) | HA Integration: Custom Panel Configuration and Options View | HA-Integration: Custom-Panel Konfigurations- und Options-Ansicht | draft | unversioned |
+| [`ha/lovelace-layout-antipatterns`](ha/lovelace-layout-antipatterns/en.md) | HA Dashboard: Layout and Card-Arrangement Antipatterns | HA-Dashboard: Layout- und Card-Anordnungs-Antipatterns | draft | unversioned |
+| [`ha/card-panel-sizing`](ha/card-panel-sizing/en.md) | HA Dashboard: Card and Panel Sizing | HA-Dashboard: Card- und Panel-Sizing | draft | unversioned |
 | [`ha/frontend-data-api`](ha/frontend-data-api/en.md) | HA Integration: Frontend Data API (`hass` object) | HA-Integration: Frontend-Data-API (`hass`-Objekt) | draft | unversioned |
 | [`ha/frontend-websocket-commands`](ha/frontend-websocket-commands/en.md) | HA Integration: Frontend WebSocket Commands | HA-Integration: Frontend-WebSocket-Commands | draft | unversioned |
 | [`ha/security-hardening`](ha/security-hardening/en.md) | HA Integration: Security Hardening | HA-Integration: Security-Hardening | draft | unversioned |
@@ -93,7 +97,11 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha-automation/filter`](ha-automation/filter/en.md) | HA Automation: Using the Filter Sensor | HA-Automation: Filter-Sensor nutzen | draft | unversioned |
 | [`ha-automation/legacy-trigger-helpers`](ha-automation/legacy-trigger-helpers/en.md) | HA Automation: Avoiding Legacy Trigger Helpers | HA-Automation: Legacy-Trigger-Helfer vermeiden | draft | unversioned |
 | [`claude/ha-integration-scaffold`](claude/ha-integration-scaffold/en.md) | Skill: `ha-integration-scaffold` | Skill: `ha-integration-scaffold` | draft | unversioned |
+| [`claude/ha-integration-ci-scaffold`](claude/ha-integration-ci-scaffold/en.md) | Skill: `ha-integration-ci-scaffold` | Skill: `ha-integration-ci-scaffold` | draft | unversioned |
+| [`claude/ha-hacs-release`](claude/ha-hacs-release/en.md) | Skill: `ha-hacs-release` | Skill: `ha-hacs-release` | draft | unversioned |
 | [`claude/ha-config-flow-augment`](claude/ha-config-flow-augment/en.md) | Skill: `ha-config-flow-augment` | Skill: `ha-config-flow-augment` | draft | unversioned |
+| [`claude/ha-options-flow-augment`](claude/ha-options-flow-augment/en.md) | Skill: `ha-options-flow-augment` | Skill: `ha-options-flow-augment` | draft | unversioned |
+| [`claude/ha-config-entry-migrate`](claude/ha-config-entry-migrate/en.md) | Skill: `ha-config-entry-migrate` | Skill: `ha-config-entry-migrate` | draft | unversioned |
 | [`claude/ha-coordinator-add`](claude/ha-coordinator-add/en.md) | Skill: `ha-coordinator-add` | Skill: `ha-coordinator-add` | draft | unversioned |
 | [`claude/ha-entity-description-mapper`](claude/ha-entity-description-mapper/en.md) | Skill: `ha-entity-description-mapper` | Skill: `ha-entity-description-mapper` | draft | unversioned |
 | [`claude/ha-service-definition-generator`](claude/ha-service-definition-generator/en.md) | Skill: `ha-service-definition-generator` | Skill: `ha-service-definition-generator` | draft | unversioned |
@@ -107,9 +115,11 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-automation-author`](claude/ha-automation-author/en.md) | Skill: `ha-automation-author` | Skill: `ha-automation-author` | draft | unversioned |
 | [`claude/ha-helper-scaffold`](claude/ha-helper-scaffold/en.md) | Skill: `ha-helper-scaffold` | Skill: `ha-helper-scaffold` | draft | unversioned |
 | [`claude/ha-derived-sensor-author`](claude/ha-derived-sensor-author/en.md) | Skill: `ha-derived-sensor-author` | Skill: `ha-derived-sensor-author` | draft | unversioned |
+| [`claude/ha-dev-workflow-apply`](claude/ha-dev-workflow-apply/en.md) | Skill: `ha-dev-workflow-apply` | Skill: `ha-dev-workflow-apply` | draft | unversioned |
 | [`claude/ha-repairs-add`](claude/ha-repairs-add/en.md) | Skill: `ha-repairs-add` | Skill: `ha-repairs-add` | draft | unversioned |
 | [`claude/ha-discovery-augment`](claude/ha-discovery-augment/en.md) | Skill: `ha-discovery-augment` | Skill: `ha-discovery-augment` | draft | unversioned |
 | [`claude/ha-device-automation-add`](claude/ha-device-automation-add/en.md) | Skill: `ha-device-automation-add` | Skill: `ha-device-automation-add` | draft | unversioned |
+| [`claude/ha-device-registry-augment`](claude/ha-device-registry-augment/en.md) | Skill: `ha-device-registry-augment` | Skill: `ha-device-registry-augment` | draft | unversioned |
 | [`claude/ha-oauth2-credentials-augment`](claude/ha-oauth2-credentials-augment/en.md) | Skill: `ha-oauth2-credentials-augment` | Skill: `ha-oauth2-credentials-augment` | draft | unversioned |
 | [`claude/ha-bluetooth-augment`](claude/ha-bluetooth-augment/en.md) | Skill: `ha-bluetooth-augment` | Skill: `ha-bluetooth-augment` | draft | unversioned |
 | [`claude/ha-conversation-agent-augment`](claude/ha-conversation-agent-augment/en.md) | Skill: `ha-conversation-agent-augment` | Skill: `ha-conversation-agent-augment` | draft | unversioned |
@@ -123,12 +133,18 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-entity-platform-add`](claude/ha-entity-platform-add/en.md) | Skill: `ha-entity-platform-add` | Skill: `ha-entity-platform-add` | draft | unversioned |
 | [`claude/ha-card-editor-add`](claude/ha-card-editor-add/en.md) | Skill: `ha-card-editor-add` | Skill: `ha-card-editor-add` | draft | unversioned |
 | [`claude/ha-card-features-add`](claude/ha-card-features-add/en.md) | Skill: `ha-card-features-add` | Skill: `ha-card-features-add` | draft | unversioned |
+| [`claude/ha-card-preview-add`](claude/ha-card-preview-add/en.md) | Skill: `ha-card-preview-add` | Skill: `ha-card-preview-add` | draft | unversioned |
 | [`claude/ha-badge-add`](claude/ha-badge-add/en.md) | Skill: `ha-badge-add` | Skill: `ha-badge-add` | draft | unversioned |
+| [`claude/ha-solution`](claude/ha-solution/en.md) | Skill: `ha-solution` | Skill: `ha-solution` | draft | unversioned |
 | [`claude/ha-strategy-add`](claude/ha-strategy-add/en.md) | Skill: `ha-strategy-add` | Skill: `ha-strategy-add` | draft | unversioned |
 | [`claude/ha-panel-add`](claude/ha-panel-add/en.md) | Skill: `ha-panel-add` | Skill: `ha-panel-add` | draft | unversioned |
+| [`claude/ha-panel-author`](claude/ha-panel-author/en.md) | Skill: `ha-panel-author` | Skill: `ha-panel-author` | draft | unversioned |
+| [`claude/ha-panel-ux-audit`](claude/ha-panel-ux-audit/en.md) | Skill: `ha-panel-ux-audit` | Skill: `ha-panel-ux-audit` | draft | unversioned |
+| [`claude/ha-panel-config-view-add`](claude/ha-panel-config-view-add/en.md) | Skill: `ha-panel-config-view-add` | Skill: `ha-panel-config-view-add` | draft | unversioned |
 | [`claude/ha-websocket-command-add`](claude/ha-websocket-command-add/en.md) | Skill: `ha-websocket-command-add` | Skill: `ha-websocket-command-add` | draft | unversioned |
 | [`claude/ha-integration-solution`](claude/ha-integration-solution/en.md) | Skill: `ha-integration-solution` | Skill: `ha-integration-solution` | draft | unversioned |
 | [`claude/ha-lovelace-solution`](claude/ha-lovelace-solution/en.md) | Skill: `ha-lovelace-solution` | Skill: `ha-lovelace-solution` | draft | unversioned |
+| [`claude/ha-pixoo-solution`](claude/ha-pixoo-solution/en.md) | Skill: `ha-pixoo-solution` | Skill: `ha-pixoo-solution` | draft | unversioned |
 
 Der Index listet nur **lokale** Specs. Portfolioweite `project/`-Specs (u. a. `project/branching-model`, `project/parallel-working-copies`) werden nicht mehr lokal geführt, sondern aus dem nolte-shared-Hub vererbt — siehe [Vererbte Specs](#vererbte-specs).
 
@@ -154,5 +170,7 @@ Die HA-Integration-Specs unter `spec/ha/` werden aus den Specs in [`nolte/kamerp
 Ausnahme: `ha/blueprint-patterns` betrifft YAML-Blueprints statt Python-Integrationen und hat keine `kamerplanter-ha`-Vorlage. Diese Spec ist direkt aus der offiziellen HA-Blueprint-Doku (`home-assistant.io/docs/blueprint/`, Stand 2024–2026) plus den „Share your Blueprints"-Forum-Konventionen destilliert.
 
 Ausnahme: Die mit der Developer-Doku-Auswertung hinzugekommenen Specs (Integration-Core wie `ha/quality-scale`/`ha/integration-manifest`/`ha/setup-lifecycle`, die `ha/entity-platform-types`- und `ha/entity-platforms-*`-Kataloge sowie die `ha/lovelace-*`- und `ha/frontend-*`-Cluster) sind aus der offiziellen HA-Developer-Doku ([`developers.home-assistant.io`](https://github.com/home-assistant/developers.home-assistant), Stand 2024–2026) destilliert statt aus `kamerplanter-ha` — primär `core/integration-quality-scale/`, `creating_integration_manifest.md`, `config_entries_index.md`, `integration_setup_failures.md`, `core/platform/*`, `core/integration/*`, `core/entity/*` (Plattform-Docs), `core/bluetooth/`, `core/llm/`, `device_automation_*`, `network_discovery.md`, `integration_*events*.md`, die `intent_*`-, `asyncio_*`- und `development_*`-Guides sowie der `frontend/`-Baum (`custom-ui/*`, `data.md`, `extending/websocket-api.md`) für die Lovelace-/Frontend-Specs. Jede Anforderung ist an einer konkreten Doc-Datei verankert.
+
+Ausnahme: `ha/lovelace-layout-antipatterns` ist ein Antipattern-Katalog zu Dashboard-Layout und Card-Anordnung und quer über den `ha/lovelace-*`-Cluster gelegt. Er ist primär aus der offiziellen HA-**Nutzer**-Doku (`home-assistant.io/dashboards/*`: `views`, `sections`, `masonry`, `panel`, `sidebar`, `grid`, `vertical-`/`horizontal-stack`) plus der **Developer**-Doku (`custom-ui/custom-card.md` „Sizing in sections view", `custom-ui/creating-custom-panels.md`) destilliert. Jeder Katalog-Eintrag trägt ein Evidenz-Tier: `[doc: user]`/`[doc: dev]` (wörtlich an einer konkreten Doc-Seite verankert), `[rationale]` (im dokumentierten Modell verankert, kein wörtliches Verbot) oder `[policy]` (nolte-Portfolio-Regel, kein HA-Fakt). Nicht-doc-belegte Behauptungen sind bewusst nicht als HA-Fakten geführt; die geflaggten Doku-Hazards stehen unter „Offene Fragen".
 
 Eigener Topic `spec/ha-automation/`: Anders als der `ha/`-Korpus (Integrations-**Entwicklung** in Python) beschreibt `ha-automation/` die **Nutzung** der eingebauten Automatisierungs-/Helfer-Integrationen auf Konfigurationsebene (YAML/UI) — die Grundlage für hochwertige Automationen und Dashboards. Scope ist ziel-orientiert kuratiert (Kern-Bausteine `automation`/`script`/`scene`/`template`/`group`, die `input_*`-/`timer`/`counter`/`schedule`-Helfer, die Command-Runner `python_script`/`shell_command`/`rest_command` und die berechneten Helfer-Sensoren `derivative`/`integration`/`utility_meter`/`statistics`/`threshold`/`trend`/`history_stats`/`min_max`/`bayesian`/`filter`), nicht die wörtliche HA-Kategorie „Automation" (der die Kern-Bausteine fehlen und die echte Legacy enthält). Jede Spec trägt eine verpflichtende Abgrenzung „Wann NICHT verwenden" mit Begründung und benannter Alternative, nennt ihre reale `ha_category` ehrlich und referenziert die Namens-Dimension `ha/naming-conventions`. Die Specs sind direkt aus der offiziellen HA-Nutzer-Doku ([`home-assistant.io`](https://github.com/home-assistant/home-assistant.io), `/integrations/<domain>/` + `/docs/automation/`, `/docs/scripts/`, `/docs/configuration/templating/`, Stand 2026) destilliert; jede Anforderung ist an einer konkreten Doc-Seite verankert.

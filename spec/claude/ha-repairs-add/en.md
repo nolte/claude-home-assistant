@@ -57,8 +57,8 @@ Augmenting exactly one repair issue per run into an existing `custom_components/
 - **SHOULD** set `breaks_in_ha_version` for deprecations
 - **MUST** for `is_fixable=True` produce a `repairs.py` with `async_create_fix_flow(hass, issue_id, data) -> RepairsFlow` as a top-level async function that routes to the flow by `issue_id`; the flow derives from `RepairsFlow` (or uses `ConfirmRepairFlow`), implements `async_step_init`, and completes with `self.async_create_entry(title="", data={})` (which removes the issue automatically)
 - **MUST** for `is_fixable=False` point `learn_more_url` at the instructions and require **no** `repairs.py` for this issue
-- **MUST** place the `translation_key` in `strings.json` under `issues:` with `title` and `description`, resolve every `translation_placeholders` in the text, and leave **no** hard-coded user strings in the Python code (translation detail follows `ha/translations`)
-- **MUST** produce or name an `async_delete_issue(hass, domain, issue_id)` path that removes the issue once the underlying state is resolved
+- **MUST** place the `translation_key` in `strings.json` under `issues:` with `title` and `description`, resolve every `translation_placeholders` in the text (placeholder values must be strings), and leave **no** hard-coded user strings in the Python code (translation detail follows `ha/translations`)
+- **MUST** place the actual `async_delete_issue(hass, domain, issue_id)` call at the resolution site (not merely name a path) so the issue clears once the underlying state is resolved — a missing call-site leaves a stale repair
 - **SHOULD** set `is_persistent=True` when the problem is only detectable at the moment it occurs (e.g. a failed update) — its display then survives an HA restart; otherwise `is_persistent=False` when the state is re-checkable on every start (e.g. an outdated backend version)
 - **MUST** name identifiers per `ha/naming-conventions` and verify HA internals against the official docs (`ha/upstream-docs-verification`)
 

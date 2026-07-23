@@ -17,6 +17,23 @@ description: >-
 distribution: plugin
 tools: Read, Glob, Grep, Bash
 tags: [home-assistant, custom-integration, verify, diagnostics]
+phase: review
+summary: "Diagnoses a deployed Custom Integration in a running HA pod on a Kind/local cluster — pod status, log error scan, installed-files check — read-only."
+summary_de: "Diagnostiziert eine deployte Custom-Integration in einem laufenden HA-Pod im Kind-/lokalen Cluster — Pod-Status, Log-Fehlerscan, Installed-Files-Check — read-only."
+use_when:
+  - "you want to verify a deployed integration on the local HA pod"
+  - "you want to diagnose the Kind-cluster HA pod"
+  - "you want to check whether the integration is loaded"
+dont_use_when:
+  - situation: "You want to deploy the integration to the pod"
+    alternative: ha-integration-deploy
+  - situation: "You want pytest-based behaviour testing"
+    alternative: ha-test-harness-augment
+see_also:
+  - ha-integration-deploy
+  - ha-integration-review
+  - ha-test-harness-augment
+  - ha-integration-solution
 ---
 
 # HA Integration Verify

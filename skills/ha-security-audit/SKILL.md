@@ -2,6 +2,20 @@
 name: ha-security-audit
 description: Read-only security audit of an existing HA Custom Integration against every MUST rule in spec/ha/security-hardening — API path whitelist, bearer gating, config-flow input validation, multi-instance service disambiguation, diagnostics redaction, logging discipline. Produces a severity-sorted findings report; never modifies code. Activate on phrasings like "run a security audit on the integration", "audit security hardening", "prüfe die Integration gegen das Security-Hardening". Do not activate for auto-fix, backend penetration testing, or general code-quality audit.
 tags: [home-assistant, custom-integration, security, audit]
+phase: quality
+summary: "Runs a read-only security audit of an HA Custom Integration against every MUST rule in ha/security-hardening and produces a severity-sorted findings report."
+summary_de: "Führt ein Read-only-Security-Audit einer HA-Custom-Integration gegen alle MUST-Regeln aus ha/security-hardening durch und erzeugt einen nach Schweregrad sortierten Findings-Report."
+use_when:
+  - "you want to run a security audit on an integration"
+  - "you want to audit an integration's security hardening"
+  - "you want to check an integration against the security-hardening MUST rules"
+dont_use_when: []
+see_also:
+  - ha-quality-scale-audit
+  - ha-dev-workflow-apply
+  - ha-diagnostics-augment
+  - ha-config-flow-augment
+  - ha-service-definition-generator
 ---
 
 # HA Security Audit
@@ -52,7 +66,10 @@ Run `grep`-based pattern checks for each rule:
 | Bearer-token gating | `Authorization` header occurrences across modules |
 | Config-flow input validation | `vol.Schema` constructs in `config_flow.py` |
 | Multi-instance service disambiguation | service handlers vs. `_resolve_entry` helper |
-| Diagnostics redaction | `async_redact_data` + `TO_REDACT` consistency with `entry.data` keys |
+| Diagnostics redaction | `async_redact_data` + `TO_REDACT` consistency with `entry.data` keys, incl. coordinates (`latitude`/`longitude`) per the `ha/security-hardening` classification |
+| Transport security (TLS) | `ssl=False` / `verify=False` / `TCPConnector(ssl=False)` occurrences |
+| Request timeouts | outbound `session.{get,post,put,patch,delete}` without `timeout=` / `ClientTimeout` |
+| HTTP view auth | `hass.http.register_view` without `requires_auth = True` |
 | Logging discipline | `_LOGGER.{level}(...api_key\|token\|password\|secret...)` |
 
 ### 2) Score

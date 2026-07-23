@@ -54,7 +54,7 @@ Der Skill ergänzt **eine** Test-Klasse (Plattform-Tests, Service-Tests, Helper-
 ### Generator-Choreographie
 
 - **MUSS [MUST]** je nach `kind` die passende Test-Datei anlegen oder erweitern:
-  - `kind=platform` → `tests/test_<platform>.py`: Plattform-Setup-Test (asserts dass async_setup_entry für die Plattform die erwartete Anzahl Entitäten registriert), `_handle_coordinator_update`-Test (asserts dass `native_value` korrekt aus den Coordinator-Daten extrahiert wird), pro `EntityDescription` aus der Tupel-Liste mindestens einen Happy-Path-Test
+  - `kind=platform` → `tests/test_<platform>.py`: Plattform-Setup-Test (asserts dass async_setup_entry für die Plattform die erwartete Anzahl Entitäten registriert), `_handle_coordinator_update`-Test (asserts dass `native_value` korrekt aus den Coordinator-Daten extrahiert wird), pro `EntityDescription` aus der Tupel-Liste mindestens einen Happy-Path-Test, und einen `snapshot_platform`-Entity-/Registry-Snapshot-Test via `syrupy` (`tests/snapshots/*.ambr`) — das dominante HA-Core-Plattform-Test-Pattern
   - `kind=service` → `tests/test_services.py`: Service-Test mit Happy-Path, fehlender Disambiguation, Auth-Fehler (siehe `ha-service-definition-generator`-Test-Pattern)
   - `kind=helpers` → `tests/test_helpers.py`: pro Helper-Funktion in `helpers.py` mindestens einen Test
   - `kind=lovelace_cleanup` → `tests/test_lovelace_cleanup.py`: testet die Lovelace-Card-Auto-Registrierung in `__init__.py` (StaticPathConfig-Aufruf, korrekte URLs, korrekte Pfade)
@@ -72,6 +72,7 @@ Der Skill ergänzt **eine** Test-Klasse (Plattform-Tests, Service-Tests, Helper-
 ## Akzeptanzkriterien
 
 - [ ] Die passende Test-Datei existiert und enthält die Tests gemäß `kind`
+- [ ] Bei `kind=platform` ist ein `snapshot_platform`-Entity-/Registry-Snapshot-Test (`syrupy`) enthalten
 - [ ] `tests/conftest.py` ist um die nötigen Fixtures erweitert (sofern erforderlich)
 - [ ] `tests/fixtures/` enthält die nötigen JSON-Snapshots
 - [ ] `pytest tests/<test-file> -v` läuft fehlerfrei

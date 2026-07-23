@@ -2,6 +2,28 @@
 name: ha-repairs-add
 description: Augment an existing Home Assistant Custom Integration with one Repairs issue (fixable or informative) conforming to spec/ha/repairs — the async_create_issue call site, a repairs.py with async_create_fix_flow + RepairsFlow/ConfirmRepairFlow for fixable issues, the strings.json issues entry (title/description), and the async_delete_issue lifecycle path. Decides fixable vs. informative and severity, redirects transient connection errors to the coordinator's UpdateFailed handling, and forbids hard-coded user strings. Activate on "add a repair issue for…", "create a fixable repair flow for…", "warn the user about a deprecation", "füge ein Repair-Issue für… hinzu". Do not activate for greenfield scaffolding (ha-integration-scaffold), system_health, whole-integration quality grading (ha-quality-scale-audit), transient error handling (ha-coordinator-add), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, repairs]
+phase: design
+summary: "Adds one Repairs issue (fixable or informative) — call site, repair flow, translations, and delete lifecycle — to an existing HA Custom Integration."
+summary_de: "Fügt einer bestehenden HA-Custom-Integration ein Repairs-Issue (fixable oder informativ) hinzu — Aufrufstelle, Repair-Flow, Übersetzungen und Delete-Lifecycle."
+use_when:
+  - "you want to add a repair issue for a problem situation"
+  - "you want to create a fixable repair flow"
+  - "you want to warn the user about a deprecation"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+  - situation: "You need integration system health (system_health.py)"
+    alternative: ha-system-health-add
+  - situation: "You want to grade the whole integration against the quality scale"
+    alternative: ha-quality-scale-audit
+  - situation: "You need transient connection/API error handling"
+    alternative: ha-coordinator-add
+see_also:
+  - ha-coordinator-add
+  - ha-quality-scale-audit
+  - ha-system-health-add
+  - ha-integration-scaffold
+  - ha-translation-sync
 ---
 
 # HA Repairs Add
@@ -33,10 +55,10 @@ Use this skill to add **one** Repairs issue (fixable or informative) to an exist
 1. **One issue, one run.** No multi-issue batches.
 2. **Read [`ha/repairs`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/repairs/de.md) first.** Do not generate from memory.
 3. **Not for transient errors.** If the situation is a transient connection/API error or a pure "something is broken" with no user action, redirect to the coordinator's `UpdateFailed` handling instead of raising an issue.
-4. **`async_create_issue` carries the mandatory fields** — `domain`, `issue_id` (unique in domain), `is_fixable`, `severity` (`IssueSeverity`: `ERROR` now-broken / `WARNING` future-break), `translation_key`. Set `breaks_in_ha_version` for deprecations.
+4. **`async_create_issue` carries the mandatory fields** — `domain`, `issue_id` (unique in domain), `is_fixable`, `severity` (`IssueSeverity`: `ERROR` now-broken / `WARNING` future-break), `translation_key`. Set `breaks_in_ha_version` for deprecations. For a whole-integration deprecation, raise a `WARNING` issue with `breaks_in_ha_version` + `is_persistent=True` and state the removal timeline in the `issues:` description — the most common real repair.
 5. **`is_fixable=True` ⇒ a real flow.** Generate `repairs.py` with `async_create_fix_flow(hass, issue_id, data) -> RepairsFlow` routing by `issue_id`; the flow derives from `RepairsFlow` (or `ConfirmRepairFlow`), implements `async_step_init`, and closes with `self.async_create_entry(title="", data={})` (which removes the issue). `is_fixable=False` ⇒ a `learn_more_url`, no flow.
-6. **No hard-coded user strings.** Every `translation_key` lives in `strings.json` under `issues:` with `title`/`description`, all `translation_placeholders` resolved (see [`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md)).
-7. **Own the lifecycle.** Produce or name an `async_delete_issue(hass, domain, issue_id)` path that clears the issue once resolved; HA does not auto-clear it.
+6. **No hard-coded user strings.** Every `translation_key` lives in `strings.json` under `issues:` with `title`/`description`, all `translation_placeholders` resolved (see [`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md)) — placeholder values must be strings (`str(...)` any non-string value).
+7. **Own the lifecycle — place the delete call.** Produce the actual `async_delete_issue(hass, domain, issue_id)` call at the resolution site (state re-detected as healthy / entry unloaded), not merely a named path — HA does not auto-clear the issue, so a missing call-site leaves a stale repair.
 8. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
 
 ## Inputs

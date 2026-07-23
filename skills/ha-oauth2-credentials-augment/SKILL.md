@@ -2,6 +2,26 @@
 name: ha-oauth2-credentials-augment
 description: Augment an existing Home Assistant Custom Integration with the OAuth2 / Application Credentials flow, conforming to spec/ha/application-credentials. Creates application_credentials.py (async_get_authorization_server returning an AuthorizationServer with authorize_url + token_url, optional async_get_auth_implementation / LocalOAuth2ImplementationWithPkce and async_get_description_placeholders), wires the config_flow as a config_entry_oauth2_flow.AbstractOAuth2FlowHandler subclass with DOMAIN + logger that uses async_oauth_create_entry and sets unique_id, adds "application_credentials" to manifest dependencies (with config_flow true), runs token refresh through config_entry_oauth2_flow.OAuth2Session, implements the reauth path, and adds the application_credentials strings.json entries. Activate on "add OAuth2 to my integration", "wire up application credentials", "set up the OAuth2 config flow", "füge OAuth2 / Application Credentials hinzu". Do not activate for generic user/password or API-key config flows (ha-config-flow-augment), greenfield scaffolding (ha-integration-scaffold), coordinator wiring (ha-coordinator-add), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, oauth2]
+phase: design
+summary: "Adds the OAuth2 / Application Credentials flow — application_credentials.py, an AbstractOAuth2FlowHandler config flow, OAuth2Session token refresh, reauth, and manifest wiring."
+summary_de: "Fügt den OAuth2-/Application-Credentials-Flow hinzu — application_credentials.py, einen AbstractOAuth2FlowHandler-Config-Flow, OAuth2Session-Token-Refresh, Reauth und Manifest-Verdrahtung."
+use_when:
+  - "you want to add OAuth2 to your integration"
+  - "you want to wire up Application Credentials"
+  - "you want to set up the OAuth2 config flow"
+dont_use_when:
+  - situation: "You need a generic user/password or API-key config flow"
+    alternative: ha-config-flow-augment
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+  - situation: "You want to wire up a coordinator"
+    alternative: ha-coordinator-add
+see_also:
+  - ha-config-flow-augment
+  - ha-options-flow-augment
+  - ha-coordinator-add
+  - ha-config-entry-migrate
+  - ha-integration-scaffold
 ---
 
 # HA OAuth2 Credentials Augment

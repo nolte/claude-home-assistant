@@ -16,7 +16,7 @@ The skill augments an **existing** `config_flow.py` of a Custom Integration. It 
 
 - Retrofit single config-flow patterns without forcing the user back through the initial-scaffold path
 - Non-destructive extension: existing steps stay unchanged; only new steps and new schema constants land in the code
-- Cross-file consistency for every added step: `config_flow.py` code, `strings.json` step strings, `translations/<lang>.json` mirrors, possibly `manifest.json` discovery keys, tests in `tests/test_config_flow.py`
+- Cross-file consistency for every added step: `config_flow.py` code, `strings.json` step strings, `translations/<lang>.json` mirrors, possibly `manifest.json` discovery keys, tests in `tests/test_config_flow.py`; for the `oauth` pattern also `manifest.json:dependencies: [application_credentials]`, an `__init__.py` registration block, and `application_credentials.py` (`async_get_authorization_server`)
 - Make quality-scale transitions visible: a user → reauth augment lifts Bronze to Silver; a user → reconfigure augment lifts Silver to Gold
 
 ## Non-Goals
@@ -25,6 +25,7 @@ The skill augments an **existing** `config_flow.py` of a Custom Integration. It 
 - Destructive refactors (step rewrites, step removal, schema reduction) — manual task
 - Backend-specific OAuth provider configuration (token endpoint, scopes, client-ID auth) — the skill scaffolds the OAuth **flow** skeleton; concrete provider values are filled by the user
 - Multi-account architecture beyond multi-step selection (for example one account with sub-accounts per service region) — separate follow-up spec when concretely needed
+- Discovery transports other than Zeroconf (DHCP/SSDP/USB/HomeKit/MQTT) — `ha-discovery-augment`; this skill's `zeroconf` pattern owns only the mDNS/Zeroconf retrofit
 
 ## Requirements
 

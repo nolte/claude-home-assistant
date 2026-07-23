@@ -27,7 +27,7 @@ Planning and orchestration across the integration backend cluster. One requireme
 - Generating a single building block and its spec conformance — that stays with the dispatched individual skills
 - A pure YAML-automation/helper solution — that is `ha-automation-solution`
 - A Lovelace frontend solution — that is `ha-lovelace-card-scaffold` (and the associated Lovelace skill family)
-- Deploying to a running HA instance or runtime verification — those are the operator follow-ups via the `ha-integration-deploy` and `ha-integration-verify` agents (out of generation scope)
+- Deploying to a running HA instance or runtime verification as part of the default generation run — those run via the `ha-integration-deploy` / `ha-integration-verify` agents, and only inside the opt-in `deploy_ready` lifecycle phase behind a second gate (out of the generation-only scope)
 - Its own validation or conformance logic — each dispatched skill validates its own artifact; this skill only aggregates the reports
 
 ## Requirements
@@ -42,24 +42,30 @@ Planning and orchestration across the integration backend cluster. One requireme
 ### Inputs
 
 - **MUST** capture: `requirement` (prose, the desired device/cloud/API result)
-- **MAY** capture: `domain` (integration domain, otherwise derived from the scaffold step), `target_dir` (repo root), and known protocol/auth details (REST/MQTT/Bluetooth; API key/OAuth2)
+- **MAY** capture: `domain` (integration domain, otherwise derived from the scaffold step), `target_dir` (repo root), known protocol/auth details (REST/MQTT/Bluetooth; API key/OAuth2), a `target_tier` (`bronze`/`silver`/`gold`/`platinum`, default `silver`) that drives the included building blocks cumulatively, `release_ready` (also scaffold CI validation + HACS-release readiness), and `deploy_ready` (default `false`; opt-in: run the deploy→verify→review lifecycle phase with a fix feedback loop behind a second gate)
 
 ### Pre-flight
 
-- **MUST** check `requirement` is non-empty; on underspecification ask 1–3 targeted questions (which protocol, which auth type, which entity domains, which quality features) before planning
+- **MUST** check `requirement` is non-empty; then gauge requirement confidence — a clearly-specified requirement uses the lightweight path (ask 1–3 targeted questions: which protocol, which auth type, which entity domains, which quality features), while a requirement below a confidence threshold (vague target, unnamed device/API, unclear scope) **MUST** dispatch `requirements-elicit` first and plan against the confirmed requirement artifact, mirroring the `issue-orchestrate` upstream gate — before planning
 - **MUST** check whether the requirement is actually YAML-automation-shaped (no own protocol, no config-flow integration); if so, mark it in the plan and point at `ha-automation-solution` instead of forcing an integration
 - **MUST** check whether an integration already exists under `target_dir/custom_components/<domain>/`; if so, skip the scaffold step and build on the existing one
 
 ### Dispatch / plan rules
 
+- **MUST** resolve each owning skill at runtime by matching the requirement against the live integration `ha-*` skill inventory (each candidate's stated responsibility), not from a frozen name list — the mappings in this section are an illustrative anchor, re-resolved each run, so a skill added to or removed from the family is dispatchable without editing the orchestrator (mirroring `issue-orchestrate`'s runtime-lookup dispatch)
 - **MUST** present a plan as a table in dependency order before any generation: per entry `#`, building block, owning skill, dependency (`depends-on`), purpose — and wait for explicit confirmation
 - **MUST NOT** generate a building block inline itself; every generation runs through the owning individual skill
 - **MUST** dispatch `ha-integration-scaffold` as step 1 whenever a *new* integration is created (greenfield hub)
-- **MUST** plan the foundation before the entities: `ha-config-flow-augment` and `ha-coordinator-add`; `ha-oauth2-credentials-augment` only for OAuth2/cloud auth
+- **MUST** plan the foundation before the entities: `ha-config-flow-augment` and `ha-coordinator-add`; `ha-oauth2-credentials-augment` only for OAuth2/cloud auth; `ha-options-flow-augment` for a post-setup option and `ha-config-entry-migrate` for a stored-shape change
 - **MUST** map declarative read-type entities (datapoint/schema driven) to `ha-entity-description-mapper` and active, command-driven platforms (climate/cover/light/fan/lock/media_player/…) to `ha-entity-platform-add`
-- **SHOULD** plan actions/surfaces/robustness only as the requirement needs: `ha-service-definition-generator` (services), `ha-integration-events-add` (event bus), `ha-device-automation-add` (device automations), `ha-discovery-augment` (DHCP/SSDP/USB/HomeKit/Zeroconf), `ha-bluetooth-augment` (BLE), `ha-diagnostics-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-significant-change-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-reproduce-state-add`, `ha-conversation-agent-augment`
+- **SHOULD** plan actions/surfaces/robustness only as the requirement needs: `ha-service-definition-generator` (services), `ha-integration-events-add` (event bus), `ha-websocket-command-add` (a WebSocket command a frontend card/panel calls — the Python-side backend endpoint), `ha-device-automation-add` (device automations), `ha-discovery-augment` (DHCP/SSDP/USB/HomeKit/Zeroconf), `ha-bluetooth-augment` (BLE), `ha-diagnostics-augment`, `ha-repairs-add`, `ha-system-health-add`, `ha-significant-change-add`, `ha-backup-platform-add`, `ha-media-source-add`, `ha-reproduce-state-add`, `ha-conversation-agent-augment`, `ha-device-registry-augment` (device grouping / `via_device` / stale-devices)
 - **MUST** plan i18n and tests near the end: `ha-translation-sync` after all string-producing steps, `ha-test-harness-augment` for the added code paths
-- **SHOULD** close the run with the read-only reviews: `ha-quality-scale-audit` and `ha-security-audit` (the bundled review path; they never modify code)
+- **MUST** drive the building-block set by `target_tier` (cumulative Bronze→Platinum) — Bronze scaffold + config-flow + tests; Silver + reauth + `PARALLEL_UPDATES` + `entity-unavailable` + options; Gold + diagnostics + discovery + `ha-device-registry-augment` + repairs + reconfigure + translations; Platinum dispatches `ha-dev-workflow-apply` (the owning skill of `ha/dev-workflow`) to apply and validate the strict-typing / code-style / `hassfest` workflow, instead of surfacing a bare checklist item
+- **MUST** finish a `release_ready` run with `ha-integration-ci-scaffold` (hassfest/HACS/pytest CI) and `ha-hacs-release` (HACS distribution readiness)
+- **MUST** close the run with the read-only audit gate — `ha-quality-scale-audit` and `ha-security-audit` (they never modify code); a shortfall routes back to the named remediation skill per finding. This is the **in-flow acceptance gate**, run once here; it deliberately overlaps the bundled `ha-integration-review` agent (which re-runs quality-scale + security *plus* cross-cutting + drift). The split is **temporal, not additive**: a run that clears this gate **MUST NOT** also dispatch `ha-integration-review` for the same two dimensions in the same pass — that agent is the separate **release / pre-PR whole-picture pass**, pointed at as a follow-up, never run on top of a green in-flow gate
+- **SHOULD** treat the plan approval as the single human gate for generation — after it the dispatch, the audits, and the release-ready finish run to completion, stopping only on NEEDS-WORK
+- **MAY**, only when `deploy_ready` is set and only after a **second explicit human gate** distinct from the plan gate, run the deploy→verify→review lifecycle phase: `ha-dev-instance-provision` (only if no dev-HA pod exists) → `ha-integration-deploy` → `ha-integration-verify` → `ha-integration-review` (the release/pre-PR whole-picture pass, legitimately executed at this separate post-gate time, never on top of the in-flow gate). The generation-only default and its single gate are preserved when `deploy_ready` is unset
+- **MUST**, in that phase, on an `ha-integration-verify` FAIL or an `ha-integration-review` NEEDS-WORK, route each finding back to the owning authoring/remediation skill (the audit-shortfall pattern), re-dispatch the fix, then re-deploy and re-verify — a closed feedback loop, not a terminal descriptive report; never `kubectl delete pod` (a code refresh is `kill 1`, owned by the `ha-integration-deploy` agent)
 - **MUST** dispatch the skills in dependency order and thread the `domain` plus the `entity_id`s/file paths produced in one step into the inputs of dependent steps
 - **MUST** stop and report when a dispatched skill returns a NEEDS-WORK report, rather than building on an unfinished predecessor building block
 - **MUST** keep artifacts minimal — never plan a building block the requirement does not call for
@@ -69,18 +75,20 @@ Planning and orchestration across the integration backend cluster. One requireme
 
 - **MUST** list, at the end, every produced/changed file path, its building block, and the wiring (`domain`, which `entity_id` references which)
 - **MUST** relay the aggregated CONFORMANT / NEEDS-WORK reports of the individual skills plus the read-only review findings without re-judging them
-- **MUST** point at the operator follow-ups (deploy/verify via the `ha-integration-deploy` and `ha-integration-verify` agents) without executing them
+- **MUST**, in the default generation-only run (`deploy_ready` unset), point at the operator follow-ups (a bundled whole-picture pass via the `ha-integration-review` agent as the **release / pre-PR** review, deploy/verify via the `ha-integration-deploy` and `ha-integration-verify` agents) without executing them — the `ha-integration-review` follow-up adds cross-cutting + drift *on top of* quality-scale + security and **MUST NOT** re-run this run's in-flow quality+security gate. When `deploy_ready` is set, these follow-ups are instead executed by the opt-in lifecycle phase behind the second gate, and the report includes the deploy/verify/review outcome and every fix cycle
 
 ### Prohibitions
 
 - **MUST NOT** orchestrate more than one requirement per run
 - **MUST NOT** execute a plan without user confirmation
 - **MUST NOT** re-judge a dispatched skill report
-- **MUST NOT** deploy to or verify against a running HA instance
+- **MUST NOT** deploy to or verify against a running HA instance in the default generation-only run — deploy/verify happens **only** inside the opt-in `deploy_ready` lifecycle phase, behind the second explicit gate
 
 ## Acceptance criteria
 
+- [ ] Owning skills are resolved against the live integration `ha-*` inventory each run (a newly added or renamed family skill is dispatchable without editing the orchestrator); the decomposition mappings are illustrative, not a frozen closed set
 - [ ] Skill asks for missing essentials (protocol, auth type, entity domains, quality features) before planning
+- [ ] An under-specified requirement dispatches `requirements-elicit` before planning; a clearly-specified one uses the fast 1–3-question clarify path
 - [ ] Skill presents a dependency-ordered skill plan and waits for confirmation
 - [ ] Skill dispatches the owning individual skills instead of generating itself
 - [ ] `ha-integration-scaffold` is step 1 for a new integration; an existing one is built upon
@@ -89,10 +97,13 @@ Planning and orchestration across the integration backend cluster. One requireme
 - [ ] Stops on a NEEDS-WORK predecessor instead of building further
 - [ ] Run ends with the read-only reviews (`ha-quality-scale-audit`, `ha-security-audit`)
 - [ ] Aggregate report lists every file and the wiring, relays the individual reports, and points at the deploy/verify follow-ups
+- [ ] When `deploy_ready` is set, an opt-in phase provisions (if needed), deploys, verifies, and reviews behind a **second** explicit gate distinct from the plan gate
+- [ ] In that phase a `ha-integration-verify` FAIL or `ha-integration-review` NEEDS-WORK routes back to the owning skill and re-drives deploy→verify, instead of terminating with a descriptive report
+- [ ] The generation-only default (and its single gate) is preserved when `deploy_ready` is unset
 
 ## Open questions
 
-- **Review agent vs. review skills**: the bundled `ha-integration-review` agent (one call summarizing quality-scale, security, and cross-cutting consistency read-only) already exists, but by contract it is a *fire-and-forget* operator follow-up check (pre-PR/pre-release) that is never dispatched by an orchestrator and never replaces the single-dimension audit skills. This skill therefore keeps dispatching `ha-quality-scale-audit` and `ha-security-audit` in-flow (interactive, visible) and points at the `ha-integration-review` agent in the aggregate report as an optional operator follow-up, without executing it.
+- **Review agent vs. review skills (resolved)**: the bundled `ha-integration-review` agent (one call summarizing quality-scale, security, and cross-cutting consistency read-only) already exists, but by contract it is a *fire-and-forget* operator follow-up check (pre-PR/pre-release) that is never dispatched by an orchestrator and never replaces the single-dimension audit skills. **Decision (Variant b):** the two audit skills are the **in-flow acceptance gate** (interactive, visible, run once in-flow); `ha-integration-review` is the separate **release / pre-PR whole-picture pass**. The split is **temporal, not additive** — a run that clears the in-flow gate does not also run the bundled agent for the same two dimensions, so the caller is never charged for the quality+security assessment twice. See the Dispatch/plan rules and Validation & report.
 - **Agent vs. skill dispatch**: should the generation steps run as skills (visible, sequential) or via generation agents (isolated, parallel)? Currently skill dispatch, because the plan confirmation and the `domain`/`entity_id` wiring should stay visible in the user context.
 - **Plan persistence**: should the skill plan be persisted as a file so an interrupted run is resumable? Currently in-conversation.
 - **Existing-integration awareness**: how deep should the skill read an existing `custom_components/<domain>/` to detect already-present building blocks (coordinator, platforms) and avoid duplicate steps? Currently a pre-flight existence check plus user statement.

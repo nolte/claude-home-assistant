@@ -23,7 +23,8 @@ Ergänzung genau eines Custom-Panels pro Lauf in einem bestehenden Repo: das Pan
 ## Nicht-Ziele
 
 - Custom-View als Layout-Container (überschreibt Masonry, rendert Core-Cards/Badges via `ll-*`-Events) — abgedeckt in `ha/lovelace-views-panels` (View-Teil), nicht von diesem Skill generiert
-- Eine einzelne Card oder eine Panel-Mode-View (Single-Card-Layout im Dashboard) — `ha-lovelace-card-scaffold` / `ha/lovelace-card-patterns`
+- Eine einzelne Card — `ha-lovelace-card-scaffold` / `ha/lovelace-card-patterns`
+- Eine Panel-Mode-View (eine `type: panel`-View mit genau einer vollbreiten Card — Dashboard-YAML, keine gescaffoldete Card) — `ha-panel-author`, der die Lieferform-Entscheidung inkl. Panel-Mode-View besitzt, gemäß `ha/lovelace-views-panels`
 - Programmatische Dashboard-Generierung (Strategien, die ganze Views/Dashboards berechnen) — `ha/lovelace-strategies`
 - WebSocket-Commands, die das Panel aufruft — `ha/frontend-websocket-commands`
 - Greenfield-Scaffolding einer Integration — `ha-integration-scaffold`
@@ -62,6 +63,7 @@ Ergänzung genau eines Custom-Panels pro Lauf in einem bestehenden Repo: das Pan
 - **KANN [MAY]** über den `config`-Block beliebige Daten an das Panel durchreichen (zur Laufzeit als `panel.config`) und **KANN [MAY]** `embed_iframe` setzen, wenn das Panel im Iframe statt direkt im Frontend ausgeliefert werden soll
 - **SOLLTE [SHOULD]** ohne ES5-Support ausliefern, solange keine breitere Browser-Unterstützung nötig ist; **MUSS [MUST]** bei nötigem ES5-Support den ES5-Adapter vor dem Definieren laden, via `window.loadES5Adapter().then(function() { customElements.define('my-panel', MyCustomPanel) })`
 - **MUSS [MUST]** Bezeichner nach `ha/naming-conventions` benennen und HA-Interna gegen die offizielle Doku verifizieren (`ha/upstream-docs-verification`)
+- **MUSS [MUST]** das generierte Panel/View an `ha/lovelace-layout-antipatterns` konformieren — ein Panel-Mode-View hält genau eine Card und keine Badges (A1/A2), das Panel respektiert `narrow` und den Mobile-Single-Column-Collapse (E1) und nutzt kein React (B5)
 
 ### Validierung & Bericht
 
