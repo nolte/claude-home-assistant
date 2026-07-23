@@ -31,7 +31,7 @@ see_also:
 
 # HA Dev-Workflow Apply
 
-Spec: `spec/claude/ha-dev-workflow-apply/en.md` (EN canonical) / `spec/claude/ha-dev-workflow-apply/en.md`. Grounding spec: `spec/ha/dev-workflow/en.md` — this skill operationalises that spec's MUST rules; read it for the pinned HA-original rules.
+Spec: `spec/claude/ha-dev-workflow-apply/en.md` (EN canonical) / `spec/claude/ha-dev-workflow-apply/de.md` (DE translation). Grounding spec: `spec/ha/dev-workflow/en.md` — this skill operationalises that spec's MUST rules; read it for the pinned HA-original rules.
 
 This skill is the owning skill of `spec/ha/dev-workflow`: it **applies** the HA coding workflow (style, strict typing, validation) to an existing Custom Integration and **validates** the result, closing the spec-vs-skill gap where the Platinum tier of `ha-integration-solution` previously resolved to a bare checklist item.
 

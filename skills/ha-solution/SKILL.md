@@ -30,7 +30,7 @@ resumable: true
 
 # HA Solution
 
-Spec: `spec/claude/ha-solution/en.md` (EN canonical) / `spec/claude/ha-solution/en.md`.
+Spec: `spec/claude/ha-solution/en.md` (EN canonical) / `spec/claude/ha-solution/de.md` (DE translation).
 
 This skill is the **top-level router** above the four domain front doors (`ha-integration-solution`, `ha-lovelace-solution`, `ha-automation-solution`, `ha-pixoo-solution`). It owns no domain artifacts itself — it classifies the requirement into one or more domains, routes each part to the owning `*-solution`, and threads the shared identities across domain boundaries. Each domain solution keeps its own plan-approval gate, decomposition, dispatch, and spec conformance.
 
@@ -81,7 +81,7 @@ Resolve the owning domain solution for each classified part **at runtime**, by m
 | an own device/cloud/API protocol, config flow, coordinator, entities, services, or a WebSocket-command backend (Python custom integration) | integration / backend | `ha-integration-solution` |
 | a dashboard surface — custom cards, editors, features, badges, strategies, custom panels | Lovelace / frontend | `ha-lovelace-solution` |
 | a YAML automation / helper / template / blueprint (no own protocol, no config flow) | automation | `ha-automation-solution` |
-| a Divoom Pixoo 64 display (pages, pixel-art, animation) | Pixoo | `ha-pixoo-solution` |
+| a Divoom Pixoo 64 display (pages, pixel-art, animation) | Pixoo — optional, device-specific family; applies only when that device is present | `ha-pixoo-solution` |
 
 A cross-domain requirement maps to several rows; the typical order is **integration/backend → Lovelace/frontend → automation → Pixoo**, since the backend produces the `domain` and `entity_id`s the later domains consume.
 

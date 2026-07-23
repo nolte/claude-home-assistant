@@ -22,7 +22,7 @@ see_also:
 
 # HA Pixoo Pixel Art Author
 
-Grounding spec: `spec/ha/pixoo-pixel-art/en.md` (EN canonical) / `spec/ha/pixoo-pixel-art/en.md`; delivery mechanics in `spec/ha/divoom-pixoo/en.md`.
+Grounding spec: `spec/ha/pixoo-pixel-art/en.md` (EN canonical) / `spec/ha/pixoo-pixel-art/de.md` (DE translation); delivery mechanics in `spec/ha/divoom-pixoo/en.md`.
 
 ## Why this is a skill, not an agent
 

@@ -22,7 +22,7 @@ see_also:
 
 # HA Pixoo Page Author
 
-Grounding specs: `spec/ha/divoom-pixoo/en.md` (EN canonical) / `spec/ha/divoom-pixoo/en.md`, and `spec/ha/pixoo-pixel-art/en.md` for embedded graphics.
+Grounding specs: `spec/ha/divoom-pixoo/en.md` (EN canonical) / `spec/ha/divoom-pixoo/de.md` (DE translation), and `spec/ha/pixoo-pixel-art/en.md` for embedded graphics.
 
 ## Why this is a skill, not an agent
 
