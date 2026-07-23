@@ -26,6 +26,12 @@ see_also:
 
 Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-entity-description-mapper/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-entity-description-mapper/en.md).
 
+## Why this is a skill, not an agent
+
+- **Per-datapoint operator decisions (decisive):** mapping a datapoint table to EntityDescription tuples requires judgement calls (device class, unit, enabled-by-default) that are confirmed in the conversation, not fired off blind.
+- **Output flows back naturally:** the generated tuple list and strings/icons entries are reviewed and iterated inline before they land.
+- **Counter-dimension considered:** the generation step is mechanical and self-contained (agent bias), but a wrong device-class guess multiplied over a whole table is expensive — the confirm-as-you-go dialogue outweighs isolation.
+
 ## When this skill activates
 
 Use this skill when the user wants to add datapoints (sensors, binary sensors, buttons, numbers, selects, switches, calendars, todos) to an existing platform file in declarative `EntityDescription` form.

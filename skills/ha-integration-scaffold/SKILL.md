@@ -27,6 +27,12 @@ see_also:
 
 Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-scaffold/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-scaffold/en.md).
 
+## Why this is a skill, not an agent
+
+- **One step in a larger human-driven workflow (decisive):** the greenfield scaffold is the opening move of integration development; domain, platforms, discovery, and harness choices are elicited and approved mid-flow.
+- **Context access:** the scaffold lands in the repository the conversation is scoped to and its decisions feed directly into the follow-on `ha-*` skills.
+- **Counter-dimension considered:** a complete skeleton is a large self-contained unit (agent bias), but every structural decision inside it is operator-facing; a fire-and-forget agent would guess where the spec demands a confirmed answer.
+
 ## When this skill activates
 
 Use this skill when the user wants to:

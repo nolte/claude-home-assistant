@@ -41,7 +41,7 @@ This agent operationalises [`spec/ha/dev-instance-provisioning`](https://github.
 
 The single most important rule carried over from `dev-environment`: once the instance runs, a code refresh restarts HA via `kubectl exec <pod> -- kill 1` — **NEVER `kubectl delete pod`** (that re-runs the init container and wipes copied files). This agent uses `kubectl delete` only for an explicit full teardown.
 
-## Skill-vs-agent rationale
+## Why this is an agent, not a skill
 
 This is an agent rather than a skill because:
 

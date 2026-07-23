@@ -25,6 +25,12 @@ see_also:
 
 Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-translation-sync/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-translation-sync/en.md).
 
+## Why this is a skill, not an agent
+
+- **Confirm-before-delete gate (decisive):** orphaned keys are surfaced for operator confirmation before removal — a mid-flow approval an agent's fire-and-forget shape would lose.
+- **Quick, targeted change:** structural drift fixes touch strings.json and the translation files of the integration in scope; main-conversation territory per the change-scope dimension.
+- **Counter-dimension considered:** drift detection is mechanical and self-contained (agent bias), but detection without the interactive disposition step is only half the contract — the gate outweighs isolation.
+
 ## When this skill activates
 
 Use this skill to align `strings.json` with every `translations/<lang>.json` file in an HA Custom Integration and to surface drift against `icons.json`.

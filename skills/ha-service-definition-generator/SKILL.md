@@ -22,6 +22,12 @@ see_also:
 
 Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-service-definition-generator/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-service-definition-generator/en.md).
 
+## Why this is a skill, not an agent
+
+- **Quick, targeted addition in the current context (decisive):** one service touches services.yaml, the handler module, translations, and icons of the integration already in scope; the change-scope and latency dimensions route it to the main thread.
+- **Mid-flow approval:** service name, fields, and selector types are confirmed with the operator before writing.
+- **Counter-dimension considered:** the generation follows a fixed recipe (agent bias), but the naming and schema decisions are operator-facing and the diff is small — isolation would cost more than it protects.
+
 ## When this skill activates
 
 Use this skill to add one HA service per call to an existing Custom Integration. Examples: a refresh button that re-polls all coordinators, a confirmation service that marks a notification as handled, a record-event service.

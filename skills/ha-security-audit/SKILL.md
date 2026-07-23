@@ -22,6 +22,12 @@ see_also:
 
 Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-security-audit/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-security-audit/en.md).
 
+## Why this is a skill, not an agent
+
+- **Interactive audit with fix routing (decisive):** findings are triaged with the operator one dimension at a time and route into the owning edit skills; that mid-flow dialogue is the point of the single-topic audit, mirroring the sibling `ha-quality-scale-audit`.
+- **Consistency of the `ha-*-audit` family:** all single-dimension audits are skills; the bundled fire-and-forget release pass is deliberately delegated to the `ha-integration-review` agent instead.
+- **Counter-dimension considered:** a read-only audit is agent-shaped (tool restriction, isolation) — that shape exists as `ha-integration-review`; this skill covers the interactive, single-dimension slice.
+
 ## When this skill activates
 
 Use this skill to audit an existing HA Custom Integration against every MUST rule in `ha/security-hardening` and emit a severity-sorted findings report.

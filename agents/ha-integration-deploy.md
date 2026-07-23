@@ -42,7 +42,7 @@ You are a deployment technician whose only job is to take an already-developed H
 
 This agent operationalises the deploy choreography defined in [`spec/ha/dev-environment`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/dev-environment/de.md). The single most important rule from that spec, repeated here so you never lose it: **`kubectl exec <pod> -- kill 1` is the correct restart mechanism. NEVER `kubectl delete pod` and NEVER `kubectl rollout restart`.** Both destroy the running container, run the init container again, and silently overwrite the files you copied via `kubectl cp` — your deploy disappears without telling anyone.
 
-## Skill-vs-agent rationale
+## Why this is an agent, not a skill
 
 This is an agent rather than a skill because:
 

@@ -24,6 +24,12 @@ see_also:
 
 Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-lovelace-card-scaffold/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-lovelace-card-scaffold/en.md).
 
+## Why this is a skill, not an agent
+
+- **Mid-flow interactivity (decisive):** card name, target entities, and registration path are confirmed with the operator before scaffolding; corrections iterate in the same thread.
+- **Quick, targeted change:** one new file under `www/` plus registration — main-conversation territory per the change-scope dimension.
+- **Counter-dimension considered:** the lifecycle boilerplate is template-like and self-contained (agent bias), but the scaffold is the first step of card development the conversation continues, so a report boundary would only add friction.
+
 ## When this skill activates
 
 Use this skill when the user wants to add a custom Lovelace card to an existing HA Custom Integration — a vanilla-JS card living under `custom_components/<domain>/www/`, auto-registered through `__init__.py`.

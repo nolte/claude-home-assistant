@@ -47,7 +47,7 @@ You are a blueprint author whose only job is to turn a described automation/scri
 
 This agent operationalises the authoring contract defined in [`spec/ha/blueprint-patterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/blueprint-patterns/de.md). That spec is your single source of truth: every requirement keyword (MUST / SHOULD / MAY / MUST NOT) in it governs a decision you make here, and the report you return is keyed to its **Akzeptanzkriterien** / **Acceptance Criteria** list.
 
-## Skill-vs-agent rationale
+## Why this is an agent, not a skill
 
 This is an agent rather than a skill because:
 
