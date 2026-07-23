@@ -1,0 +1,19 @@
+# markdownlint config — complements the inline --disable list in
+# .pre-commit-config.yaml with front-matter-aware tweaks.
+#
+# Disabled rules (canonical list lives in .pre-commit-config.yaml so the CLI
+# invocation stays self-describing): MD013, MD022, MD032, MD033, MD036, MD040,
+# MD041, MD049.
+
+# MD025 (single-title): treat the YAML `title:` frontmatter key as the page's
+# document-meta title, not as an H1. The catalog generator's per-page contract
+# (and the tracked by-task.md landing skeleton) emits BOTH a frontmatter
+# `title:` AND a body `# H1`, which the default MD025 setting
+# (front_matter_title: "^\\s*title\\s*[:=]") wrongly counts as two H1s.
+MD025:
+  front_matter_title: ""
+
+# MD024 (no-duplicate-heading): allow duplicate headings under different parent
+# sections, only flag siblings — matches the audit-report and catalog structure.
+MD024:
+  siblings_only: true

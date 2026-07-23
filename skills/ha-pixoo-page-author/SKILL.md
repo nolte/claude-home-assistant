@@ -2,6 +2,22 @@
 name: ha-pixoo-page-author
 description: Author one Divoom Pixoo 64 page as spec-conformant YAML for the divoom_pixoo integration's pages_data list — a components page (text/image/rectangle/templatable), a special page (PV/progress_bar/fuel), or a native page (channel/clock/gif/visualizer) — from a described information requirement. Lays out the 64×64 canvas, wires entity-state Jinja templates onto the display, picks fonts/colors/alignment, applies the static pixel-art rules for embedded graphics, and returns a conformance report. Activate on "show my heat-pump power on the Pixoo", "make a Pixoo page with the dishwasher progress", "put the weather and temperature on the Divoom", "zeig mir X auf dem Pixoo als Seite", "bau eine Pixoo-Page für…". Do not activate for detailed pixel-art graphics (ha-pixoo-pixel-art-author), animated/moving displays (ha-pixoo-animation-author), device setup/config flow, or deploying to a live HA instance.
 tags: [home-assistant, divoom-pixoo, display, yaml]
+phase: build
+summary: "Authors one Divoom Pixoo 64 page — components, special, or native — as spec-conformant pages_data YAML from an information requirement, with a conformance report."
+summary_de: "Erzeugt eine Divoom-Pixoo-64-Seite — components, special oder native — als spec-konformes pages_data-YAML aus einer Informationsanforderung, mit Konformitätsbericht."
+use_when:
+  - "you want to show entity state or data on the Pixoo as a page"
+  - "you want a Pixoo page with progress, power, or weather"
+  - "you want a components, special, or native Pixoo page"
+dont_use_when:
+  - situation: "You need a detailed pixel-art graphic"
+    alternative: ha-pixoo-pixel-art-author
+  - situation: "You need a moving or animated display"
+    alternative: ha-pixoo-animation-author
+see_also:
+  - ha-pixoo-pixel-art-author
+  - ha-pixoo-animation-author
+  - ha-pixoo-solution
 ---
 
 # HA Pixoo Page Author

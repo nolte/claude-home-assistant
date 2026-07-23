@@ -2,6 +2,24 @@
 name: ha-entity-description-mapper
 description: Generate EntityDescription tuple lists for an HA Custom Integration platform module from a datapoint table or API-schema JSON, plus matching strings.json and icons.json entries. Activate on phrasings like "add sensors from this datapoint list", "generate EntityDescriptions from this CSV", "add binary_sensors for the alert types", "erweitere die Sensor-Plattform um folgende Datapoints". Do not activate for greenfield scaffolding (use ha-integration-scaffold) or when the platform file does not yet exist.
 tags: [home-assistant, custom-integration, entity-description]
+phase: design
+summary: "Generates EntityDescription tuple lists for a platform module from a datapoint table or API-schema JSON, plus matching strings.json and icons.json entries."
+summary_de: "Erzeugt EntityDescription-Listen für ein Plattform-Modul aus einer Datapoint-Tabelle oder API-Schema-JSON, samt passender strings.json- und icons.json-Einträge."
+use_when:
+  - "you want to add sensors from a datapoint list"
+  - "you want to generate EntityDescriptions from a CSV"
+  - "you want to add binary_sensors for alert types"
+  - "you want to extend a platform with more datapoints"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+  - situation: "The target platform file does not yet exist"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-integration-scaffold
+  - ha-entity-platform-add
+  - ha-coordinator-add
+  - ha-translation-sync
 ---
 
 # HA EntityDescription Mapper

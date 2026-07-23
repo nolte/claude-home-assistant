@@ -2,6 +2,25 @@
 name: ha-automation-solution
 description: Plan and orchestrate a complete Home Assistant YAML solution from a result-oriented requirement, so the user never has to pick which authoring skill to use. Decomposes the requirement into the minimal combination of artifacts across the ha-automation skill family, presents a dependency-ordered artifact plan for approval, then dispatches ha-automation-author, ha-helper-scaffold, ha-derived-sensor-author, and ha-blueprint-scaffold in order — threading entity_ids between steps — and flags requirements that actually need a custom integration. Activate on "I want my heat pump's daily energy on the dashboard and an alert when it's high", "set up presence-based lighting that only runs in the evening", "baue mir eine Lösung, die…", "richte… ein". Do not activate for a single clear artifact (let the owning skill handle it), Python custom integrations (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, automation, orchestration, planning]
+phase: plan
+summary: "Plans and orchestrates a complete Home Assistant YAML solution from a result-oriented requirement, dispatching the ha-automation authoring skills in dependency order."
+summary_de: "Plant und orchestriert eine vollständige HA-YAML-Lösung aus einer Anforderung und dispatcht die ha-automation-Authoring-Skills in Abhängigkeitsreihenfolge."
+use_when:
+  - "you want a multi-part automation result and don't know which skill to use"
+  - "you want a derived sensor plus an automation that reacts to it"
+  - "you want presence-based lighting scoped to a time window"
+dont_use_when:
+  - situation: "The requirement needs a Python custom integration, not YAML"
+    alternative: ha-integration-scaffold
+  - situation: "You need only one artifact, e.g. a single automation"
+    alternative: ha-automation-author
+see_also:
+  - ha-automation-author
+  - ha-helper-scaffold
+  - ha-derived-sensor-author
+  - ha-blueprint-scaffold
+  - ha-integration-scaffold
+  - ha-integration-solution
 ---
 
 # HA Automation Solution

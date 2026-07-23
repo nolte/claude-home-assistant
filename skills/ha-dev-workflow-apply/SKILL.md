@@ -2,6 +2,31 @@
 name: ha-dev-workflow-apply
 description: Apply and validate the HA code-style / strict-typing / validation workflow (spec/ha/dev-workflow) against an existing HA Custom Integration — Ruff format, ordered imports and alphabetical constants/lists, f-strings (logging excepted), file-header docstrings, full type annotations with `from __future__ import annotations`, a local mypy-strict profile as the standalone counterpart of Core's `.strict-typing` (the platinum strict-typing bridge), hassfest validation (manifest/strings/services), and voluptuous config validation for YAML-configurable platforms — then report CONFORMANT / NEEDS-WORK against the spec's MUST rules keyed to a target tier (bronze floor → platinum). Activate on "apply the HA dev workflow", "make this integration strict-typing / platinum-ready", "run ruff + mypy strict + hassfest on my integration", "enforce HA code style", "wende den HA-Dev-Workflow an", "mach die Integration platinum-tauglich". Do not activate for a read-only quality-scale tier check (ha-quality-scale-audit), a security audit (ha-security-audit), the pytest harness (ha-test-harness-augment), devcontainer / Kind setup (ha/dev-environment), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, code-style, strict-typing, validation]
+phase: quality
+summary: "Applies and validates the HA code-style, strict-typing, and validation workflow (ruff, mypy-strict, hassfest, voluptuous) on a Custom Integration, reporting CONFORMANT/NEEDS-WORK per target tier."
+summary_de: "Wendet den HA-Code-Style-, Strict-Typing- und Validierungs-Workflow (ruff, mypy-strict, hassfest, voluptuous) auf eine Custom-Integration an und meldet CONFORMANT/NEEDS-WORK je Ziel-Tier."
+use_when:
+  - "you want to apply the HA dev workflow to an integration"
+  - "you want to make an integration strict-typing / platinum-ready"
+  - "you want to run ruff + mypy strict + hassfest on an integration"
+  - "you want to enforce HA code style on an integration"
+dont_use_when:
+  - situation: "You want a read-only quality-scale tier check, not to apply fixes"
+    alternative: ha-quality-scale-audit
+  - situation: "You want a security-hardening audit"
+    alternative: ha-security-audit
+  - situation: "You want the pytest test harness"
+    alternative: ha-test-harness-augment
+  - situation: "You want to deploy or verify against a live HA instance"
+    alternative: ha-integration-deploy
+see_also:
+  - ha-quality-scale-audit
+  - ha-security-audit
+  - ha-test-harness-augment
+  - ha-translation-sync
+  - ha-integration-solution
+  - ha-integration-deploy
+  - ha-integration-verify
 ---
 
 # HA Dev-Workflow Apply

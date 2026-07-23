@@ -2,6 +2,26 @@
 name: ha-diagnostics-augment
 description: Enrich an existing Home Assistant Custom Integration's diagnostics beyond the scaffold baseline, conforming to spec/ha/diagnostics. Creates or edits diagnostics.py with async_get_config_entry_diagnostics (and optional async_get_device_diagnostics) returning structured dicts, and routes every secret/PII/credential/coordinate field through homeassistant.components.diagnostics.async_redact_data with an explicit module-constant TO_REDACT frozenset — never manual truncation or field deletion. Includes redacted coordinator snapshots and version strings in the dump. Pairs with the diagnostics quality-scale rule (Silver). Activate on "enrich diagnostics", "add device diagnostics", "make sure diagnostics redacts secrets", "erweitere die Diagnostics", "redacte die Secrets im Diagnostics-Dump". Do not activate to audit redaction gaps across modules (ha-security-audit), to scaffold the bare diagnostics stub at greenfield (ha-integration-scaffold), to score the quality-scale rule (ha-quality-scale-audit), or to deploy to a live HA instance.
 tags: [home-assistant, custom-integration, diagnostics]
+phase: design
+summary: "Enriches an integration's diagnostics.py beyond the scaffold, routing every secret, PII, and coordinate field through async_redact_data with an explicit TO_REDACT set."
+summary_de: "Erweitert die diagnostics.py einer Integration über das Scaffold hinaus und führt jedes Secret-, PII- und Koordinaten-Feld über async_redact_data mit explizitem TO_REDACT-Set."
+use_when:
+  - "you want to enrich an integration's diagnostics dump"
+  - "you want to add device diagnostics"
+  - "you want to ensure diagnostics redacts every secret"
+dont_use_when:
+  - situation: "You want to audit redaction gaps across all modules"
+    alternative: ha-security-audit
+  - situation: "You want the bare diagnostics stub at greenfield creation"
+    alternative: ha-integration-scaffold
+  - situation: "You want to score the diagnostics quality-scale rule"
+    alternative: ha-quality-scale-audit
+see_also:
+  - ha-security-audit
+  - ha-quality-scale-audit
+  - ha-device-registry-augment
+  - ha-coordinator-add
+  - ha-integration-scaffold
 ---
 
 # HA Diagnostics Augment

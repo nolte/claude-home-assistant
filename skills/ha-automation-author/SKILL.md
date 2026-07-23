@@ -2,6 +2,28 @@
 name: ha-automation-author
 description: Author one Home Assistant automation-logic or command artifact as spec-conformant YAML (or a sandboxed .py) from a described intent — an automation, script, scene, generic template entity, or a rest_command / shell_command / python_script — conforming to the matching spec/ha-automation/<topic>. Picks the artifact type, enforces a deliberate mode, stable id/unique_id, unavailable-guarded templates, shell-injection and python-sandbox safety, redirects legacy trigger helpers to modern equivalents, validates offline, and returns a conformance report. Activate on "write an automation that…", "create a script for…", "add a scene/template sensor/rest_command for…", "schreibe eine Automation, die…", "erstelle ein Script für…". Do not activate for blueprints (ha-blueprint-scaffold), stateful helpers (ha-helper-scaffold), derived/statistical sensors (ha-derived-sensor-author), Python custom integrations (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, automation, script, scene, yaml]
+phase: build
+summary: "Authors one non-blueprint automation-logic or command artifact — automation, script, scene, template entity, or rest/shell/python_script — as spec-conformant YAML."
+summary_de: "Erzeugt ein einzelnes Nicht-Blueprint-Automations- oder Kommando-Artefakt — Automation, Script, Szene, Template-Entity oder rest/shell/python_script — als spec-konformes YAML."
+use_when:
+  - "you want to write an automation from a described intent"
+  - "you want to create a script, scene, or template sensor"
+  - "you want to add a rest_command, shell_command, or python_script"
+dont_use_when:
+  - situation: "You need a parameterized, shareable blueprint"
+    alternative: ha-blueprint-scaffold
+  - situation: "You need a stateful helper (input_*, counter, timer, schedule)"
+    alternative: ha-helper-scaffold
+  - situation: "You need a derived or statistical helper sensor"
+    alternative: ha-derived-sensor-author
+  - situation: "You are scaffolding a Python custom integration"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-blueprint-scaffold
+  - ha-helper-scaffold
+  - ha-derived-sensor-author
+  - ha-integration-scaffold
+  - ha-automation-solution
 ---
 
 # HA Automation Author

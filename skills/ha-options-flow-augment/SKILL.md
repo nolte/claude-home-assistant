@@ -2,6 +2,27 @@
 name: ha-options-flow-augment
 description: Augment an existing Home Assistant Custom Integration with one generic config option retrofitted into its OptionsFlow — a post-setup setting stored in entry.options (never entry.data), with a typed selector, strings + translations, an entry-reload-on-change wiring, and a test. Non-destructive — existing options stay untouched. Activate on "add an option for X to the integration", "let the user configure the poll behaviour / a threshold / a toggle after setup", "retrofit an options flow", "füge eine Option für X hinzu", "erweitere den Options-Flow". Do not activate for greenfield scaffolding (ha-integration-scaffold, which ships the base options flow), config-flow setup patterns like tenant/reauth/reconfigure/zeroconf/oauth (ha-config-flow-augment), the coordinator poll-interval option specifically (ha-coordinator-add owns it), config-entry data migration (ha-config-entry-migrate), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, config-flow, options]
+phase: design
+summary: "Retrofits one generic post-setup config option into an existing integration's OptionsFlow, stored in entry.options with a typed selector, strings/translations, reload wiring, and a test."
+summary_de: "Rüstet eine generische Post-Setup-Option in den OptionsFlow einer Integration nach — gespeichert in entry.options, mit typisiertem Selector, Strings/Übersetzungen, Reload-Verdrahtung und Test."
+use_when:
+  - "you want to add a post-setup option to an existing integration"
+  - "you want to let a user configure a threshold or toggle after setup"
+  - "you want to retrofit an OptionsFlow into an integration"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration with its base options flow"
+    alternative: ha-integration-scaffold
+  - situation: "You need a config-flow setup pattern (tenant, reauth, reconfigure, zeroconf, OAuth)"
+    alternative: ha-config-flow-augment
+  - situation: "You want the coordinator poll-interval option specifically"
+    alternative: ha-coordinator-add
+  - situation: "You are migrating stored entry.data/options across a version bump"
+    alternative: ha-config-entry-migrate
+see_also:
+  - ha-config-flow-augment
+  - ha-coordinator-add
+  - ha-config-entry-migrate
+  - ha-integration-scaffold
 ---
 
 # HA Options Flow Augment

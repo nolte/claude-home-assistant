@@ -2,6 +2,27 @@
 name: ha-config-flow-augment
 description: Augment an existing Home Assistant Custom Integration config flow with an additional pattern — multi-step tenant / account selection, zeroconf discovery, reauth flow, reconfigure flow, or OAuth as alternative to API key — non-destructively. Activate on phrasings like "add a multi-step tenant selection to the config flow", "add zeroconf discovery to the existing config flow", "add a reauth flow", "add reconfigure flow", "add OAuth login as alternative to API key", "erweitere den Config-Flow um Tenant-Auswahl". Do not activate for greenfield scaffolding (use ha-integration-scaffold), pure schema edits, or destructive refactors.
 tags: [home-assistant, custom-integration, config-flow]
+phase: design
+summary: "Augments an existing integration's config flow with an added pattern — tenant/account selection, zeroconf discovery, reauth, reconfigure, or OAuth alongside API key — non-destructively."
+summary_de: "Erweitert den Config-Flow einer bestehenden Integration nicht-destruktiv um ein Muster — Tenant-/Account-Auswahl, Zeroconf-Discovery, Reauth, Reconfigure oder OAuth neben API-Key."
+use_when:
+  - "you want to add a multi-step tenant or account selection to the config flow"
+  - "you want to add zeroconf discovery to an existing config flow"
+  - "you want to add a reauth or reconfigure flow"
+  - "you want to add OAuth login alongside an existing API-key path"
+dont_use_when:
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+  - situation: "You are migrating stored entry.data across a version bump"
+    alternative: ha-config-entry-migrate
+  - situation: "You need DHCP/SSDP/USB/HomeKit discovery, not Zeroconf"
+    alternative: ha-discovery-augment
+see_also:
+  - ha-integration-scaffold
+  - ha-config-entry-migrate
+  - ha-discovery-augment
+  - ha-options-flow-augment
+  - ha-coordinator-add
 ---
 
 # HA Config Flow Augment

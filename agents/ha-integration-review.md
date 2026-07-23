@@ -27,6 +27,31 @@ description: >-
 distribution: plugin
 tools: Read, Glob, Grep, Bash
 tags: [home-assistant, custom-integration, review, quality-scale, security]
+phase: review
+summary: "Produces one bundled, read-only pre-PR/pre-release review of a Home Assistant Custom Integration combining quality-scale, security, and cross-cutting checks."
+summary_de: "Erstellt einen gebündelten, read-only Pre-PR-/Pre-Release-Review einer HA-Custom-Integration aus Quality-Scale-, Security- und Cross-Cutting-Prüfungen."
+use_when:
+  - "you want a full integration review before opening the PR"
+  - "you want a combined quality-scale plus security review"
+  - "you want a whole-picture pre-release integration check"
+dont_use_when:
+  - situation: "You want a single-dimension quality-scale audit on a visible surface"
+    alternative: ha-quality-scale-audit
+  - situation: "You want a single-dimension security audit on a visible surface"
+    alternative: ha-security-audit
+  - situation: "You want to deploy the integration to a live pod"
+    alternative: ha-integration-deploy
+  - situation: "You want to verify a running integration on a live pod"
+    alternative: ha-integration-verify
+  - situation: "You want pytest-based behaviour testing"
+    alternative: ha-test-harness-augment
+see_also:
+  - ha-quality-scale-audit
+  - ha-security-audit
+  - ha-integration-verify
+  - ha-integration-deploy
+  - ha-test-harness-augment
+  - ha-integration-solution
 ---
 
 # HA Integration Review

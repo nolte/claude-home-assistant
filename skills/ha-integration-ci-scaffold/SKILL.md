@@ -2,6 +2,23 @@
 name: ha-integration-ci-scaffold
 description: Scaffold the Home-Assistant-specific CI validation for a Custom Integration repository — a GitHub Actions workflow that runs hassfest (home-assistant/actions/hassfest@master) and the HACS validation action (hacs/action@main with category integration) on push and pull_request, plus a pytest job using pytest-homeassistant-custom-component across a Python matrix. Complements the portfolio's generic lint/release CI (project-structure, quality-gate, release-automation) rather than replacing it; adds only the HA-domain validators. Grounded in spec/ha/dev-workflow (hassfest) and spec/ha/hacs-release (HACS validation gate). Activate on phrasings like "add hassfest and HACS validation to CI", "set up the integration CI workflow", "add a pytest matrix job for the integration", "richte die Integration-CI ein", "füge hassfest/HACS-Validierung zur CI hinzu". Do not activate for the generic repo scaffold (nolte-shared project-structure), the release publish flow (release-automation / ha-hacs-release), the Python code itself (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, ci, hassfest]
+phase: design
+summary: "Scaffolds the HA-specific CI validators for a Custom Integration repo — hassfest, the HACS validation action, and a pytest matrix — complementing the generic portfolio CI."
+summary_de: "Scaffolded die HA-spezifischen CI-Validatoren für ein Custom-Integration-Repo — hassfest, HACS-Validierungs-Action und eine pytest-Matrix — als Ergänzung zur generischen Portfolio-CI."
+use_when:
+  - "you want to add hassfest and HACS validation to CI"
+  - "you want a pytest matrix job for the integration"
+dont_use_when:
+  - situation: "You want the release publish flow with version alignment"
+    alternative: ha-hacs-release
+  - situation: "You need to generate the Python integration code"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-integration-scaffold
+  - ha-hacs-release
+  - ha-test-harness-augment
+  - ha-quality-scale-audit
+  - ha-dev-workflow-apply
 ---
 
 # HA Integration CI Scaffold

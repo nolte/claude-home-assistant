@@ -2,6 +2,32 @@
 name: ha-panel-author
 description: Act as a senior Home Assistant panel developer — take a described full-page or dashboard-surface need and develop it end-to-end to production grade, conforming to the full relevant spec set. First decides the delivery shape (custom sidebar panel vs. panel-mode view with one full-width card vs. custom view as a layout container) per spec/ha/lovelace-views-panels and spec/ha/lovelace-layout-antipatterns, then builds it — dispatching ha-panel-add for the base custom-panel scaffold, wiring hass data access (spec/ha/frontend-data-api) and any WebSocket backend (spec/ha/frontend-websocket-commands via ha-websocket-command-add + ha-integration-scaffold), and enforcing layout/responsive (narrow), performance (entity-change detection), shadow-DOM theming, and naming discipline. Activate on "build a proper custom panel for…", "develop a full-page HA panel that shows…", "I need a senior-grade dashboard panel", "entwickle ein vollwertiges Custom-Panel für…", "baue mir ein produktionsreifes HA-Panel". Do not activate for the minimal one-panel scaffold only (ha-panel-add), a single card (ha-lovelace-card-scaffold), a multi-artifact frontend solution across the whole Lovelace family (ha-lovelace-solution), a dashboard strategy (ha-strategy-add), the Python integration backend (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, frontend, lovelace, custom-panel]
+phase: build
+summary: "Develops a Home Assistant panel end-to-end to production grade — delivery-shape decision, data wiring, layout/responsive/theming discipline, and a multi-spec conformance report."
+summary_de: "Entwickelt ein Home-Assistant-Panel produktionsreif von Anfang bis Ende — Delivery-Shape-Entscheidung, Datenanbindung, Layout/Responsive/Theming-Disziplin und Konformitätsbericht."
+use_when:
+  - "you want a complete, production-grade custom panel built"
+  - "you want a full-page sidebar page or panel-mode view developed"
+  - "you want senior-grade dashboard-surface judgement, not a bare scaffold"
+dont_use_when:
+  - situation: "You only need the minimal one-panel scaffold"
+    alternative: ha-panel-add
+  - situation: "You need a single custom card"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You need a multi-artifact frontend solution across Lovelace"
+    alternative: ha-lovelace-solution
+  - situation: "You need a programmatic dashboard/view strategy"
+    alternative: ha-strategy-add
+  - situation: "You need the Python custom-integration backend"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-panel-add
+  - ha-lovelace-card-scaffold
+  - ha-lovelace-solution
+  - ha-strategy-add
+  - ha-websocket-command-add
+  - ha-integration-scaffold
+  - ha-panel-ux-audit
 ---
 
 # HA Panel Author

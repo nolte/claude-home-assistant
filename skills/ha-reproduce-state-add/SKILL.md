@@ -2,6 +2,23 @@
 name: ha-reproduce-state-add
 description: Augment an existing Home Assistant Custom Integration with scene / reproduce-state support, conforming to spec/ha/reproduce-state. Creates a reproduce_state.py platform module exporting the top-level async function async_reproduce_states(hass, states, context=None) that gathers per-entity async_reproduce_state coroutines; each maps a target State (state string plus relevant attributes) onto the domain's own service actions, skips entities already in the desired state, and passes the supplied context through. Sources Context/HomeAssistant/State from homeassistant.core, never manipulates state directly via hass.states.async_set, and reports the Bronze quality-scale marker. Activate on "add reproduce_state", "make my entities scene-capable", "füge Scene-/Reproduce-State-Support hinzu". Do not activate for writing or using scenes in config (ha-automation/scene), for the called service actions themselves (ha-service-definition-generator / ha/services), for the entity command methods that set the states (the entity platform), or for deploying to a live HA instance.
 tags: [home-assistant, custom-integration, reproduce-state]
+phase: design
+summary: "Adds a reproduce_state.py platform so an integration's entities can be captured in scenes and restored through the domain's own service actions."
+summary_de: "Fügt ein reproduce_state.py-Platform-Modul hinzu, damit die Entities einer Integration in Szenen erfasst und über die eigenen Service-Aktionen der Domain wiederhergestellt werden."
+use_when:
+  - "you want to add reproduce_state support to an integration"
+  - "you want to make your entities scene-capable"
+  - "you want entities restored when a scene is activated"
+dont_use_when:
+  - situation: "You need the service actions the mapping calls"
+    alternative: ha-service-definition-generator
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-service-definition-generator
+  - ha-coordinator-add
+  - ha-significant-change-add
+  - ha-integration-scaffold
 ---
 
 # HA Reproduce State Add

@@ -2,6 +2,25 @@
 name: ha-integration-scaffold
 description: Scaffold a complete Home Assistant Custom Integration skeleton — manifest, lifecycle, config flow, coordinator, entity, platforms, translations, icons, diagnostics, plus pytest harness — in one go, conformant to every MUST pattern in spec/ha/*. Activate on phrasings like "scaffold a new HA Custom Integration", "create a Home Assistant integration", "neue HA-Integration scaffolden", "skeleton einer HA Custom Integration anlegen", "bootstrap a new HACS-compatible integration". Do not activate when the user only edits an existing integration, scaffolds a Lovelace card, scaffolds an ESPHome component, scaffolds a blueprint, or asks for a YAML-to-config-flow migration — those have their own skills.
 tags: [home-assistant, custom-integration, scaffolding]
+phase: design
+summary: "Scaffolds a complete HA Custom Integration skeleton — manifest, config flow, coordinator, entities, platforms, translations, diagnostics, and a pytest harness — in one conformant pass."
+summary_de: "Scaffolded ein vollständiges HA-Custom-Integration-Skelett — Manifest, Config-Flow, Coordinator, Entities, Plattformen, Übersetzungen, Diagnostics und pytest-Harness — in einem Durchlauf."
+use_when:
+  - "you want to bootstrap a brand-new HA Custom Integration from scratch"
+  - "you want a runnable, lint-clean, test-passing integration skeleton"
+  - "you want to start an integration targeting HACS distribution"
+dont_use_when:
+  - situation: "You are scaffolding a Lovelace card"
+    alternative: ha-lovelace-card-scaffold
+  - situation: "You are scaffolding a blueprint or automation"
+    alternative: ha-blueprint-scaffold
+see_also:
+  - ha-lovelace-card-scaffold
+  - ha-blueprint-scaffold
+  - ha-coordinator-add
+  - ha-entity-platform-add
+  - ha-integration-ci-scaffold
+  - ha-integration-solution
 ---
 
 # HA Integration Scaffold

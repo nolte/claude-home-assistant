@@ -2,6 +2,23 @@
 name: ha-device-automation-add
 description: Augment an existing Home Assistant Custom Integration with one device-automation kind — a device trigger, condition, or action — conforming to spec/ha/device-automations. Creates the matching platform module (device_trigger.py / device_condition.py / device_action.py) with its async_get_* list (CONF_PLATFORM/CONF_DOMAIN/CONF_DEVICE_ID/CONF_TYPE fields), a module-constant *_SCHEMA the core applies (never manually), the attach/check/call function, optional capabilities, and the device_automation strings.json entries. Runs an entity-vs-device value check and flags HA's stance that no new device automations are accepted. Activate on "add a device trigger for…", "expose a remote button press as a device trigger", "füge eine Device-Action hinzu". Do not activate for entity automations (ha/entity-architecture), registered services (ha-service-definition-generator), greenfield scaffolding (ha-integration-scaffold), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, device-automation]
+phase: design
+summary: "Adds one device-automation kind — a device trigger, condition, or action — to an existing Home Assistant Custom Integration."
+summary_de: "Fügt einer bestehenden Home-Assistant-Custom-Integration eine Device-Automation-Art hinzu — einen Device-Trigger, eine Condition oder eine Action."
+use_when:
+  - "you want to add a device trigger for a device-native event"
+  - "you want to expose a remote button press as a device trigger"
+  - "you want to add a device condition or device action"
+dont_use_when:
+  - situation: "You need a registered service with its own schema"
+    alternative: ha-service-definition-generator
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-integration-events-add
+  - ha-service-definition-generator
+  - ha-integration-scaffold
+  - ha-entity-platform-add
 ---
 
 # HA Device Automation Add

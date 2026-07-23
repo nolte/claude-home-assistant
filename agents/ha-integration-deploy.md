@@ -18,6 +18,22 @@ description: >-
 distribution: plugin
 tools: Read, Glob, Grep, Bash
 tags: [home-assistant, custom-integration, deploy]
+phase: build
+summary: "Deploys a Home Assistant Custom Integration from a local repo into a running HA pod in a Kind/local Kubernetes cluster and returns a PASS/FAIL report."
+summary_de: "Deployt eine Home-Assistant-Custom-Integration aus einem lokalen Repo in einen laufenden HA-Pod in einem Kind-/lokalen Kubernetes-Cluster und liefert einen PASS/FAIL-Bericht."
+use_when:
+  - "you want to deploy an integration to a dev HA instance"
+  - "you want to roll the latest code out to the Kind cluster"
+  - "you want to kubectl-cp an integration into a running HA pod"
+dont_use_when:
+  - situation: "You need production distribution via HACS or add-on"
+    alternative: ha-hacs-release
+see_also:
+  - ha-dev-instance-provision
+  - ha-integration-verify
+  - ha-integration-review
+  - ha-integration-scaffold
+  - ha-hacs-release
 ---
 
 # HA Integration Deploy

@@ -2,6 +2,21 @@
 name: ha-card-editor-add
 description: Add an ha-form-based visual configuration editor to an existing custom Home Assistant Lovelace card, conforming to spec/ha/lovelace-card-editor. Generates the editor custom element (a LitElement implementing setConfig + a hass setter + a render() over <ha-form> with a schema, .data, and computeLabel, plus a _valueChanged handler that dispatches config-changed with bubbles/composed and detail.config), the card's static getConfigElement() returning that element, static getStubConfig() for a default config without the type parameter, and the customElements.define registration. Activate on "add a config editor to my card", "wire up the ha-form editor", "make my card configurable in the UI", "füge meiner Card einen Editor hinzu". Do not activate for scaffolding the card itself (ha-lovelace-card-scaffold), base card-level patterns (ha/lovelace-card-patterns), entity-selector filtering (ha/lovelace-card-entity-selector), or deploying to a live HA instance.
 tags: [home-assistant, lovelace-card, frontend]
+phase: design
+summary: "Adds an ha-form-based visual configuration editor to an existing custom Home Assistant Lovelace card."
+summary_de: "Fügt einer bestehenden Custom-Lovelace-Card von Home Assistant einen ha-form-basierten visuellen Konfigurationseditor hinzu."
+use_when:
+  - "you want to add a config editor to your card"
+  - "you want to wire up the ha-form editor"
+  - "you want to make your card configurable in the UI"
+dont_use_when:
+  - situation: "You are scaffolding the card itself, not just the editor"
+    alternative: ha-lovelace-card-scaffold
+see_also:
+  - ha-lovelace-card-scaffold
+  - ha-card-preview-add
+  - ha-card-features-add
+  - ha-panel-config-view-add
 ---
 
 # HA Card Editor Add

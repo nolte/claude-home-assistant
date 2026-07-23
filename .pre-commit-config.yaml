@@ -42,3 +42,12 @@ repos:
         language: system
         always_run: true
         pass_filenames: false
+      # Byte-compare the vendored catalog generator against the pinned canonical
+      # copy in the nolte-shared hub. Network-tolerant locally (skips offline);
+      # CI enforces it with --require-network. Runs only when the generator changes.
+      - id: catalog-generator-drift
+        name: catalog generator must match the pinned canonical hub copy
+        entry: python3 scripts/docs/check_catalog_generator_drift.py
+        language: system
+        files: ^scripts/docs/gen_catalog\.py$
+        pass_filenames: false

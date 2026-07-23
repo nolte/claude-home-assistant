@@ -45,6 +45,10 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r docs/requirements.txt
+      # The catalog generator (scripts/docs/gen_catalog.py) is a vendored copy of
+      # the canonical generator in the nolte-shared hub. Fail the build if it has
+      # drifted from the pinned canonical version before we rely on it to build.
+      - run: python3 scripts/docs/check_catalog_generator_drift.py --require-network
       - uses: arduino/setup-task@v2
         with:
           version: 3.x

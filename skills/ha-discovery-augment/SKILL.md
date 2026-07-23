@@ -2,6 +2,25 @@
 name: ha-discovery-augment
 description: Augment an existing Home Assistant Custom Integration with one network or bus discovery mechanism beyond Zeroconf — DHCP, SSDP/uPnP, USB, HomeKit, or MQTT discovery — conforming to spec/ha/discovery-mechanisms. Sets the manifest matcher list, implements the typed async_step_<mechanism> in config_flow.py, forwards into a confirm step (never a direct async_create_entry), and wires the unique_id plus _abort_if_unique_id_configured(updates=...) host/IP update path (the Gold discovery-update-info rule). Narrows generic OUI/bridge-chip matchers. Activate on "add DHCP/SSDP/USB/HomeKit/MQTT discovery", "discover the device by MAC/vid:pid/model", "füge DHCP-Discovery hinzu". Do not activate for mDNS/Zeroconf (ha/zeroconf-discovery, scaffold), Bluetooth (ha/bluetooth), greenfield scaffolding (ha-integration-scaffold), generic config-flow auth steps (ha-config-flow-augment), or deploying to a live HA instance.
 tags: [home-assistant, custom-integration, discovery]
+phase: design
+summary: "Adds one discovery mechanism beyond Zeroconf — DHCP, SSDP, USB, HomeKit, or MQTT — with the manifest matcher, a typed config-flow step, confirm step, and unique_id update path."
+summary_de: "Fügt einen Discovery-Mechanismus jenseits von Zeroconf hinzu — DHCP, SSDP, USB, HomeKit oder MQTT — mit Manifest-Matcher, typisiertem Config-Flow-Schritt, Confirm-Schritt und unique_id-Update-Pfad."
+use_when:
+  - "you want to add DHCP, SSDP, USB, HomeKit, or MQTT discovery"
+  - "you want to discover a device by MAC, vid:pid, or model"
+  - "you want users to skip typing a host or picking the integration"
+dont_use_when:
+  - situation: "You need Bluetooth discovery"
+    alternative: ha-bluetooth-augment
+  - situation: "You want generic config-flow auth or selection steps"
+    alternative: ha-config-flow-augment
+  - situation: "You are scaffolding a brand-new integration from scratch"
+    alternative: ha-integration-scaffold
+see_also:
+  - ha-config-flow-augment
+  - ha-bluetooth-augment
+  - ha-coordinator-add
+  - ha-integration-scaffold
 ---
 
 # HA Discovery Augment
