@@ -25,7 +25,7 @@ see_also:
 
 # HA Integration Events Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-events-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-events-add/en.md).
+Spec: `spec/claude/ha-integration-events-add/en.md` (EN canonical) / `spec/claude/ha-integration-events-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -48,14 +48,14 @@ Use this skill to add event **firing** and/or **listening** to an existing integ
 ## Hard rules
 
 1. **Decide the direction first.** Resolve **fire vs. listen vs. both** with the user before generating anything.
-2. **Read [`ha/integration-events`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/integration-events/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/integration-events/en.md` first.** Do not generate from memory.
 3. **Domain-prefixed firing.** Fire via `hass.bus.async_fire("<domain>_event", event_data)`; the event type **must** carry the domain prefix; `event_data` is a JSON-serializable dict. Never use unprefixed or generic event names.
 4. **Firing lives in setup.** Place firing code in `async_setup_entry` (`__init__.py`), never in a platform's entity logic. For device-/service-related events add a `device_id` attribute from the device registry, and document the `event_data` shape (keys + types).
 5. **Listen via the bus or a helper.** Use `hass.bus.async_listen` (until canceled) or `hass.bus.async_listen_once` (exactly once); prefer `async_listen_once` for one-shot lifecycle events (`EVENT_HOMEASSISTANT_START` / `_STARTED` / `_STOP`). Prefer an `homeassistant.helpers.event` helper when it covers the type; do not listen to core events like `EVENT_STATE_CHANGED` when a dedicated helper exists.
-6. **Never drop the unsubscribe.** Hold the callable returned by `async_listen` / `async_listen_once` (or the helper) and register it via `entry.async_on_unload(unsub)` — or tear it down in `async_unload_entry` (see [`ha/setup-lifecycle`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/setup-lifecycle/de.md)). A discarded callable leaks beyond the reload and fires twice.
-7. **`@callback` listeners.** Decorate non-blocking, loop-running listeners with `@callback` (`homeassistant.core.callback`); avoid blocking or I/O work inside them and offload follow-up work as a task (see [`ha/async-patterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/async-patterns/de.md)).
-8. **Event, not state.** Fire transient occurrences as events; never let entity state represent a transient event (no "30-second-on" binary sensor). Point at an `event` entity ([`ha/entity-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-architecture/de.md)) when it models the occurrence more cleanly.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+6. **Never drop the unsubscribe.** Hold the callable returned by `async_listen` / `async_listen_once` (or the helper) and register it via `entry.async_on_unload(unsub)` — or tear it down in `async_unload_entry` (see `spec/ha/setup-lifecycle/en.md`). A discarded callable leaks beyond the reload and fires twice.
+7. **`@callback` listeners.** Decorate non-blocking, loop-running listeners with `@callback` (`homeassistant.core.callback`); avoid blocking or I/O work inside them and offload follow-up work as a task (see `spec/ha/async-patterns/en.md`).
+8. **Event, not state.** Fire transient occurrences as events; never let entity state represent a transient event (no "30-second-on" binary sensor). Point at an `event` entity (`spec/ha/entity-architecture/en.md`) when it models the occurrence more cleanly.
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

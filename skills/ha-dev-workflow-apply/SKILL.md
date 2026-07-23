@@ -31,7 +31,7 @@ see_also:
 
 # HA Dev-Workflow Apply
 
-Spec: [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-dev-workflow-apply/en.md) (EN canonical) / [`de.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-dev-workflow-apply/de.md). Grounding spec: [`ha/dev-workflow`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/dev-workflow/en.md) — this skill operationalises that spec's MUST rules; read it for the pinned HA-original rules.
+Spec: `spec/claude/ha-dev-workflow-apply/en.md` (EN canonical) / `spec/claude/ha-dev-workflow-apply/en.md`. Grounding spec: `spec/ha/dev-workflow/en.md` — this skill operationalises that spec's MUST rules; read it for the pinned HA-original rules.
 
 This skill is the owning skill of `spec/ha/dev-workflow`: it **applies** the HA coding workflow (style, strict typing, validation) to an existing Custom Integration and **validates** the result, closing the spec-vs-skill gap where the Platinum tier of `ha-integration-solution` previously resolved to a bare checklist item.
 
@@ -65,7 +65,7 @@ Use this skill to bring an existing Custom Integration under `custom_components/
 6. **Type narrowing discipline.** `assert`-based type narrowing appears **only** inside `if TYPE_CHECKING:` blocks.
 7. **Validate, don't just format.** Shape the integration so hassfest passes (manifest, strings, services); for YAML-configurable platforms, validate input via voluptuous using `const.py` constants, `required` before `optional`, and valid non-`None` defaults for `cv.string`.
 8. **Report against the spec's acceptance criteria.** End every run with a CONFORMANT / NEEDS-WORK report keyed to the `spec/ha/dev-workflow` acceptance-criteria list; a NEEDS-WORK item names the concrete remaining action.
-9. **Verify HA internals against the official docs.** Don't reproduce HA conventions from memory — consult the developer docs when uncertain (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Verify HA internals against the official docs.** Don't reproduce HA conventions from memory — consult the developer docs when uncertain (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

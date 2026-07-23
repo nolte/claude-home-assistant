@@ -28,7 +28,7 @@ see_also:
 
 # HA Device Registry Augment
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-device-registry-augment/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-device-registry-augment/en.md).
+Spec: `spec/claude/ha-device-registry-augment/en.md` (EN canonical) / `spec/claude/ha-device-registry-augment/de.md` (DE translation).
 
 This skill owns the **device-registry hierarchy** — `DeviceInfo`, `via_device`, dynamic device add, and stale device removal — that `ha/entity-architecture` describes but no skill wires. It lifts an integration from flat entities toward the Gold `devices` / `stale-devices` / `dynamic-devices` rules.
 
@@ -59,7 +59,7 @@ Use this skill when an existing integration's entities should group into one or 
 4. **Dynamic devices.** When the backend can gain devices at runtime, add them from the coordinator update (create the new entities/devices on discovery) rather than only at setup — the Gold `dynamic-devices` rule.
 5. **Stale device removal.** Implement `async_remove_config_entry_device(hass, config_entry, device_entry) -> bool` returning `True` when the device is no longer present in the integration's data, so HA lets the user delete it (the Gold `stale-devices` rule). Do not auto-delete a device that is merely temporarily unavailable.
 6. **Device diagnostics are optional.** Add `async_get_device_diagnostics(hass, entry, device)` only on request; route its data through `async_redact_data` per `ha/diagnostics` / `ha/security-hardening`.
-7. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)**, follow [`ha/device-registry`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/device-registry/de.md) and [`ha/entity-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-architecture/de.md), and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+7. **Name per `spec/ha/naming-conventions/en.md`**, follow `spec/ha/device-registry/en.md` and `spec/ha/entity-architecture/en.md`, and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

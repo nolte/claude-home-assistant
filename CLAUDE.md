@@ -12,7 +12,7 @@ Orientation for Claude Code and contributors working inside this repository.
 - `.claude-plugin/marketplace.json` — marketplace catalog (downstream install source)
 - `skills/<name>/SKILL.md` — reusable skills; each folder is one skill
 - `agents/<name>.md` — reusable sub-agents (when present)
-- `spec/` — bilingual specifications (DE canonical, EN translation)
+- `spec/` — bilingual specifications (EN canonical, DE translation)
 - `docs/` — MkDocs source (bilingual once content lands; DE-first)
 - `tests/` — repo-local test harness (placeholder until first runtime check exists)
 

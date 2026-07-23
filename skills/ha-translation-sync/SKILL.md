@@ -23,7 +23,7 @@ see_also:
 
 # HA Translation Sync
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-translation-sync/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-translation-sync/en.md).
+Spec: `spec/claude/ha-translation-sync/en.md` (EN canonical) / `spec/claude/ha-translation-sync/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -49,7 +49,7 @@ Use this skill to align `strings.json` with every `translations/<lang>.json` fil
 3. **Never apply machine translations.** `<TODO: translate '<EN value>'>` is the only automatic placeholder.
 4. **Always run `report` first.** Default mode is `report`; `apply` is opt-in.
 5. **Always include `icons.json` drift — and fill it.** A translation key without an icon (or vice versa) is a defect even when both files are internally consistent; in `apply` mode, fill a missing `icons.json` entry with a `<TODO: icon>` marker via the same mechanism as `strings.json`, rather than only reporting it.
-6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

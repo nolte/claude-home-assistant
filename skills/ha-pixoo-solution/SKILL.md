@@ -25,9 +25,9 @@ see_also:
 
 # HA Pixoo Solution
 
-Spec: [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-pixoo-solution/en.md) (EN canonical) / [`de.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-pixoo-solution/de.md). This spec governs the front-door dispatch/plan contract, structurally consistent with its `ha-{integration,lovelace,automation}-solution` siblings; the grounding specs below govern the Pixoo domain artifacts.
+Spec: `spec/claude/ha-pixoo-solution/en.md` (EN canonical) / `spec/claude/ha-pixoo-solution/en.md`. This spec governs the front-door dispatch/plan contract, structurally consistent with its `ha-{integration,lovelace,automation}-solution` siblings; the grounding specs below govern the Pixoo domain artifacts.
 
-Grounding specs: [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md) (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/en.md), [`ha/pixoo-pixel-art`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art/de.md), [`ha/pixoo-pixel-art-animation`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art-animation/de.md).
+Grounding specs: `spec/ha/divoom-pixoo/en.md` (EN canonical) / `spec/ha/divoom-pixoo/en.md`, `spec/ha/pixoo-pixel-art/en.md`, `spec/ha/pixoo-pixel-art-animation/en.md`.
 
 This skill is the **front door** to the Divoom Pixoo skill family. It does not generate any artifact itself — it decomposes the requirement, plans the combination, and dispatches the owning authoring skills, each of which owns its generation and spec conformance.
 
@@ -45,7 +45,7 @@ Use this skill when the user describes a **Pixoo display result** that likely ne
 ## When NOT to activate
 
 - a single clear artifact (one page, one pixel-art graphic, one animation) → let the owning skill activate directly
-- device setup, discovery, config flow, IP/`scan_interval` changes, entity wiring → that is **using** the existing `divoom_pixoo` integration per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md), not authoring; out of scope
+- device setup, discovery, config flow, IP/`scan_interval` changes, entity wiring → that is **using** the existing `divoom_pixoo` integration per `spec/ha/divoom-pixoo/en.md`, not authoring; out of scope
 - deploying/importing the config into a running HA instance → out of scope (generation only)
 
 ## Hard rules
@@ -55,10 +55,10 @@ Use this skill when the user describes a **Pixoo display result** that likely ne
 3. **Confidence-gate the requirement.** Before planning, gauge requirement confidence. When it is clearly specified, use the lightweight path (1–3 clarifying questions — which info, static vs. animated, target device entity, palette). When it is below a confidence threshold (vague display, unnamed entities, unclear scope), dispatch `requirements-elicit` first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding.
 4. **One requirement, one run.** No multi-requirement batches.
 5. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; a plain info page does not need a pixel-art or animation add-on.
-6. **Thread identities.** Dispatch in dependency order and pass the identities produced in earlier steps — the `pages_data` page structure, component positions, the chosen palette/ramps, and the target `sensor.<name>_current_page` entity (the service target per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)) — as inputs to dependent steps.
+6. **Thread identities.** Dispatch in dependency order and pass the identities produced in earlier steps — the `pages_data` page structure, component positions, the chosen palette/ramps, and the target `sensor.<name>_current_page` entity (the service target per `spec/ha/divoom-pixoo/en.md`) — as inputs to dependent steps.
 7. **Stop on NEEDS-WORK.** If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent artifact on an unfinished predecessor.
 8. **Generation only.** Never deploy to a live HA instance and never modify the device or its config entry.
-9. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)); for the integration's own contract read the grounding specs above, not memory.
+9. **Verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`); for the integration's own contract read the grounding specs above, not memory.
 
 ## Inputs
 
@@ -85,7 +85,7 @@ Dispatch order is page → pixel-art → animation: the page defines the canvas 
 
 ## Boundaries
 
-- Device/integration setup, services, page-type reference → use, per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md) (not authoring)
+- Device/integration setup, services, page-type reference → use, per `spec/ha/divoom-pixoo/en.md` (not authoring)
 - Single page → `ha-pixoo-page-author`
 - Single pixel-art graphic → `ha-pixoo-pixel-art-author`
 - Single animation → `ha-pixoo-animation-author`

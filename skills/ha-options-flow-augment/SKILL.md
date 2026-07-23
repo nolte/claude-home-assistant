@@ -27,7 +27,7 @@ see_also:
 
 # HA Options Flow Augment
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-options-flow-augment/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-options-flow-augment/en.md).
+Spec: `spec/claude/ha-options-flow-augment/en.md` (EN canonical) / `spec/claude/ha-options-flow-augment/de.md` (DE translation).
 
 This skill retrofits **one** generic, post-setup config **option** into an existing integration's `OptionsFlow` — the piece the initial scaffold's options flow cannot cover generically and that no other skill owns (the coordinator poll-interval is the one exception, owned by `ha-coordinator-add`).
 
@@ -59,7 +59,7 @@ Use this skill to add **one** post-setup option to an existing integration — a
 5. **Read with a safe default.** Runtime reads use `entry.options.get(<key>, <default>)`; the default matches the one advertised in the schema so a not-yet-set option behaves deterministically.
 6. **Wire the reload-on-change.** When the option affects setup (coordinator interval, entity set, connection), register `entry.async_on_unload(entry.add_update_listener(_async_update_listener))` with an `_async_update_listener` that calls `await hass.config_entries.async_reload(entry.entry_id)`; when it is read live on every use, state explicitly that no reload is needed.
 7. **Strings, translations, and a test land together.** Add `options.step.init.data.<key>` (+ `data_description`) to `strings.json` and every `translations/<lang>.json`, and a `tests/test_config_flow.py` options-flow test (set the option, assert it lands in `entry.options`).
-8. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+8. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

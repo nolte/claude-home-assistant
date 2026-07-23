@@ -23,7 +23,7 @@ see_also:
 
 # HA Reproduce State Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-reproduce-state-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-reproduce-state-add/en.md).
+Spec: `spec/claude/ha-reproduce-state-add/en.md` (EN canonical) / `spec/claude/ha-reproduce-state-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -47,14 +47,14 @@ Use this skill to add scene / reproduce-state support to an existing integration
 ## Hard rules
 
 1. **One module, offline.** Add exactly one `reproduce_state.py`; generation never touches a live HA instance.
-2. **Read [`ha/reproduce-state`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/reproduce-state/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/reproduce-state/en.md` first.** Do not generate from memory.
 3. **Scene-relevance check.** Confirm the domain is expectably used in scenes and has settable target states; discourage it for pure read-only sensor domains (reproduce state may be omitted there).
 4. **Signature contract.** Export `async_reproduce_states(hass, states, context=None)` as a top-level async function; `states` is an `Iterable[State]`, `context` an optional `Context`, and it returns `None` (the effect comes from service calls). Source `Context`/`HomeAssistant`/`State` from `homeassistant.core`.
 5. **Per-entity coroutines.** `async_reproduce_states` only aggregates; gather one `async_reproduce_state` coroutine per supplied `State` and execute them (`asyncio.gather` when parallel reproduction is wanted).
 6. **Map to service actions, not state.** Map each `State` (state string plus relevant attributes) onto the domain's own service action(s) that drive the entity into that state. **Never** set state directly via `hass.states.async_set`.
 7. **Idempotent.** Skip entities already in the target state — no service call for those.
 8. **Context pass-through.** Forward the supplied `context` to every triggered service call so reproduction actions stay attributed to the same context.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

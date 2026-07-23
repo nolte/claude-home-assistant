@@ -25,7 +25,7 @@ see_also:
 
 # HA Card Features Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-card-features-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-card-features-add/en.md).
+Spec: `spec/claude/ha-card-features-add/en.md` (EN canonical) / `spec/claude/ha-card-features-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -48,15 +48,15 @@ Use this skill to add **one** custom card feature — an interactive control row
 ## Hard rules
 
 1. **One feature, one run.** No multi-feature batches.
-2. **Read [`ha/lovelace-card-features`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-card-features/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/lovelace-card-features/en.md` first.** Do not generate from memory.
 3. **Register both ways.** Register the feature via `window.customCardFeatures = window.customCardFeatures || []; window.customCardFeatures.push({ type, name, ... })` with mandatory `type` and `name`, **and** register the element via `customElements.define("<feature-type>", <FeatureClass>)` so the `type` resolves. The element extends `HTMLElement` or `LitElement`.
 4. **`setConfig` lifecycle.** Implement `setConfig(config)` (`this.config = config`) and reject a missing/invalid config with `throw new Error("Invalid configuration")`.
 5. **Context contract.** Carry `hass`, `config`, `context` as properties (the host card sets them); resolve the target `stateObj` from `this.hass.states[this.context.entity_id]`, handling a missing `context`/`entity_id`; return `null` from `render()` while `config`/`hass`/`context` are unset or the entity is unsupported.
 6. **Service on interaction.** Render controls and on interaction call `this.hass.callService(domain, service, { entity_id })` on the target entity; call `ev.stopPropagation()` so the click does not bubble up to the host card.
 7. **One predicate, two uses.** Provide an `isSupported(hass, context)` predicate that resolves the `stateObj` from `context.entity_id`, returns `false` when none exists, and checks applicability by domain (not a single entity ID) — and use the **same** function in `render()` and in the `customCardFeatures` `isSupported` entry.
-8. **Configurable only when configured.** For a configurable feature add `static getStubConfig()` (returning a default config incl. `type: "custom:<feature-type>"`), set `configurable: true`, and add `static getConfigElement()` for a graphical editor (see [`ha/lovelace-card-editor`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-card-editor/de.md)); never require `getConfigElement`/`getStubConfig` for a feature with no extra config — `configurable` stays `false`.
+8. **Configurable only when configured.** For a configurable feature add `static getStubConfig()` (returning a default config incl. `type: "custom:<feature-type>"`), set `configurable: true`, and add `static getConfigElement()` for a graphical editor (see `spec/ha/lovelace-card-editor/en.md`); never require `getConfigElement`/`getStubConfig` for a feature with no extra config — `configurable` stays `false`.
 9. **HA default styling.** Use the CSS custom properties `--feature-height`, `--feature-border-radius`, `--feature-button-spacing`.
-10. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+10. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

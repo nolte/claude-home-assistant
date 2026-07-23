@@ -26,7 +26,7 @@ see_also:
 
 # HA Diagnostics Augment
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-diagnostics-augment/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-diagnostics-augment/en.md).
+Spec: `spec/claude/ha-diagnostics-augment/en.md` (EN canonical) / `spec/claude/ha-diagnostics-augment/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -49,14 +49,14 @@ Use this skill to enrich an existing integration's diagnostics beyond the scaffo
 ## Hard rules
 
 1. **Existing integration only.** `custom_components/<domain>/manifest.json` must exist. When `diagnostics.py` already exists, edit it — never blindly overwrite.
-2. **Read [`ha/diagnostics`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/diagnostics/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/diagnostics/en.md` first.** Do not generate from memory.
 3. **`async_get_config_entry_diagnostics` contract.** Export `async_get_config_entry_diagnostics(hass, entry) -> dict` as a top-level async function — HA invokes it automatically on "Download Diagnostics". Optionally export `async_get_device_diagnostics(hass, entry, device) -> dict` with the same redaction contract.
 4. **`async_redact_data` is mandatory.** Wrap every `entry.data` and `entry.options` lookup — and every coordinator nesting that carries sensitive fields — in `homeassistant.components.diagnostics.async_redact_data(..., TO_REDACT)`. **Never** use manual logic (`if "api_key" in d: d["api_key"] = "***"`), a manual `"REDACTED"` string, or field deletion (`del d["api_key"]`); `**REDACTED**` preserves length/format debugging and is the HA convention.
 5. **Module-constant `TO_REDACT` frozenset.** Define `TO_REDACT` as a module constant (or in `const.py` when shared across hooks) holding every `entry.data` key classified as a credential or identifier — typically `api_key`, `password`, `token`, `secret`, `auth`, `bearer`, plus integration-specific tenant/account slugs. Keep it in sync with the `entry.data` schema.
 6. **Identifiers and coordinates too.** Include multi-tenant identifiers (`tenant_slug`, `tenant_id`, `org_id`) and coordinates (`latitude`, `longitude`) in `TO_REDACT` — identifying, therefore kept out of forum reports.
 7. **Coordinator data in the dump.** Include the current `coordinator.data` of every registered coordinator and redact it when the API response carries sensitive fields; reduce to a subset only when the full dump would be too large. Never dump logs or stack traces.
 8. **Derive, don't guess.** Derive the `entry.data` / `entry.options` key space from the config flow and setup; ask when uncertain.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

@@ -22,7 +22,7 @@ see_also:
 
 # HA Pixoo Pixel Art Author
 
-Grounding spec: [`ha/pixoo-pixel-art`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art/de.md) (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art/en.md); delivery mechanics in [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md).
+Grounding spec: `spec/ha/pixoo-pixel-art/en.md` (EN canonical) / `spec/ha/pixoo-pixel-art/en.md`; delivery mechanics in `spec/ha/divoom-pixoo/en.md`.
 
 ## Why this is a skill, not an agent
 
@@ -39,18 +39,18 @@ Use this skill to author **one** detailed 64×64 pixel-art graphic — an icon, 
 
 - a whole information page / data layout → `ha-pixoo-page-author`
 - a moving/animated graphic → `ha-pixoo-animation-author`
-- device setup, services, page-type reference → use the integration per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)
+- device setup, services, page-type reference → use the integration per `spec/ha/divoom-pixoo/en.md`
 - deploying/importing into a running HA instance → out of scope (generation only)
 
 ## Hard rules
 
 1. **One graphic, one delivery form, one run.** No batches.
 2. **Subject is mandatory.** Without a described subject there is no generation; optional fields fall back to documented defaults, stated in the output.
-3. **Read the spec first.** Before generating, read [`ha/pixoo-pixel-art`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art/de.md); do not generate craft rules from memory.
+3. **Read the spec first.** Before generating, read `spec/ha/pixoo-pixel-art/en.md`; do not generate craft rules from memory.
 4. **Limited ramp-based palette.** Define shading via ordered ramps (shadow→mid→light, 3–5 values); full saturation only as accents; apply hue shifting (shadows cooler, highlights warmer) consistently.
 5. **Contours are selective.** Apply selective outlining (selout) — never black-outline every detail; distinguish interior vs. exterior contour; prefer a darker colored variant of the surface over pure black around light areas; remove/lighten the bottom edge of grounded objects.
 6. **Shading follows one light source.** Establish a single light direction and keep it; no pillow shading; end ramps at a clear terminator edge. Use anti-aliasing and dithering **dosed**, with the LED-matrix caveats (AA pixels read as standalone at distance; verify dithering on the real device).
-7. **Native 64×64.** A PNG plan targets exactly 64×64 with `nearest`/`pixel_art` resampling — never author smaller and upscale. Procedural art uses `rectangle` (`size:[1,1]` for single pixels) or a `templatable` component returning the pixel list, per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md).
+7. **Native 64×64.** A PNG plan targets exactly 64×64 with `nearest`/`pixel_art` resampling — never author smaller and upscale. Procedural art uses `rectangle` (`size:[1,1]` for single pixels) or a `templatable` component returning the pixel list, per `spec/ha/divoom-pixoo/en.md`.
 8. **Same craft on both paths.** Palette/contour/shading rules apply identically to procedural and PNG output; recommend verifying on the real device.
 
 ## Inputs
@@ -95,6 +95,6 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 - Whole info page / layout → `ha-pixoo-page-author`
 - Animation / motion → `ha-pixoo-animation-author`
-- Device/integration mechanics → [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)
+- Device/integration mechanics → `spec/ha/divoom-pixoo/en.md`
 - Multi-artifact requirement → `ha-pixoo-solution`
 - Deploy to live HA → out of scope

@@ -22,7 +22,7 @@ see_also:
 
 # HA Pixoo Animation Author
 
-Grounding spec: [`ha/pixoo-pixel-art-animation`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art-animation/de.md) (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art-animation/en.md); image craft in [`ha/pixoo-pixel-art`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art/de.md), delivery in [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md).
+Grounding spec: `spec/ha/pixoo-pixel-art-animation/en.md` (EN canonical) / `spec/ha/pixoo-pixel-art-animation/en.md`; image craft in `spec/ha/pixoo-pixel-art/en.md`, delivery in `spec/ha/divoom-pixoo/en.md`.
 
 ## Why this is a skill, not an agent
 
@@ -39,14 +39,14 @@ Use this skill to author **one** animated Pixoo display from a described motion 
 
 - a static information page → `ha-pixoo-page-author`
 - a single still graphic → `ha-pixoo-pixel-art-author`
-- device setup, services, page-type reference → use the integration per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)
+- device setup, services, page-type reference → use the integration per `spec/ha/divoom-pixoo/en.md`
 - deploying/importing into a running HA instance → out of scope (generation only)
 
 ## Hard rules
 
 1. **One animation, one model, one run.** No batches.
 2. **Motion/effect is mandatory.** Without a described animation there is no generation; optional fields fall back to documented defaults, stated in the output.
-3. **Read the spec first.** Before generating, read [`ha/pixoo-pixel-art-animation`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art-animation/de.md); do not generate from memory.
+3. **Read the spec first.** Before generating, read `spec/ha/pixoo-pixel-art-animation/en.md`; do not generate from memory.
 4. **Single-frame-push model.** Each frame is a full page re-render pushing one buffer — there is no multi-frame transmission. Treat the practical ceiling as ~1 fps via `duration` rotation; higher needs an `update_page` loop.
 5. **Crash-safe driver.** Choose a frame driver explicitly (self-driving short `duration`, or an `update_page` loop) and **never** spam `update_page` — bound the interval; document the chosen cadence.
 6. **Phase discipline.** Drive frame selection from a monotonic phase (`now()`, a `timer`, or a `counter`), looped modulo the frame count for a seamless cycle. Motion is `position = f(phase)` on the integer 64×64 grid (no sub-pixel); color animation is `color = f(phase)` **within** the `ha/pixoo-pixel-art` ramps (cycling/pulsing/hue-shift, discrete steps).
@@ -96,6 +96,6 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 - Static page → `ha-pixoo-page-author`
 - Still graphic → `ha-pixoo-pixel-art-author`
-- Device/integration mechanics → [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)
+- Device/integration mechanics → `spec/ha/divoom-pixoo/en.md`
 - Multi-artifact requirement → `ha-pixoo-solution`
 - Deploy to live HA → out of scope

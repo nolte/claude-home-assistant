@@ -24,7 +24,7 @@ see_also:
 
 # HA Config Entry Migrate
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-config-entry-migrate/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-config-entry-migrate/en.md).
+Spec: `spec/claude/ha-config-entry-migrate/en.md` (EN canonical) / `spec/claude/ha-config-entry-migrate/de.md` (DE translation).
 
 This skill owns the config-entry **migration** path — `async_migrate_entry` plus the `VERSION` / `MINOR_VERSION` bump — that no other skill covers. It sits between `ha-config-flow-augment` (which explicitly excludes destructive refactors) and the initial scaffold, and is the maintenance move an integration needs whenever its stored `entry.data` / `entry.options` shape changes.
 
@@ -54,7 +54,7 @@ Use this skill when an existing integration's stored config-entry shape changed 
 4. **Transform, never drop.** Rename / move / default / split keys explicitly and write them back via `hass.config_entries.async_update_entry(entry, data=new_data, options=new_options, version=…, minor_version=…)`. Unrelated keys are carried over verbatim; no key is dropped silently.
 5. **Idempotent and ordered.** Guard each step by the source version (`if entry.version == 1: …`) so re-running the migration is safe and multi-step upgrades apply in order.
 6. **Land the test.** Add a `tests/test_init.py` (or `tests/test_migration.py`) test that seeds an old-version `MockConfigEntry`, runs setup, and asserts the entry is migrated to the new `version`/`minor_version` with the transformed keys.
-7. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+7. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

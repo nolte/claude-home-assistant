@@ -31,7 +31,7 @@ see_also:
 
 # HA Panel Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-panel-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-panel-add/en.md).
+Spec: `spec/claude/ha-panel-add/en.md` (EN canonical) / `spec/claude/ha-panel-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -57,15 +57,15 @@ Use this skill to add **one** custom panel — a full-page custom element regist
 ## Hard rules
 
 1. **One panel, one run.** No multi-panel batches; never generate a custom view, a card, or a strategy.
-2. **Read [`ha/lovelace-views-panels`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-views-panels/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/lovelace-views-panels/en.md` first.** Do not generate from memory.
 3. **Delivery-shape check.** Run it before generating: if a custom view (layout inside the dashboard) or a panel-mode view (single card) covers the need, surface it; only a genuine full-page page linked from the sidebar justifies a custom panel.
 4. **Custom element, not React.** Define the panel as a custom element — the render framework is free (Lit, Preact, etc.) but **never** React (explicitly excluded) — and register it through `customElements.define(...)`.
 5. **HA-supplied property set.** Accept `hass` (object, current HA state), `narrow` (boolean), and `panel` (object; config via `panel.config`); accept `route` (object) too.
 6. **`hass` is the only state channel.** Never access the HA state outside the `hass` property.
 7. **Register through `panel_custom`.** Add the entry in `configuration.yaml` with a unique `url_path` per entry and the panel module through `module_url` (ES module, e.g. `/local/example-panel.js`); set `sidebar_title`/`sidebar_icon` where sensible; `config`/`embed_iframe` only on request.
 8. **ES5 only when needed.** Ship without ES5 by default; when ES5 support is required, load the adapter before defining via `window.loadES5Adapter().then(function() { customElements.define('my-panel', MyCustomPanel) })`.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
-10. **Honour the layout-antipattern catalogue** ([`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md)). A panel-**mode view** holds exactly one card and shows a warning otherwise (A1) and supports no badges (A2); read and honour `narrow` and order content so the mobile single-column collapse still reads correctly (E1); never React (B5, see rule 4). Weigh these in the delivery-shape check (rule 3).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
+10. **Honour the layout-antipattern catalogue** (`spec/ha/lovelace-layout-antipatterns/en.md`). A panel-**mode view** holds exactly one card and shows a warning otherwise (A1) and supports no badges (A2); read and honour `narrow` and order content so the mobile single-column collapse still reads correctly (E1); never React (B5, see rule 4). Weigh these in the delivery-shape check (rule 3).
 
 ## Inputs
 

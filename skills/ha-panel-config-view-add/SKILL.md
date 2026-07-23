@@ -29,9 +29,9 @@ see_also:
 
 # HA Panel Config View Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-panel-config-view-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-panel-config-view-add/en.md).
+Spec: `spec/claude/ha-panel-config-view-add/en.md` (EN canonical) / `spec/claude/ha-panel-config-view-add/de.md` (DE translation).
 
-This skill makes an existing custom panel's **configuration/options view** complete and correct, per [`ha/lovelace-panel-config-view`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-panel-config-view/de.md). It completes the missing config-view pieces (deploy-time-vs-runtime classification, the `ha-form` options form, a persistence path, admin gating) and validates them — it does not scaffold the panel (`ha-panel-add`) or define the WebSocket command (`ha-websocket-command-add`).
+This skill makes an existing custom panel's **configuration/options view** complete and correct, per `spec/ha/lovelace-panel-config-view/en.md`. It completes the missing config-view pieces (deploy-time-vs-runtime classification, the `ha-form` options form, a persistence path, admin gating) and validates them — it does not scaffold the panel (`ha-panel-add`) or define the WebSocket command (`ha-websocket-command-add`).
 
 ## Why this is a skill, not an agent
 
@@ -54,13 +54,13 @@ Use this skill to give an **existing** custom panel a complete, correct configur
 
 ## Hard rules
 
-1. **Read [`ha/lovelace-panel-config-view`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-panel-config-view/de.md) first.** Do not generate from memory. Honour its evidence tiers — `[doc]` / `[src]` / `[unsupported]` / `[policy]` — and never present a source-verified, inferred, or policy rule as a documented HA fact.
+1. **Read `spec/ha/lovelace-panel-config-view/en.md` first.** Do not generate from memory. Honour its evidence tiers — `[doc]` / `[src]` / `[unsupported]` / `[policy]` — and never present a source-verified, inferred, or policy rule as a documented HA fact.
 2. **Classify every value.** Split each configurable value into deploy-time config (fixed per deployment → `panel.config`) or runtime option (user/admin-editable → a persistence path). `[policy]` A value the user changes at runtime **MUST NOT** require a `configuration.yaml` edit + restart.
 3. **`panel.config` is read-only in practice.** Read it at runtime as `panel.config`; `[unsupported]` never mutate it in the element to persist state — there is no documented write-back path.
 4. **Pick the persistence path by ownership.** Domain/shared state → a custom WebSocket command (`hass.callWS`, with a matching read and, where relevant, subscribe command; define it via `ha-websocket-command-add`) `[doc]`. Per-user UI preference → the `frontend/*_user_data` store `[src]` (undocumented). Never store installation-wide config in the per-user store.
 5. **Compose the form from `ha-form` + `ha-selector`.** `[doc]` selectors are the documented approach; `[src]` binding `ha-form`/`ha-selector` directly in a panel is source-verified (no `getConfigForm` equivalent for panels). Reuse HA selectors over raw inputs so validation, theming, and mobile behaviour come for free.
 6. **Gate admin, and enforce it server-side.** `require_admin` / `hass.user.is_admin` gate the UI `[doc]`, but `[src]`/`[policy]` the WebSocket command handler is the real trust boundary — every admin-only write **MUST** be enforced server-side; frontend gating alone is not enough.
-7. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+7. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

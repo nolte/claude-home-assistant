@@ -23,7 +23,7 @@ see_also:
 
 # HA Device Automation Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-device-automation-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-device-automation-add/en.md).
+Spec: `spec/claude/ha-device-automation-add/en.md` (EN canonical) / `spec/claude/ha-device-automation-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -46,14 +46,14 @@ Use this skill to add **one** device-automation kind — a device trigger, condi
 ## Hard rules
 
 1. **One kind, one run.** No multi-kind batches.
-2. **Read [`ha/device-automations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/device-automations/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/device-automations/en.md` first.** Do not generate from memory.
 3. **Deliberate trade-off.** The quality-scale marker is **none** and HA accepts no new device automations. Run an entity-vs-device value check first: if a state/event entity automation covers the need, point that out; only a genuine device-native event justifies this. State the caveat in the report.
 4. **`async_get_*` contract.** `async_get_triggers`/`async_get_conditions`/`async_get_actions(hass, device_id)` returns a list of dicts; every entry carries `CONF_PLATFORM` (`"device"`), `CONF_DOMAIN`, `CONF_DEVICE_ID`, and at least `CONF_TYPE`.
 5. **Module-constant schema, core-applied.** Define `TRIGGER_SCHEMA` (extends `TRIGGER_BASE_SCHEMA`) / `CONDITION_SCHEMA` (from `DEVICE_CONDITION_BASE_SCHEMA`) / `ACTION_SCHEMA` (from `DEVICE_ACTION_BASE_SCHEMA`) as a module constant — **never** apply it to the config manually; the core does.
 6. **Attach / check / call.** `async_attach_trigger(...)` calls the `action` on fire and returns a detach function; `async_condition_from_config(...)` is a `@callback` returning a `bool` checker and respecting `config_validation`; `async_call_action_from_config(...)` executes the action.
 7. **Thin adapters.** Build on event/state/service-action helpers; never duplicate business logic that already lives in a service or the entity platform.
-8. **Translate every type.** Each used `CONF_TYPE` (and optional subtype) has a string in `strings.json` under `device_automation:` (see [`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md)); a missing string shows the user a raw key.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+8. **Translate every type.** Each used `CONF_TYPE` (and optional subtype) has a string in `strings.json` under `device_automation:` (see `spec/ha/translations/en.md`); a missing string shows the user a raw key.
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

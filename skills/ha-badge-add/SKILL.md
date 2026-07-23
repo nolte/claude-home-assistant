@@ -27,7 +27,7 @@ see_also:
 
 # HA Badge Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-badge-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-badge-add/en.md).
+Spec: `spec/claude/ha-badge-add/en.md` (EN canonical) / `spec/claude/ha-badge-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -51,15 +51,15 @@ Use this skill to add **one** custom badge — the small status widget at the he
 ## Hard rules
 
 1. **One badge, one run.** No multi-badge batches.
-2. **Read [`ha/lovelace-badges`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-badges/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/lovelace-badges/en.md` first.** Do not generate from memory.
 3. **Custom element, no React.** Define the badge as a subclass of `HTMLElement` (or `LitElement`) and register it via `customElements.define("<badge-type>", <BadgeClass>)`; the tag name becomes the badge type `custom:<badge-type>`. **Never** use React as the rendering framework — custom elements and React are not compatible in HA badges.
 4. **`setConfig` contract.** Implement `setConfig(config)`; reject an invalid configuration with `throw new Error("...")` — HA catches it and renders an error badge.
-5. **`hass` setter.** Implement the `hass` property as a setter; the badge updates itself to the latest state on every set. Read the consumed entity from `hass.states[entityId]` and render a sensible fallback (e.g. `unavailable`) when it is missing (see [`ha/frontend-data-api`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/frontend-data-api/de.md)).
+5. **`hass` setter.** Implement the `hass` property as a setter; the badge updates itself to the latest state on every set. Read the consumed entity from `hass.states[entityId]` and render a sensible fallback (e.g. `unavailable`) when it is missing (see `spec/ha/frontend-data-api/en.md`).
 6. **Picker registration.** Push an entry into `window.customBadges` (`window.customBadges = window.customBadges || []; window.customBadges.push({...})`) with at least the required `type` and `name`; `description` / `documentationURL` / `preview` are optional (`preview` defaults to `false`).
-7. **Graphical editor is optional.** Add the static `getConfigElement()` / `getStubConfig()` only when an editor is wanted; do **not** spell out the `config-changed` event pattern here — that is governed by [`ha/lovelace-card-editor`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-card-editor/de.md).
+7. **Graphical editor is optional.** Add the static `getConfigElement()` / `getStubConfig()` only when an editor is wanted; do **not** spell out the `config-changed` event pattern here — that is governed by `spec/ha/lovelace-card-editor/en.md`.
 8. **Document the wiring.** Reference the badge via `type: "custom:<badge-type>"` in a view's `badges:` list and add a `module` resource with the badge module URL (typically `/local/<badge-name>.js`); note the HA restart needed after first creating the `www` folder.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
-10. **Honour the layout-antipattern catalogue** ([`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md)). Badges do not render in `panel` or `sidebar` views (A2) — when documenting the wiring, note the target view must support badges (Sections, Masonry), not panel/sidebar.
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
+10. **Honour the layout-antipattern catalogue** (`spec/ha/lovelace-layout-antipatterns/en.md`). Badges do not render in `panel` or `sidebar` views (A2) — when documenting the wiring, note the target view must support badges (Sections, Masonry), not panel/sidebar.
 
 ## Inputs
 

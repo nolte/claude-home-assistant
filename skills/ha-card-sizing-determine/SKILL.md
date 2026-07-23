@@ -32,7 +32,7 @@ see_also:
 
 # HA Card Sizing Determine
 
-Spec: [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/card-panel-sizing/en.md) (EN canonical) / [`de.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/card-panel-sizing/de.md). This skill operationalises that decision procedure; it does not restate it — read the spec for the field reference, the `.fit-rows` mechanics, the source citations, and the canonical card examples.
+Spec: `spec/ha/card-panel-sizing/en.md` (EN canonical) / `spec/ha/card-panel-sizing/en.md`. This skill operationalises that decision procedure; it does not restate it — read the spec for the field reference, the `.fit-rows` mechanics, the source citations, and the canonical card examples.
 
 ## Why this is a skill, not an agent
 

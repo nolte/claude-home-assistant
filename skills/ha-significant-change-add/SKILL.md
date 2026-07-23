@@ -21,7 +21,7 @@ see_also:
 
 # HA Significant Change Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-significant-change-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-significant-change-add/en.md).
+Spec: `spec/claude/ha-significant-change-add/en.md` (EN canonical) / `spec/claude/ha-significant-change-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -44,14 +44,14 @@ Use this skill to add the `significant_change.py` module to an existing integrat
 ## Hard rules
 
 1. **Continuous values only.** Run a need check first: the module is for integrations exporting continuous values; for purely discrete entities (binary sensor, switch, select) HA's default suffices — discourage it and abort. State the boundary to `always_update` in the report.
-2. **Read [`ha/significant-change`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/significant-change/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/significant-change/en.md` first.** Do not generate from memory.
 3. **Prescribed signature.** Export `async_check_significant_change(hass: HomeAssistant, old_state: str, old_attrs: dict, new_state: str, new_attrs: dict, **kwargs: Any) -> bool | None` as a **top-level** function. Carry `**kwargs: Any` so future HA extensions do not break it.
 4. **`@callback`, non-blocking.** Decorate the function with `@callback` — it runs synchronously in the event loop and must not block.
 5. **Three-value return.** Return `True` (significant → report), `False` (insignificant → do not report), or `None` (cannot decide → HA applies its default). Nothing else.
 6. **Device-class thresholds.** Use `old_attrs`/`new_attrs`, not just the bare state. Differentiate via device classes; define an absolute threshold per relevant device class (a temperature threshold does not apply to brightness or battery). You **may** use `check_absolute_change` / `check_valid_float` from the core significant-change module.
 7. **No `unknown`/`unavailable` handling.** HA handles those transitions automatically; do not reimplement them.
 8. **Previously-significant state, not last-two.** The function is passed a state previously considered significant and the new state — never assume the last two known states.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

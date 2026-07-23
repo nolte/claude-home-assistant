@@ -25,7 +25,7 @@ see_also:
 
 # HA Integration Scaffold
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-scaffold/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-scaffold/en.md).
+Spec: `spec/claude/ha-integration-scaffold/en.md` (EN canonical) / `spec/claude/ha-integration-scaffold/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -52,13 +52,13 @@ Use this skill when the user wants to:
 ## Hard rules
 
 1. **Never overwrite an existing `custom_components/<domain>/`.** If the directory exists, abort with the path quoted. Collision is a user-disambiguation problem, not a generator problem.
-2. **Never use `hass.data[DOMAIN]`.** Every setup artefact lives in typed `entry.runtime_data` (see [`ha/runtime-data-pattern`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/runtime-data-pattern/de.md)). The generated `__init__.py` is the single source of this contract.
-3. **Never set `_attr_name = "<string>"` on a generated entity.** All entity names live in `strings.json` under `entity.<platform>.<translation_key>.name` (see [`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md)). Hard-coded names break translation and stable `entity_id` slugs.
-4. **Never set `self.entity_id = "..."`.** HA derives the `entity_id` from the system-language display name at first registration. The skeleton stays English-source so the slug remains language-independent (see [`ha/entity-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-architecture/de.md)).
-5. **Never bypass the API path whitelist.** Generated `api.py` carries `_API_PATH_RE` and a `_with_auth(headers)` helper; bearer tokens go on the wire only after the path has passed the whitelist (see [`ha/security-hardening`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/security-hardening/de.md)).
+2. **Never use `hass.data[DOMAIN]`.** Every setup artefact lives in typed `entry.runtime_data` (see `spec/ha/runtime-data-pattern/en.md`). The generated `__init__.py` is the single source of this contract.
+3. **Never set `_attr_name = "<string>"` on a generated entity.** All entity names live in `strings.json` under `entity.<platform>.<translation_key>.name` (see `spec/ha/translations/en.md`). Hard-coded names break translation and stable `entity_id` slugs.
+4. **Never set `self.entity_id = "..."`.** HA derives the `entity_id` from the system-language display name at first registration. The skeleton stays English-source so the slug remains language-independent (see `spec/ha/entity-architecture/en.md`).
+5. **Never bypass the API path whitelist.** Generated `api.py` carries `_API_PATH_RE` and a `_with_auth(headers)` helper; bearer tokens go on the wire only after the path has passed the whitelist (see `spec/ha/security-hardening/en.md`).
 6. **Never silently default.** When the user did not specify `hacs` / `zeroconf` / `auth` / `platforms`, fall back to documented defaults — but state every default in the output summary so the user sees what was assumed.
-7. **Name every artefact per `ha/naming-conventions`.** The integration `domain`, `unique_id`, `translation_key`, device `identifiers`, service names, config-entry title, and all generated file paths follow the consolidated naming authority — `snake_case` identifiers, English display names (≤ 50 chars), no volatile data (IP, hostname, token, timestamp) in any ID (see [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)). Rules 3–4 are the entity-name instances of this authority.
-8. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+7. **Name every artefact per `ha/naming-conventions`.** The integration `domain`, `unique_id`, `translation_key`, device `identifiers`, service names, config-entry title, and all generated file paths follow the consolidated naming authority — `snake_case` identifiers, English display names (≤ 50 chars), no volatile data (IP, hostname, token, timestamp) in any ID (see `spec/ha/naming-conventions/en.md`). Rules 3–4 are the entity-name instances of this authority.
+8. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see `spec/ha/upstream-docs-verification/en.md`).
 9. **Emit `PARALLEL_UPDATES` in every platform module.** Each generated entity-platform module carries a module-level `PARALLEL_UPDATES` constant — `0` for coordinator-backed read-only platforms — so the integration satisfies the Silver quality-scale rule `parallel-updates` that `ha-quality-scale-audit` checks. Verify the exact numeric convention against the HA `parallel-updates` rule page.
 
 ## Inputs
@@ -102,18 +102,18 @@ Wait for user confirmation. This is the only approval gate — the rest of the w
 
 Write these files (every file is mandatory unless marked optional):
 
-- `manifest.json` — every required field per [`ha/integration-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/integration-architecture/de.md)
-- `__init__.py` — `async_setup_entry` + `async_unload_entry` with `runtime_data` ([`ha/runtime-data-pattern`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/runtime-data-pattern/de.md))
+- `manifest.json` — every required field per `spec/ha/integration-architecture/en.md`
+- `__init__.py` — `async_setup_entry` + `async_unload_entry` with `runtime_data` (`spec/ha/runtime-data-pattern/en.md`)
 - `const.py` — `DOMAIN`, `PLATFORMS`, `CONF_*`, `DEFAULT_POLL_*` / `MIN_POLL_*`
-- `api.py` — API client skeleton with path whitelist + bearer gating ([`ha/security-hardening`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/security-hardening/de.md))
-- `config_flow.py` — user flow + (when `auth=true`) reauth + reconfigure + options flow ([`ha/config-flow-patterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/config-flow-patterns/de.md)); when `zeroconf=true`, additionally `async_step_zeroconf` ([`ha/zeroconf-discovery`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/zeroconf-discovery/de.md))
-- `coordinator.py` — `<Domain>Coordinator` with error mapping ([`ha/coordinator-patterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/coordinator-patterns/de.md))
-- `entity.py` — base entity + DeviceInfo factories ([`ha/entity-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-architecture/de.md), [`ha/device-registry`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/device-registry/de.md))
+- `api.py` — API client skeleton with path whitelist + bearer gating (`spec/ha/security-hardening/en.md`)
+- `config_flow.py` — user flow + (when `auth=true`) reauth + reconfigure + options flow (`spec/ha/config-flow-patterns/en.md`); when `zeroconf=true`, additionally `async_step_zeroconf` (`spec/ha/zeroconf-discovery/en.md`)
+- `coordinator.py` — `<Domain>Coordinator` with error mapping (`spec/ha/coordinator-patterns/en.md`)
+- `entity.py` — base entity + DeviceInfo factories (`spec/ha/entity-architecture/en.md`, `spec/ha/device-registry/en.md`)
 - one platform module per entry in `platforms` (default: `sensor.py`), each with a module-level `PARALLEL_UPDATES` constant
-- `strings.json` — English source ([`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md))
+- `strings.json` — English source (`spec/ha/translations/en.md`)
 - `translations/en.json` and `translations/de.json` — mirrors of `strings.json`
-- `icons.json` — icon mappings ([`ha/icons`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/icons/de.md))
-- `diagnostics.py` — redaction hook with `TO_REDACT` ([`ha/diagnostics`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/diagnostics/de.md))
+- `icons.json` — icon mappings (`spec/ha/icons/en.md`)
+- `diagnostics.py` — redaction hook with `TO_REDACT` (`spec/ha/diagnostics/en.md`)
 - `services.yaml` (optional, only when services are explicitly requested)
 - `hacs.json` at the repo root (when `hacs=true`)
 
@@ -128,7 +128,7 @@ Cross-file consistency invariants — verify before writing:
 
 Write:
 
-- `tests/conftest.py` — `mock_config_entry_data` + API mock fixture using `load_fixture` ([`ha/test-harness`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/test-harness/de.md))
+- `tests/conftest.py` — `mock_config_entry_data` + API mock fixture using `load_fixture` (`spec/ha/test-harness/en.md`)
 - `tests/test_config_flow.py` — user-flow happy path, user-flow sad path; reauth tests when `auth=true`
 - `tests/test_coordinator.py` — `ConfigEntryAuthFailed` and `UpdateFailed` mappings
 - `tests/test_init.py` — `async_setup_entry` / `async_unload_entry` lifecycle

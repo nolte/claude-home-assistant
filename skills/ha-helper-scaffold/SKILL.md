@@ -24,7 +24,7 @@ see_also:
 
 # HA Helper Scaffold
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-helper-scaffold/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-helper-scaffold/en.md).
+Spec: `spec/claude/ha-helper-scaffold/en.md` (EN canonical) / `spec/claude/ha-helper-scaffold/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -53,8 +53,8 @@ Use this skill to scaffold **one** stateful helper entity from a described inten
 4. **Right helper, not the convenient one.** If the intent targets a measured value (→ sensor/integration), a derived value (→ `ha-derived-sensor-author`), or behavior another helper carries better (one-shot press → `input_button`, not `input_boolean`), redirect instead of scaffolding the wrong helper.
 5. **Never overwrite an existing helper** with the same `object_id`. Abort with the id quoted.
 6. **Mandatory fields are mandatory.** `input_number` → `min`+`max`; `input_select` → non-empty `options`; `input_datetime` → at least one of `has_date`/`has_time`; `input_text` → `max` ≤ 255; `timer` → `restore: true` when it must survive a restart; `schedule` → per-weekday `from`/`to` windows. Set `initial` only for a fixed start value, else document restore semantics.
-7. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md).** `object_id` snake_case; English display names ≤ 50 chars.
-8. **Verify HA internals against the official docs** — don't reproduce schemas from memory (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+7. **Name per `spec/ha/naming-conventions/en.md`.** `object_id` snake_case; English display names ≤ 50 chars.
+8. **Verify HA internals against the official docs** — don't reproduce schemas from memory (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 
