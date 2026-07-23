@@ -29,6 +29,12 @@ see_also:
 
 Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-config-flow-augment/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-config-flow-augment/en.md).
 
+## Why this is a skill, not an agent
+
+- **Mid-flow approval is the contract (decisive):** augmenting a live config flow edits an existing integration; the pattern choice and the plan are confirmed with the operator before any write, and follow-up corrections continue in the same thread.
+- **Context access:** which integration, which flow pattern, and which existing conventions apply comes from the open conversation and repo state, not from a self-contained input.
+- **Counter-dimension considered:** applying one known pattern is a well-defined unit (agent bias), but losing the approval gate in a fire-and-forget agent would let structural flow changes land unreviewed — interactivity outweighs.
+
 ## When this skill activates
 
 Use this skill when the user wants to:

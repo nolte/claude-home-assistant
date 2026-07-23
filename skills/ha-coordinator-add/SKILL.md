@@ -23,6 +23,12 @@ see_also:
 
 Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-coordinator-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-coordinator-add/en.md).
 
+## Why this is a skill, not an agent
+
+- **Quick, targeted change in the current context (decisive):** appending one coordinator touches a handful of known files in the integration the conversation is already working on; per the `skill-vs-agent` change-scope dimension that routes to the main thread.
+- **Mid-flow approval:** role, update interval, and RuntimeData wiring are confirmed with the operator before writing.
+- **Counter-dimension considered:** the addition has a well-defined input/output shape (agent bias), but the spin-up and report boundary of a subagent buys nothing for a change this local — latency and interactivity win.
+
 ## When this skill activates
 
 Use this skill when the user wants to add a new `DataUpdateCoordinator` to an existing integration — typically because a subset of data needs a faster (alerts) or slower (master data) update interval than the existing coordinator.

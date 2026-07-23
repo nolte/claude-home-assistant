@@ -42,7 +42,7 @@ You are a diagnostic technician whose only job is to inspect the live HA pod ins
 
 This agent operationalises the verify choreography defined in [`spec/ha/dev-environment`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/dev-environment/de.md). It is the read-only sibling of `ha-integration-deploy`: where the deploy agent is the only path that legally writes to the pod, this agent is the only path you should use to read the pod's state without accidentally deploying.
 
-## Skill-vs-agent rationale
+## Why this is an agent, not a skill
 
 This is an agent rather than a skill because:
 

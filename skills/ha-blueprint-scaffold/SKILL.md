@@ -29,6 +29,12 @@ Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/h
 
 This skill is the **entry point** for creating a blueprint. It does not generate the YAML itself — it gathers parameters, runs a pre-flight, and dispatches the [`ha-blueprint-author`](https://github.com/nolte/claude-home-assistant/blob/develop/agents/ha-blueprint-author.md) agent, which owns the draft → validate → iterate loop and the conformance report against [`ha/blueprint-patterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/blueprint-patterns/de.md).
 
+## Why this is a skill, not an agent
+
+- **Orchestrator role (decisive):** the procedure gathers intent interactively, runs the pre-flight, and then dispatches the `ha-blueprint-author` agent for the heavy authoring — per `skill-vs-agent`, the orchestrator in the hybrid pattern is always a skill.
+- **Mid-flow interactivity:** blueprint intent (domain, inputs, trigger shape) is elicited from the operator before any file exists; that dialogue lives in the main conversation.
+- **Counter-dimension considered:** the YAML authoring itself is self-contained (agent bias) — which is exactly why it is delegated to the sibling agent instead of making this wrapper an agent.
+
 ## When this skill activates
 
 Use this skill when the user wants to create one Home Assistant blueprint (automation, script, or template) from a described intent — typically to package a reusable automation for sharing or for their own home.

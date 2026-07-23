@@ -23,6 +23,12 @@ see_also:
 
 Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-test-harness-augment/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-test-harness-augment/en.md).
 
+## Why this is a skill, not an agent
+
+- **Run-and-fix loop in the main thread (decisive):** added tests are executed and repaired iteratively against the live suite; that loop needs the conversation's context of what just changed and why.
+- **Mid-flow approval:** which secondary path to cover and which snapshot shape to freeze is agreed with the operator first.
+- **Counter-dimension considered:** test generation for one path is a bounded unit (agent bias), but a fire-and-forget agent returning a red suite would push the debugging back into the main thread anyway — keeping the loop here is cheaper.
+
 ## When this skill activates
 
 Use this skill to augment the test suite of an existing HA Custom Integration with one secondary test class per call.
