@@ -52,6 +52,8 @@ This is an agent rather than a skill because:
 - **Narrow tool surface** — Bash for kubectl, Read / Glob / Grep on the local repo. No write access to the integration under deployment.
 - **Counter-dimension** — interactive confirmation ("another integration is broken, want to fix it?") is given up; behaviour is decided up front by the caller's inputs.
 
+**Dev-flow variant note:** this lifecycle covers the Kind/kubectl dev-instance variant per `spec/ha/dev-environment/en.md`. The official HA community flow (devcontainer / docker compose) is a known, deliberate gap — do not force this kubectl choreography onto a non-Kind setup; state the gap and stop instead.
+
 ## Bash justification
 
 This agent is deliberately side-effectful through `Bash`, and the effect envelope is exactly the §Lifecycle command set: the kubectl deploy choreography (`kubectl cp`, remote/local bytecode-cache cleanup, `kubectl exec <pod> -- kill 1`, readiness polling, `kubectl logs`), plus one local write — creating `.audits/deploy/` and writing the full-text deploy log `<ISO-timestamp>-<domain>.log`. It never writes to the integration source tree, never mutates git state, and never uses a pod-destroying restart (hard rule: no `kubectl delete pod`, no `rollout restart`).

@@ -22,7 +22,7 @@ see_also:
 
 # HA Pixoo Animation Author
 
-Grounding spec: `spec/ha/pixoo-pixel-art-animation/en.md` (EN canonical) / `spec/ha/pixoo-pixel-art-animation/en.md`; image craft in `spec/ha/pixoo-pixel-art/en.md`, delivery in `spec/ha/divoom-pixoo/en.md`.
+Grounding spec: `spec/ha/pixoo-pixel-art-animation/en.md` (EN canonical) / `spec/ha/pixoo-pixel-art-animation/de.md` (DE translation); image craft in `spec/ha/pixoo-pixel-art/en.md`, delivery in `spec/ha/divoom-pixoo/en.md`.
 
 ## Why this is a skill, not an agent
 

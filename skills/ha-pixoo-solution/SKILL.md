@@ -26,11 +26,11 @@ resumable: true
 
 # HA Pixoo Solution
 
-Spec: `spec/claude/ha-pixoo-solution/en.md` (EN canonical) / `spec/claude/ha-pixoo-solution/en.md`. This spec governs the front-door dispatch/plan contract, structurally consistent with its `ha-{integration,lovelace,automation}-solution` siblings; the grounding specs below govern the Pixoo domain artifacts.
+Spec: `spec/claude/ha-pixoo-solution/en.md` (EN canonical) / `spec/claude/ha-pixoo-solution/de.md` (DE translation). This spec governs the front-door dispatch/plan contract, structurally consistent with its `ha-{integration,lovelace,automation}-solution` siblings; the grounding specs below govern the Pixoo domain artifacts.
 
-Grounding specs: `spec/ha/divoom-pixoo/en.md` (EN canonical) / `spec/ha/divoom-pixoo/en.md`, `spec/ha/pixoo-pixel-art/en.md`, `spec/ha/pixoo-pixel-art-animation/en.md`.
+Grounding specs: `spec/ha/divoom-pixoo/en.md` (EN canonical) / `spec/ha/divoom-pixoo/de.md` (DE translation), `spec/ha/pixoo-pixel-art/en.md`, `spec/ha/pixoo-pixel-art-animation/en.md`.
 
-This skill is the **front door** to the Divoom Pixoo skill family. It does not generate any artifact itself — it decomposes the requirement, plans the combination, and dispatches the owning authoring skills, each of which owns its generation and spec conformance.
+This skill is the **front door** to the Divoom Pixoo skill family — an **optional, device-specific family** (Divoom Pixoo 64), not a general HA domain like integration/Lovelace/automation: it applies only to setups that include that device, and remains a candidate for a later device-specific plugin split per the distribution-contract rule. It does not generate any artifact itself — it decomposes the requirement, plans the combination, and dispatches the owning authoring skills, each of which owns its generation and spec conformance.
 
 ## Why this is a skill, not an agent
 

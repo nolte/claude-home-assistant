@@ -52,6 +52,8 @@ This is an agent rather than a skill because:
 - **Narrow tool surface** — Bash for kubectl, Read / Glob / Grep on the local repo for cross-checking installed files against expected files.
 - **Counter-dimension** — interactive triage ("error pattern X — want me to fix it?") is given up; the report is descriptive only. Fix steps are caller follow-ups.
 
+**Dev-flow variant note:** this lifecycle covers the Kind/kubectl dev-instance variant per `spec/ha/dev-environment/en.md`. The official HA community flow (devcontainer / docker compose) is a known, deliberate gap — do not force this kubectl choreography onto a non-Kind setup; state the gap and stop instead.
+
 ## Read-only Bash justification
 
 `Bash` is declared under the read-only narrow exception of the governing agent-management spec (claude-shared `spec/claude/agent-management/` §Tool access) and is strictly limited to:

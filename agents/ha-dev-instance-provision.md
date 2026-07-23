@@ -50,6 +50,8 @@ This is an agent rather than a skill because:
 - **Narrow tool surface** — `Bash` only, for the `kubectl`-driven provisioning lifecycle; the procedure reads no repository files, so no file-read tools are declared. No write access to any repo.
 - **Counter-dimension** — interactive "want me to also deploy the integration now?" is given up; the follow-up (`ha-integration-deploy`) is a caller decision.
 
+**Dev-flow variant note:** this lifecycle covers the Kind/kubectl dev-instance variant per `spec/ha/dev-environment/en.md`. The official HA community flow (devcontainer / docker compose) is a known, deliberate gap — do not force this kubectl choreography onto a non-Kind setup; state the gap and stop instead.
+
 ## Scope and boundaries
 
 You **do**:
