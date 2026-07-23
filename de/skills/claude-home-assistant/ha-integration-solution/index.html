@@ -1,0 +1,4021 @@
+
+<!doctype html>
+<html lang="de" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Claude Code skills, agents and conventions for Home Assistant development — packaged as the claude-home-assistant plugin.">
+      
+      
+        <meta name="author" content="nolte">
+      
+      
+        <link rel="canonical" href="https://nolte.github.io/claude-home-assistant/de/skills/claude-home-assistant/ha-integration-solution/">
+      
+      
+        <link rel="prev" href="../ha-automation-solution/">
+      
+      
+        <link rel="next" href="../ha-lovelace-solution/">
+      
+      
+        
+          <link rel="alternate" href="../../../../skills/claude-home-assistant/ha-integration-solution/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="de">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ha-integration-solution - claude-home-assistant</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ha-integration-solution" class="md-skip">
+          Zum Inhalt
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
+    <a href="../../../" title="claude-home-assistant" class="md-header__button md-logo" aria-label="claude-home-assistant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            claude-home-assistant
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ha-integration-solution
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Zum Dunkelmodus wechseln"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Zum Dunkelmodus wechseln" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Zum Hellmodus wechseln"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Zum Hellmodus wechseln" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sprache wechseln">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../../skills/claude-home-assistant/ha-integration-solution/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="de" class="md-select__link">
+              Deutsch
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Suche" placeholder="Suche" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Suche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Zurücksetzen" aria-label="Zurücksetzen" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Suche wird initialisiert
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nolte/claude-home-assistant" title="Zum Repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nolte/claude-home-assistant
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Hauptnavigation" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Startseite
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../use-cases/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Anwendungsfälle
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Skills
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../agents/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Agents
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../references/tags/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Tags
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../" title="claude-home-assistant" class="md-nav__button md-logo" aria-label="claude-home-assistant" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    claude-home-assistant
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nolte/claude-home-assistant" title="Zum Repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nolte/claude-home-assistant
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Startseite
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../use-cases/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Anwendungsfälle
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Anwendungsfälle
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../use-cases/custom-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Integration (Python)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../use-cases/lovelace-frontend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lovelace-Frontend (TS / JS)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../use-cases/automations-blueprints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automationen und Blueprints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../use-cases/pixoo-display/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Divoom-Pixoo-Display
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../use-cases/dev-testing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Auf einer Dev-HA testen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../use-cases/review-hardening/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Review und Härtung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Skills
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Skills
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 Plan
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2 Plan
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-automation-solution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-automation-solution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-integration-solution
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-integration-solution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#anwenden-wenn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anwenden wenn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nicht-anwenden-wenn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nicht anwenden wenn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#siehe-auch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Siehe auch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referenziert-von" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referenziert von
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ha-integration-solution_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HA Integration Solution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HA Integration Solution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-is-a-skill-not-an-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this is a skill, not an agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-this-skill-activates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When this skill activates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-not-to-activate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When NOT to activate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hard-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hard rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-skill-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime skill resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decomposition-heuristic-requirement-shape-building-block-owning-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decomposition heuristic (requirement shape → building block → owning skill)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-tier-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target-tier decomposition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boundaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boundaries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-lovelace-solution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-lovelace-solution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-pixoo-solution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-pixoo-solution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-solution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-solution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 Design
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3 Design
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-backup-platform-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-backup-platform-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-badge-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-badge-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-blueprint-scaffold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-blueprint-scaffold
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-bluetooth-augment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-bluetooth-augment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-card-editor-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-card-editor-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-card-features-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-card-features-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-card-preview-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-card-preview-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-card-sizing-determine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-card-sizing-determine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-config-entry-migrate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-config-entry-migrate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-config-flow-augment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-config-flow-augment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-conversation-agent-augment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-conversation-agent-augment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-coordinator-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-coordinator-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-device-automation-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-device-automation-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-device-registry-augment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-device-registry-augment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-diagnostics-augment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-diagnostics-augment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-discovery-augment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-discovery-augment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-entity-description-mapper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-entity-description-mapper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-entity-platform-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-entity-platform-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-helper-scaffold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-helper-scaffold
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-integration-ci-scaffold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-integration-ci-scaffold
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-integration-events-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-integration-events-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-integration-scaffold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-integration-scaffold
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-lovelace-card-scaffold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-lovelace-card-scaffold
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-media-source-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-media-source-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-oauth2-credentials-augment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-oauth2-credentials-augment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-options-flow-augment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-options-flow-augment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-panel-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-panel-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-panel-config-view-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-panel-config-view-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-repairs-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-repairs-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-reproduce-state-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-reproduce-state-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-service-definition-generator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-service-definition-generator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-significant-change-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-significant-change-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-strategy-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-strategy-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-system-health-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-system-health-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-websocket-command-add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-websocket-command-add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 Build
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4 Build
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-automation-author/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-automation-author
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-derived-sensor-author/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-derived-sensor-author
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-panel-author/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-panel-author
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-pixoo-animation-author/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-pixoo-animation-author
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-pixoo-page-author/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-pixoo-page-author
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-pixoo-pixel-art-author/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-pixoo-pixel-art-author
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 Quality
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    6 Quality
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-dev-workflow-apply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-dev-workflow-apply
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-panel-ux-audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-panel-ux-audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-quality-scale-audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-quality-scale-audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-security-audit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-security-audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-test-harness-augment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-test-harness-augment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 Close & Release
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7 Close & Release
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-hacs-release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-hacs-release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8 Cross-cutting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    8 Cross-cutting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ha-translation-sync/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-translation-sync
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../agents/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agents
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Agents
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 Build
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    4 Build
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/claude-home-assistant/ha-blueprint-author/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-blueprint-author
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/claude-home-assistant/ha-dev-instance-provision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-dev-instance-provision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/claude-home-assistant/ha-integration-deploy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-integration-deploy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 Review
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5 Review
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/claude-home-assistant/ha-integration-review/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-integration-review
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../agents/claude-home-assistant/ha-integration-verify/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ha-integration-verify
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Inhaltsverzeichnis">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Inhaltsverzeichnis
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#anwenden-wenn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anwenden wenn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nicht-anwenden-wenn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nicht anwenden wenn
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#siehe-auch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Siehe auch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#referenziert-von" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Referenziert von
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ha-integration-solution_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HA Integration Solution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HA Integration Solution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-is-a-skill-not-an-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this is a skill, not an agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-this-skill-activates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When this skill activates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-not-to-activate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When NOT to activate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hard-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hard rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inputs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtime-skill-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime skill resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decomposition-heuristic-requirement-shape-building-block-owning-skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decomposition heuristic (requirement shape → building block → owning skill)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-tier-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target-tier decomposition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boundaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boundaries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/nolte/claude-home-assistant/edit/develop/docs/de/skills/claude-home-assistant/ha-integration-solution.md" title="Seite editieren" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="ha-integration-solution">ha-integration-solution<a class="headerlink" href="#ha-integration-solution" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>Plant und orchestriert ein vollständiges Python-Custom-Integration-Backend aus einer Geräte-/Cloud-/API-Anforderung, gesteuert durch eine gewählte Quality-Scale-Zielstufe.</p>
+</blockquote>
+<p><em>Plan and orchestrate a complete Home Assistant Python custom-integration backend from a result-oriented device/cloud/API requirement, driven by a chosen quality-scale target tier (Bronze through Platinum) and optionally finishing with CI validation and HACS-release readiness, so the user never has to pick which integration skill to use. The integration-side counterpart to ha-automation-solution. Decomposes the requirement into the minimal dependency-ordered set of integration skills for the target tier, presents the plan for approval, then dispatches ha-integration-scaffold, ha-config-flow-augment, ha-options-flow-augment, ha-config-entry-migrate, ha-oauth2-credentials-augment, ha-coordinator-add, ha-entity-description-mapper, ha-entity-platform-add, ha-device-registry-augment, ha-service-definition-generator, ha-integration-events-add, ha-device-automation-add, ha-discovery-augment, ha-bluetooth-augment, ha-diagnostics-augment, ha-repairs-add, ha-system-health-add, ha-significant-change-add, ha-backup-platform-add, ha-media-source-add, ha-reproduce-state-add, ha-conversation-agent-augment, ha-translation-sync, ha-test-harness-augment, ha-dev-workflow-apply, ha-quality-scale-audit, ha-security-audit, ha-integration-ci-scaffold, and ha-hacs-release in order — threading the integration domain and entity_ids between steps. Activate on "build an integration for device/API X", "scaffold and wire up a full custom integration for …", "build a Gold-tier integration for my Acme thermostat cloud API", "baue mir eine vollständige Integration für …", "richte eine Custom-Integration für … ein". Do not activate for a single clear augment (let the owning skill handle it), a pure YAML automation/helper solution (ha-automation-solution), a Lovelace frontend (ha-lovelace-card-scaffold), or deploying to a live HA instance (ha-integration-deploy agent).</em></p>
+<ul>
+<li><strong>Plugin:</strong> <code>claude-home-assistant</code></li>
+<li><strong>Phase:</strong> 2 Plan (<code>plan</code>)</li>
+<li><strong>Tags:</strong> <code>home-assistant</code>, <code>integration</code>, <code>orchestration</code>, <code>planning</code></li>
+<li><strong>Quelle:</strong> <a href="https://github.com/nolte/claude-home-assistant/blob/develop/skills/ha-integration-solution/SKILL.md">skills/ha-integration-solution/SKILL.md</a></li>
+</ul>
+<h2 id="anwenden-wenn">Anwenden wenn<a class="headerlink" href="#anwenden-wenn" title="Permanent link">&para;</a></h2>
+<ul>
+<li>you want a complete integration built for a device, cloud, or API</li>
+<li>you want a full custom integration wired up end to end</li>
+<li>you want an integration built to a specific quality-scale tier</li>
+</ul>
+<h2 id="nicht-anwenden-wenn">Nicht anwenden wenn<a class="headerlink" href="#nicht-anwenden-wenn" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>The requirement is a pure YAML automation/helper solution</strong> → <a href="../ha-automation-solution/"><code>ha-automation-solution</code></a></li>
+<li><strong>You need a Lovelace/frontend card, not the backend</strong> → <a href="../ha-lovelace-card-scaffold/"><code>ha-lovelace-card-scaffold</code></a></li>
+<li><strong>You are deploying the integration to a live HA instance</strong> → <a href="../../../agents/claude-home-assistant/ha-integration-deploy/"><code>ha-integration-deploy</code></a></li>
+</ul>
+<h2 id="siehe-auch">Siehe auch<a class="headerlink" href="#siehe-auch" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../ha-integration-scaffold/"><code>ha-integration-scaffold</code></a></li>
+<li><a href="../ha-automation-solution/"><code>ha-automation-solution</code></a></li>
+<li><a href="../ha-lovelace-solution/"><code>ha-lovelace-solution</code></a></li>
+<li><a href="../ha-quality-scale-audit/"><code>ha-quality-scale-audit</code></a></li>
+<li><a href="../ha-security-audit/"><code>ha-security-audit</code></a></li>
+<li><a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a></li>
+<li><a href="../ha-integration-ci-scaffold/"><code>ha-integration-ci-scaffold</code></a></li>
+<li><a href="../ha-hacs-release/"><code>ha-hacs-release</code></a></li>
+</ul>
+<h2 id="referenziert-von">Referenziert von<a class="headerlink" href="#referenziert-von" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a></li>
+<li><a href="../../../agents/claude-home-assistant/ha-integration-verify/"><code>ha-integration-verify</code></a></li>
+<li><a href="../ha-automation-solution/"><code>ha-automation-solution</code></a></li>
+<li><a href="../ha-dev-workflow-apply/"><code>ha-dev-workflow-apply</code></a></li>
+<li><a href="../ha-hacs-release/"><code>ha-hacs-release</code></a></li>
+<li><a href="../ha-integration-scaffold/"><code>ha-integration-scaffold</code></a></li>
+<li><a href="../ha-lovelace-solution/"><code>ha-lovelace-solution</code></a></li>
+<li><a href="../ha-solution/"><code>ha-solution</code></a></li>
+<li><a href="../ha-translation-sync/"><code>ha-translation-sync</code></a></li>
+</ul>
+<hr />
+<h2 id="ha-integration-solution_1">HA Integration Solution<a class="headerlink" href="#ha-integration-solution_1" title="Permanent link">&para;</a></h2>
+<p>Spec: <a href="https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-solution/de.md">https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-solution/de.md</a> (DE canonical) / <a href="https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-solution/en.md"><code>en.md</code></a>.</p>
+<p>This skill is the <strong>front door</strong> to the Python custom-integration backend cluster — the integration-side counterpart to <a href="../ha-automation-solution/"><code>ha-automation-solution</code></a>. It does not generate any artifact itself — it decomposes the requirement, plans the dependency-ordered combination, and dispatches the owning individual skills, each of which owns its generation and spec conformance.</p>
+<h3 id="why-this-is-a-skill-not-an-agent">Why this is a skill, not an agent<a class="headerlink" href="#why-this-is-a-skill-not-an-agent" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Plan-before-generate gate</strong> — the skill plan must be presented and explicitly approved before any generation; that human-visible gate is core to the contract and an agent's fire-and-forget shape would lose it.</li>
+<li><strong>Mid-flow interactivity</strong> — clarifying questions (protocol, auth type, entity domains, quality features), plan confirmation, and the "this is actually a YAML automation, not an integration" decision are per-run dialogues.</li>
+<li><strong>Orchestrator that dispatches other skills</strong> — the skill-orchestrates-skill default (see <code>skill-vs-agent</code>) keeps the entry point in skill form, like <a href="../ha-automation-solution/"><code>ha-automation-solution</code></a> dispatching its authoring skills.</li>
+<li>Counter-dimension considered: the per-building-block generation could run as parallel agents, but the plan approval and the <code>domain</code>/<code>entity_id</code> threading must stay visible in the user's context; skill wins.</li>
+</ul>
+<h3 id="when-this-skill-activates">When this skill activates<a class="headerlink" href="#when-this-skill-activates" title="Permanent link">&para;</a></h3>
+<p>Use this skill when the user describes a <strong>device/cloud/API integration result</strong> that likely needs more than one building block, and should not have to know which integration skill produces what — "build an integration for X", "integrate my Acme thermostat over its cloud API", "baue mir eine Integration für …".</p>
+<h3 id="when-not-to-activate">When NOT to activate<a class="headerlink" href="#when-not-to-activate" title="Permanent link">&para;</a></h3>
+<ul>
+<li>a single clear augment (one config-flow pattern, one coordinator, one platform, one diagnostics enrichment) → let the owning skill activate directly</li>
+<li>a pure YAML automation/helper/template/blueprint solution (no own protocol, no config flow) → <a href="../ha-automation-solution/"><code>ha-automation-solution</code></a></li>
+<li>a Lovelace frontend card → <a href="../ha-lovelace-card-scaffold/"><code>ha-lovelace-card-scaffold</code></a> (and the Lovelace skill family)</li>
+<li>deploying/verifying against a running HA instance as a standalone task → not an activation reason; deploy/verify happens only inside the opt-in <code>deploy_ready</code> lifecycle phase (§5) of a build run, behind a second gate, via the <a href="../../../agents/claude-home-assistant/ha-integration-deploy/"><code>ha-integration-deploy</code></a> / <a href="../../../agents/claude-home-assistant/ha-integration-verify/"><code>ha-integration-verify</code></a> agents</li>
+</ul>
+<h3 id="hard-rules">Hard rules<a class="headerlink" href="#hard-rules" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Never generate inline.</strong> Every building block is produced by its owning skill, resolved at runtime from the live integration <code>ha-*</code> inventory (see <a href="#runtime-skill-resolution">Runtime skill resolution</a>), never from a frozen snapshot of names. This skill plans and dispatches; it does not write code.</li>
+<li><strong>Plan before generate.</strong> Always present the dependency-ordered skill plan and wait for explicit approval before dispatching anything.</li>
+<li><strong>One requirement, one run.</strong> No multi-requirement batches.</li>
+<li><strong>Scaffold first.</strong> For a new integration, <a href="../ha-integration-scaffold/"><code>ha-integration-scaffold</code></a> is step 1 (greenfield hub); when an integration already exists under <code>custom_components/&lt;domain&gt;/</code>, skip scaffold and build on it.</li>
+<li><strong>Minimal building blocks.</strong> Decompose to the fewest skills that satisfy the requirement; never plan a surface or quality feature the requirement does not call for.</li>
+<li><strong>Thread identities.</strong> Dispatch in dependency order and pass the <code>domain</code> plus the <code>entity_id</code>s/file paths produced in earlier steps as inputs to dependent steps. Keep all names consistent per <a href="https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md"><code>ha/naming-conventions</code></a>.</li>
+<li><strong>Stop on NEEDS-WORK.</strong> If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent building block on an unfinished predecessor.</li>
+<li><strong>Relay reports verbatim.</strong> Pass through each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings without re-judging them.</li>
+<li><strong>Recognize automation-shaped work.</strong> When the requirement is really a YAML automation/helper solution rather than a custom integration, say so in the plan and point at <a href="../ha-automation-solution/"><code>ha-automation-solution</code></a> instead of forcing an integration.</li>
+<li><strong>Verify HA internals against the official docs</strong> (see <a href="https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md"><code>ha/upstream-docs-verification</code></a>).</li>
+<li><strong>Tier-driven completeness, audit-gated.</strong> Plan the building blocks the <code>target_tier</code> requires (cumulative Bronze→Platinum); finish <code>release_ready</code> runs with <a href="../ha-integration-ci-scaffold/"><code>ha-integration-ci-scaffold</code></a> + <a href="../ha-hacs-release/"><code>ha-hacs-release</code></a>; run <a href="../ha-quality-scale-audit/"><code>ha-quality-scale-audit</code></a> + <a href="../ha-security-audit/"><code>ha-security-audit</code></a> last as the acceptance gate, routing any shortfall back to the named remediation skill per finding. These two audits are the <strong>in-flow acceptance gate</strong> — run once, here, against the freshly generated code. They deliberately overlap with the bundled <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a> agent, which re-runs quality-scale + security <em>plus</em> cross-cutting + drift; the split is <strong>temporal, not additive</strong>. A run that clears this in-flow gate <strong>MUST NOT</strong> also dispatch <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a> for the same two dimensions in the same pass — the bundled agent is the separate <strong>release / pre-PR whole-picture pass</strong> (see the closing report), pointed at as a follow-up, never run on top of a green in-flow gate.</li>
+<li><strong>Deploy-ready is opt-in, behind a second gate.</strong> Generation stays the default and the plan approval (rule 2) remains the single gate for it. Only when <code>deploy_ready</code> is set does the deploy→verify→review lifecycle phase run (§5) — and only after a <strong>second explicit human gate</strong> — chaining <a href="../../../agents/claude-home-assistant/ha-dev-instance-provision/"><code>ha-dev-instance-provision</code></a> (only if no dev-HA pod exists) → <a href="../../../agents/claude-home-assistant/ha-integration-deploy/"><code>ha-integration-deploy</code></a> → <a href="../../../agents/claude-home-assistant/ha-integration-verify/"><code>ha-integration-verify</code></a> → <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a>. On an <a href="../../../agents/claude-home-assistant/ha-integration-verify/"><code>ha-integration-verify</code></a> FAIL or an <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a> NEEDS-WORK, <strong>route the finding back to the owning authoring/remediation skill</strong> (the rule-11 pattern), re-dispatch the fix, then re-deploy and re-verify — a closed feedback loop, not a terminal report. The <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a> executed here is exactly the release/pre-PR whole-picture pass of rule 11, legitimately run at this separate post-gate time and never on top of the in-flow gate in the generation pass. Never <code>kubectl delete pod</code>; a code refresh is <code>kill 1</code> (the <a href="../../../agents/claude-home-assistant/ha-integration-deploy/"><code>ha-integration-deploy</code></a> agent owns that).</li>
+</ol>
+<h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Required</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requirement</code></td>
+<td>yes</td>
+<td>—</td>
+<td>The desired device/cloud/API result, in prose</td>
+</tr>
+<tr>
+<td><code>domain</code></td>
+<td>no</td>
+<td>derived from scaffold</td>
+<td>the integration domain; threaded into every step</td>
+</tr>
+<tr>
+<td><code>target_dir</code></td>
+<td>no</td>
+<td>working dir</td>
+<td>repo root; passed through to dispatched skills</td>
+</tr>
+<tr>
+<td><code>protocol</code> / <code>auth</code></td>
+<td>no</td>
+<td>asked when needed</td>
+<td>REST/MQTT/Bluetooth; API key/OAuth2</td>
+</tr>
+<tr>
+<td><code>target_tier</code></td>
+<td>no</td>
+<td><code>silver</code></td>
+<td><code>bronze</code>/<code>silver</code>/<code>gold</code>/<code>platinum</code>; drives the included building blocks (cumulative)</td>
+</tr>
+<tr>
+<td><code>release_ready</code></td>
+<td>no</td>
+<td>inferred</td>
+<td>also scaffold CI validation + HACS-release readiness</td>
+</tr>
+<tr>
+<td><code>deploy_ready</code></td>
+<td>no</td>
+<td><code>false</code></td>
+<td>opt-in: after a <strong>second</strong> explicit gate, run the deploy→verify→review lifecycle phase (§5) with a fix feedback loop; default keeps the run generation-only</td>
+</tr>
+</tbody>
+</table>
+<h3 id="runtime-skill-resolution">Runtime skill resolution<a class="headerlink" href="#runtime-skill-resolution" title="Permanent link">&para;</a></h3>
+<p>Resolve the owning skill for each building block <strong>at runtime</strong>, by matching the requirement against the live inventory of this plugin's integration/backend <code>ha-*</code> skills — read each candidate's stated responsibility from your available-skills registry, or, when running inside the plugin source tree, <code>Glob skills/ha-*/SKILL.md</code> and read its <code>description:</code>. Match on responsibility, not on a remembered name. The decomposition heuristic below is an <strong>illustrative anchor</strong> of the typical mappings, <strong>not</strong> an authoritative or exhaustive list: re-resolve against the current inventory on every run, so a skill newly added to (or renamed within) the family is dispatchable immediately and a removed one is not — without editing this skill (the runtime-lookup pattern of <code>issue-orchestrate</code>). If you genuinely cannot enumerate the live inventory, fall back to the anchor table and note the degraded resolution.</p>
+<h3 id="decomposition-heuristic-requirement-shape-building-block-owning-skill">Decomposition heuristic (requirement shape → building block → owning skill)<a class="headerlink" href="#decomposition-heuristic-requirement-shape-building-block-owning-skill" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>The requirement needs…</th>
+<th>Building block</th>
+<th>Owning skill</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a new integration skeleton (manifest, <code>__init__</code>, config entry, RuntimeData)</td>
+<td>greenfield hub</td>
+<td><a href="../ha-integration-scaffold/"><code>ha-integration-scaffold</code></a></td>
+</tr>
+<tr>
+<td>user setup, multi-step/tenant, reauth, reconfigure, or zeroconf config step</td>
+<td>config flow</td>
+<td><a href="../ha-config-flow-augment/"><code>ha-config-flow-augment</code></a></td>
+</tr>
+<tr>
+<td>a post-setup config option retrofitted into the options flow</td>
+<td>options flow</td>
+<td><a href="../ha-options-flow-augment/"><code>ha-options-flow-augment</code></a></td>
+</tr>
+<tr>
+<td>a stored config-entry schema migration + version bump</td>
+<td>config-entry migration</td>
+<td><a href="../ha-config-entry-migrate/"><code>ha-config-entry-migrate</code></a></td>
+</tr>
+<tr>
+<td>OAuth2 / Application Credentials cloud auth</td>
+<td>OAuth2 flow</td>
+<td><a href="../ha-oauth2-credentials-augment/"><code>ha-oauth2-credentials-augment</code></a></td>
+</tr>
+<tr>
+<td>a separate polling role / update interval</td>
+<td>DataUpdateCoordinator</td>
+<td><a href="../ha-coordinator-add/"><code>ha-coordinator-add</code></a></td>
+</tr>
+<tr>
+<td>declarative read-type entities from a datapoint/schema table</td>
+<td>EntityDescription lists</td>
+<td><a href="../ha-entity-description-mapper/"><code>ha-entity-description-mapper</code></a></td>
+</tr>
+<tr>
+<td>an active command-driven platform (climate/cover/light/fan/lock/media_player/…)</td>
+<td>platform entity</td>
+<td><a href="../ha-entity-platform-add/"><code>ha-entity-platform-add</code></a></td>
+</tr>
+<tr>
+<td>device grouping / hub-child <code>via_device</code> hierarchy / stale-device removal</td>
+<td>device registry</td>
+<td><a href="../ha-device-registry-augment/"><code>ha-device-registry-augment</code></a></td>
+</tr>
+<tr>
+<td>a registered service action</td>
+<td>service</td>
+<td><a href="../ha-service-definition-generator/"><code>ha-service-definition-generator</code></a></td>
+</tr>
+<tr>
+<td>firing/listening on the HA event bus</td>
+<td>integration events</td>
+<td><a href="../ha-integration-events-add/"><code>ha-integration-events-add</code></a></td>
+</tr>
+<tr>
+<td>a WebSocket command a frontend card/panel calls (Python-side backend endpoint)</td>
+<td>WebSocket command</td>
+<td><a href="../ha-websocket-command-add/"><code>ha-websocket-command-add</code></a></td>
+</tr>
+<tr>
+<td>a device trigger/condition/action</td>
+<td>device automation</td>
+<td><a href="../ha-device-automation-add/"><code>ha-device-automation-add</code></a></td>
+</tr>
+<tr>
+<td>DHCP/SSDP/USB/HomeKit/Zeroconf network discovery</td>
+<td>discovery matcher</td>
+<td><a href="../ha-discovery-augment/"><code>ha-discovery-augment</code></a></td>
+</tr>
+<tr>
+<td>BLE advertisements / Bluetooth support</td>
+<td>bluetooth</td>
+<td><a href="../ha-bluetooth-augment/"><code>ha-bluetooth-augment</code></a></td>
+</tr>
+<tr>
+<td>redacted diagnostics dump</td>
+<td>diagnostics</td>
+<td><a href="../ha-diagnostics-augment/"><code>ha-diagnostics-augment</code></a></td>
+</tr>
+<tr>
+<td>a user-facing fixable/informative issue</td>
+<td>repairs issue</td>
+<td><a href="../ha-repairs-add/"><code>ha-repairs-add</code></a></td>
+</tr>
+<tr>
+<td>at-a-glance system-health info</td>
+<td>system health</td>
+<td><a href="../ha-system-health-add/"><code>ha-system-health-add</code></a></td>
+</tr>
+<tr>
+<td>throttling insignificant continuous-value updates</td>
+<td>significant-change checker</td>
+<td><a href="../ha-significant-change-add/"><code>ha-significant-change-add</code></a></td>
+</tr>
+<tr>
+<td>backup hooks or a backup agent</td>
+<td>backup platform</td>
+<td><a href="../ha-backup-platform-add/"><code>ha-backup-platform-add</code></a></td>
+</tr>
+<tr>
+<td>a browsable media source</td>
+<td>media source</td>
+<td><a href="../ha-media-source-add/"><code>ha-media-source-add</code></a></td>
+</tr>
+<tr>
+<td>scene / reproduce-state support</td>
+<td>reproduce_state</td>
+<td><a href="../ha-reproduce-state-add/"><code>ha-reproduce-state-add</code></a></td>
+</tr>
+<tr>
+<td>intents / a conversation agent / LLM API tools</td>
+<td>voice &amp; AI surfaces</td>
+<td><a href="../ha-conversation-agent-augment/"><code>ha-conversation-agent-augment</code></a></td>
+</tr>
+<tr>
+<td>translation/icon structural sync after string changes</td>
+<td>i18n drift fix</td>
+<td><a href="../ha-translation-sync/"><code>ha-translation-sync</code></a></td>
+</tr>
+<tr>
+<td>tests for the added code paths</td>
+<td>test harness</td>
+<td><a href="../ha-test-harness-augment/"><code>ha-test-harness-augment</code></a></td>
+</tr>
+<tr>
+<td>the Platinum code-style / strict-typing / <code>hassfest</code> workflow applied + validated</td>
+<td>dev-workflow apply</td>
+<td><a href="../ha-dev-workflow-apply/"><code>ha-dev-workflow-apply</code></a></td>
+</tr>
+<tr>
+<td>a read-only tier check</td>
+<td>quality-scale audit</td>
+<td><a href="../ha-quality-scale-audit/"><code>ha-quality-scale-audit</code></a></td>
+</tr>
+<tr>
+<td>a read-only security check</td>
+<td>security audit</td>
+<td><a href="../ha-security-audit/"><code>ha-security-audit</code></a></td>
+</tr>
+<tr>
+<td>HA-domain CI validation (hassfest / HACS action / pytest matrix)</td>
+<td>CI workflow</td>
+<td><a href="../ha-integration-ci-scaffold/"><code>ha-integration-ci-scaffold</code></a></td>
+</tr>
+<tr>
+<td>HACS-release readiness (<code>hacs.json</code>, version alignment, ZIP release)</td>
+<td>HACS release</td>
+<td><a href="../ha-hacs-release/"><code>ha-hacs-release</code></a></td>
+</tr>
+<tr>
+<td>a YAML automation/helper solution (no own protocol, no config flow)</td>
+<td>—</td>
+<td><strong>out of scope</strong> → <a href="../ha-automation-solution/"><code>ha-automation-solution</code></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="target-tier-decomposition">Target-tier decomposition<a class="headerlink" href="#target-tier-decomposition" title="Permanent link">&para;</a></h3>
+<p>The requirement <strong>plus a <code>target_tier</code></strong> drives <em>which</em> building blocks the plan includes, so one run reaches a deliberate quality-scale level (cumulative — each tier includes those below):</p>
+<ul>
+<li><strong>Bronze</strong> (baseline): <a href="../ha-integration-scaffold/"><code>ha-integration-scaffold</code></a> (config flow, <code>runtime_data</code>, <code>has_entity_name</code>), the config flow (<a href="../ha-config-flow-augment/"><code>ha-config-flow-augment</code></a>), and platform tests (<a href="../ha-test-harness-augment/"><code>ha-test-harness-augment</code></a>).</li>
+<li><strong>Silver</strong>: + reauth (<a href="../ha-config-flow-augment/"><code>ha-config-flow-augment</code></a>), coordinator error handling + <code>PARALLEL_UPDATES</code> + <code>entity-unavailable</code> (<a href="../ha-coordinator-add/"><code>ha-coordinator-add</code></a>, <a href="../ha-entity-platform-add/"><code>ha-entity-platform-add</code></a>), and options where post-setup config is needed (<a href="../ha-options-flow-augment/"><code>ha-options-flow-augment</code></a>).</li>
+<li><strong>Gold</strong>: + diagnostics (<a href="../ha-diagnostics-augment/"><code>ha-diagnostics-augment</code></a>), discovery (<a href="../ha-discovery-augment/"><code>ha-discovery-augment</code></a>), the device hierarchy (<a href="../ha-device-registry-augment/"><code>ha-device-registry-augment</code></a>), repairs (<a href="../ha-repairs-add/"><code>ha-repairs-add</code></a>), reconfigure (<a href="../ha-config-flow-augment/"><code>ha-config-flow-augment</code></a>), and entity/exception translations (<a href="../ha-translation-sync/"><code>ha-translation-sync</code></a>, <a href="../ha-service-definition-generator/"><code>ha-service-definition-generator</code></a>).</li>
+<li><strong>Platinum</strong>: strict typing / fully-async — dispatch <a href="../ha-dev-workflow-apply/"><code>ha-dev-workflow-apply</code></a> (the owning skill of <code>ha/dev-workflow</code>) to apply and validate the code-style + strict-typing + <code>hassfest</code> rules against the generated integration; it reports CONFORMANT / NEEDS-WORK and its findings route back like any other building block, instead of surfacing a bare checklist item.</li>
+<li><strong>Release-ready</strong> (any tier): + CI validation (<a href="../ha-integration-ci-scaffold/"><code>ha-integration-ci-scaffold</code></a>) and HACS-release readiness (<a href="../ha-hacs-release/"><code>ha-hacs-release</code></a>).</li>
+</ul>
+<p>A stored-shape change from a later edit routes through <a href="../ha-config-entry-migrate/"><code>ha-config-entry-migrate</code></a>. The quality-scale + security audits run last and confirm the reached tier; a shortfall routes back to the named remediation skill per finding.</p>
+<h3 id="workflow">Workflow<a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h3>
+<h4 id="1-clarify">1) Clarify<a class="headerlink" href="#1-clarify" title="Permanent link">&para;</a></h4>
+<p>First gauge requirement confidence. When the requirement is clearly specified, use the lightweight path: ask 1–3 targeted questions (which protocol, which auth type, which entity domains, which quality features) before planning. When it is below a confidence threshold (vague target, unnamed device/API, unclear scope), dispatch <code>requirements-elicit</code> first and plan against the confirmed requirement artifact — mirroring the <code>issue-orchestrate</code> upstream gate — instead of decomposing a fuzzy requirement against weak understanding. Check whether an integration already exists under <code>custom_components/&lt;domain&gt;/</code>, and whether the work is actually YAML-automation-shaped. Do not plan on guesses.</p>
+<h4 id="2-plan">2) Plan<a class="headerlink" href="#2-plan" title="Permanent link">&para;</a></h4>
+<p>Decompose into a dependency-ordered plan and present it as a table:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>| # | Building block | Skill | Depends on | Purpose |
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>|---|---|---|---|---|
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>| 1 | scaffold (domain=acme) | ha-integration-scaffold | — | manifest/__init__/config entry/RuntimeData |
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>| 2 | OAuth2 / Application Credentials | ha-oauth2-credentials-augment | <span class="ni">#1</span> | cloud auth |
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>| 3 | config flow | ha-config-flow-augment | <span class="ni">#1</span>,#2 | account setup + reauth |
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>| 4 | coordinator | ha-coordinator-add | <span class="ni">#1</span> | poll the Acme cloud API |
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>| 5 | climate entity | ha-entity-platform-add | <span class="ni">#4</span> | thermostat control |
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>| 6 | diagnostics | ha-diagnostics-augment | <span class="ni">#5</span> | redacted dump |
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>| 7 | translations | ha-translation-sync | <span class="ni">#3</span>,#5,#6 | string/icon sync |
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>| 8 | tests | ha-test-harness-augment | <span class="ni">#5</span> | climate platform tests |
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>| 9 | quality-scale audit | ha-quality-scale-audit | all | read-only tier check |
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>| 10 | security audit | ha-security-audit | all | read-only security check |
+</span></code></pre></div>
+<p>The typical order is scaffold → (config-flow + coordinator [+ oauth2] [+ options]) → entities [+ device registry] → [Gold surfaces as the tier needs — diagnostics, discovery, repairs, services] → translations → tests → quality-scale + security audit → [release-ready — CI + HACS release]. Include exactly the building blocks the <code>target_tier</code> requires (cumulative). State any "this is actually a YAML automation" finding here and point at <a href="../ha-automation-solution/"><code>ha-automation-solution</code></a>. Wait for explicit approval — that approval is the <strong>single human gate for generation</strong>; after it the dispatch, the audits, and the release-ready finish run to completion, stopping only on a NEEDS-WORK. The opt-in <code>deploy_ready</code> lifecycle phase (§5) is gated separately, by a <strong>second</strong> explicit approval.</p>
+<h4 id="3-dispatch">3) Dispatch<a class="headerlink" href="#3-dispatch" title="Permanent link">&para;</a></h4>
+<p>Invoke each owning skill in plan order, passing the <code>domain</code> and the <code>entity_id</code>s/file paths resolved in earlier steps as inputs to the dependent steps. After each, check the returned report; stop on NEEDS-WORK rather than building on an unfinished predecessor.</p>
+<h4 id="4-aggregate-report">4) Aggregate report<a class="headerlink" href="#4-aggregate-report" title="Permanent link">&para;</a></h4>
+<p>List every produced/changed file, its building block, and the wiring (the <code>domain</code>, which <code>entity_id</code> references which). Relay each dispatched skill's CONFORMANT / NEEDS-WORK report and the read-only review findings verbatim — do not re-judge them. Point at the operator follow-ups (a bundled whole-picture pass via the <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a> agent, deploy via the <a href="../../../agents/claude-home-assistant/ha-integration-deploy/"><code>ha-integration-deploy</code></a> agent, runtime verify via the <a href="../../../agents/claude-home-assistant/ha-integration-verify/"><code>ha-integration-verify</code></a> agent) without executing them. The <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a> follow-up is the <strong>release / pre-PR</strong> review — it adds cross-cutting + drift <em>on top of</em> quality-scale + security and must <strong>not</strong> re-run this run's in-flow quality+security gate; a caller who cleared the in-flow gate does not run it again for the same two dimensions in the same pass. In the default generation-only run, stop here and do not deploy. When <code>deploy_ready</code> is set, continue into §5 after a second explicit gate.</p>
+<h4 id="5-deploy-ready-lifecycle-phase-opt-in">5) Deploy-ready lifecycle phase (opt-in)<a class="headerlink" href="#5-deploy-ready-lifecycle-phase-opt-in" title="Permanent link">&para;</a></h4>
+<p>Runs <strong>only</strong> when <code>deploy_ready</code> is set, and <strong>only</strong> after a second explicit human approval distinct from the plan gate — so the generation-only default and its single gate are preserved. This turns the former set of manual agent islands (build → deploy → verify → review with no feedback loop) into one autonomous flow:</p>
+<ol>
+<li><strong>Provision (if needed).</strong> If no dev-HA pod exists in the local Kind cluster, dispatch <a href="../../../agents/claude-home-assistant/ha-dev-instance-provision/"><code>ha-dev-instance-provision</code></a>; otherwise skip.</li>
+<li><strong>Deploy.</strong> Dispatch <a href="../../../agents/claude-home-assistant/ha-integration-deploy/"><code>ha-integration-deploy</code></a> (lint pre-flight → <code>kubectl cp</code> → bytecode-cache cleanup → <code>kill 1</code> restart → wait-on-ready → log tail). Never <code>kubectl delete pod</code>.</li>
+<li><strong>Verify.</strong> Dispatch <a href="../../../agents/claude-home-assistant/ha-integration-verify/"><code>ha-integration-verify</code></a> (pod status, log error-pattern scan, installed-files check).</li>
+<li><strong>Review.</strong> Dispatch the bundled <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a> agent — the release/pre-PR whole-picture pass (quality-scale + security + cross-cutting + drift).</li>
+</ol>
+<p><strong>Feedback loop.</strong> On an <a href="../../../agents/claude-home-assistant/ha-integration-verify/"><code>ha-integration-verify</code></a> FAIL or an <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a> NEEDS-WORK, do not terminate with a descriptive report: route each finding back to the owning authoring/remediation skill (the rule-11 pattern), re-dispatch the fix, then re-run from step 2 (re-deploy → re-verify), until verify passes and review is CONFORMANT or the operator stops the loop. Report the deploy/verify/review outcome and every fix cycle at the end.</p>
+<h3 id="boundaries">Boundaries<a class="headerlink" href="#boundaries" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Single-building-block generation + spec conformance → the owning individual skill</li>
+<li>A YAML automation/helper solution → <a href="../ha-automation-solution/"><code>ha-automation-solution</code></a> (this skill only recognizes and points)</li>
+<li>A Lovelace frontend card → <a href="../ha-lovelace-card-scaffold/"><code>ha-lovelace-card-scaffold</code></a></li>
+<li>Deploy / runtime verify against a live HA instance → generation-only by default; available only via the opt-in <code>deploy_ready</code> lifecycle phase (§5), which drives the <a href="../../../agents/claude-home-assistant/ha-integration-deploy/"><code>ha-integration-deploy</code></a> / <a href="../../../agents/claude-home-assistant/ha-integration-verify/"><code>ha-integration-verify</code></a> / <a href="../../../agents/claude-home-assistant/ha-integration-review/"><code>ha-integration-review</code></a> agents behind a second gate with a fix feedback loop</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Zurück zum Seitenanfang
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 nolte
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/nolte/claude-home-assistant" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "header.autohide", "toc.follow", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.action.edit"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version": "Version ausw\u00e4hlen"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
