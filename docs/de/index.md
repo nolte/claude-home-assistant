@@ -17,7 +17,7 @@ Wofür das Plugin gedacht ist, jeweils mit der Front-Door-Skill:
 - **Auf einer Dev-HA betreiben & testen** — Agents `ha-dev-instance-provision`, `ha-integration-deploy`, `ha-integration-verify` (lokales Kubernetes / Kind) plus `ha-test-harness-augment` für pytest-Abdeckung.
 - **Vor dem Release prüfen & härten** — `ha-quality-scale-audit`, `ha-security-audit` und der gebündelte Agent `ha-integration-review`.
 
-Die vollständige Übersicht — jeder Anwendungsfall auf seine Skills, Agents und Specs abgebildet — steht unter [Anwendungsfälle](use-cases.md).
+Die vollständige Übersicht — jeder Anwendungsfall auf seine Skills, Agents und Specs abgebildet — steht unter [Anwendungsfälle](use-cases/index.md).
 
 !!! note "Noch nicht abgedeckt"
     ESPHome-Custom-Components und Home-Assistant-Add-ons (Docker / s6) stehen auf der Roadmap; dafür liefert das Plugin bisher keine Skills.
