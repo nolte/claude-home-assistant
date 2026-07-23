@@ -1,6 +1,6 @@
 ---
 name: ha-translation-sync
-description: Detect and fix structural drift between strings.json and every translations/<lang>.json in an HA Custom Integration. Fill missing keys with TODO markers, surface orphaned keys for confirmation, and additionally report icons.json drift. Activate on phrasings like "sync the translations", "check translation drift", "align strings.json with translations", "prüfe Translation-Drift". Do not activate for machine translation, value changes, or new-language creation.
+description: Detects and fixes structural drift between strings.json and every translations/<lang>.json in an HA Custom Integration. Fill missing keys with TODO markers, surface orphaned keys for confirmation, and additionally report icons.json drift. Activate on phrasings like "sync the translations", "check translation drift", "align strings.json with translations", "prüfe Translation-Drift". Do not activate for machine translation, value changes, or new-language creation.
 tags: [home-assistant, custom-integration, translations]
 phase: cross-cutting
 summary: "Detects and fixes structural drift between strings.json and every translations/<lang>.json in an HA Custom Integration, and reports icons.json drift."

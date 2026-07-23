@@ -1,29 +1,6 @@
 ---
 name: ha-integration-review
-description: >-
-  Produce one bundled, read-only integration-review report for a Home
-  Assistant Custom Integration by combining quality-scale tier
-  assessment, security/hardening review, and cross-cutting consistency
-  checks (manifest ↔ tier coherence, translations/strings completeness,
-  diagnostics redaction presence, entity-device-class correctness,
-  spec-conformance drift against the plugin ha/* pattern specs, and an
-  upstream-docs spot-check). A whole-picture pre-PR / pre-release
-  pass that complements — never replaces — the interactive
-  single-dimension audit skills `ha-quality-scale-audit` and
-  `ha-security-audit`. Read-only: never edits the integration, never
-  deploys, never restarts, never dispatches sibling skills or agents,
-  never recommends-then-applies fixes — it surfaces findings and the
-  caller decides. Use when the user says "review my integration", "run
-  a full integration review before the PR", "combined quality + security
-  review", or equivalent German requests ("prüfe meine Integration
-  umfassend", "Integration-Review vor dem Release"). Don't use for a
-  single-dimension interactive audit (→ `ha-quality-scale-audit` or
-  `ha-security-audit`), for applying fixes (caller follow-up), for
-  deploying or verifying on a live pod (→ `ha-integration-deploy` /
-  `ha-integration-verify`), or for pytest behaviour
-  (→ `ha-test-harness-augment`). Returns a per-dimension verdict plus an
-  aggregate CONFORMANT / NEEDS-WORK, and writes the full report under
-  `.audits/integration-review/`.
+description: "Produces one bundled, read-only integration-review report for a Home Assistant Custom Integration: quality-scale tier assessment, security/hardening review, and cross-cutting consistency checks (manifest-tier coherence, translations, diagnostics redaction, device classes, spec drift, upstream-docs spot-check). Whole-picture pre-PR / pre-release pass that complements — never replaces — the interactive single-dimension audit skills ha-quality-scale-audit and ha-security-audit. Read-only: surfaces findings, the caller decides; persists only the report under .audits/integration-review/. Use on \"review my integration\", \"run a full integration review before the PR\", or equivalent German requests. Don't use for a single-dimension interactive audit (ha-quality-scale-audit / ha-security-audit), applying fixes (caller follow-up), live-pod deploy/verify (ha-integration-deploy / ha-integration-verify), or pytest behaviour (ha-test-harness-augment). Returns per-dimension verdicts plus aggregate CONFORMANT / NEEDS-WORK."
 distribution: plugin
 tools: Read, Glob, Grep, Bash
 tags: [home-assistant, custom-integration, review, quality-scale, security]

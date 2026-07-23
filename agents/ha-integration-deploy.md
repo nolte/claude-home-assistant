@@ -1,7 +1,7 @@
 ---
 name: ha-integration-deploy
 description: >-
-  Deploy a Home Assistant Custom Integration from a local repo into a
+  Deploys a Home Assistant Custom Integration from a local repo into a
   running HA pod inside a Kind / local Kubernetes cluster — lint
   pre-flight, file copy via `kubectl cp`, mandatory bytecode-cache
   cleanup, HA-process restart via `kill 1` (NEVER `kubectl delete pod`),

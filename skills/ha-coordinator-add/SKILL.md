@@ -1,6 +1,6 @@
 ---
 name: ha-coordinator-add
-description: Append a new DataUpdateCoordinator to an existing Home Assistant Custom Integration — separate role, separate update interval, full integration with RuntimeData mapping, options-flow entry, translations, and tests. Activate on phrasings like "add a new coordinator for alerts", "split the existing coordinator", "add a faster polling coordinator", "füge einen Coordinator für X hinzu". Do not activate for greenfield scaffolding (use ha-integration-scaffold) or coordinator removal; a push-style coordinator variant (async_set_updated_data) is supported for local_push / cloud_push integrations.
+description: Appends a new DataUpdateCoordinator to an existing Home Assistant Custom Integration — separate role, separate update interval, full integration with RuntimeData mapping, options-flow entry, translations, and tests. Activate on phrasings like "add a new coordinator for alerts", "split the existing coordinator", "add a faster polling coordinator", "füge einen Coordinator für X hinzu". Do not activate for greenfield scaffolding (use ha-integration-scaffold) or coordinator removal; a push-style coordinator variant (async_set_updated_data) is supported for local_push / cloud_push integrations.
 tags: [home-assistant, custom-integration, coordinator]
 phase: design
 summary: "Appends a new DataUpdateCoordinator with its own role and update interval to an existing integration — RuntimeData mapping, options-flow entry, translations, and tests."

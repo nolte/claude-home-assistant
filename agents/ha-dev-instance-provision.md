@@ -1,7 +1,7 @@
 ---
 name: ha-dev-instance-provision
 description: >-
-  Provision a disposable development Home Assistant instance into a local
+  Provisions a disposable development Home Assistant instance into a local
   Kubernetes cluster (typically Kind) by applying a self-generated
   StatefulSet + Service + `/config` PVC manifest, waiting for rollout, and
   preparing `/config/custom_components` — so that `ha-integration-deploy`
