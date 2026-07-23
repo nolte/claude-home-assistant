@@ -19,7 +19,7 @@ see_also:
 
 # HA Media Source Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-media-source-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-media-source-add/en.md).
+Spec: `spec/claude/ha-media-source-add/en.md` (EN canonical) / `spec/claude/ha-media-source-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -43,14 +43,14 @@ Use this skill to add a media source provider to an existing integration — a `
 ## Hard rules
 
 1. **One media source, one run.** No multi-source batches.
-2. **Read [`ha/media-source`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/media-source/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/media-source/en.md` first.** Do not generate from memory.
 3. **No manifest change for discovery.** HA discovers `media_source.py` automatically via the integration platform mechanism — **never** add a manifest entry for discovery.
 4. **Top-level contract.** `media_source.py` exports the top-level async function `async_get_media_source(hass) -> MediaSource` returning an instance of the `MediaSource` subclass, which is bound to the domain via `super().__init__(DOMAIN)`.
 5. **Two mandatory methods.** Implement `async_browse_media(item)` (returns a `BrowseMediaSource` tree — root node on empty `item.identifier`, children otherwise; raise `BrowseError` when the structure cannot be retrieved) and `async_resolve_media(item)` (returns a `PlayMedia(url, mime_type)` with a correct `mime_type`; raise `Unresolvable` when the item cannot be resolved).
 6. **Node attributes.** Every `BrowseMediaSource` node carries an appropriate `MediaClass` and correctly set `can_play`/`can_expand` flags (`can_play` for playable items, `can_expand` for items browsable deeper); root items set `identifier=None`.
 7. **URI construction.** Use `generate_media_source_id(DOMAIN, identifier)` to construct `media-source://` URIs; encode the path in the `identifier` for deep hierarchies.
-8. **Translatable errors.** Raise `Unresolvable`/`BrowseError` with `translation_domain`/`translation_key`/`translation_placeholders` when the message is to be translatable (see [`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md)).
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+8. **Translatable errors.** Raise `Unresolvable`/`BrowseError` with `translation_domain`/`translation_key`/`translation_placeholders` when the message is to be translatable (see `spec/ha/translations/en.md`).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

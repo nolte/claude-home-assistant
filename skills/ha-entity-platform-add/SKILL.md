@@ -26,7 +26,7 @@ see_also:
 
 # HA Entity Platform Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-entity-platform-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-entity-platform-add/en.md).
+Spec: `spec/claude/ha-entity-platform-add/en.md` (EN canonical) / `spec/claude/ha-entity-platform-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -50,7 +50,7 @@ Use this skill to scaffold **one** active platform entity — a command-driven d
 ## Hard rules
 
 1. **One platform entity, one run.** No multi-platform batches.
-2. **Read the operationalized spec first.** Read [`ha/entity-platform-types`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platform-types/de.md) to pick active-vs-declarative and the family, **then** read the matching family spec ([`controls`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-controls/de.md) / [`climate`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-climate/de.md) / [`devices`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-devices/de.md) / [`media`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-media/de.md) / [`voice`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-voice/de.md) / [`inputs`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-inputs/de.md) / [`sensors`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-platforms-sensors/de.md)) in full. Do not generate from memory.
+2. **Read the operationalized spec first.** Read `spec/ha/entity-platform-types/en.md` to pick active-vs-declarative and the family, **then** read the matching family spec (`spec/ha/entity-platforms-controls/en.md` / `spec/ha/entity-platforms-climate/en.md` / `spec/ha/entity-platforms-devices/en.md` / `spec/ha/entity-platforms-media/en.md` / `spec/ha/entity-platforms-voice/en.md` / `spec/ha/entity-platforms-inputs/en.md` / `spec/ha/entity-platforms-sensors/en.md`) in full. Do not generate from memory.
 3. **Active platforms only.** This skill scaffolds command-driven entities authored as a full entity class with hand-written async command/set methods. The boundary is the **authoring form**, not the domain: a read-type datapoint (`sensor`/`binary_sensor`/`button`) or any entity expressed purely as an `EntityDescription` table without a hand-written command/set method → point at `ha-entity-description-mapper` and abort. Active platforms whose command/set method this skill writes — including the `inputs` family (`number`/`select`/`text`/`date`/`time`/`datetime`) and `calendar`/`todo` — stay in scope.
 4. **Name the domain, confirm the family.** Require the operator to name the target domain and confirm the resolved family before generating.
 5. **Base class from the family spec.** Derive the entity from the documented platform base class (`ClimateEntity`/`CoverEntity`/`LightEntity`/`FanEntity`/`LockEntity`/`MediaPlayerEntity`/`StateVacuumEntity`/`ValveEntity`/`HumidifierEntity`/`WaterHeaterEntity`/`SirenEntity`/`LawnMowerEntity` …).
@@ -60,7 +60,7 @@ Use this skill to scaffold **one** active platform entity — a command-driven d
 9. **Wire the setup.** Implement `async_setup_entry(hass, entry, async_add_entities)` that builds the entities and registers them via `async_add_entities`, attaching to the coordinator / `config_entry.runtime_data`; if no coordinator exists, point at `ha-coordinator-add`.
 10. **Availability (`entity-unavailable`, Silver).** The generated entity handles availability — subclass `CoordinatorEntity` (which derives `available` from `coordinator.last_update_success`) or override the `available` property to return `False` when the datapoint can't be read or controlled. An active entity that never reports unavailable silently misses the Silver `entity-unavailable` rule that `ha-quality-scale-audit` checks.
 11. **Emit `PARALLEL_UPDATES` (`parallel-updates`, Silver).** Declare a module-level `PARALLEL_UPDATES` constant in `<platform>.py` (a coordinator-backed read path typically uses `0`; command platforms bound their concurrency). Verify the value against the HA `parallel-updates` rule page rather than reproducing it from memory.
-12. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)**, do not duplicate the generic entity pattern (delegate to [`ha/entity-architecture`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/entity-architecture/de.md)), and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+12. **Name per `spec/ha/naming-conventions/en.md`**, do not duplicate the generic entity pattern (delegate to `spec/ha/entity-architecture/en.md`), and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

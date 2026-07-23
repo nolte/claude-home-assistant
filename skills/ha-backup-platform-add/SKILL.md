@@ -22,7 +22,7 @@ see_also:
 
 # HA Backup Platform Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-backup-platform-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-backup-platform-add/en.md).
+Spec: `spec/claude/ha-backup-platform-add/en.md` (EN canonical) / `spec/claude/ha-backup-platform-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -45,14 +45,14 @@ Use this skill to add **one** backup-platform surface — pre/post backup hooks 
 ## Hard rules
 
 1. **One surface, one run.** Either pre/post hooks or a backup agent — no combined batch.
-2. **Read [`ha/backup-platform`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/backup-platform/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/backup-platform/en.md` first.** Do not generate from memory.
 3. **Disambiguate the surface.** Stateful / DB-writing integration → pre/post hooks; storage-providing (cloud-storage) integration → backup agent. When both apply, have the user pick the one this run augments.
 4. **Hooks contract.** `async_pre_backup(hass: HomeAssistant) -> None` and `async_post_backup(hass: HomeAssistant) -> None` are top-level async functions; whatever `async_pre_backup` pauses, `async_post_backup` resumes.
 5. **Agent registration.** `async_get_backup_agents(hass)` returns `list[BackupAgent]` and **must** return `[]` when no loaded config entry exists for the domain (`hass.config_entries.async_loaded_entries(DOMAIN)`). `async_register_backup_agents_listener(hass, *, listener, **kwargs)` is a `@callback` returning an unregister function; notify listeners during `async_setup_entry`.
 6. **Agent contract.** The `BackupAgent` subclass (from `homeassistant.components.backup`) sets `domain`/`name`/`unique_id` and implements `async_upload_backup`, `async_download_backup`, `async_list_backups`, `async_get_backup`, and `async_delete_backup` — the full abstract interface.
 7. **Error semantics.** Errors raise `BackupAgentError` (or a subclass) — no other exception leaves the agent; a missing backup raises `BackupNotFound` in `async_download_backup`/`async_delete_backup`/`async_get_backup`. Call the `on_progress` callback periodically in `async_upload_backup`.
 8. **No backup-manager territory.** Never implement encryption, retention, scheduling, or restore orchestration; those belong to the backup manager or the core.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

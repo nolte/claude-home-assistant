@@ -21,7 +21,7 @@ see_also:
 
 # HA Card Editor Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-card-editor-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-card-editor-add/en.md).
+Spec: `spec/claude/ha-card-editor-add/en.md` (EN canonical) / `spec/claude/ha-card-editor-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -44,14 +44,14 @@ Use this skill to add **one** `ha-form`-based visual configuration editor to an 
 ## Hard rules
 
 1. **One editor, one run.** No multi-editor batches.
-2. **Read [`ha/lovelace-card-editor`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-card-editor/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/lovelace-card-editor/en.md` first.** Do not generate from memory.
 3. **Existing card required.** The card must already exist and be registered via `customElements.define`. If it does not exist, point at `ha-lovelace-card-scaffold` and abort. If it already carries an editor hook (`getConfigElement` or `getConfigForm`), abort rather than add a second.
 4. **`getConfigElement` contract.** `static getConfigElement()` on the card returns `document.createElement("<domain>-<card>-editor")`; that element is registered beforehand via `customElements.define`, in lowercase kebab-case with an integration-domain prefix.
 5. **Editor is a `LitElement`.** It implements `setConfig(config)` and accepts the `hass` property as a setter. This skill's chosen surface is `ha-form`-driven: a `render()` over `<ha-form>` with `.hass`, `.data` (the current config), `.schema` (a list, one entry per field with `name` and preferably `selector`), and `.computeLabel`. Note that `<ha-form>` inside a `getConfigElement` custom element is this skill's implementation choice, not mandated by `ha/lovelace-card-editor` for the `getConfigElement` path (where the spec binds `ha-form` to the built-in `getConfigForm`); verify against the official HA docs.
 6. **`config-changed` is the sole return channel.** The `_valueChanged` handler dispatches a `config-changed` event with `bubbles: true`, `composed: true`, and `detail: { config: newConfig }` — **never** on an unchanged config, and **never** by mutating the config passed to `setConfig`.
 7. **`getStubConfig` without `type:`.** `static getStubConfig()` returns a default config **without** the `type:` parameter; the card picker adds it itself.
 8. **Selectors preferred.** Prefer selectors (`{ selector: { entity: {} } }`, `{ selector: { text: {} } }`, …) over native form types; add `computeLabel`, and `computeHelper`/`assertConfig` where the form needs them; verify selector options beyond the named ones against `ha-form/types.ts`.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

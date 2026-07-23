@@ -23,7 +23,7 @@ see_also:
 
 # HA Integration CI Scaffold
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-ci-scaffold/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-integration-ci-scaffold/en.md).
+Spec: `spec/claude/ha-integration-ci-scaffold/en.md` (EN canonical) / `spec/claude/ha-integration-ci-scaffold/de.md` (DE translation).
 
 This skill scaffolds the **HA-domain CI validators** — hassfest, the HACS validation action, and the pytest matrix — that the generic portfolio CI (`nolte-shared:project-structure`, `quality-gate`, `release-automation`) does not emit. It closes the audit finding that `ha-integration-scaffold` claims hassfest CI is "handled by the project-structure scaffold" when in fact nothing HA-specific is generated. The generated YAML targets the **consumer integration repository**, not this plugin repo.
 
@@ -53,7 +53,7 @@ Use this skill to add the HA-specific CI validation to a Custom Integration repo
 4. **pytest matrix on `pytest-homeassistant-custom-component`.** Add a pytest job over a Python-version matrix (the versions HA currently supports), installing the integration's test deps and running `pytest` with coverage; align with `ha/test-harness`.
 5. **Triggers.** Run on `push` and `pull_request`; a nightly `schedule` (`cron: "0 0 * * *"`) is a MAY (catches upstream HA/HACS breakage).
 6. **Complement, do not duplicate.** Do not re-emit lint / pre-commit / release jobs the generic CI owns; add only the HA-domain validators. Reference `nolte/gh-plumbing` reusable workflows where the portfolio already provides one instead of inlining bespoke logic.
-7. **Verify HA internals against the official docs.** Confirm the current action refs and supported Python matrix before pinning them (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md); hassfest per [`ha/dev-workflow`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/dev-workflow/de.md), HACS gate per [`ha/hacs-release`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/hacs-release/de.md)).
+7. **Verify HA internals against the official docs.** Confirm the current action refs and supported Python matrix before pinning them (see `spec/ha/upstream-docs-verification/en.md`; hassfest per `spec/ha/dev-workflow/en.md`, HACS gate per `spec/ha/hacs-release/en.md`).
 
 ## Inputs
 

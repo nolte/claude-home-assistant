@@ -23,7 +23,7 @@ see_also:
 
 # HA Strategy Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-strategy-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-strategy-add/en.md).
+Spec: `spec/claude/ha-strategy-add/en.md` (EN canonical) / `spec/claude/ha-strategy-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -47,15 +47,15 @@ Use this skill to add **one** custom Lovelace strategy — a dashboard strategy 
 ## Hard rules
 
 1. **One strategy, one run.** No multi-strategy batches; a dashboard strategy and the view strategy it delegates to are two runs.
-2. **Read [`ha/lovelace-strategies`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-strategies/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/lovelace-strategies/en.md` first.** Do not generate from memory.
 3. **`generate` contract.** `static async generate(config, hass)` is static and async; a dashboard strategy returns `{ views: [...] }`, a view strategy returns `{ cards: [...] }`. A view strategy **never** returns a `views` array.
 4. **Derive the full structure from `config`, with defaults.** Expand the small strategy `config` into the full structure and guard values with defaults (e.g. `const title = config.title || "…"`) so the strategy renders without a complete config.
 5. **Register with the correct prefix and load as a resource.** `customElements.define("ll-strategy-dashboard-<id>", …)` (dashboard) or `ll-strategy-view-<id>` (view); load the strategy as a dashboard resource (module). Reference it via `strategy.type: custom:<id>` — `<id>` without the `ll-strategy-…` prefix. Without a loaded resource the strategy is not resolvable.
 6. **Registry access via `hass.callWS`, parallelised.** When generation needs areas/devices/entities, query `config/area_registry/list` / `config/device_registry/list` / `config/entity_registry/list` via `hass.callWS(...)`; parallelise independent queries with `Promise.all([...])`. Keep generation deterministic and fast — it blocks the initial dashboard rendering.
 7. **Graphical config, when present.** `static getConfigElement()` returns an element implementing `setConfig(config)` and emitting a `config-changed` custom event (`bubbles: true, composed: true, detail: { config: newConfig }`); set `configRequired = true` when the strategy needs config, otherwise `noEditor = true`.
 8. **Community dashboard, when a dashboard strategy.** A `window.customStrategies.push({...})` carries `type` (without `custom:`) and `strategyType: "dashboard"` (both required); `name`/`description`/`documentationURL` and `static getCreateSuggestions(hass)` (default `title`/`icon`) are optional.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
-10. **Honour the layout-antipattern catalogue** ([`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md)). Generated views/cards set each view's `type` explicitly and prefer `sections` — never rely on the shape-inferred default (A3); never emit a panel view with more than one card (A1) or badges in a panel/sidebar view (A2); use only native constructs, never third-party layout tooling (D1).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
+10. **Honour the layout-antipattern catalogue** (`spec/ha/lovelace-layout-antipatterns/en.md`). Generated views/cards set each view's `type` explicitly and prefer `sections` — never rely on the shape-inferred default (A3); never emit a panel view with more than one card (A1) or badges in a panel/sidebar view (A2); use only native constructs, never third-party layout tooling (D1).
 
 ## Inputs
 

@@ -24,7 +24,7 @@ see_also:
 
 # HA Conversation Agent Augment
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-conversation-agent-augment/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-conversation-agent-augment/en.md).
+Spec: `spec/claude/ha-conversation-agent-augment/en.md` (EN canonical) / `spec/claude/ha-conversation-agent-augment/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -48,14 +48,14 @@ Use this skill to add **one or more** Voice & AI surfaces — intent handlers, a
 ## Hard rules
 
 1. **Decide scope first.** Resolve with the user which surface(s) are in scope — intents, a conversation entity, and/or LLM tools — and, for tools, the role: **expose** an `llm.API` vs. **consume** an API. Keep the two axes (intents/conversation vs. tools) separated.
-2. **Read [`ha/intents-conversation`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/intents-conversation/de.md) and [`ha/llm-api`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/llm-api/de.md) first** (at least the in-scope one). Do not generate from memory.
+2. **Read `spec/ha/intents-conversation/en.md` and `spec/ha/llm-api/en.md` first** (at least the in-scope one). Do not generate from memory.
 3. **Intent handler contract.** Every handler derives from `homeassistant.helpers.intent.IntentHandler`, sets `intent_type`, is registered via `intent.async_register(hass, handler)` in `async_setup`/`async_setup_entry` (never in platform modules), and `async_handle(self, intent_obj) -> IntentResponse` returns an `IntentResponse` — never `None` or a raw string. Read slots via `intent_obj.slots["<name>"]["value"]`; declare a `slot_schema` for expected slots.
 4. **Built-in intents, no deprecated ones.** Implement domain-appropriate built-in intents (`HassTurnOn`/`HassTurnOff`/`HassGetState`), treating `HassTurnOn`/`HassTurnOff` slots as optional; **never** re-implement deprecated intents (`HassToggle`, `HassOpenCover`, …).
 5. **Speech & response type.** Create the response via `intent_obj.create_response()` + `response.async_set_speech(...)`; speech is only `plain` or `ssml`; set the correct `response_type` (`action_done`/`query_answer`/`error`) and a valid `data.code` (`no_intent_match`/`no_valid_targets`/`failed_to_handle`/`unknown`) on error.
 6. **Conversation entity.** A conversation agent lives in `conversation.py`, derives from `conversation.ConversationEntity`, declares `supported_languages` (`list[str]` or `"*"`), and implements `_async_handle_message(self, user_input, chat_log) -> ConversationResult` — **not** the deprecated `async_process`. Set `ConversationEntityFeature.CONTROL` only when the agent actually controls HA; perform no I/O in property getters.
 7. **LLM tool contract.** Every tool derives from `llm.Tool`, carries a `name`, implements async `async_call(self, hass, tool_input, llm_context)`, returns a JSON-serializable `JsonObjectType`, and raises errors as `HomeAssistantError` — no in-band error codes. A custom API inherits from `API`, implements `async_get_api_instance(self, llm_context) -> APIInstance` (with the required `api_prompt`), is registered via `llm.async_register_api(hass, api)` with a unique `id`/`name`, and is unregistered via `entry.async_on_unload(unreg)`.
-8. **Localization out of code.** Keep localized sentences/response/prompt texts out of handler/tool code — sentences in `intents/<lang>.yaml` (see [`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md)).
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+8. **Localization out of code.** Keep localized sentences/response/prompt texts out of handler/tool code — sentences in `intents/<lang>.yaml` (see `spec/ha/translations/en.md`).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

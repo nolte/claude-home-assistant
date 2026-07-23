@@ -26,7 +26,7 @@ see_also:
 
 # HA OAuth2 Credentials Augment
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-oauth2-credentials-augment/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-oauth2-credentials-augment/en.md).
+Spec: `spec/claude/ha-oauth2-credentials-augment/en.md` (EN canonical) / `spec/claude/ha-oauth2-credentials-augment/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -49,15 +49,15 @@ Use this skill to add the OAuth2 / Application Credentials flow to an existing i
 ## Hard rules
 
 1. **One flow, one run.** Augment the OAuth2 application-credentials path; do not also rebuild a generic config flow.
-2. **Read [`ha/application-credentials`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/application-credentials/de.md) first.** Do not generate from memory.
-3. **Manifest prerequisites.** Add `application_credentials` to `manifest.json:dependencies` and ensure `config_flow: true` (see [`ha/integration-manifest`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/integration-manifest/de.md)).
-4. **Authorization server contract.** `application_credentials.py` implements `async def async_get_authorization_server(hass) -> AuthorizationServer`, importing `AuthorizationServer` from `homeassistant.components.application_credentials`; `authorize_url` and `token_url` are required and **SHOULD** be HTTPS, never hard-coded plaintext HTTP (see [`ha/security-hardening`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/security-hardening/de.md)). Add `async_get_auth_implementation` (optionally `LocalOAuth2ImplementationWithPkce` for PKCE) only when custom token handling is needed.
+2. **Read `spec/ha/application-credentials/en.md` first.** Do not generate from memory.
+3. **Manifest prerequisites.** Add `application_credentials` to `manifest.json:dependencies` and ensure `config_flow: true` (see `spec/ha/integration-manifest/en.md`).
+4. **Authorization server contract.** `application_credentials.py` implements `async def async_get_authorization_server(hass) -> AuthorizationServer`, importing `AuthorizationServer` from `homeassistant.components.application_credentials`; `authorize_url` and `token_url` are required and **SHOULD** be HTTPS, never hard-coded plaintext HTTP (see `spec/ha/security-hardening/en.md`). Add `async_get_auth_implementation` (optionally `LocalOAuth2ImplementationWithPkce` for PKCE) only when custom token handling is needed.
 5. **OAuth2 config-flow handler.** Define the flow as a `config_entry_oauth2_flow.AbstractOAuth2FlowHandler` subclass with `domain = DOMAIN` and a `logger` property; use `async_oauth_create_entry(self, data)` and set `unique_id` (`async_set_unique_id` + `_abort_if_unique_id_configured` on first creation). Do not duplicate the generic mechanics from `ha/config-flow-patterns`.
 6. **HA owns the refresh.** Run token refresh through the `config_entry_oauth2_flow.OAuth2Session` helpers — **never** refresh tokens manually. On setup, make a refresh call and raise `ConfigEntryAuthFailed` on auth failure so HA starts reauth.
 7. **Reauth path.** Implement `async_step_reauth` / `async_step_reauth_confirm`; in the reauth case (`self.source == SOURCE_REAUTH`) call `self._abort_if_unique_id_mismatch()` and finish with `async_update_reload_and_abort(self._get_reauth_entry(), data_updates=data)`.
 8. **No YAML credentials.** Never accept OAuth2 client credentials via `configuration.yaml`.
-9. **Translate the dialog.** Define the credentials dialog under the `application_credentials` key in `strings.json` (see [`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md)); optional placeholders come from `async_get_description_placeholders`.
-10. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Translate the dialog.** Define the credentials dialog under the `application_credentials` key in `strings.json` (see `spec/ha/translations/en.md`); optional placeholders come from `async_get_description_placeholders`.
+10. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

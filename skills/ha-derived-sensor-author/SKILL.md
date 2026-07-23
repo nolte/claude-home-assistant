@@ -27,7 +27,7 @@ see_also:
 
 # HA Derived Sensor Author
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-derived-sensor-author/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-derived-sensor-author/en.md).
+Spec: `spec/claude/ha-derived-sensor-author/en.md` (EN canonical) / `spec/claude/ha-derived-sensor-author/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -57,8 +57,8 @@ Use this skill to author **one** derived/statistical helper sensor from a descri
 4. **Right integration, with delimitation.** Rate → `derivative`, smoothing → `filter`, time-integral → `integration`; momentary aggregate → `min_max`, time aggregate → `statistics`, past-window → `history_stats`; momentary threshold → `threshold`, direction → `trend`. A free formula → `template` (via `ha-automation-author`); a stored value → `ha-helper-scaffold`. Redirect rather than forcing the wrong one.
 5. **A source entity is required** for every integration except `bayesian` (which works off `observations`). No source → ask, don't guess.
 6. **Set the math-bearing parameter correctly** per the topic spec — never `prob_given_*` of 0/1; `unit_time` deliberate; `derivative` on a non-negative source needs `state_class: total_increasing`; `filter` `window_size` not a needlessly large integer; `min_max` sources share one unit; `statistics` `state_characteristic` matches source type; `threshold` `lower < upper` with `hysteresis` on noisy sources; `trend` `min_gradient` in units **per second**; `history_stats` exactly two of `start`/`end`/`duration`; `utility_meter` a monotonic source with `cycle` or `cron` (not both); `group` modern per-domain, deliberate `all`.
-7. **Type the sensor and guard the source.** Correct `sensor`/`binary_sensor`, `device_class`/`state_class`; robust against source `unavailable`/`unknown`. Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md).
-8. **Never overwrite** an existing sensor with the same `unique_id`. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+7. **Type the sensor and guard the source.** Correct `sensor`/`binary_sensor`, `device_class`/`state_class`; robust against source `unavailable`/`unknown`. Name per `spec/ha/naming-conventions/en.md`.
+8. **Never overwrite** an existing sensor with the same `unique_id`. **Verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

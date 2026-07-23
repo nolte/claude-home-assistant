@@ -22,7 +22,7 @@ see_also:
 
 # HA Pixoo Page Author
 
-Grounding specs: [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md) (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/en.md), and [`ha/pixoo-pixel-art`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art/de.md) for embedded graphics.
+Grounding specs: `spec/ha/divoom-pixoo/en.md` (EN canonical) / `spec/ha/divoom-pixoo/en.md`, and `spec/ha/pixoo-pixel-art/en.md` for embedded graphics.
 
 ## Why this is a skill, not an agent
 
@@ -39,14 +39,14 @@ Use this skill to author **one** Pixoo `pages_data` page from an information req
 
 - a detailed pixel-art graphic (shading/contours, illustration, icon) → `ha-pixoo-pixel-art-author`
 - a moving/animated display → `ha-pixoo-animation-author`
-- device setup, discovery, config flow, service reference → using the integration per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md), not authoring
+- device setup, discovery, config flow, service reference → using the integration per `spec/ha/divoom-pixoo/en.md`, not authoring
 - deploying/importing into a running HA instance → out of scope (generation only)
 
 ## Hard rules
 
 1. **One page, one type, one run.** No multi-page batches.
 2. **Requirement is mandatory.** Without a described information need there is no generation; optional fields fall back to documented defaults, stated in the output.
-3. **Read the spec first.** Before generating, read [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md) (and [`ha/pixoo-pixel-art`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/pixoo-pixel-art/de.md) for embedded graphics); do not generate from memory.
+3. **Read the spec first.** Before generating, read `spec/ha/divoom-pixoo/en.md` (and `spec/ha/pixoo-pixel-art/en.md` for embedded graphics); do not generate from memory.
 4. **64×64 grid discipline.** All positions use the top-left origin grid 0…63; content beyond is clipped. Lay out for high contrast and readability per `ha/pixoo-pixel-art`.
 5. **Templating + guards.** Entity states reach the display via Jinja in `content`/`color`/`enabled`/image fields; guard `unavailable`/`unknown` (`has_value()`, `float(default)`) so a dead sensor never renders garbage or a false value.
 6. **Config-only vs. service.** `enabled`, `duration`, and component `variables` apply only in the `pages_data` config — never in `show_message`. State which context the page targets.
@@ -101,6 +101,6 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 - Detailed pixel-art graphics → `ha-pixoo-pixel-art-author`
 - Animated displays → `ha-pixoo-animation-author`
-- Device/integration setup & services → use per [`ha/divoom-pixoo`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/divoom-pixoo/de.md)
+- Device/integration setup & services → use per `spec/ha/divoom-pixoo/en.md`
 - Multi-artifact requirement → `ha-pixoo-solution`
 - Deploy to live HA → out of scope

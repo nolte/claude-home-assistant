@@ -27,7 +27,7 @@ see_also:
 
 # HA Panel UX Audit
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-panel-ux-audit/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-panel-ux-audit/en.md).
+Spec: `spec/claude/ha-panel-ux-audit/en.md` (EN canonical) / `spec/claude/ha-panel-ux-audit/de.md` (DE translation).
 
 This skill is the **UX expert** of the panel family. It statically audits an existing panel artifact from the user's point of view — can a person actually use this, especially on a phone — and emits a severity-sorted report of concrete improvements. It never edits code; the report is meant to be read, acted on, and — when the user wants — handed to `ha-panel-author` as a prioritized work-list.
 
@@ -54,12 +54,12 @@ Use this skill to audit an existing **panel-level** artifact — a custom sideba
 ## Hard rules
 
 1. **Read-only.** The skill never modifies the panel element, its config, or any file. `git status` must be unchanged after the run.
-2. **Mobile usability is mandatory.** Every audit MUST evaluate the mobile-device dimension and emit an explicit **Mobile usability verdict: PASS / NEEDS-WORK**; a critical mobile finding makes the overall verdict NEEDS-WORK. Anchor the HA-specific mobile facts in [`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md) E1 (the `narrow` property and the documented single-column collapse).
-3. **Audit against the existing specs; reference them per finding.** The binding set: [`ha/lovelace-views-panels`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-views-panels/de.md), [`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md), [`ha/lovelace-card-patterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-card-patterns/de.md), and [`ha/frontend-data-api`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/frontend-data-api/de.md). Every finding names the spec rule it rests on, or is tagged a **UX heuristic** (see rule 4).
+2. **Mobile usability is mandatory.** Every audit MUST evaluate the mobile-device dimension and emit an explicit **Mobile usability verdict: PASS / NEEDS-WORK**; a critical mobile finding makes the overall verdict NEEDS-WORK. Anchor the HA-specific mobile facts in `spec/ha/lovelace-layout-antipatterns/en.md` E1 (the `narrow` property and the documented single-column collapse).
+3. **Audit against the existing specs; reference them per finding.** The binding set: `spec/ha/lovelace-views-panels/en.md`, `spec/ha/lovelace-layout-antipatterns/en.md`, `spec/ha/lovelace-card-patterns/en.md`, and `spec/ha/frontend-data-api/en.md`. Every finding names the spec rule it rests on, or is tagged a **UX heuristic** (see rule 4).
 4. **Distinguish HA facts from UX heuristics.** HA-internal facts come from the specs above / the official docs; general UX and accessibility heuristics (touch-target ≈44–48px, WCAG-AA contrast, no hover-only affordances, reduced-motion) are external best practice — label them **[UX heuristic]** and never present them as HA facts.
 5. **Severity-sorted, actionable output.** Rank findings critical → high → medium → low. Every finding carries a concrete, spec-referenced improvement suggestion phrased so `ha-panel-author` can act on it; never a vague "improve UX".
 6. **Never overstate.** A static audit cannot prove on-device usability; flag findings that need live-device verification as such rather than asserting them as confirmed.
-7. **Verify HA internals against the official docs.** Don't reproduce HA API/behaviour from memory — when uncertain consult Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant) and [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+7. **Verify HA internals against the official docs.** Don't reproduce HA API/behaviour from memory — when uncertain consult Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant) and [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

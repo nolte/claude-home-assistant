@@ -11,7 +11,7 @@ Keine Zielgruppen ergänzen, ohne zuerst den Bounded Context unten anzupassen.
 **Was dieser Kontext *ist***:
 
 - Das Repository `nolte/claude-home-assistant`, veröffentlicht als Claude-Code-Plugin `claude-home-assistant` (Version 0.1.0) über den Plugin-Marketplace.
-- Es bündelt wiederverwendbare **Skills** (`skills/<name>/SKILL.md`), **Agents** (`agents/<name>.md`) und **Specs** (`spec/`, DE-kanonisch, EN als Übersetzung) für vier Home-Assistant-Authoring-Oberflächen: **Custom Integrations (Python)**, **Lovelace Cards (TypeScript / JavaScript)**, **Blueprints & Automations (YAML)** und **ESPHome / Add-ons**.
+- Es bündelt wiederverwendbare **Skills** (`skills/<name>/SKILL.md`), **Agents** (`agents/<name>.md`) und **Specs** (`spec/`, EN-kanonisch, DE als Übersetzung) für vier Home-Assistant-Authoring-Oberflächen: **Custom Integrations (Python)**, **Lovelace Cards (TypeScript / JavaScript)**, **Blueprints & Automations (YAML)** und **ESPHome / Add-ons**.
 - MkDocs-Doku (`docs/`, DE-only zum Start) und Taskfile-Automatisierung.
 
 **Konkrete Anwendungs-Domänen, an denen die Skills geschärft werden**:
@@ -68,7 +68,7 @@ Jeder Eintrag: Label, Beziehungs-Kategorie, Interaktions-Oberfläche, Erwartung,
 
 ### Beitragende / Maintainer
 
-- **Repo-Maintainer (nolte)** — _Kategorie_: contributor · _Oberfläche_: direkter Commit-Zugriff auf alle Branches, Review-Autorität, Release-Autorität, Spec-Evolutions-Autorität · _erwartet_: Specs, Skills und Plugin-Manifest bleiben konsistent; `CLAUDE.md` reflektiert den Repo-Stand; Konventionen (DE-kanonische Specs, Conventional Commits, PR-Workflow via `/nolte-shared:pull-request-create`) werden eingehalten · _Status_: `assumed` · _Kritikalität_: primary · _Track_: developer-docs
+- **Repo-Maintainer (nolte)** — _Kategorie_: contributor · _Oberfläche_: direkter Commit-Zugriff auf alle Branches, Review-Autorität, Release-Autorität, Spec-Evolutions-Autorität · _erwartet_: Specs, Skills und Plugin-Manifest bleiben konsistent; `CLAUDE.md` reflektiert den Repo-Stand; Konventionen (EN-kanonische Specs, Conventional Commits, PR-Workflow via `/nolte-shared:pull-request-create`) werden eingehalten · _Status_: `assumed` · _Kritikalität_: primary · _Track_: developer-docs
   - Offene Fragen: keine
 
 - **Claude Code als Co-Autor** — _Kategorie_: contributor · _Oberfläche_: Skills aus `nolte-shared` (`/nolte-shared:skill-management`, `/nolte-shared:spec`, `/nolte-shared:project-structure-apply`, `/nolte-shared:pull-request-create`, `/nolte-shared:audience-identify`) — Claude scaffolded und editiert Files unter `skills/`, `agents/`, `spec/` und erzeugt Commits/PRs · _erwartet_: Skills folgen ihren eigenen Specs (Meta-Konsistenz: `claude-home-assistant`-Skills lesen `claude-home-assistant`-Specs); Änderungen bleiben review-fähig; Hard Rules werden respektiert (z. B. keine Plugin-Skills nach `.claude/skills/` kopieren); generierter Code für HA-Patterns matched die kanonisierten Specs · _Status_: `assumed` · _Kritikalität_: primary · _Track_: developer-docs

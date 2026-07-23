@@ -27,7 +27,7 @@ see_also:
 
 # HA Lovelace Solution
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-lovelace-solution/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-lovelace-solution/en.md).
+Spec: `spec/claude/ha-lovelace-solution/en.md` (EN canonical) / `spec/claude/ha-lovelace-solution/de.md` (DE translation).
 
 This skill is the **front door** to the Lovelace/frontend skill family. It does not generate any artifact itself — it decomposes the requirement, plans the combination, and dispatches the owning skills, each of which owns its generation and spec conformance.
 
@@ -54,11 +54,11 @@ Use this skill when the user describes a **frontend result** that likely needs m
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
 3. **One requirement, one run.** No multi-requirement batches.
 4. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; never add an add-on a single artifact already covers.
-5. **Thread identities.** Dispatch in dependency order and pass the identities produced in earlier steps — card tag / `custom:<type>`, file path, module resource, `<domain>`, command `type` — as inputs to dependent steps. Keep all names consistent per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md).
+5. **Thread identities.** Dispatch in dependency order and pass the identities produced in earlier steps — card tag / `custom:<type>`, file path, module resource, `<domain>`, command `type` — as inputs to dependent steps. Keep all names consistent per `spec/ha/naming-conventions/en.md`.
 6. **Stop on NEEDS-WORK.** If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent artifact on an unfinished predecessor.
 7. **Backend lives in a Python integration.** A WebSocket command's backend belongs to a custom integration — dispatch the command via `ha-websocket-command-add`, surface a missing integration as a prerequisite (`ha-integration-scaffold`), and never fold backend work into a frontend skill.
-8. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
-9. **Layout-antipattern catalogue governs every artifact.** Every dispatched card/panel/strategy/badge must conform to [`ha/lovelace-layout-antipatterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-layout-antipatterns/de.md); fold its acceptance checklist into each artifact's conformance gate and stop on a violation as with any NEEDS-WORK (rule 6).
+8. **Verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
+9. **Layout-antipattern catalogue governs every artifact.** Every dispatched card/panel/strategy/badge must conform to `spec/ha/lovelace-layout-antipatterns/en.md`; fold its acceptance checklist into each artifact's conformance gate and stop on a violation as with any NEEDS-WORK (rule 6).
 
 ## Inputs
 
@@ -113,7 +113,7 @@ Surface any backend / custom-integration prerequisite here. Wait for explicit ap
 
 Invoke each owning skill in plan order, passing the identities resolved in earlier steps (card tag, file path, module resource, `<domain>`, command `type`) as inputs to the dependent steps. After each, check the returned report; stop on NEEDS-WORK.
 
-For every scaffolded card or panel, run the size-declaration completion step by dispatching `ha-card-sizing-determine` (per [`ha/card-panel-sizing`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/card-panel-sizing/en.md)) before the aggregate report, and dispatch `ha-card-preview-add` when a card-picker / editor preview is in scope — these are the default post-generation completion steps, not optional afterthoughts, since wrong sizing and a broken preview are exactly the defects a naive requirement will not name.
+For every scaffolded card or panel, run the size-declaration completion step by dispatching `ha-card-sizing-determine` (per `spec/ha/card-panel-sizing/en.md`) before the aggregate report, and dispatch `ha-card-preview-add` when a card-picker / editor preview is in scope — these are the default post-generation completion steps, not optional afterthoughts, since wrong sizing and a broken preview are exactly the defects a naive requirement will not name.
 
 ### 4) Aggregate report
 

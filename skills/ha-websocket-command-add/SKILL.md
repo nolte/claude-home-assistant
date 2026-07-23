@@ -23,7 +23,7 @@ see_also:
 
 # HA WebSocket Command Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-websocket-command-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-websocket-command-add/en.md).
+Spec: `spec/claude/ha-websocket-command-add/en.md` (EN canonical) / `spec/claude/ha-websocket-command-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -46,14 +46,14 @@ Use this skill to add **one** custom WebSocket API command to an existing integr
 ## Hard rules
 
 1. **One command, one run.** No multi-command batches.
-2. **Read [`ha/frontend-websocket-commands`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/frontend-websocket-commands/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/frontend-websocket-commands/en.md` first.** Do not generate from memory.
 3. **Command vs. service.** Run the choice first: a data fetch into the frontend is a command; a user-driven action/mutation is a service. On action/mutation, point at `ha-service-definition-generator` and abort.
 4. **Three-part contract.** Declare type and schema via `@websocket_api.websocket_command({...})` on a handler with signature `(hass, connection, msg)`; namespace the type as `vol.Required("type"): "<domain>/<name>"` (docs example: `"camera/get_thumbnail"`); declare input fields via `vol.Required`/`vol.Optional` with a type annotation, kept minimal.
 5. **Sync vs. async.** A pure in-memory handler is a synchronous function with `@callback`; a handler doing network/device/computation work is `async def` decorated with `@websocket_api.async_response`. **Never** run blocking I/O in a `@callback` handler.
 6. **Results and errors.** Deliver success via `connection.send_result(msg["id"], result)` using the incoming `msg["id"]`; report errors via `connection.send_error(msg["id"], "<code>", "<message>")` instead of letting an exception propagate, and **return** after every `send_error`. Never substitute the `msg["id"]`.
 7. **Admin restriction.** Decorate admin-only commands with `@websocket_api.require_admin`; consider it for sensitive or integration-internal data. Never hand-roll admin checks in the handler body.
 8. **Register in setup.** Register via `websocket_api.async_register_command(hass, ws_handler)` inside the integration's setup method (e.g. `async_setup`), not scattered across platform modules; do **not** require `websocket_api` as a manifest dependency.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

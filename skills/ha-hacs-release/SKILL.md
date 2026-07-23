@@ -23,9 +23,9 @@ see_also:
 
 # HA HACS Release
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-hacs-release/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-hacs-release/en.md).
+Spec: `spec/claude/ha-hacs-release/en.md` (EN canonical) / `spec/claude/ha-hacs-release/de.md` (DE translation).
 
-This skill operationalizes [`ha/hacs-release`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/hacs-release/de.md) — the HACS-specific distribution layer (`hacs.json`, version alignment, ZIP release, `brands`) — on top of the portfolio's generic `release-automation` flow. It closes the audit finding that the `ha/hacs-release` spec exists but no skill or agent makes a consumer integration HACS-release-ready.
+This skill operationalizes `spec/ha/hacs-release/en.md` — the HACS-specific distribution layer (`hacs.json`, version alignment, ZIP release, `brands`) — on top of the portfolio's generic `release-automation` flow. It closes the audit finding that the `ha/hacs-release` spec exists but no skill or agent makes a consumer integration HACS-release-ready.
 
 ## Why this is a skill, not an agent
 
@@ -53,7 +53,7 @@ Use this skill to make an existing integration installable and updatable through
 4. **A real GitHub release, not a bare tag.** State that HACS ignores a tag without a published release object; the generic `release-automation` flow (`reusable-release-publish`) produces the release.
 5. **ZIP-release CD obligation.** When `zip_release: true`, the release CD must build and attach `<domain>.zip` (the `custom_components/<domain>/` tree) as a release asset; point at the `nolte/gh-plumbing` reusable that does this rather than inlining it.
 6. **Do not redefine `release-automation`.** Reference the generic Draft → Published, version-bearing-files, and `chore(release): <tag>` alignment rules; add only the HACS-specific layer. `brands` registration is a pointer to the `home-assistant/brands` repo, not generated here.
-7. **Verify HA/HACS internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md); the HACS publish rules are anchored in `ha/hacs-release`).
+7. **Verify HA/HACS internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`; the HACS publish rules are anchored in `ha/hacs-release`).
 
 ## Inputs
 

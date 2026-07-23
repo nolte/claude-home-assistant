@@ -28,7 +28,7 @@ see_also:
 
 # HA Automation Author
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-automation-author/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-automation-author/en.md).
+Spec: `spec/claude/ha-automation-author/en.md` (EN canonical) / `spec/claude/ha-automation-author/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -54,11 +54,11 @@ Use this skill to author **one** non-blueprint automation-logic or command artif
 1. **One artifact, one type, one run.** No multi-artifact batches.
 2. **Intent is mandatory.** Without a described intent there is no generation; everything else may fall back to a documented default, stated in the output.
 3. **Read the topic spec first.** Before generating, read the matching [`ha-automation/<topic>`](https://github.com/nolte/claude-home-assistant/tree/develop/spec/ha-automation) spec; do not generate from memory.
-4. **Never generate a legacy trigger helper.** If the intent targets `flux`, `device_sun_light_trigger`, or a hand-built `platform:` trigger helper, propose the modern equivalent per [`ha-automation/legacy-trigger-helpers`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha-automation/legacy-trigger-helpers/de.md) instead.
+4. **Never generate a legacy trigger helper.** If the intent targets `flux`, `device_sun_light_trigger`, or a hand-built `platform:` trigger helper, propose the modern equivalent per `spec/ha-automation/legacy-trigger-helpers/en.md` instead.
 5. **Never overwrite an existing entity.** Collision on `id` / `unique_id` / `object_id` aborts with the identifier quoted.
-6. **Deliberate mode, stable identity, guarded templates.** `automation`/`script` carry a consciously chosen `mode` (with `max` for `parallel`/`queued`); every entity gets a stable `id`/`unique_id` and an English `alias` (≤50 chars); every Jinja template guards `unavailable`/`unknown` (`has_value()`, `is_number()`, `float(default)`, `availability`). Names follow [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md).
+6. **Deliberate mode, stable identity, guarded templates.** `automation`/`script` carry a consciously chosen `mode` (with `max` for `parallel`/`queued`); every entity gets a stable `id`/`unique_id` and an English `alias` (≤50 chars); every Jinja template guards `unavailable`/`unknown` (`has_value()`, `is_number()`, `float(default)`, `availability`). Names follow `spec/ha/naming-conventions/en.md`.
 7. **Command-artifact safety.** `shell_command` never interpolates untrusted input unquoted (runs as root), no pipes/redirects in templates; `python_script` uses no `import` and only `hass`/`data`/`logger`/`output`; `rest_command` keeps `verify_ssl: true` unless justified and credentials out of the URL.
-8. **Verify HA internals against the official docs.** Don't reproduce HA schemas/conventions from memory — consult Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant) and [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+8. **Verify HA internals against the official docs.** Don't reproduce HA schemas/conventions from memory — consult Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant) and [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

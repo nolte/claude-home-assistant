@@ -25,7 +25,7 @@ see_also:
 
 # HA Quality-Scale Audit
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-quality-scale-audit/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-quality-scale-audit/en.md).
+Spec: `spec/claude/ha-quality-scale-audit/en.md` (EN canonical) / `spec/claude/ha-quality-scale-audit/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -53,7 +53,7 @@ Use this skill to audit an existing HA Custom Integration against `ha/quality-sc
 4. **Always reference the relevant `ha/quality-scale` rule** (and its tier) in every finding.
 5. **Exempt needs a comment.** An `exempt` rule without a justifying `comment` is a high finding. When the `comment` is present and plausible, mark a matching finding "review" instead of suppressing it silently.
 6. **Severity-sorted output.** High → medium → low. Never bury high findings under low ones.
-7. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before asserting it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+7. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before asserting it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

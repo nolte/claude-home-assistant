@@ -25,7 +25,7 @@ see_also:
 
 # HA Automation Solution
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-automation-solution/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-automation-solution/en.md).
+Spec: `spec/claude/ha-automation-solution/en.md` (EN canonical) / `spec/claude/ha-automation-solution/de.md` (DE translation).
 
 This skill is the **front door** to the `ha-automation` skill family. It does not generate any artifact itself — it decomposes the requirement, plans the combination, and dispatches the owning authoring skills, each of which owns its generation and spec conformance.
 
@@ -52,10 +52,10 @@ Use this skill when the user describes a **result** that likely needs more than 
 2. **Plan before generate.** Always present the dependency-ordered artifact plan and wait for explicit approval before dispatching anything.
 3. **One requirement, one run.** No multi-requirement batches.
 4. **Minimal artifacts.** Decompose to the fewest artifacts that satisfy the requirement; never add a helper or sensor a single artifact already covers.
-5. **Thread identities.** Dispatch in dependency order and pass the `entity_id`s/identifiers produced in earlier steps as inputs to dependent steps. Keep all names consistent per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md).
+5. **Thread identities.** Dispatch in dependency order and pass the `entity_id`s/identifiers produced in earlier steps as inputs to dependent steps. Keep all names consistent per `spec/ha/naming-conventions/en.md`.
 6. **Stop on NEEDS-WORK.** If a dispatched skill returns NEEDS-WORK, stop and report — do not build a dependent artifact on an unfinished predecessor.
 7. **Recognize integration-shaped work.** When the requirement needs a custom integration rather than YAML, say so in the plan and point at `ha-integration-scaffold` instead of forcing it into helpers/templates.
-8. **Verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+8. **Verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

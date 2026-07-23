@@ -25,7 +25,7 @@ see_also:
 
 # HA Bluetooth Augment
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-bluetooth-augment/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-bluetooth-augment/en.md).
+Spec: `spec/claude/ha-bluetooth-augment/en.md` (EN canonical) / `spec/claude/ha-bluetooth-augment/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -48,7 +48,7 @@ Use this skill to add Bluetooth support — central BLE discovery plus advertise
 
 ## Hard rules
 
-1. **Read [`ha/bluetooth`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/bluetooth/de.md) first.** Do not generate HA internals from memory.
+1. **Read `spec/ha/bluetooth/en.md` first.** Do not generate HA internals from memory.
 2. **Right mechanism, with delimitation.** DHCP/SSDP/USB/HomeKit/Zeroconf → `ha-discovery-augment`; the full config-flow discovery step → `ha-config-flow-augment`. Redirect rather than augmenting the wrong one.
 3. **Manifest matcher + dependency.** The `bluetooth` key is a list of matcher dicts from the documented fields (`service_uuid`, `local_name`, `manufacturer_id`, `service_data_uuid`, `connectable`); add `bluetooth_adapters` to `dependencies` when the integration uses an adapter.
 4. **Passive is the default.** Operate `connectable=False` whenever the device delivers data through advertisements only — that opts in to non-connectable controllers. Use `connectable=True` (the field default) only where an outgoing connection is actually needed; set the flag per device for mixed devices.
@@ -56,7 +56,7 @@ Use this skill to add Bluetooth support — central BLE discovery plus advertise
 6. **Lookups, never an own scanner.** Get a `BLEDevice` via `bluetooth.async_ble_device_from_address(hass, address, connectable)` and handle the `None` case (no adapter in range); read latest info via `bluetooth.async_last_service_info`; check `bluetooth.async_scanner_count(hass, connectable=True)` at setup when connecting. **Never** instantiate an own `BleakScanner`.
 7. **Right coordinator family.** `PassiveBluetoothProcessorCoordinator` for sensors/binary sensors/events from advertisements; `ActiveBluetoothProcessorCoordinator` on connection need; the DataUpdate variants for non-sensor entities; the generic `DataUpdateCoordinator` only on pure connection communication with no advertisements. Processor coordinators format `PassiveBluetoothDataUpdate` (indexed by `PassiveBluetoothEntityKey`) and bind `coordinator.async_start()` to `entry.async_on_unload(...)` only **after** `async_forward_entry_setups`. Active variants check `CoreState.running` and a reachable connectable `BLEDevice` in `needs_poll_method`.
 8. **Connection handling.** For active connections use `bluetooth.async_get_scanner(hass)`, a fresh `BleakClient` per connection, a timeout ≥ 10 s, and `bleak-retry-connector`; never hold a permanent connection when the data is in advertisements.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

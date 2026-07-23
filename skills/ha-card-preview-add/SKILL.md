@@ -22,9 +22,9 @@ see_also:
 
 # HA Card Preview Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-card-preview-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-card-preview-add/en.md).
+Spec: `spec/claude/ha-card-preview-add/en.md` (EN canonical) / `spec/claude/ha-card-preview-add/de.md` (DE translation).
 
-This skill makes an existing custom card's **preview** complete and correct, per [`ha/lovelace-card-preview`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-card-preview/de.md). It completes the missing preview pieces (picker preview, editor live preview, the `preview` property guard, preview correctness) and validates them — it does not scaffold the card (`ha-lovelace-card-scaffold`) or build the editor (`ha-card-editor-add`).
+This skill makes an existing custom card's **preview** complete and correct, per `spec/ha/lovelace-card-preview/en.md`. It completes the missing preview pieces (picker preview, editor live preview, the `preview` property guard, preview correctness) and validates them — it does not scaffold the card (`ha-lovelace-card-scaffold`) or build the editor (`ha-card-editor-add`).
 
 ## Why this is a skill, not an agent
 
@@ -46,14 +46,14 @@ Use this skill to ensure an **existing** custom card previews completely and cor
 
 ## Hard rules
 
-1. **Read [`ha/lovelace-card-preview`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/lovelace-card-preview/de.md) first.** Do not generate from memory. Honour its evidence tiers — `[doc]` / `[src]` / `[policy]` — and never present a source-verified or policy rule as a documented HA fact.
+1. **Read `spec/ha/lovelace-card-preview/en.md` first.** Do not generate from memory. Honour its evidence tiers — `[doc]` / `[src]` / `[policy]` — and never present a source-verified or policy rule as a documented HA fact.
 2. **Picker preview flag.** Set `preview: true` on the card's `window.customCards` entry when a live picker preview is intended; `[src]` without it the tile shows only `description`. Keep `description` set as the fallback text.
 3. **Valid `getStubConfig`.** Ensure a `getStubConfig` returns a config the card's `setConfig` accepts, so the `preview: true` tile renders a real, non-error preview (detail per `ha/lovelace-card-editor`; delegate the editor to `ha-card-editor-add`).
 4. **Editor live preview is deterministic.** The render must follow `setConfig`/`hass` so the editor live preview reflects each `config-changed`; never cache first-render state that ignores a later `setConfig`.
 5. **Read the `preview` property.** Read the boolean `preview` property HA sets on the card element (editor-preview context), and the legacy `editMode` alias for older frontends; `[src]` the picker tile does not set `preview`, so do not depend on it there.
 6. **Preview correctness.** `[policy]` **Never** fire a real service call, action, or side-effect while `preview` (or `editMode`) is `true`; render representative content; render a graceful placeholder (never throw) for a missing entity or incomplete config.
 7. **Do not size the picker tile via `getCardSize`/`getGridOptions`.** `[src]` the gallery tile is CSS-governed; those methods govern the editor preview and the real dashboard.
-8. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+8. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

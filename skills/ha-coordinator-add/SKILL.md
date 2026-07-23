@@ -21,7 +21,7 @@ see_also:
 
 # HA Coordinator Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-coordinator-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-coordinator-add/en.md).
+Spec: `spec/claude/ha-coordinator-add/en.md` (EN canonical) / `spec/claude/ha-coordinator-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -49,7 +49,7 @@ Use this skill when the user wants to add a new `DataUpdateCoordinator` to an ex
 6. **Store the new coordinator on a typed `runtime_data`.** The coordinator lands in the `RuntimeData.coordinators` mapping on a **typed** config entry (a typed alias such as `type <Domain>ConfigEntry = ConfigEntry[RuntimeData]`, used throughout); re-verify the `RuntimeData` dataclass field type when the mapping key is added so the typed entry stays sound (`ha/runtime-data-pattern`).
 7. **Surface `PARALLEL_UPDATES` for the backed platforms.** This skill adds the coordinator, not the entity-platform modules — but every platform that reads the new coordinator needs a module-level `PARALLEL_UPDATES` (Silver `parallel-updates` rule). Surface this in the report and point the user at `ha-entity-platform-add` / `ha-entity-description-mapper` to emit it.
 8. **Push-style variant for `local_push` / `cloud_push`.** For a push iot_class a poll-based coordinator is the wrong shape — a push-style coordinator (`async_set_updated_data`, no `update_interval`) MAY be produced instead; the bespoke transport wiring (webhook server, MQTT broker) stays out of scope.
-9. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+9. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

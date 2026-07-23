@@ -25,9 +25,9 @@ see_also:
 
 # HA Blueprint Scaffold
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-blueprint-scaffold/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-blueprint-scaffold/en.md).
+Spec: `spec/claude/ha-blueprint-scaffold/en.md` (EN canonical) / `spec/claude/ha-blueprint-scaffold/de.md` (DE translation).
 
-This skill is the **entry point** for creating a blueprint. It does not generate the YAML itself — it gathers parameters, runs a pre-flight, and dispatches the [`ha-blueprint-author`](https://github.com/nolte/claude-home-assistant/blob/develop/agents/ha-blueprint-author.md) agent, which owns the draft → validate → iterate loop and the conformance report against [`ha/blueprint-patterns`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/blueprint-patterns/de.md).
+This skill is the **entry point** for creating a blueprint. It does not generate the YAML itself — it gathers parameters, runs a pre-flight, and dispatches the [`ha-blueprint-author`](https://github.com/nolte/claude-home-assistant/blob/develop/agents/ha-blueprint-author.md) agent, which owns the draft → validate → iterate loop and the conformance report against `spec/ha/blueprint-patterns/en.md`.
 
 ## Why this is a skill, not an agent
 
@@ -53,7 +53,7 @@ Use this skill when the user wants to create one Home Assistant blueprint (autom
 3. **Never overwrite an existing blueprint.** If the resolved path already exists, abort with the path quoted. Collision is a user-disambiguation problem.
 4. **Never silently default.** When the user is silent on `domain`, `target_dir`, `author`, or `source_url`, use the documented defaults — but state every default in the dispatch and in the relayed report.
 5. **One blueprint, one domain, one run.** No multi-blueprint batches, no Python, no live-HA import.
-6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+6. **Verify HA internals against the official docs.** Don't reproduce HA API signatures, lifecycle hooks, conventions, or schemas from memory — when uncertain, consult the official docs before generating or relying on it: Developer docs [`developers.home-assistant`](https://github.com/home-assistant/developers.home-assistant), architecture/blueprint/YAML docs [`home-assistant.io`](https://github.com/home-assistant/home-assistant.io) (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 
@@ -63,7 +63,7 @@ Use this skill when the user wants to create one Home Assistant blueprint (autom
 | `domain` | no | `automation` | One of `automation`, `script`, `template` |
 | `target_dir` | no | repo root | Where to write; an HA config tree triggers the `blueprints/<domain>/<author>/` path derivation |
 | `author` | no | git user or `local` | Namespace folder + `author` key |
-| `file_name` | no | derived from name (`snake_case`) | The `.yaml` filename, per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md) |
+| `file_name` | no | derived from name (`snake_case`) | The `.yaml` filename, per `spec/ha/naming-conventions/en.md` |
 | `source_url` | no | — | Canonical origin; set only when the blueprint is meant to be shared |
 
 If the user is silent on any optional field, use the default but state it explicitly in the output.

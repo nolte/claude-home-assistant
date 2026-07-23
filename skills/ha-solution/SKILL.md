@@ -29,7 +29,7 @@ see_also:
 
 # HA Solution
 
-Spec: [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-solution/en.md) (EN canonical) / [`de.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-solution/de.md).
+Spec: `spec/claude/ha-solution/en.md` (EN canonical) / `spec/claude/ha-solution/en.md`.
 
 This skill is the **top-level router** above the four domain front doors (`ha-integration-solution`, `ha-lovelace-solution`, `ha-automation-solution`, `ha-pixoo-solution`). It owns no domain artifacts itself — it classifies the requirement into one or more domains, routes each part to the owning `*-solution`, and threads the shared identities across domain boundaries. Each domain solution keeps its own plan-approval gate, decomposition, dispatch, and spec conformance.
 
@@ -56,10 +56,10 @@ Use this skill when the user describes a **Home Assistant result** and either th
 2. **Resolve the domain solutions at runtime.** Match the requirement against the live inventory of `ha-*-solution` skills (see [Runtime solution resolution](#runtime-solution-resolution)), never a frozen name list — a domain solution added to or renamed within the family is routable without editing this skill.
 3. **Classify into one or more domains.** Bucket the requirement into integration/backend, Lovelace/frontend, YAML-automation, and Pixoo parts; a single-domain requirement routes to exactly one solution, a cross-domain one to several.
 4. **Plan before route.** Present the domain plan (which domains, which `*-solution`, dependency order, threaded identities) and wait for explicit approval before dispatching any solution.
-5. **Order by dependency and thread shared identities across boundaries.** Dispatch a backend before the frontend/automation that consumes it, and pass the identities produced in one domain — `domain`, `entity_id`s, device ids, card tag / `custom:<type>`, WebSocket command `type` — into the inputs of the dependent domain solution(s). Keep all names consistent per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md).
+5. **Order by dependency and thread shared identities across boundaries.** Dispatch a backend before the frontend/automation that consumes it, and pass the identities produced in one domain — `domain`, `entity_id`s, device ids, card tag / `custom:<type>`, WebSocket command `type` — into the inputs of the dependent domain solution(s). Keep all names consistent per `spec/ha/naming-conventions/en.md`.
 6. **One requirement, one run.** No multi-requirement batches.
 7. **Stop on a NEEDS-WORK domain result.** If a dispatched `*-solution` returns NEEDS-WORK (or one of its steps does), stop and report — do not route a dependent domain onto an unfinished predecessor.
-8. **Delegate domain judgement.** Do not re-judge or re-plan a domain solution's internal decomposition or reports; relay them. Verify cross-domain HA internals against the official docs ([`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+8. **Delegate domain judgement.** Do not re-judge or re-plan a domain solution's internal decomposition or reports; relay them. Verify cross-domain HA internals against the official docs (`spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 

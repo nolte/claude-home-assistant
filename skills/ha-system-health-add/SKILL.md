@@ -25,7 +25,7 @@ see_also:
 
 # HA System Health Add
 
-Spec: <https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-system-health-add/de.md> (DE canonical) / [`en.md`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/claude/ha-system-health-add/en.md).
+Spec: `spec/claude/ha-system-health-add/en.md` (EN canonical) / `spec/claude/ha-system-health-add/de.md` (DE translation).
 
 ## Why this is a skill, not an agent
 
@@ -48,14 +48,14 @@ Use this skill to add a system health info provider to an existing integration �
 ## Hard rules
 
 1. **At-a-glance only.** System health carries short status values, never a full diagnostic dump. Run the value check first: a purely local integration with no meaningful status should be steered to skip `system_health.py`; full dumps go to `ha-diagnostics-augment`.
-2. **Read [`ha/system-health`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/system-health/de.md) first.** Do not generate from memory.
+2. **Read `spec/ha/system-health/en.md` first.** Do not generate from memory.
 3. **`@callback`, synchronous registration.** Export `async_register(hass, register) -> None` decorated with `@callback`; the registration is synchronous — only the info gathering is async. Import `SystemHealthRegistration` from `homeassistant.components.system_health` for the annotation.
 4. **Register via `async_register_info`.** Inside `async_register`, call `register.async_register_info(async_health_info)`; optionally pass a manage URL as the second argument, e.g. `register.async_register_info(async_health_info, "/config/<domain>")`.
 5. **Info callback contract.** Provide `async def async_health_info(hass) -> dict` returning the displayed info dict; values may be of any type, including coroutines.
 6. **Coroutine for expensive checks.** Set URL reachability and other expensive checks as a **coroutine** in the dict **without** a prior `await` — the frontend shows a waiting indicator and updates the item automatically.
 7. **Use the reachability helper.** For reachability items use `system_health.async_check_can_reach_url(hass, url)` instead of a custom HTTP probe; one helper call per endpoint.
-8. **Translate every key.** Each info key has a string under `system_health:` in `strings.json` (see [`ha/translations`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/translations/de.md)); a missing string shows the user a raw key.
-9. **Name per [`ha/naming-conventions`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/naming-conventions/de.md)** and **verify HA internals against the official docs** (see [`ha/upstream-docs-verification`](https://github.com/nolte/claude-home-assistant/blob/develop/spec/ha/upstream-docs-verification/de.md)).
+8. **Translate every key.** Each info key has a string under `system_health:` in `strings.json` (see `spec/ha/translations/en.md`); a missing string shows the user a raw key.
+9. **Name per `spec/ha/naming-conventions/en.md`** and **verify HA internals against the official docs** (see `spec/ha/upstream-docs-verification/en.md`).
 
 ## Inputs
 
