@@ -1,6 +1,6 @@
 ---
 name: ha-integration-solution
-description: "Plans and orchestrates a complete Home Assistant Python custom-integration backend from a result-oriented device/cloud/API requirement, driven by a chosen quality-scale target tier (Bronze through Platinum), so the user never has to pick which integration skill to use. Decomposes the requirement into a minimal dependency-ordered plan for the target tier, presents it for approval, then dispatches the owning integration ha-* skills — resolved from the live skill inventory at runtime, never from a frozen list — threading the domain and entity_ids between steps, optionally closing with CI validation and HACS-release readiness. Activate on \"build an integration for device/API X\", \"build a Gold-tier integration for my Acme thermostat cloud API\", or equivalent German requests. Do not activate for a single clear augment (the owning skill), a YAML automation solution (ha-automation-solution), a Lovelace frontend (ha-lovelace-solution), or deploying to a live HA instance (ha-integration-deploy agent)."
+description: "Plans and orchestrates a complete Home Assistant Python custom-integration backend from a result-oriented device/cloud/API requirement, driven by a chosen quality-scale target tier (Bronze–Platinum), so the user never picks individual skills. Decomposes the requirement into a minimal dependency-ordered plan for the target tier, presents it for approval, then dispatches the owning integration ha-* skills — resolved from the live skill inventory at runtime, never from a frozen list — threading the domain and entity_ids between steps, optionally closing with CI validation and HACS-release readiness. Activate on \"build an integration for device/API X\", \"build a Gold-tier integration for my Acme thermostat cloud API\", or equivalent German requests. Do not activate for a single clear augment (the owning skill), a YAML automation solution (ha-automation-solution), a Lovelace frontend (ha-lovelace-solution), or deploying to a live HA instance (ha-integration-deploy agent). Supports resume on re-invocation."
 tags: [home-assistant, integration, orchestration, planning]
 phase: plan
 summary: "Plans and orchestrates a complete Python custom-integration backend from a device/cloud/API requirement, driven by a chosen quality-scale target tier."
@@ -25,6 +25,7 @@ see_also:
   - ha-integration-review
   - ha-integration-ci-scaffold
   - ha-hacs-release
+resumable: true
 ---
 
 # HA Integration Solution
@@ -134,7 +135,7 @@ A stored-shape change from a later edit routes through `ha-config-entry-migrate`
 
 ### 1) Clarify
 
-First gauge requirement confidence. When the requirement is clearly specified, use the lightweight path: ask 1–3 targeted questions (which protocol, which auth type, which entity domains, which quality features) before planning. When it is below a confidence threshold (vague target, unnamed device/API, unclear scope), dispatch `requirements-elicit` first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding. Check whether an integration already exists under `custom_components/<domain>/`, and whether the work is actually YAML-automation-shaped. Do not plan on guesses.
+First gauge requirement confidence. When the requirement is clearly specified, use the lightweight path: ask 1–3 targeted questions (which protocol, which auth type, which entity domains, which quality features) before planning. When it is below a confidence threshold (vague target, unnamed device/API, unclear scope), dispatch `requirements-elicit` (from the nolte-shared plugin; when it is not installed, reach the same rigor via a structured series of targeted questions) first and plan against the confirmed requirement artifact — mirroring the `issue-orchestrate` upstream gate — instead of decomposing a fuzzy requirement against weak understanding. Check whether an integration already exists under `custom_components/<domain>/`, and whether the work is actually YAML-automation-shaped. Do not plan on guesses.
 
 ### 2) Plan
 
@@ -182,3 +183,7 @@ Runs **only** when `deploy_ready` is set, and **only** after a second explicit h
 - A YAML automation/helper solution → `ha-automation-solution` (this skill only recognizes and points)
 - A Lovelace frontend card → `ha-lovelace-card-scaffold`
 - Deploy / runtime verify against a live HA instance → generation-only by default; available only via the opt-in `deploy_ready` lifecycle phase (§5), which drives the `ha-integration-deploy` / `ha-integration-verify` / `ha-integration-review` agents behind a second gate with a fix feedback loop
+
+## Resumability
+
+Re-invoking this skill with the same requirement resumes per `spec/claude/resumable-work/`: the checkpoint under `.resume/<skill-name>/` records the approved plan and per-step dispatch status, so an interrupted orchestration continues at the first incomplete step instead of re-planning from scratch.

@@ -25,7 +25,7 @@ see_also:
 
 Spec: `spec/claude/ha-integration-ci-scaffold/en.md` (EN canonical) / `spec/claude/ha-integration-ci-scaffold/de.md` (DE translation).
 
-This skill scaffolds the **HA-domain CI validators** — hassfest, the HACS validation action, and the pytest matrix — that the generic portfolio CI (`nolte-shared:project-structure`, `quality-gate`, `release-automation`) does not emit. It closes the audit finding that `ha-integration-scaffold` claims hassfest CI is "handled by the project-structure scaffold" when in fact nothing HA-specific is generated. The generated YAML targets the **consumer integration repository**, not this plugin repo.
+This skill scaffolds the **HA-domain CI validators** — hassfest, the HACS validation action, and the pytest matrix — that the generic portfolio CI (`nolte-shared:project-structure-apply`, `quality-gate`, `release-automation`) does not emit. It closes the audit finding that `ha-integration-scaffold` claims hassfest CI is "handled by the project-structure scaffold" when in fact nothing HA-specific is generated. The generated YAML targets the **consumer integration repository**, not this plugin repo.
 
 ## Why this is a skill, not an agent
 
@@ -40,7 +40,7 @@ Use this skill to add the HA-specific CI validation to a Custom Integration repo
 
 ## When NOT to activate
 
-- the generic repo scaffold (lint, pre-commit, release-drafter wiring) → `nolte-shared:project-structure`
+- the generic repo scaffold (lint, pre-commit, release-drafter wiring) → `nolte-shared:project-structure-apply`
 - the release publish flow (Draft → Published, version alignment, ZIP asset) → `release-automation` / `ha-hacs-release`
 - generating the Python integration code → `ha-integration-scaffold`
 - deploying/importing into a running HA instance → out of scope (generation only)
@@ -86,6 +86,6 @@ Validate offline (YAML parses; hassfest and — when applicable — the HACS ste
 
 ## Boundaries
 
-- Generic repo scaffold / lint CI → `nolte-shared:project-structure`
+- Generic repo scaffold / lint CI → `nolte-shared:project-structure-apply`
 - Release publish + version alignment + ZIP asset → `release-automation` / `ha-hacs-release`
 - The pytest tests themselves → `ha-test-harness-augment`

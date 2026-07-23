@@ -38,7 +38,7 @@ Use this skill to add scene / reproduce-state support to an existing integration
 
 ## When NOT to activate
 
-- writing or using scenes in config / automations → `ha-automation/scene`
+- writing or using scenes in config / automations → `ha-automation-author` (scene helper family)
 - the service actions or `services.yaml` the mapping calls → `ha-service-definition-generator` / `ha/services`
 - the entity command methods that actually set the states (`async_turn_on` etc.) → the entity platform
 - greenfield integration scaffolding → `ha-integration-scaffold`
@@ -99,7 +99,7 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 
 ## Boundaries
 
-- Writing / using scenes → `ha-automation/scene`
+- Writing / using scenes → `ha-automation-author` (scene helper family)
 - Called service actions → `ha-service-definition-generator` / `ha/services`
 - Entity command methods that set the states → the entity platform
 - Greenfield scaffold → `ha-integration-scaffold`

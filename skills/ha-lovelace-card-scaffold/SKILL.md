@@ -100,5 +100,5 @@ pytest tests/ -v
 ## Boundaries
 
 - TypeScript / Lit cards → planned follow-up spec
-- Card editor element → consumer task
+- Card editor element → `ha-card-editor-add`
 - HACS plugin distribution → out of scope

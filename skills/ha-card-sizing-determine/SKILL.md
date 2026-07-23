@@ -103,7 +103,7 @@ Present the determined declaration and the intended hand-off (inline patch vs. d
 The determination is not the end — hand the declaration to an implementation step:
 
 - **(a) inline patch** — generate or patch `getGridOptions()` and `getCardSize()` in `card_file` (and apply any required CSS-precondition fix on the card root), matching how the sibling scaffold/augment skills generate/patch callbacks.
-- **(b) dispatch** — when the edit is larger than a two-callback patch, hand the determined declaration to the appropriate implementation specialist rather than doing heavy work here.
+- **(b) dispatch** — when the edit is larger than a two-callback patch, hand the determined declaration to the appropriate implementation specialist rather than doing heavy work here — resolve the specialist from the live skill inventory (typically `ha-lovelace-card-scaffold` for cards, `ha-panel-add` / `ha-panel-author` for panels).
 
 Keep the analyse→hand-off boundary explicit: determination produces the declaration; the hand-off applies it.
 

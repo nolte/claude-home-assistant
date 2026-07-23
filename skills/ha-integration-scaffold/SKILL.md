@@ -43,9 +43,9 @@ Use this skill when the user wants to:
 
 ## When NOT to activate
 
-- editing an existing `custom_components/<domain>/` → there is no scaffold to do; consult the relevant detail spec under `spec/ha/*`
+- editing an existing `custom_components/<domain>/` → route to the owning augment skill (`ha-config-flow-augment`, `ha-coordinator-add`, `ha-entity-platform-add`, …) or let `ha-integration-solution` plan the combination
 - scaffolding a Lovelace card → separate skill `ha-lovelace-card-scaffold`
-- scaffolding an ESPHome custom component → separate skill `ha-esphome-component-scaffold` (planned)
+- scaffolding an ESPHome custom component → out of scope; no ESPHome skill axis exists yet
 - scaffolding a blueprint / automation → separate skill `ha-blueprint-scaffold`
 - migrating a YAML-configured integration to config flow → separate skill (planned, only on demand)
 

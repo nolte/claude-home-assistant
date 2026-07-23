@@ -130,5 +130,5 @@ Output to the user:
 - Greenfield scaffold → `ha-integration-scaffold`
 - Add a coordinator → `ha-coordinator-add` (planned)
 - Test coverage augmentation → `ha-test-harness-augment` (planned)
-- Schema migration of `entry.data` across versions → `ha-schema-migration` (planned)
+- Schema migration of `entry.data` across versions → `ha-config-entry-migrate`
 - Provider-specific OAuth setup beyond the skeleton → consumer task; no dedicated skill planned

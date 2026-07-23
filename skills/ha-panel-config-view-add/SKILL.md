@@ -49,7 +49,7 @@ Use this skill to give an **existing** custom panel a complete, correct configur
 - scaffolding a brand-new panel → `ha-panel-add`
 - defining the backend WebSocket command (decorator, schema, `async_register_command`) → `ha-websocket-command-add`
 - the card graphical config editor (`getConfigElement` / `getConfigForm`) → `ha-card-editor-add`
-- the backend integration config/options flow (`config_flow.py`, `OptionsFlow`) → `ha/config-flow-patterns`
+- the backend integration config/options flow (`config_flow.py`, `OptionsFlow`) → `ha-options-flow-augment`
 - deploying/importing into a running HA instance → out of scope (generation only)
 
 ## Hard rules
@@ -100,4 +100,4 @@ Validate offline (every value classified; `panel.config` not mutated to persist;
 - Scaffolding a new panel → `ha-panel-add`
 - Defining the WebSocket command → `ha-websocket-command-add` / `ha/frontend-websocket-commands`
 - The card config editor → `ha-card-editor-add` / `ha/lovelace-card-editor`
-- The backend integration options flow → `ha/config-flow-patterns`
+- The backend integration options flow → `ha-options-flow-augment`

@@ -38,7 +38,7 @@ Use this skill to add **one** backup-platform surface — pre/post backup hooks 
 ## When NOT to activate
 
 - greenfield integration scaffolding → `ha-integration-scaffold`
-- the sibling diagnostics platform module → `ha/diagnostics`
+- the sibling diagnostics platform module → `ha-diagnostics-augment`
 - backup encryption, retention, scheduling, or restore orchestration → owned by the backup manager / HA core, out of scope
 - deploying/importing into a running HA instance → out of scope
 
@@ -99,6 +99,6 @@ The skill never deploys to a live HA instance. Surface the report and stop.
 ## Boundaries
 
 - Greenfield scaffold → `ha-integration-scaffold`
-- Sibling diagnostics module → `ha/diagnostics`
+- Sibling diagnostics module → `ha-diagnostics-augment`
 - Encryption / retention / scheduling / restore → backup manager / HA core, out of scope
 - Deploy to live HA → out of scope
