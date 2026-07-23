@@ -72,6 +72,13 @@ plugins:
           nav_translations:
             Home: Startseite
             Use cases: Anwendungsfälle
+            Overview: Überblick
+            Custom integration (Python): Custom Integration (Python)
+            Lovelace frontend (TS / JS): Lovelace-Frontend (TS / JS)
+            Automations and blueprints: Automationen und Blueprints
+            Divoom Pixoo display: Divoom-Pixoo-Display
+            Run and test on a dev HA: Auf einer Dev-HA testen
+            Review and harden: Review und Härtung
 
   - literate-nav:
       nav_file: SUMMARY.md
@@ -126,7 +133,14 @@ extra:
 
 nav:
   - Home: en/index.md
-  - Use cases: en/use-cases.md
+  - Use cases:
+      - Overview: en/use-cases/index.md
+      - Custom integration (Python): en/use-cases/custom-integration.md
+      - Lovelace frontend (TS / JS): en/use-cases/lovelace-frontend.md
+      - Automations and blueprints: en/use-cases/automations-blueprints.md
+      - Divoom Pixoo display: en/use-cases/pixoo-display.md
+      - Run and test on a dev HA: en/use-cases/dev-testing.md
+      - Review and harden: en/use-cases/review-hardening.md
   # Directory references so mkdocs-literate-nav expands each SUMMARY.md into the
   # left sidebar as a grouped tree (by delivery-lifecycle phase), matching the
   # claude-shared catalog. A file reference (skills/SUMMARY.md) renders the list

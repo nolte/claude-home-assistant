@@ -17,7 +17,7 @@ What the plugin is for, each with its front-door skill:
 - **Run & test on a dev HA** — agents `ha-dev-instance-provision`, `ha-integration-deploy`, `ha-integration-verify` (local Kubernetes / Kind) plus `ha-test-harness-augment` for pytest coverage.
 - **Review & harden before release** — `ha-quality-scale-audit`, `ha-security-audit`, and the bundled `ha-integration-review` agent.
 
-The full overview — every use case mapped to its skills, agents, and specs — is under [Use cases](use-cases.md).
+The full overview — every use case mapped to its skills, agents, and specs — is under [Use cases](use-cases/index.md).
 
 !!! note "Not covered yet"
     ESPHome custom components and Home Assistant add-ons (Docker / s6) are on the roadmap; no skills ship for them yet.
