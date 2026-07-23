@@ -2,6 +2,8 @@
 
 Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zweisprachig: Englisch ist kanonisch (`en.md`), Deutsch ist Übersetzung (`de.md`). Konfiguration siehe `.spec-config.yml`.
 
+**Design-Spec-Konvention:** Jeder **Skill** trägt einen per-Artefakt-Design-Spec unter `spec/claude/<skill-name>/` (Kontrakt des Skills, getrennt von den `ha/`-Domänen-Specs, die er konsumiert). **Agents** tragen bewusst *keinen* eigenen Design-Spec: sie sind per geerbter agent-management-Konvention einzelne, in sich geschlossene Dateien, deren Kontrakt (Rolle, Scope, Inputs, Output-Shape, Hard Rules) vollständig im Agent-Body lebt — ein separater Spec würde den Body nur duplizieren und drift-anfällig machen. Diese Festlegung schließt die im Skills-&-Agents-Audit 2026-07 offene Frage.
+
 ## Index
 
 | Slug | Titel (EN) | Titel (DE) | Status | Zuletzt aktualisiert |
@@ -68,6 +70,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/divoom-pixoo`](ha/divoom-pixoo/en.md) | HA Device: Divoom Pixoo 64 (gickowtf integration) | HA-Gerät: Divoom Pixoo 64 (gickowtf-Integration) | draft | unversioned |
 | [`ha/pixoo-pixel-art`](ha/pixoo-pixel-art/en.md) | HA Device: Pixel Art on the 64×64 Matrix (Shading & Contours) | HA-Gerät: Pixel-Art auf der 64×64-Matrix (Schattierung & Konturen) | draft | unversioned |
 | [`ha/pixoo-pixel-art-animation`](ha/pixoo-pixel-art-animation/en.md) | HA Device: Pixel Art Animation on the 64×64 Matrix | HA-Gerät: Pixel-Art-Animation auf der 64×64-Matrix | draft | unversioned |
+| [`ha/esphome-config-patterns`](ha/esphome-config-patterns/en.md) | ESPHome Device-Config Patterns | ESPHome-Device-Config-Patterns | draft | unversioned |
 | [`ha-automation/automation`](ha-automation/automation/en.md) | HA Automation: Using Automation | HA-Automation: Automation nutzen | draft | unversioned |
 | [`ha-automation/script`](ha-automation/script/en.md) | HA Automation: Using Script | HA-Automation: Script nutzen | draft | unversioned |
 | [`ha-automation/scene`](ha-automation/scene/en.md) | HA Automation: Using Scene | HA-Automation: Scene nutzen | draft | unversioned |
@@ -145,6 +148,12 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-integration-solution`](claude/ha-integration-solution/en.md) | Skill: `ha-integration-solution` | Skill: `ha-integration-solution` | draft | unversioned |
 | [`claude/ha-lovelace-solution`](claude/ha-lovelace-solution/en.md) | Skill: `ha-lovelace-solution` | Skill: `ha-lovelace-solution` | draft | unversioned |
 | [`claude/ha-pixoo-solution`](claude/ha-pixoo-solution/en.md) | Skill: `ha-pixoo-solution` | Skill: `ha-pixoo-solution` | draft | unversioned |
+| [`claude/ha-esphome-config-scaffold`](claude/ha-esphome-config-scaffold/en.md) | Skill: `ha-esphome-config-scaffold` | Skill: `ha-esphome-config-scaffold` | draft | unversioned |
+| [`claude/ha-esphome-config-augment`](claude/ha-esphome-config-augment/en.md) | Skill: `ha-esphome-config-augment` | Skill: `ha-esphome-config-augment` | draft | unversioned |
+| [`claude/ha-card-sizing-determine`](claude/ha-card-sizing-determine/en.md) | Skill: `ha-card-sizing-determine` | Skill: `ha-card-sizing-determine` | draft | unversioned |
+| [`claude/ha-pixoo-page-author`](claude/ha-pixoo-page-author/en.md) | Skill: `ha-pixoo-page-author` | Skill: `ha-pixoo-page-author` | draft | unversioned |
+| [`claude/ha-pixoo-pixel-art-author`](claude/ha-pixoo-pixel-art-author/en.md) | Skill: `ha-pixoo-pixel-art-author` | Skill: `ha-pixoo-pixel-art-author` | draft | unversioned |
+| [`claude/ha-pixoo-animation-author`](claude/ha-pixoo-animation-author/en.md) | Skill: `ha-pixoo-animation-author` | Skill: `ha-pixoo-animation-author` | draft | unversioned |
 
 Der Index listet nur **lokale** Specs. Portfolioweite `project/`-Specs (u. a. `project/branching-model`, `project/parallel-working-copies`) werden nicht mehr lokal geführt, sondern aus dem nolte-shared-Hub vererbt — siehe [Vererbte Specs](#vererbte-specs).
 
