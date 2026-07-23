@@ -1,7 +1,7 @@
 ---
 name: ha-integration-verify
 description: >-
-  Diagnose a deployed Home Assistant Custom Integration in a running HA
+  Diagnoses a deployed Home Assistant Custom Integration in a running HA
   pod inside a Kind / local Kubernetes cluster — pod-status check,
   recent-log scan with error-pattern detection, installed-files
   verification — and return a structured health report. Read-only:

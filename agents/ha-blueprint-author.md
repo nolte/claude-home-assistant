@@ -1,23 +1,6 @@
 ---
 name: ha-blueprint-author
-description: >-
-  Author a Home Assistant blueprint (automation, script, or template
-  domain) as a single self-contained YAML file that conforms to the
-  ha/blueprint-patterns spec — correct `blueprint:` header, declared
-  inputs with type-appropriate selectors, the `!input` → `variables` /
-  `trigger_variables` templating bridge, a deliberate `mode`, and
-  unavailable-state-guarded templates — then validate it and return a
-  spec-conformance report. Use when the user says "write a blueprint for
-  X", "scaffold an automation blueprint", "turn this automation into a
-  blueprint", "draft a motion-light blueprint", or equivalent German
-  requests ("schreibe ein Blueprint für X", "erstelle ein Automations-
-  Blueprint", "mach aus dieser Automation ein Blueprint"). Don't use to
-  scaffold a Python custom integration (`ha-integration-scaffold`), to
-  author a Lovelace card (`ha-lovelace-card-scaffold`), to define an
-  integration service (`ha-service-definition-generator`), or to deploy
-  anything to a running HA instance. Returns the written `.yaml` file
-  plus a CONFORMANT / NEEDS-WORK report keyed to the spec's acceptance
-  criteria.
+description: "Authors one Home Assistant blueprint (automation, script, or template domain) as a single self-contained YAML file conforming to the ha/blueprint-patterns spec — correct blueprint: header, declared inputs with type-appropriate selectors, the !input to variables / trigger_variables templating bridge, a deliberate mode, and unavailable-state-guarded templates — then validates it and returns the written .yaml plus a CONFORMANT / NEEDS-WORK report keyed to the spec's acceptance criteria. Dispatched by the ha-blueprint-scaffold skill after its intent gathering and pre-flight; the skill owns the user-facing triggers and dialogue, this agent owns the self-contained authoring pass. Don't use to gather blueprint intent interactively (ha-blueprint-scaffold), to scaffold a Python custom integration (ha-integration-scaffold), to author a Lovelace card (ha-lovelace-card-scaffold), to define an integration service (ha-service-definition-generator), or to deploy anything to a running HA instance."
 distribution: plugin
 tools: Read, Write, Edit, Glob, Grep, Bash
 tags: [home-assistant, blueprint, automation, yaml, authoring]

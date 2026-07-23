@@ -1,6 +1,6 @@
 ---
 name: ha-lovelace-card-scaffold
-description: Scaffold a vanilla-JS Lovelace card under custom_components/<domain>/www/<card-name>.js with every mandatory lifecycle method, shadow DOM, entity-change detection, HA CSS custom properties, and auto-registration in __init__.py. Activate on phrasings like "scaffold a Lovelace card for the integration", "add a custom Lovelace card called `<name>`", "erstelle eine Custom-Card für `<Resource>`". Do not activate for greenfield setup (use ha-integration-scaffold), TypeScript / Lit cards, or card removal.
+description: Scaffolds a vanilla-JS Lovelace card under custom_components/<domain>/www/<card-name>.js with every mandatory lifecycle method, shadow DOM, entity-change detection, HA CSS custom properties, and auto-registration in __init__.py. Activate on phrasings like "scaffold a Lovelace card for the integration", "add a custom Lovelace card called `<name>`", "erstelle eine Custom-Card für `<Resource>`". Do not activate for greenfield setup (use ha-integration-scaffold), TypeScript / Lit cards, or card removal.
 tags: [home-assistant, custom-integration, lovelace]
 phase: design
 summary: "Scaffolds a vanilla-JS Lovelace card under www/ with every mandatory lifecycle method, shadow DOM, entity-change detection, HA CSS properties, and auto-registration."
