@@ -82,6 +82,7 @@ Resolve the owning domain solution for each classified part **at runtime**, by m
 | a dashboard surface — custom cards, editors, features, badges, strategies, custom panels | Lovelace / frontend | `ha-lovelace-solution` |
 | a YAML automation / helper / template / blueprint (no own protocol, no config flow) | automation | `ha-automation-solution` |
 | a Divoom Pixoo 64 display (pages, pixel-art, animation) | Pixoo — optional, device-specific family; applies only when that device is present | `ha-pixoo-solution` |
+| an ESPHome device config (new device or one more sensor/bus/component) | ESPHome (device-YAML slice; routes to the owning skill directly — no front door yet) | `ha-esphome-config-scaffold` / `ha-esphome-config-augment` |
 
 A cross-domain requirement maps to several rows; the typical order is **integration/backend → Lovelace/frontend → automation → Pixoo**, since the backend produces the `domain` and `entity_id`s the later domains consume.
 

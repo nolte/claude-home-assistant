@@ -120,7 +120,7 @@ Jeder Eintrag: Label, Beziehungs-Kategorie, Interaktions-Oberfläche, Erwartung,
 - **Veröffentlichungs-Schwelle**: Ab welchem Skill-/Reifegrad gibt das Plugin den Nicht-Owner-Konsumenten überhaupt einen Mehrwert, der eine Marketplace-Listung rechtfertigt?
 - **HACS-Layout-Pflicht**: Sollen Skills nur HACS-konforme Strukturen erzeugen oder auch native Custom-Integration-Layouts ohne HACS unterstützen?
 - **Quality-Scale-Markierung**: Sollen Specs pro Pattern explizit eine HA-Quality-Scale-Stufe markieren (Bronze/Silver/Gold/Platinum), damit Skill-Konsumenten wissen, auf welcher Stufe ihr Output landet?
-- **ESPHome-Achse**: Sind ESPHome-Custom-Components und HA-Add-ons zwei getrennte Skill-Achsen oder eine? Welches Repo dient als Round-Trip-Fixture (`esphome-configs`)?
+- **ESPHome-Achse**: ENTSCHIEDEN 2026-07-23 — Device-YAML-Schnitt zuerst (Spec `spec/ha/esphome-config-patterns` + Skills `ha-esphome-config-scaffold`/`-augment`), Round-Trip-Fixture `nolte/esphome-configs`; Custom-Components und HA-Add-ons bleiben separate, spätere Achsen.
 
 ## Anlässe für Re-Identifikation
 
