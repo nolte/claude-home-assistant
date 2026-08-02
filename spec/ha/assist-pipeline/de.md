@@ -65,7 +65,7 @@ Verifiziert 2026-08.
 - Es **MUSS [MUST]** verstanden werden, dass diese Engines über die **Wyoming**-Protokoll-Integration andocken, die externe Speech-to-Text-, Text-to-Speech- und Wake-Word-Dienste anbindet und laufende Instanzen automatisch entdeckt (manuelle Host-/Port-Eingabe bleibt verfügbar) `[doc:user]`
 - Die **Supervisor-Anforderung** **MUSS [MUST]** eingeplant werden: Die Engines werden als Home-Assistant-Apps (früher Add-ons) ausgeliefert, was Home Assistant OS oder Supervised voraussetzt — Home Assistant Core kann sie nicht installieren und benötigt stattdessen extern gehostete Wyoming-Dienste `[doc:user]` `[policy]`
 - Die Pipeline **SOLLTE [SHOULD]** in der dokumentierten Reihenfolge zusammengesetzt werden — Speech-to-Text- und Text-to-Speech-Dienste installieren und starten, unter *Einstellungen → Geräte & Dienste* einbinden, dann den Assistenten unter *Einstellungen → Sprachassistenten → Assistent hinzufügen* anlegen und Sprache sowie Engines wählen `[doc:user]`
-- Es **SOLLTE [SHOULD]** **eine Pipeline je Sprache oder Zweck** angelegt werden, statt eine einzelne Pipeline zu überladen, da Sprache und Engine-Auswahl Einstellungen je Pipeline sind `[doc:user]` `[policy]`
+- Es **MUSS [MUST]** **eine Pipeline je Sprache** angelegt werden, statt eine einzelne Pipeline zu überladen, da Sprache und Engine-Auswahl Einstellungen je Pipeline sind; jedem Satelliten wird dann die Pipeline der Sprache zugewiesen, die in seinem Raum tatsächlich gesprochen wird `[doc:user]` `[policy]`
 
 ### Platzierung des Wake-Words
 
@@ -130,7 +130,8 @@ Verifiziert 2026-08.
   3. **Debug-Aufzeichnung** — `assist_pipeline: {debug_recording_dir: /share/assist_pipeline}` in der `configuration.yaml` setzen, um pro Befehl eine `.wav` zu erhalten und das Audio selbst zu beurteilen
 - Das Symptom **SOLLTE [SHOULD]** vor jeder Änderung einer Stufe zugeordnet werden: gar keine Reaktion deutet auf das Wake-Word, ein falsches Transkript auf Speech-to-Text, „Entschuldigung, das verstehe ich nicht" auf Intent-Matching oder Freigabe und eine stumme Antwort auf Text-to-Speech `[doc:user]` `[policy]`
 - Wird ein Gerät nicht gefunden, **SOLLTE [SHOULD]** zuerst die **Freigabe** geprüft werden — der dokumentierte Fehlermodus für unbeantwortete Fragen ist eine nie freigegebene Entität, kein falsch geparster Satz `[doc:user]`
-- `debug_recording_dir` **MUSS [MUST]** nach Abschluss einer Untersuchung entfernt werden: Es schreibt jeden gesprochenen Befehl als Audio auf die Platte — das sensibelste Artefakt, das die Pipeline erzeugt `[doc:user]` `[policy]`
+- `debug_recording_dir` **DARF NICHT [MUST NOT]** über eine zeitlich begrenzte Untersuchung hinaus aktiviert bleiben, und die aufgezeichneten `.wav`-Dateien **MÜSSEN [MUST]** zusammen mit dem Config-Key gelöscht werden, wenn sie endet: Es schreibt jeden gesprochenen Befehl als Audio auf die Platte — das sensibelste Artefakt, das die Pipeline erzeugt `[doc:user]` `[policy]`
+- Bei jeder Aktivierung der Debug-Aufzeichnung **SOLLTE [SHOULD]** festgehalten werden, was untersucht wurde und über welchen Zeitraum, damit eine Audio-Aufzeichnung später nie ohne Erklärung auffindbar ist `[policy]`
 
 ### Datenschutz und Betriebsgrenzen
 
@@ -166,10 +167,7 @@ Verifiziert 2026-08.
 
 ## Offene Fragen
 
-- **Agent-Fallback**: Gibt es bei konfiguriertem LLM-Conversation-Agent ein dokumentiertes Local-First- oder Fallback-Verhalten für Befehle, die die eingebauten Intents ohnehin beherrschen, oder erhält der Agent alles? Das Verhalten ließ sich in den konsultierten Quellen nicht bestätigen und sollte geklärt werden, bevor ein LLM-Agent portfolioweit übernommen wird.
-- **Speech-to-Phrase gegenüber Whisper**: Reicht der begrenzte Phrasensatz von Speech-to-Phrase für das Befehlsvokabular dieses Portfolios, oder erzwingt freie Diktatnutzung (Einkaufslisten-Einträge, Notizen) Whisper und damit stärkere Host-Hardware?
-- **Pipeline je Sprache**: Ist bei zweisprachigem Haushalt eine Pipeline je Sprache plus Zuweisung je Satellit das richtige Modell, oder tragen Satelliten in Gemeinschaftsräumen nur die Mehrheitssprache?
-- **Eigenes Wake-Word**: Lohnt ein portfolio-spezifisches Wake-Word (Unterscheidbarkeit, weniger Fehlauslösungen), wo die On-Device-Erkennung auf ihre drei vortrainierten Modelle begrenzt ist — was die Erkennung serverseitig verschieben und das Streaming-Profil ändern würde?
-- **Debug-Recording-Regel**: Soll das Portfolio `debug_recording_dir` außerhalb einer zeitlich begrenzten Untersuchung untersagen, und wenn ja, wie wird das durchgesetzt statt nur dokumentiert?
-- **Satellitenzahl**: Ab welcher Zahl von Satelliten muss der Host dieses Portfolios neu dimensioniert werden, und sollte diese Schwelle gemessen statt aus der dokumentierten Raspberry-Pi-4-Referenz übernommen werden?
-- **Prüfrhythmus der Freigabe**: Soll die Entity-Freigabe planmäßig auditiert werden (und durch welchen Skill), da sie sich beim Onboarding neuer Geräte stillschweigend ausweitet?
+- **Agent-Fallback**: Gibt es bei konfiguriertem LLM-Conversation-Agent ein Local-First- oder Fallback-Verhalten für Befehle, die die eingebauten Intents ohnehin beherrschen? Erneut geprüft 2026-08 gegen die Seite der `conversation`-Integration und einen repräsentativen LLM-Agenten (`openai_conversation`) — **keine von beiden dokumentiert eine solche Option**, die Frage bleibt also mangels Dokumentation offen, nicht mangels Nachschauens. Empirisch zu klären (beobachten, ob ein eingebauter Intent bei ausgewähltem LLM-Agenten noch feuert), bevor ein LLM-Agent portfolioweit übernommen wird.
+- **Engine-Dimensionierung am realen Host**: Sowohl die Speech-to-Text-Wahl (Speech-to-Phrase gegenüber Whisper) als auch die Satellitenzahl, ab der der Host neu dimensioniert werden muss, hängen an Hardware, die diese Spec nicht kennt. Die dokumentierten Zahlen — ~8 s gegenüber <1 s Transkription, ~5 gleichzeitige Streams auf einem Raspberry Pi 4 — sind Kalibrierungspunkte; **am tatsächlichen Host messen**, bevor eines von beidem als Portfolio-Regel fixiert wird.
+
+Per Entscheidung erledigt (hier festgehalten, damit die Begründung auffindbar bleibt, nicht als offene Arbeit): eine Pipeline **je Sprache** mit Zuweisung je Satellit; **kein** eigenes Wake-Word, damit die Erkennung on-device bleibt und Audio einen Satelliten erst nach dem Wake-Word verlässt; `debug_recording_dir` ist **nur** für eine zeitlich begrenzte Untersuchung zulässig und seine Aufzeichnungen werden danach gelöscht; und die Entity-Freigabe wird **bei jedem Geräte-Onboarding** erneut geprüft statt nach Kalender, weil sie sich genau dann ausweitet.

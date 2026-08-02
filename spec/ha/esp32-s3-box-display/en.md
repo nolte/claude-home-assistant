@@ -96,7 +96,7 @@ Verified 2026-08.
 - **MUST** position text with an explicit `TextAlign` value rather than relying on the default `TOP_LEFT` when the anchor is meant to be a centre or a right edge; the available values are the nine box alignments plus `BASELINE_LEFT` / `BASELINE_CENTER` / `BASELINE_RIGHT` `[doc]`
 - **SHOULD** anchor centred text on `it.get_width() / 2` with `TextAlign::TOP_CENTER` (or a `CENTER` variant) instead of estimating a left offset from the expected string width `[doc]` `[policy]`
 - **MUST** bound every variable-length string before it is drawn: the reference config truncates at 32 characters via `esphome::str_truncate(name, 31)` plus an ellipsis, applied in the text sensor's `on_value` rather than in the lambda `[ref-config]`
-- **SHOULD** derive that limit from the box: at the reference's 15-pixel Figtree in a 280-pixel-wide frame, roughly 32 characters fit — a different font, size, or box width requires re-measuring, not reusing the number `[ref-config]` `[policy]`
+- **MUST** derive that limit by measurement and record it in a small per-project table (font × size × box width → character budget) rather than computing it at render time: the reference's 15-pixel Figtree in a 280-pixel frame fits roughly 32 characters, and every new font, size, or box width adds a measured row instead of reusing that number `[ref-config]` `[policy]`
 - **MAY** render formatted time with `it.strftime(x, y, font, color, align, format, time)`; for elapsed/remaining durations the reference config formats the digits itself (`HH:MM` above one hour, else `MM:SS`) and prints with `printf` `[doc]` `[ref-config]`
 
 ### Images
@@ -107,13 +107,13 @@ Verified 2026-08.
 - **MAY** use `transparency: chroma_key` or `alpha_channel` to compose an image over a background instead of pre-baking the background into every asset; grayscale images with transparency remain one byte per pixel `[doc]`
 - **MUST** place images with an explicit `ImageAlign` when the anchor is not the top left — ESPHome aligns at the top left by default, so a centred illustration is `it.image(w / 2, h / 2, id(img), ImageAlign::CENTER)` `[doc]` `[ref-config]`
 - **MAY** source an image from a URL at **compile** time (the reference config pulls its illustrations from a GitHub raw URL) or from Material Design Icons; runtime downloading is a different platform (`online_image`) with its own memory cost `[doc]` `[ref-config]`
-- **SHOULD** keep image assets under version control in the config repo rather than depending on an upstream URL staying reachable at build time `[policy]`
+- **MUST** vendor image assets into the config repository under version control rather than depending on an upstream URL staying reachable at build time — the build stays reproducible and offline-capable, at the cost of repository size `[policy]`
 
 ### Colours
 
 - **MUST** define reusable colours as `color:` components with ids (hex, percentage, or integer form) and reference them by id in lambdas, rather than repeating literals across pages — the reference config defines one colour per screen state plus the two timer-bar colours `[doc]` `[ref-config]`
 - **MAY** construct an ad-hoc colour inline as `Color(r, g, b)` inside a lambda where a one-off value is genuinely local `[doc]`
-- **MAY** use the `Color::WHITE` / `Color::BLACK` constants, which the reference config relies on for frames and text; note they are not listed in the component documentation, so a colour component is the more portable form `[ref-config]` `[doc]`
+- **MAY** use the `Color::WHITE` / `Color::BLACK` constants, which the reference config relies on for frames and text: they are declared in ESPHome's own `esphome/core/color.h` as `static const Color BLACK;` / `static const Color WHITE;`, so they are real API rather than an undocumented accident — they are simply absent from the component documentation `[ref-config]` `[doc]`
 - **MUST** parameterise per-state background colours through substitutions when a config is meant to be re-themed, as the reference config does with its `*_illustration_background_color` substitutions `[ref-config]`
 - **SHOULD** verify contrast on the physical panel rather than on a monitor — this is a small, bright 2.4-inch LCD, and the backlight level is a user-controllable light entity that will not always be at 100 % `[policy]`
 
@@ -190,10 +190,6 @@ Verified 2026-08.
 
 ## Open Questions
 
-- **Portfolio default path**: should BOX projects in this portfolio default to the immediate-mode path (matching upstream, one reviewable file) or to LVGL (touch-ready, better long-term ergonomics), or does the choice stay per-project?
-- **Reusable layout package**: are the zone grid and the shared drawing scripts worth extracting into a repo-local ESPHome package that device configs include, rather than re-deriving them per device?
-- **Truncation heuristic**: the 32-character limit is measured for 15-pixel Figtree in a 280-pixel box. Should the portfolio maintain a small measured table (font × size × box width → character budget), or compute the budget at render time from font metrics (`get_baseline`, glyph widths)?
-- **Rotation**: none of the reference configs rotate the panel. If a project mounts the BOX differently, does the zone grid get a rotated twin, or is rotation simply out of scope?
-- **`Color::WHITE` / `Color::BLACK`**: these constants are used by the upstream reference config but are not in the component documentation. Should portfolio configs avoid them in favour of declared `color:` components, or is upstream usage sufficient warrant?
-- **Asset hosting**: the reference config fetches illustrations from GitHub raw URLs at build time. Should portfolio configs vendor image assets into the config repo (reproducible builds, repo size) or keep remote references (small repo, build-time network dependency)?
-- **Animation**: ESPHome ships an `animation:` platform alongside `image:`. Is there a use case on this device that justifies the flash cost of multi-frame assets, given that page switching already covers state transitions?
+- **Animation**: ESPHome ships an `animation:` platform alongside `image:`. Is there a use case on this device that justifies the flash cost of multi-frame assets, given that page switching already covers state transitions? Genuinely undecidable without a concrete design wish, so it stays open.
+
+Settled by decision (kept here so the rationale stays findable, not as open work): the rendering path stays a **per-project** choice on the criterion already stated in *Choosing a rendering path* — no portfolio-wide default; a shared layout **package** is deferred until a second BOX screen would actually reuse it, to avoid abstracting from a single example; the truncation budget is a **measured table**, not a render-time computation; **rotation** is out of scope while the zone grid is defined for 320×240; and image assets are **vendored** into the config repository.
