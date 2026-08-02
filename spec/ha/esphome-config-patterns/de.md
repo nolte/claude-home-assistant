@@ -38,11 +38,11 @@ Diese Spec kanonisiert die Device-YAML-Patterns für das Portfolio, destilliert 
 
 ### Konnektivität und Sicherheit
 
-- `wifi:`-Credentials **MÜSSEN** aus `secrets.yaml` kommen (`!secret wifi_ssid` / `!secret wifi_password`); `secrets.yaml` **MUSS** gitignored sein, mit einer committeten `secrets.yaml.example`, die die benötigten Keys benennt
+- `wifi:`-Credentials **MÜSSEN** aus Umgebungsvariablen kommen (`!env_var WIFI_SSID` / `!env_var WIFI_PASSWORD`), nie aus einer Datei im Repository: Remote-Packages können `!secret` nachweislich nicht auflösen, und Umgebungsvariablen erreichen lokalen wie CI-Build gleichermaßen. Jede gelesene Variable **MUSS** dokumentiert sein, damit ein frischer Checkout baubar ist
 - `wifi:` **SOLLTE** einen `ap:`-Fallback plus `captive_portal:` deklarieren, damit ein unerreichbares Gerät wiederherstellbar bleibt
-- `api:` **MUSS** `encryption: key: !secret api_encryption_key` deklarieren — eine unverschlüsselte native API ist ein Finding, keine Variante
-- `ota:` **MUSS** vorhanden und via `!secret ota_password` passwortgeschützt sein
-- Kein literales Credential, Token oder Key **DARF** je in einer Device- oder Shared-Datei erscheinen
+- `api:` **MUSS** `encryption:` mit einem **geräteeigenen** Key deklarieren, geliefert als Substitution, die die Device-Datei setzt (`substitutions: {api_key: !env_var <DEVICE>_API_KEY}`) und konsumiert als `key: ${api_key}` — eine unverschlüsselte native API ist ein Finding, keine Variante
+- `ota:` **MUSS** vorhanden und via `!env_var OTA_PASSWORD` passwortgeschützt sein
+- Kein literales Credential, Token oder Key **DARF** je in einer Device- oder Shared-Datei erscheinen, und eine befüllte `secrets.yaml` **DARF NICHT** committet werden
 
 ### Plattformen und Components
 
@@ -62,7 +62,7 @@ Diese Spec kanonisiert die Device-YAML-Patterns für das Portfolio, destilliert 
 - [ ] Entity-Namen in generierten Plattform-Blöcken leiten sich per Naming-Regel aus `${friendly_name}` ab
 - [ ] Neue Configs nutzen `packages:` für geteilte Blöcke; keine neuen `<<: !include`-Merge-Keys
 - [ ] Jeder Schema-Key im generierten Output löst gegen die offiziellen ESPHome-Docs auf
-- [ ] `secrets.yaml` bleibt gitignored und die Example-Datei benennt jeden referenzierten Key
+- [ ] Credentials lösen sich aus dokumentierten Umgebungsvariablen auf; keine Credential-Datei ist committet
 
 ## Offene Fragen
 

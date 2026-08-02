@@ -73,6 +73,7 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`ha/pixoo-pixel-art`](ha/pixoo-pixel-art/en.md) | HA Device: Pixel Art on the 64×64 Matrix (Shading & Contours) | HA-Gerät: Pixel-Art auf der 64×64-Matrix (Schattierung & Konturen) | draft | unversioned |
 | [`ha/pixoo-pixel-art-animation`](ha/pixoo-pixel-art-animation/en.md) | HA Device: Pixel Art Animation on the 64×64 Matrix | HA-Gerät: Pixel-Art-Animation auf der 64×64-Matrix | draft | unversioned |
 | [`ha/esphome-config-patterns`](ha/esphome-config-patterns/en.md) | ESPHome Device-Config Patterns | ESPHome-Device-Config-Patterns | draft | unversioned |
+| [`ha/esphome-project-structure`](ha/esphome-project-structure/en.md) | ESPHome Project Structure (Repository Layout and Reuse) | ESPHome-Projektstruktur (Repository-Layout und Wiederverwendung) | draft | unversioned |
 | [`ha/esp32-s3-box`](ha/esp32-s3-box/en.md) | ESPHome Device: ESP32-S3-BOX Family (BOX / BOX-Lite / BOX-3 / BOX-3B) | ESPHome-Gerät: ESP32-S3-BOX-Familie (BOX / BOX-Lite / BOX-3 / BOX-3B) | draft | unversioned |
 | [`ha/esp32-s3-box-display`](ha/esp32-s3-box-display/en.md) | ESPHome Device: ESP32-S3-BOX Display (Rendering and Placement) | ESPHome-Gerät: ESP32-S3-BOX-Display (Rendering und Platzierung) | draft | unversioned |
 | [`ha/assist-pipeline`](ha/assist-pipeline/en.md) | HA Voice: Assist Pipeline (Configuration and Operation) | HA-Voice: Assist-Pipeline (Konfiguration und Betrieb) | draft | unversioned |

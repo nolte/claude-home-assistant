@@ -38,11 +38,11 @@ This spec canonizes the device-YAML patterns for the portfolio, distilled from t
 
 ### Connectivity and security
 
-- `wifi:` credentials **MUST** come from `secrets.yaml` (`!secret wifi_ssid` / `!secret wifi_password`); `secrets.yaml` **MUST** be gitignored, with a committed `secrets.yaml.example` naming the required keys
+- `wifi:` credentials **MUST** come from environment variables (`!env_var WIFI_SSID` / `!env_var WIFI_PASSWORD`), never from a file in the repository: remote packages provably cannot resolve `!secret`, and environment variables reach a local build and a CI build alike. Every variable a config reads **MUST** be documented so a fresh checkout is buildable
 - `wifi:` **SHOULD** declare an `ap:` fallback plus `captive_portal:` so an unreachable device stays recoverable
-- `api:` **MUST** declare `encryption: key: !secret api_encryption_key` — an unencrypted native API is a finding, not a variant
-- `ota:` **MUST** be present and password-protected via `!secret ota_password`
-- No literal credential, token, or key **MUST** ever appear in a device or shared file
+- `api:` **MUST** declare `encryption:` with a **per-device** key, supplied as a substitution the device file sets (`substitutions: {api_key: !env_var <DEVICE>_API_KEY}`) and consumed as `key: ${api_key}` — an unencrypted native API is a finding, not a variant, and one fleet-wide key would let a single compromised device expose every other device's API session
+- `ota:` **MUST** be present and password-protected via `!env_var OTA_PASSWORD`
+- No literal credential, token, or key **MUST** ever appear in a device or shared file, and a populated `secrets.yaml` **MUST NOT** be committed
 
 ### Platforms and components
 
@@ -62,7 +62,7 @@ This spec canonizes the device-YAML patterns for the portfolio, distilled from t
 - [ ] Entity names in generated platform blocks derive from `${friendly_name}` per the naming rule
 - [ ] New configs use `packages:` for shared blocks; no new `<<: !include` merge keys are introduced
 - [ ] Every schema key in generated output resolves against the official ESPHome docs
-- [ ] `secrets.yaml` stays gitignored and the example file names every referenced key
+- [ ] Credentials resolve from documented environment variables; no credential file is committed
 
 ## Open Questions
 
