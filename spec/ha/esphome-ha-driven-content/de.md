@@ -21,9 +21,10 @@ Diese Spec ist geräteunabhängig und gilt für jeden ESPHome-Node an Home Assis
 
 - `[doc]` — offizielle Dokumentation, zitiert von der jeweils in der Anforderung genannten Seite: ESPHome unter <https://esphome.io> für geräteseitige Schlüssel, Home Assistant unter <https://www.home-assistant.io> für die Einstellungen der Integration selbst.
 - `[policy]` — eine nolte-Portfolio-Regel, kein Upstream-Fakt.
-- **Nicht ausgesagt** — wo die Dokumentation schweigt, sagt diese Spec das, statt zu schlussfolgern. Zwei solche Lücken sind unten markiert und unter Offene Fragen wiederholt.
+- `[src]` — Verhalten, das real, aber undokumentiert ist, belegt aus dem ESPHome-Quellbaum ([`esphome/esphome`](https://github.com/esphome/esphome)). Schwächer als `[doc]`: Es kann sich ohne Dokumentationsänderung ändern.
+- **Nicht ausgesagt** — wo die Dokumentation schweigt, sagt diese Spec das, statt zu schlussfolgern.
 
-Verifiziert 2026-08. Jeder YAML-Schlüssel dieser Spec wurde auf seiner Komponenten-Seite gelesen; nichts hier ist aus dem Gedächtnis wiedergegeben.
+Verifiziert 2026-08; erneut verifiziert am 2026-08-02, als die beiden ursprünglich festgehaltenen Dokumentationslücken aus der Quelle geschlossen statt offengelassen wurden. Jeder YAML-Schlüssel dieser Spec wurde auf seiner Komponenten-Seite gelesen; nichts hier ist aus dem Gedächtnis wiedergegeben.
 
 ## Ziele
 
@@ -58,9 +59,10 @@ Verifiziert 2026-08. Jeder YAML-Schlüssel dieser Spec wurde auf seiner Komponen
 
 - Ein numerischer Wert **MUSS [MUST]** mit `sensor: {platform: homeassistant, entity_id: <entity>}` importiert werden; `entity_id` ist erforderlich, und `attribute` wählt optional ein Zustands-Attribut statt des Zustands selbst `[doc]`
 - Ein textueller Wert **MUSS [MUST]** mit `text_sensor: {platform: homeassistant, entity_id: <entity>}` importiert werden, das dieselben Schlüssel `entity_id` und optional `attribute` annimmt — die `sensor`-Plattform verarbeitet ausschließlich numerische Werte `[doc]`
+- Die weiteren Import-Plattformen der Komponente **KÖNNEN [MAY]** genutzt werden; die Dokumentation deckt sie ungleichmäßig ab: `binary_sensor` für einen booleschen Zustand sowie `number` / `switch` für Werte, die das Gerät liest und zurückschreibt. Das lesende Trio (`sensor`, `text_sensor`, `binary_sensor`) teilt sich `HOME_ASSISTANT_IMPORT_SCHEMA` und unterstützt daher `attribute:`; `number` und `switch` nutzen `HOME_ASSISTANT_IMPORT_CONTROL_SCHEMA`, das **kein** `attribute` kennt — sie binden also nur an den Zustand einer Entity `[src]`
 - Es **MUSS [MUST]** bekannt sein, dass die importierten Werte der `sensor`-Plattform **standardmäßig `internal`** sind, dokumentiert als „to avoid exporting them back to Home Assistant"; `internal: false` ist nur zu setzen, wenn ein Rückweg wirklich gewollt ist `[doc]`
-- Für die `text_sensor`-Plattform **DARF NICHT [MUST NOT]** derselbe `internal`-Default angenommen werden: Ihre Dokumentation nennt weder einen Default noch das Verhalten. Dort ist `internal:` explizit zu setzen, statt sich auf einen unverifizierten Default zu verlassen `[doc]` `[policy]`
-- In einem Config-Kommentar oder einem Folgedokument **DARF NICHT [MUST NOT]** behauptet werden, diese Abos seien Push-basiert: Die Komponenten-Seiten sagen nur, sie „import states from your Home Assistant instance using the native API", und dokumentieren **nicht**, ob Aktualisierungen per Push oder per Polling eintreffen. Es ist so zu entwerfen, dass beides korrekt ist `[doc]` `[policy]`
+- Derselbe Default **MUSS [MUST]** auf **jede** Home-Assistant-Import-Plattform angewendet werden, `text_sensor` eingeschlossen. Die Dokumentation nennt ihn nur für `sensor`, aber alle erweitern ein gemeinsames Schema, `HOME_ASSISTANT_IMPORT_SCHEMA`, das `cv.Optional(CONF_INTERNAL, default=True)` deklariert — der Default ist strukturell identisch, weil es buchstäblich dieselbe Codezeile ist. `internal:` explizit zu setzen bleibt der Lesbarkeit halber sinnvoll, aber nicht mehr zur Absicherung gegen einen unbekannten Default `[src]` `[doc]`
+- Es **MUSS [MUST]** verstanden werden, dass diese Abos **Push-basiert** sind, auch wenn keine Komponenten-Seite das sagt. Das Gerät registriert jedes Abo einmalig, indem es eine `SubscribeHomeAssistantStateResponse` über die native API-Verbindung sendet — mit einem `once`-Flag, das einen einmaligen Lesevorgang von einem stehenden Abo unterscheidet; Home Assistant pusht daraufhin `HomeAssistantStateResponse`-Nachrichten, die `APIConnection::on_home_assistant_state_response` an die registrierten Callbacks verteilt. Einen geräteseitigen Polling-Loop gibt es nicht. Die praktische Folge: Die Aktualisierungslatenz ist die von Home Assistant, und ein Wert trifft erst *nach* dem Verbinden des API-Clients ein — weshalb die Boot-Zustands-Anforderung weiter unten nicht optional ist `[src]`
 - Jeder abonnierte Wert **SOLLTE [SHOULD]** eine `id:` bekommen und in Lambdas über diese ID konsumiert werden, damit das Abo die einzige Quelle ist und kein Lambda gedanklich nach Home Assistant greift `[policy]`
 - An einen abonnierten Sensor **SOLLTE [SHOULD]** `on_value` gehängt werden, wenn eine Änderung sichtbar werden muss, und dieser Trigger **SOLLTE [SHOULD]** das einzige Redraw-Script des Displays aufrufen statt selbst zu zeichnen `[policy]`
 
@@ -141,7 +143,7 @@ Verifiziert 2026-08. Jeder YAML-Schlüssel dieser Spec wurde auf seiner Komponen
 ### Verifikation
 
 - Jeder Schlüssel dieser Spec **MUSS [MUST]** vor der Nutzung gegen die zugehörige Komponenten-Seite verifiziert werden, gemäß [`ha/upstream-docs-verification`](../upstream-docs-verification/de.md) — die Mechanismen hier verteilen sich über mindestens sechs getrennte Seiten (`api`, `sensor/homeassistant`, `text_sensor/homeassistant`, `time/homeassistant`, `text/template` und die Display-Komponenten) `[policy]`
-- Eine Dokumentationslücke **DARF NICHT [MUST NOT]** durch Schlussfolgerung gefüllt werden. Wo die Dokumentation schweigt — Aktualisierungsmechanismus der Abos, `internal`-Default der `text_sensor`-Plattform — **MUSS [MUST]** eine Konfiguration so geschrieben sein, dass sie in beiden Fällen korrekt ist, und die Lücke **MUSS [MUST]** festgehalten statt durch Annahme aufgelöst werden `[doc]` `[policy]`
+- Eine Dokumentationslücke **DARF NICHT [MUST NOT]** durch Schlussfolgerung gefüllt werden — vorher **MUSS [MUST]** aber die Quelle probiert werden. Beide ursprünglich festgehaltenen Lücken (Aktualisierungsmechanismus der Abos, `internal`-Default außerhalb von `sensor`) waren aus `esphome/components/homeassistant/` und `esphome/components/api/` in Minuten beantwortbar; keine brauchte Hardware, keine brauchte eine Annahme. Wo die Quelle entscheidet, ist das Ergebnis `[src]` zu tiern und auszusagen; wo selbst die Quelle mehrdeutig ist, ist die Lücke festzuhalten und eine in beiden Fällen korrekte Konfiguration zu schreiben `[policy]`
 - Ein unverifiziertes Verhalten **SOLLTE [SHOULD]** empirisch am Gerät bestätigt werden (abonnierten Wert loggen und die Home-Assistant-Entity ändern), bevor eine Konfiguration davon abhängt `[policy]`
 
 ## Akzeptanzkriterien
@@ -149,7 +151,7 @@ Verifiziert 2026-08. Jeder YAML-Schlüssel dieser Spec wurde auf seiner Komponen
 - [ ] Jeder Home-Assistant-getriebene Wert hat einen gewählten Mechanismus, und die Wahl folgt der Regel: fortlaufend → Abo, einmalig → Aktion, vom Menschen gesetzt → schreibbare Entity
 - [ ] Abos nutzen `platform: homeassistant` mit explizitem `entity_id` und `attribute`, wo ein Attribut statt des Zustands gemeint ist
 - [ ] `internal` ist an `text_sensor`-Abos explizit gesetzt, statt sich auf einen undokumentierten Default zu verlassen
-- [ ] Keine Konfiguration und kein Kommentar behauptet, Abos seien Push-basiert; das Verhalten ist unter beiden Aktualisierungsmechanismen korrekt
+- [ ] Kein Wert wird gerendert, bevor er angekommen ist: Abos sind Push-basiert, also existiert zwischen Boot und erstem API-Client kein Wert
 - [ ] Aufrufbare Aktionen deklarieren typisierte `variables:`, validieren sie und beantworten fehlerhafte Eingaben über `api.respond`
 - [ ] Jede aufrufende Automation nutzt die Form `esphome.{node_name}_{action_name}`, und die Folge einer Geräte-Umbenennung ist verstanden
 - [ ] Schreibbare `text`-Template-Entities beachten die dokumentierten Ausschlüsse (`optimistic`, `initial_value`, `restore_value` gegenüber `lambda`), und keine Regel dieses Abschnitts wurde auf eine ungelesene Template-Plattform angewandt
@@ -160,8 +162,11 @@ Verifiziert 2026-08. Jeder YAML-Schlüssel dieser Spec wurde auf seiner Komponen
 
 ## Offene Fragen
 
-- **Aktualisierungsmechanismus der Abos**: Weder die `sensor`- noch die `text_sensor`-Home-Assistant-Plattformseite dokumentiert, ob importierte Zustände per Push oder per Polling eintreffen. Die native API ist eine dauerhafte Verbindung, was Push plausibel macht — plausibel ist aber nicht dokumentiert. Empirisch bestätigen (Entity ändern und das Geräte-Log beobachten) und das Ergebnis festhalten, oder ein Upstream-Doku-Issue aufmachen.
-- **`internal`-Default bei `text_sensor`**: Die `sensor`-Plattform dokumentiert einen `internal: true`-Default mit genannter Begründung; die `text_sensor`-Seite nennt keines von beidem. Ist der Default derselbe, und sollte das Portfolio ihn trotzdem der Lesbarkeit halber explizit setzen?
-- **Binärer Zustand**: Ein `binary_sensor`-Gegenstück zu diesen Plattformen erscheint in der Komponenten-Hierarchie, wurde für diese Spec aber nicht gelesen, weshalb keine Anforderung dazu formuliert ist. Seine Konfigurationsfläche ist zu bestätigen, bevor eine Config sich darauf stützt.
-- **Kopplung des Aktionsnamens an den Node-Namen**: `esphome.{node_name}_{action_name}` bindet Automationen an den Gerätenamen. Sollte das Portfolio deshalb Abos und schreibbare Entities gegenüber aufrufbaren Aktionen bevorzugen, oder die Kopplung akzeptieren und Geräte-Umbenennungen als brechende Änderung mit Migrationsschritt behandeln?
-- **Rückkopplungs-Schleifen**: Ein abonnierter Wert mit `internal: false` wird nach Home Assistant zurück-exportiert. Gibt es dafür in diesem Portfolio eine legitime Nutzung, oder sollte es rundheraus untersagt werden, um Feedback-Schleifen auszuschließen?
+- **Kopplung des Action-Namens an den Node-Namen**: `esphome.{node_name}_{action_name}` bindet Automationen an den Gerätenamen. Sollte das Portfolio deshalb Abos und schreibbare Entities gegenüber aufrufbaren Actions bevorzugen — oder die Kopplung akzeptieren und Geräte-Umbenennungen als Breaking Change mit Migrationsschritt behandeln?
+- **Round-Trip-Schleifen**: Ein abonnierter Wert mit `internal: false` wird nach Home Assistant zurückexportiert. Gibt es dafür in diesem Portfolio eine legitime Verwendung, oder sollte es rundheraus verboten werden, um Rückkopplungen auszuschließen?
+
+Am 2026-08-02 aus dem ESPHome-Quellcode geklärt und hier festgehalten, damit die Antworten auffindbar bleiben statt bei der nächsten Lektüre erneut gestellt zu werden:
+
+- **Aktualisierungsmechanismus der Abos** — **Push**. Das Gerät registriert jedes Abo einmalig per `SubscribeHomeAssistantStateResponse` (deren `once`-Flag einen einmaligen Lesevorgang von einem stehenden Abo trennt), und Home Assistant pusht `HomeAssistantStateResponse`-Nachrichten zurück, verteilt von `APIConnection::on_home_assistant_state_response`. Einen geräteseitigen Polling-Loop gibt es nicht. Weder Hardware noch ein Upstream-Doku-Issue waren nötig.
+- **`internal`-Default außerhalb von `sensor`** — **derselbe, `true`**, und nicht zufällig: Jede Import-Plattform erweitert ein gemeinsames `HOME_ASSISTANT_IMPORT_SCHEMA` mit `cv.Optional(CONF_INTERNAL, default=True)`.
+- **Binärer Zustand** — eine `binary_sensor`-Plattform existiert, ebenso `number` und `switch`. Die lesenden Plattformen teilen sich obiges Schema; `number` und `switch` nutzen `HOME_ASSISTANT_IMPORT_CONTROL_SCHEMA`, das `attribute:` weglässt.

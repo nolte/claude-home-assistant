@@ -19,7 +19,7 @@ This spec is the BOX-3 sibling of the Pixoo rendering specs (`ha/pixoo-pixel-art
 
 ### Source tiers
 
-Evidence tiers are used exactly as defined in [`ha/esp32-s3-box`](../esp32-s3-box/en.md) §"Source tiers": `[doc]` for the official ESPHome component documentation, `[ref-config]` for the official board configs in `esphome/wake-word-voice-assistants`, `[bsp]` for Espressif's board-support package, `[vendor]` for Espressif product documentation, and `[policy]` for a nolte-portfolio rule that is not an upstream fact. Layout constants marked `[ref-config]` are measured from a shipping configuration; the grid derived from them is `[policy]`.
+Evidence tiers are used exactly as defined in [`ha/esp32-s3-box`](../esp32-s3-box/en.md) §"Source tiers": `[doc]` for the official ESPHome component documentation, `[ref-config]` for the official board configs in `esphome/wake-word-voice-assistants`, `[bsp]` for Espressif's board-support package, `[vendor]` for Espressif product documentation, `[src]` for behaviour that is real but undocumented and therefore established from the ESPHome source tree, and `[policy]` for a nolte-portfolio rule that is not an upstream fact. Layout constants marked `[ref-config]` are measured from a shipping configuration; the grid derived from them is `[policy]`.
 
 Verified 2026-08.
 
@@ -80,7 +80,7 @@ Verified 2026-08.
 
 ### Drawing primitives
 
-- **MUST** address the full primitive set through the `it` object inside a lambda: `line`, `rectangle`, `filled_rectangle`, `circle`, `filled_circle`, `triangle`, `filled_triangle`, `filled_ring`, `filled_gauge`, `regular_polygon`, `filled_regular_polygon`, `draw_pixel_at`, plus `fill` and `clear` `[doc]`
+- **MUST** address the full primitive set through the `it` object inside a lambda: `line`, `rectangle`, `filled_rectangle`, `circle`, `filled_circle`, `triangle`, `filled_triangle`, `filled_ring`, `filled_gauge`, `regular_polygon`, `filled_regular_polygon`, `draw_pixel_at`, and `fill` — each taking an optional trailing colour argument. `clear()` also exists but only in the source, not in the component documentation `[doc]` `[src]`
 - **SHOULD** build framed panels as the reference config does — a `filled_rectangle` in the fill colour followed by a `rectangle` in the border colour at identical coordinates — rather than drawing four lines `[ref-config]`
 - **SHOULD** use `filled_gauge` / `filled_ring` for radial progress and a two-rectangle construction for linear progress; the reference timer bar draws a white track (`0, 225, 320, 15`) and an inset coloured fill (`0, 226, <n>, 13`) whose width is the remaining fraction of the total `[doc]` `[ref-config]`
 - **MUST** compute progress widths in integer pixels and guard the divisor: the reference config divides by `max(total_seconds, 1)` before scaling to 320 px, and skips drawing entirely when the result is zero `[ref-config]`
@@ -89,9 +89,13 @@ Verified 2026-08.
 
 ### Text and fonts
 
-- **MUST** declare every font as a `font:` component with an explicit `size:` in pixels; a font is rasterised at compile time, so a size that is not declared cannot be used at runtime `[doc]`
-- **MUST** restrict the character set deliberately via `glyphs:` or `glyphsets:` — the reference config uses the Google-Fonts glyphset `GF_Latin_Core` plus an explicit allowed-character list — because every additional glyph at every declared size costs flash `[doc]` `[ref-config]`
-- **MUST** pass a **background colour** to `print` / `printf` whenever the font is anti-aliased (`bpp` greater than 1): the documented signature for anti-aliased text is `it.printf(x, y, font, foreground, background, align, format, …)`, and omitting the background yields incorrectly blended text `[doc]`
+- **MUST** declare every font as a `font:` component with an explicit `size:` in pixels. This is a portfolio rule, not a schema requirement: `size` is optional and **defaults to 20** for scalable fonts (and to the first available size for bitmap fonts), so an omitted size renders silently at the wrong size rather than failing. Because a font is rasterised per size at compile time, using one face at two sizes means declaring **two** font components `[doc]` `[policy]`
+- **MUST** restrict the character set deliberately via `glyphs:` or `glyphsets:`, because every additional glyph at every declared size costs flash. `glyphsets` defaults to `GF_Latin_Kernel`; the reference configs override it with `GF_Latin_Core` and declare **no** `glyphs:` at all — their `allowed_characters` substitution is dead configuration, never referenced, and upstream annotates it as pointless with the shipped Latin-only font. When overriding `glyphsets`, note the documented trap that `GF_Latin_Kernel` may still need including for digits and whitespace `[doc]` `[ref-config]`
+- **MUST** pass a **background colour** whenever the font is anti-aliased (`bpp` greater than 1), and **MUST** put it in the position that overload expects — the two differ, which is the trap:
+  - `it.print(x, y, font, foreground, align, text, background)` — background **last**, after the text. This is the form the documentation shows.
+  - `it.printf(x, y, font, foreground, background, align, format, …)` — background **fifth**, before the align, because the variadic format arguments must come last. This overload is real but **undocumented**; it exists only in `esphome/components/display/display.h`.
+
+  Passing a background in the `print` position to `printf` does not fail loudly — it binds a different overload and the colour is consumed as a format argument `[doc]` `[src]`
 - **SHOULD** keep `bpp` low (the default) for small UI text and raise it only for large display type, since higher bit depths "increase the binary size considerably" `[doc]`
 - **MUST** position text with an explicit `TextAlign` value rather than relying on the default `TOP_LEFT` when the anchor is meant to be a centre or a right edge; the available values are the nine box alignments plus `BASELINE_LEFT` / `BASELINE_CENTER` / `BASELINE_RIGHT` `[doc]`
 - **SHOULD** anchor centred text on `it.get_width() / 2` with `TextAlign::TOP_CENTER` (or a `CENTER` variant) instead of estimating a left offset from the expected string width `[doc]` `[policy]`
@@ -101,10 +105,14 @@ Verified 2026-08.
 
 ### Images
 
-- **MUST** declare each image as an `image:` component with an `id:`, and size it at compile time with `resize:` to the box it will occupy — a full-screen illustration on this panel is `resize: 320x240` `[doc]` `[ref-config]`
-- **MUST** choose `type:` deliberately (`BINARY`, `GRAYSCALE`, `RGB565`, `RGB`, `RGBA`), because the type sets the per-pixel cost in flash; the reference config ships full-screen illustrations as `type: RGB` with `transparency: alpha_channel` `[doc]` `[ref-config]`
-- **SHOULD** budget image flash before adding one: a 320×240 `RGB565` image is ~150 KiB and an `RGB` image is larger still, so a handful of full-screen images dominates the firmware `[doc]` `[policy]`
-- **MAY** use `transparency: chroma_key` or `alpha_channel` to compose an image over a background instead of pre-baking the background into every asset; grayscale images with transparency remain one byte per pixel `[doc]`
+- **MUST** declare each image under `image:` with an `id:` and a compile-time `resize:` for the box it will occupy, and **MUST** choose the declaration form against the config's own `min_version`, because the two forms do not overlap in time:
+  - **`min_version: 2026.7.0` or later** — use the platform form (`platform: file` for assets embedded at compile time, `animation` for multi-frame, `online_image` for runtime download). `CONF_PLATFORM` first appears in the `image` component at **2026.7.0**; it is absent at 2026.6.0 and earlier, so emitting it below that floor produces a config that does not validate.
+  - **below 2026.7.0** — use the older platform-less form, as all three reference configs still do at their pinned floors.
+
+  The platform-less form is a migration shim, not a supported alternative: the component carries `LEGACY_REMOVAL_VERSION = "2027.1.0"` and rewrites legacy entries into `platform: file` transparently, so it disappears in **2027.1.0**. Any config still on the legacy form must move before then. Note also that `resize` **fits inside** the given box preserving aspect ratio — `resize: 320x240` fills this panel only for a 4:3 source `[doc]` `[src]`
+- **MUST** choose `type:` deliberately — it is a **required** key and the documented values are `BINARY`, `GRAYSCALE`, `RGB565`, and `RGB`. There is **no `RGBA`**: an alpha channel is requested through `transparency:`, which adds one byte per pixel to `RGB565` and `RGB`. The type sets the per-pixel cost in flash: `BINARY` 1 bit, `GRAYSCALE` 1 byte, `RGB565` 2 bytes (3 with alpha), `RGB` 3 bytes (4 with alpha) `[doc]` `[ref-config]`
+- **SHOULD** budget image flash before adding one, using the per-pixel costs above against this panel's 76 800 pixels: `RGB565` is 150 KiB per full-screen image, and the reference configs' own choice — `type: RGB` with `transparency: alpha_channel`, four bytes per pixel — is **300 KiB each**. Those configs ship eight such illustrations, roughly 2.4 MB of flash before any other asset, which is why a status device with a few screens should reach for `RGB565` or `GRAYSCALE` first `[doc]` `[ref-config]` `[policy]`
+- **MAY** use `transparency: chroma_key` or `alpha_channel` to compose an image over a background instead of pre-baking the background into every asset — but on the **immediate-mode path this spec's main track uses, `alpha_channel` buys nothing**: the documentation is explicit that the display lambda's image functions "will draw or not draw the pixel, no blending with the background will be done", and that alpha blending is "useful mainly when using LVGL". On that path `alpha_channel` is an extra byte per pixel for a binary result `chroma_key` already delivers. Grayscale images with transparency remain one byte per pixel `[doc]`
 - **MUST** place images with an explicit `ImageAlign` when the anchor is not the top left — ESPHome aligns at the top left by default, so a centred illustration is `it.image(w / 2, h / 2, id(img), ImageAlign::CENTER)` `[doc]` `[ref-config]`
 - **MAY** source an image from a URL at **compile** time (the reference config pulls its illustrations from a GitHub raw URL) or from Material Design Icons; runtime downloading is a different platform (`online_image`) with its own memory cost `[doc]` `[ref-config]`
 - **MUST** vendor image assets into the config repository under version control rather than depending on an upstream URL staying reachable at build time — the build stays reproducible and offline-capable, at the cost of repository size `[policy]`
@@ -113,7 +121,7 @@ Verified 2026-08.
 
 - **MUST** define reusable colours as `color:` components with ids (hex, percentage, or integer form) and reference them by id in lambdas, rather than repeating literals across pages — the reference config defines one colour per screen state plus the two timer-bar colours `[doc]` `[ref-config]`
 - **MAY** construct an ad-hoc colour inline as `Color(r, g, b)` inside a lambda where a one-off value is genuinely local `[doc]`
-- **MAY** use the `Color::WHITE` / `Color::BLACK` constants, which the reference config relies on for frames and text: they are declared in ESPHome's own `esphome/core/color.h` as `static const Color BLACK;` / `static const Color WHITE;`, so they are real API rather than an undocumented accident — they are simply absent from the component documentation `[ref-config]` `[doc]`
+- **MAY** use the `Color::WHITE` / `Color::BLACK` constants, which the reference config relies on for frames and text: they are declared in ESPHome's own `esphome/core/color.h` as `static const Color BLACK;` / `static const Color WHITE;`, so they are real API rather than an undocumented accident — they are simply absent from the component documentation, which is exactly what the `[src]` tier is for `[ref-config]` `[src]`
 - **MUST** parameterise per-state background colours through substitutions when a config is meant to be re-themed, as the reference config does with its `*_illustration_background_color` substitutions `[ref-config]`
 - **SHOULD** verify contrast on the physical panel rather than on a monitor — this is a small, bright 2.4-inch LCD, and the backlight level is a user-controllable light entity that will not always be at 100 % `[policy]`
 
@@ -161,7 +169,7 @@ Verified 2026-08.
 - **SHOULD** keep the default full-size buffer on this board, since it has 16 MB of octal PSRAM; reducing `buffer_size` forces multiple drawing passes per frame and costs performance to save memory the BOX does not need to save `[doc]` `[policy]`
 - **MUST** keep the display `data_rate` at the board's documented `40MHz` unless a measured problem justifies changing it — the BSP pins the panel's pixel clock at 40 MHz `[bsp]` `[ref-config]`
 - **SHOULD** treat full-screen redraws as the dominant cost on this panel and reduce redraw *frequency* first (redraw on state change, not on a timer) before optimising individual draw calls `[ref-config]` `[policy]`
-- **SHOULD** leave `draw_rounding` at its default of 2 unless artifacts appear; it exists to prevent display glitches on certain controllers and must remain a power of two `[doc]`
+- **SHOULD** leave `draw_rounding` at its default of 2 unless artifacts appear; it rounds draw areas to a boundary for controllers that require it, and those boundaries are "usually powers of 2" — the documentation states that as a property of such displays, not as a constraint the value must satisfy `[doc]`
 - **MUST** count font and image assets against flash, not RAM: both are compiled into the firmware, and a few full-screen images plus several font sizes will dominate the binary `[doc]` `[policy]`
 
 ### Verification
@@ -180,7 +188,7 @@ Verified 2026-08.
 - [ ] All coordinates respect the 320×240 canvas with a 20-pixel outer margin, and the bottom 15 pixels are reserved for the status strip
 - [ ] Centres and edges are derived from `it.get_width()` / `it.get_height()` or from arithmetic, not from eyeballed offsets
 - [ ] Anti-aliased text is drawn with an explicit background colour, and every text anchor states its `TextAlign`
-- [ ] Every font declares an explicit `size` and a bounded glyph set; every image declares an explicit `resize` and `type`
+- [ ] Every font declares an explicit `size` and a bounded glyph set; every image declares an explicit `resize` and `type`, uses the declaration form matching the config's `min_version` (platform form at `2026.7.0`+, legacy form below), and no image uses the non-existent `RGBA` type
 - [ ] Variable-length strings are truncated to a limit measured for the actual font and box width, with a visible ellipsis
 - [ ] Reusable colours exist as `color:` components with ids; per-state background colours are parameterised via substitutions
 - [ ] Shared furniture (status strip, widgets) is drawn from reusable scripts rather than duplicated per page
@@ -191,6 +199,6 @@ Verified 2026-08.
 
 ## Open Questions
 
-- **Animation**: ESPHome ships an `animation:` platform alongside `image:`. Is there a use case on this device that justifies the flash cost of multi-frame assets, given that page switching already covers state transitions? Genuinely undecidable without a concrete design wish, so it stays open.
+- **Animation**: ESPHome ships `animation` as a **platform of** `image:` (`image: - platform: animation`), supporting all `file`-platform options plus `next_frame()` / `prev_frame()` / `set_frame()`. Is there a use case on this device that justifies the flash cost of multi-frame assets — every frame paying the same per-pixel price as a still — given that page switching already covers state transitions? Genuinely undecidable without a concrete design wish, so it stays open.
 
 Settled by decision (kept here so the rationale stays findable, not as open work): the rendering path stays a **per-project** choice on the criterion already stated in *Choosing a rendering path* — no portfolio-wide default; a shared layout **package** is deferred until a second BOX screen would actually reuse it, to avoid abstracting from a single example; the truncation budget is a **measured table**, not a render-time computation; **rotation** is out of scope while the zone grid is defined for 320×240; and image assets are **vendored** into the config repository.
