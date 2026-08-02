@@ -82,7 +82,10 @@ Resolve the owning domain solution for each classified part **at runtime**, by m
 | a dashboard surface — custom cards, editors, features, badges, strategies, custom panels | Lovelace / frontend | `ha-lovelace-solution` |
 | a YAML automation / helper / template / blueprint (no own protocol, no config flow) | automation | `ha-automation-solution` |
 | a Divoom Pixoo 64 display (pages, pixel-art, animation) | Pixoo — optional, device-specific family; applies only when that device is present | `ha-pixoo-solution` |
-| an ESPHome device config (new device or one more sensor/bus/component) | ESPHome (device-YAML slice; routes to the owning skill directly — no front door yet) | `ha-esphome-config-scaffold` / `ha-esphome-config-augment` |
+| an ESPHome device config (new device, or one more sensor/bus/component) | ESPHome — device-YAML slice; routes to the owning skill directly (no front door yet) | `ha-esphome-config-scaffold` / `ha-esphome-config-augment` |
+| how an ESPHome **repository** is laid out — packages, reuse, fleet naming, CI | ESPHome — project structure; spec-only today, no skill yet | read `spec/ha/esphome-project-structure/` |
+| Home Assistant should drive what an ESPHome device shows or does (subscription, callable action, writable entity, event) | ESPHome — HA-driven content; spec-only today, no skill yet | read `spec/ha/esphome-ha-driven-content/` |
+| an ESP32-S3-BOX device — pins, codecs, display rendering, voice satellite | ESPHome — device-specific family; applies only when that device is present | read `spec/ha/esp32-s3-box/`, `spec/ha/esp32-s3-box-display/`, `spec/ha/assist-pipeline/` |
 
 A cross-domain requirement maps to several rows; the typical order is **integration/backend → Lovelace/frontend → automation → Pixoo**, since the backend produces the `domain` and `entity_id`s the later domains consume.
 

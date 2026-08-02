@@ -138,6 +138,7 @@ Verifiziert 2026-08.
 ### Datengetriebene Inhalte
 
 - Live-Werte **SOLLTEN [SHOULD]** in `text_sensor: {platform: template}` oder `globals:` bereitgestellt und im Lambda gelesen werden, statt aus Render-Code in den Zustand anderer Komponenten zu greifen `[ref-config]` `[policy]`
+- Der Mechanismus, der diese Werte aus Home Assistant füllt — Zustands-Abo, aufrufbare Aktion, schreibbare Entity oder Rückkanal — **MUSS [MUST]** aus [`ha/esphome-ha-driven-content`](../esphome-ha-driven-content/de.md) bezogen werden, die auch das resultierende `on_value` an den einzigen Redraw-Einstiegspunkt dieser Spec bindet `[policy]`
 - Formatierung, Kürzung und Einheitenbehandlung **MÜSSEN [MUST]** **vor** dem Render-Schritt erfolgen — im `on_value` des Sensors oder in einem Script — damit das Lambda nur bereits darstellbare Strings positioniert `[ref-config]` `[policy]`
 - Für einen noch nicht verfügbaren Wert **MUSS [MUST]** ein expliziter Platzhalter gerendert werden statt eines leeren Bereichs; die Referenzkonfiguration veröffentlicht `"..."` in ihre Anfrage-/Antwort-Sensoren, wenn eine Pipeline-Runde beginnt `[ref-config]`
 - Transiente Strings **SOLLTEN [SHOULD]** gelöscht werden, wenn der Zustand endet, der sie erzeugt hat, damit keine veraltete Antwort hinter einem späteren Bildschirm verharrt `[ref-config]`
