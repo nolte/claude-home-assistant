@@ -28,7 +28,9 @@ Eine Ergänzung an einer bestehenden Device-Datei pro Aufruf, gemäß `spec/ha/e
 - **MUSS** den Duplikat-Check ausführen (gleiche Plattform + Adresse/Bus, lokal oder via Package) und Duplikate verweigern
 - **MUSS** das Component-Schema gemäß `spec/ha/upstream-docs-verification` upstream verifizieren; deprecated Keys sind Findings, nie Output
 - **MUSS** neue I2C-Blöcke auf multiplexten Topologien an eine benannte `bus_id` binden und die Wahl mit dem Operator bestätigen
-- **MUSS** Naming substitution-abgeleitet und Credentials als reportete `!secret`-Referenzen halten
+- **MUSS** Naming substitution-abgeleitet und Credentials als reportete `!env_var`-Referenzen halten
+- **MUSS** `spec/ha/esphome-ha-driven-content/de.md` heranziehen, wenn die Ergänzung von Home Assistant getrieben wird, und den dort vorgeschriebenen Mechanismus wählen — Zustands-Abo, aufrufbare Aktion, schreibbare Entity oder Rückkanal — statt einen zu erfinden
+- **SOLLTE** eine Ergänzung verweigern, die Inhalt dupliziert, den ein geteiltes Package bereits liefert, gemäß `spec/ha/esphome-project-structure/de.md`, und stattdessen auf das Package verweisen
 - **DARF NICHT** `<<: !include`-Merge-Keys einführen oder erweitern, andere Device-Dateien editieren oder mehr als eine Ergänzung pro Lauf vornehmen
 - **SOLLTE** `esphome config <file>`-Validierung anbieten, wenn die Toolchain vorhanden ist
 
@@ -36,7 +38,7 @@ Eine Ergänzung an einer bestehenden Device-Datei pro Aufruf, gemäß `spec/ha/e
 
 - [ ] Ein Augment-Lauf auf einem fixture-artigen Multiplex-Gerät bindet den neuen Block an einen explizit benannten Kanal-Bus
 - [ ] Die Anforderung eines Blocks, den ein Shared Package schon liefert, wird unter Nennung des Packages verweigert
-- [ ] Die Diff-Zusammenfassung benennt jeden neuen `!secret`-Key und lässt unbeteiligte Blöcke byte-identisch
+- [ ] Die Diff-Zusammenfassung benennt jede neue Umgebungsvariable und lässt unbeteiligte Blöcke byte-identisch
 
 ## Offene Fragen
 

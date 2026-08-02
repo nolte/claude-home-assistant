@@ -138,6 +138,7 @@ Verified 2026-08.
 ### Data-driven content
 
 - **SHOULD** stage live values in `text_sensor: {platform: template}` or `globals:` and read them in the lambda, instead of reaching into other components' state from render code `[ref-config]` `[policy]`
+- **MUST** take the mechanism that fills those values from Home Assistant — state subscription, callable action, writable entity, or return channel — from [`ha/esphome-ha-driven-content`](../esphome-ha-driven-content/en.md), which also binds the resulting `on_value` back to this spec's single redraw entry point `[policy]`
 - **MUST** apply formatting, truncation, and unit handling **before** the render step — in the sensor's `on_value` or in a script — so the lambda only positions already-presentable strings `[ref-config]` `[policy]`
 - **MUST** render an explicit placeholder for a value that is not yet available rather than an empty region; the reference config publishes `"..."` into its request/response sensors when a pipeline turn starts `[ref-config]`
 - **SHOULD** clear transient strings when the state that produced them ends, so a stale response cannot linger behind a later screen `[ref-config]`

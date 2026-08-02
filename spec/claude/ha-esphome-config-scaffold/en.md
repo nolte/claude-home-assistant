@@ -8,7 +8,7 @@ The ESPHome axis was declared in `AUDIENCES.md` from the start but shipped no ar
 
 ## Scope
 
-One device, one new YAML file per invocation, in the consumer repository's device-config root. Composition prefers shared `packages:`; secrets stay `!secret` references; the skill ends at the written file plus a validation-step report.
+One device, one new YAML file per invocation, in the consumer repository's device-config root. Composition prefers shared `packages:`; credentials stay `!env_var` references; the skill ends at the written file plus a validation-step report.
 
 ## Goals
 
@@ -25,7 +25,9 @@ One device, one new YAML file per invocation, in the consumer repository's devic
 
 ## Requirements
 
-- **MUST** read `spec/ha/esphome-config-patterns/en.md` before composing and satisfy every MUST it declares (naming, packages-over-merge-keys, secrets, api encryption, ota)
+- **MUST** read `spec/ha/esphome-config-patterns/en.md` before composing and satisfy every MUST it declares (naming, packages-over-merge-keys, credentials, api encryption, ota)
+- **MUST** read `spec/ha/esphome-project-structure/en.md` as well and place the file accordingly: device files flat in the config root, reuse composed from a board package rather than copied blocks, and the `name` / `id` / `comment` substitution trio present
+- **SHOULD** consult the device spec when scaffolding for known hardware (`spec/ha/esp32-s3-box/en.md` for the BOX family), so generation-specific pins and codecs come from the spec instead of from a generic template
 - **MUST** verify every emitted schema key against the official ESPHome docs per `spec/ha/upstream-docs-verification`
 - **MUST** run the pre-flight (config-root detection, collision check, secrets inventory, operator confirmation) before writing
 - **MUST** report the secrets keys the operator has to fill, and extend `secrets.yaml.example` when the repo ships one
@@ -36,7 +38,7 @@ One device, one new YAML file per invocation, in the consumer repository's devic
 
 - [ ] A scaffold run against the fixture layout produces a file that satisfies every checklist item of `spec/ha/esphome-config-patterns` §Acceptance Criteria
 - [ ] Re-running with the same device name aborts on the collision pre-flight instead of overwriting
-- [ ] The report names every `!secret` key the generated file references
+- [ ] The report names every environment variable the generated file references
 
 ## Open Questions
 
