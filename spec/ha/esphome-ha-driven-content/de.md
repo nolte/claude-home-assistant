@@ -10,7 +10,7 @@ ESPHome bietet dafür vier unterschiedliche Mechanismen, und sie sind nicht aust
 
 1. **Zustands-Abo** — das Gerät importiert den Zustand einer Home-Assistant-Entity über die native API (`platform: homeassistant` an `sensor` und `text_sensor`). Home Assistant ändert eine Entity; das Gerät folgt.
 2. **Aufrufbare Aktionen** — das Gerät deklariert unter `api:` Aktionen, die in Home Assistant als `esphome.{node_name}_{action_name}` erscheinen und typisierte Argumente annehmen. Home Assistant ruft; das Gerät handelt einmal.
-3. **Schreibbare Entities** — das Gerät exponiert eine `template`-Entity mit `set_action`, die Home Assistants Frontend setzen kann. Home Assistant schreibt einen Wert; das Gerät speichert und reagiert.
+3. **Schreibbare Entities** — das Gerät exponiert eine `template`-**Text**-Entity mit `set_action`, die Home Assistants Frontend setzen kann. Home Assistant schreibt einen Wert; das Gerät speichert und reagiert.
 4. **Rückkanal** — das Gerät feuert Events oder ruft Aktionen zurück nach Home Assistant (`homeassistant.event`, `homeassistant.action`, `api.respond`).
 
 Die Wahl zwischen ihnen ist die Substanz dieser Spec: Ein fortlaufend gespiegelter Wert ist ein Abo, ein einmaliger Befehl eine Aktion, ein vom Menschen setzbarer Wert eine schreibbare Entity. Die falsche Wahl erzeugt entweder ein Gerät, das pollt, was man ihm hätte sagen können, oder eine Automation, die in ein Gerät ohne Empfänger feuert.
@@ -19,7 +19,7 @@ Diese Spec ist geräteunabhängig und gilt für jeden ESPHome-Node an Home Assis
 
 ### Quellen-Tiers
 
-- `[doc]` — die offizielle ESPHome-Dokumentation unter <https://esphome.io>, zitiert von der jeweils in der Anforderung genannten Komponenten-Seite.
+- `[doc]` — offizielle Dokumentation, zitiert von der jeweils in der Anforderung genannten Seite: ESPHome unter <https://esphome.io> für geräteseitige Schlüssel, Home Assistant unter <https://www.home-assistant.io> für die Einstellungen der Integration selbst.
 - `[policy]` — eine nolte-Portfolio-Regel, kein Upstream-Fakt.
 - **Nicht ausgesagt** — wo die Dokumentation schweigt, sagt diese Spec das, statt zu schlussfolgern. Zwei solche Lücken sind unten markiert und unter Offene Fragen wiederholt.
 
@@ -100,7 +100,8 @@ Verifiziert 2026-08. Jeder YAML-Schlüssel dieser Spec wurde auf seiner Komponen
 
 ### Schreibbare Entities am Gerät
 
-- Home Assistant **KANN [MAY]** einen Wert schreiben, indem das Gerät eine `template`-Entity mit `set_action` exponiert, dokumentiert als „the action that should be performed when the remote (like Home Assistant's frontend) requests to set the text value", wobei der neue Wert Lambdas als `x` zur Verfügung steht `[doc]`
+- Home Assistant **KANN [MAY]** einen Wert schreiben, indem das Gerät eine `text: {platform: template}`-Entity mit `set_action` exponiert, dokumentiert als „the action that should be performed when the remote (like Home Assistant's frontend) requests to set the text value", wobei der neue Wert Lambdas als `x` zur Verfügung steht `[doc]`
+- Die Regeln dieses Abschnitts **DÜRFEN NICHT [MUST NOT]** ungeprüft auf die anderen Template-Plattformen (`number`, `select`, `switch`, …) übertragen werden: Für diese Spec wurde ausschließlich `text/template` gelesen, und die dokumentierten Ausschlüsse gelten allein dafür `[policy]`
 - Zwischen `optimistic: true` und `set_action` **MUSS [MUST]** bewusst gewählt werden: Der optimistische Modus bedeutet „any command sent to the template text will immediately update the reported state", und die Dokumentation stellt fest, dass er **nicht mit `lambda`** verwendbar ist `[doc]`
 - Die dokumentierten wechselseitigen Ausschlüsse eines Template-Text **MÜSSEN [MUST]** beachtet werden: `optimistic`, `initial_value` und `restore_value` sind jeweils **nicht mit `lambda`** verwendbar `[doc]`
 - `restore_value: true` **SOLLTE [SHOULD]** gesetzt werden, wo ein von Home Assistant gesetzter Wert einen Geräteneustart überleben muss, unter Inkaufnahme dessen, dass es „saves and loads the state to RTC/Flash" `[doc]` `[policy]`
@@ -121,7 +122,7 @@ Verifiziert 2026-08. Jeder YAML-Schlüssel dieser Spec wurde auf seiner Komponen
 - Eine Home-Assistant-Aktion **KANN [MAY]** vom Gerät mit `homeassistant.action` aufgerufen werden, mit `data:`, `data_template:` und `variables:`, deren Werte aus Lambdas stammen `[doc]`
 - Das Ergebnis eines solchen Aufrufs **KANN [MAY]** mit `capture_response: true` plus `response_template:` erfasst und in `on_success:` / `on_error:` behandelt werden — das dokumentierte Beispiel liest eine Vorhersage-Temperatur in ein Lambda zurück `[doc]`
 - Ein Event **SOLLTE [SHOULD]** einer Aktion vorgezogen werden, wenn Home Assistant entscheiden soll, was passiert: Ein Event trägt den Sachverhalt, eine Aktion setzt die Reaktion voraus `[policy]`
-- Ruft ein Gerät Home-Assistant-Aktionen auf, **MUSS [MUST]** die entsprechende Berechtigung aktiviert werden — das Setup der ESPHome-Integration bietet dafür ein ausdrückliches Opt-in, und das ist eine Vertrauensentscheidung, keine Formalie `[policy]`
+- Ruft ein Gerät Home-Assistant-Aktionen auf, **MUSS [MUST]** die entsprechende Berechtigung aktiviert werden — das Setup der ESPHome-Integration bietet dafür ein ausdrückliches Opt-in, dort als vertrauensbedürftig beschrieben; es ist eine Vertrauensentscheidung, keine Formalie `[doc]` `[policy]`
 
 ### Zeit von Home Assistant
 
@@ -151,7 +152,7 @@ Verifiziert 2026-08. Jeder YAML-Schlüssel dieser Spec wurde auf seiner Komponen
 - [ ] Keine Konfiguration und kein Kommentar behauptet, Abos seien Push-basiert; das Verhalten ist unter beiden Aktualisierungsmechanismen korrekt
 - [ ] Aufrufbare Aktionen deklarieren typisierte `variables:`, validieren sie und beantworten fehlerhafte Eingaben über `api.respond`
 - [ ] Jede aufrufende Automation nutzt die Form `esphome.{node_name}_{action_name}`, und die Folge einer Geräte-Umbenennung ist verstanden
-- [ ] Schreibbare Entities beachten die dokumentierten Ausschlüsse (`optimistic`, `initial_value`, `restore_value` gegenüber `lambda`)
+- [ ] Schreibbare `text`-Template-Entities beachten die dokumentierten Ausschlüsse (`optimistic`, `initial_value`, `restore_value` gegenüber `lambda`), und keine Regel dieses Abschnitts wurde auf eine ungelesene Template-Plattform angewandt
 - [ ] Geräte, die Home-Assistant-Aktionen aufrufen, haben die entsprechende Berechtigung bewusst aktiviert
 - [ ] Jede eingehende Änderung, die sichtbar werden muss, läuft über den einzigen Redraw-Einstiegspunkt
 - [ ] Das Gerät definiert einen Zustand für „Wert noch nicht empfangen" und für „API getrennt", und `reboot_timeout` ist im Offline-Entwurf berücksichtigt

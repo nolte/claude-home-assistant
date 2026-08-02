@@ -10,7 +10,7 @@ ESPHome offers four distinct mechanisms for this, and they are not interchangeab
 
 1. **State subscription** — the device imports a Home Assistant entity's state through the native API (`platform: homeassistant` on `sensor` and `text_sensor`). Home Assistant changes an entity; the device follows.
 2. **Callable actions** — the device declares actions under `api:` that appear in Home Assistant as `esphome.{node_name}_{action_name}` and accept typed arguments. Home Assistant calls; the device acts once.
-3. **Writable entities** — the device exposes a `template` entity with a `set_action`, which Home Assistant's frontend can set. Home Assistant writes a value; the device stores and reacts.
+3. **Writable entities** — the device exposes a `template` **text** entity with a `set_action`, which Home Assistant's frontend can set. Home Assistant writes a value; the device stores and reacts.
 4. **Return channel** — the device fires events or calls actions back into Home Assistant (`homeassistant.event`, `homeassistant.action`, `api.respond`).
 
 The choice between them is the substance of this spec: a continuously mirrored value is a subscription, a one-shot command is an action, and a user-settable value is a writable entity. Picking the wrong one produces either a device that polls what it should have been told, or an automation that fires into a device with no receiver.
@@ -19,7 +19,7 @@ This spec is device-agnostic and applies to any ESPHome node bound to Home Assis
 
 ### Source tiers
 
-- `[doc]` — the official ESPHome documentation at <https://esphome.io>, quoted from the component page named in the requirement.
+- `[doc]` — official documentation, quoted from the page named in the requirement: ESPHome at <https://esphome.io> for device-side keys, Home Assistant at <https://www.home-assistant.io> for the integration's own settings.
 - `[policy]` — a nolte-portfolio rule, not an upstream fact.
 - **Not stated** — where the documentation is silent, this spec says so rather than inferring. Two such gaps are marked below and repeated under Open Questions.
 
@@ -100,7 +100,8 @@ Verified 2026-08. Every YAML key in this spec was read from its component page; 
 
 ### Writable entities on the device
 
-- **MAY** let Home Assistant write a value by exposing a `template` entity with a `set_action`, documented as "the action that should be performed when the remote (like Home Assistant's frontend) requests to set the text value", with the new value available to lambdas as `x` `[doc]`
+- **MAY** let Home Assistant write a value by exposing a `text: {platform: template}` entity with a `set_action`, documented as "the action that should be performed when the remote (like Home Assistant's frontend) requests to set the text value", with the new value available to lambdas as `x` `[doc]`
+- **MUST NOT** carry the rules in this section over to the other template platforms (`number`, `select`, `switch`, …) without reading their pages first: only `text/template` was read for this spec, and its documented exclusions are stated for it alone `[policy]`
 - **MUST** choose between `optimistic: true` and `set_action` deliberately: optimistic mode means "any command sent to the template text will immediately update the reported state", and the documentation states it **cannot be used with `lambda`** `[doc]`
 - **MUST** respect the documented mutual exclusions on a template text: `optimistic`, `initial_value`, and `restore_value` each **cannot be used with `lambda`** `[doc]`
 - **SHOULD** set `restore_value: true` where a Home-Assistant-set value must survive a device reboot, and accept that it "saves and loads the state to RTC/Flash" `[doc]` `[policy]`
@@ -121,7 +122,7 @@ Verified 2026-08. Every YAML key in this spec was read from its component page; 
 - **MAY** call a Home Assistant action from the device with `homeassistant.action`, passing `data:`, `data_template:`, and `variables:` whose values come from lambdas `[doc]`
 - **MAY** capture the result of such a call with `capture_response: true` plus `response_template:`, handling the outcome in `on_success:` / `on_error:` — the documented example reads a forecast temperature back into a lambda `[doc]`
 - **SHOULD** prefer an event over an action when Home Assistant should decide what happens: an event carries the fact, an action presumes the reaction `[policy]`
-- **MUST** enable the corresponding permission when a device calls Home Assistant actions — the ESPHome integration's setup exposes an explicit opt-in for letting devices perform Home Assistant actions, and it is a trust decision, not a formality `[policy]`
+- **MUST** enable the corresponding permission when a device calls Home Assistant actions — the ESPHome integration's setup exposes an explicit opt-in for letting devices perform Home Assistant actions, described there as requiring trust; it is a trust decision, not a formality `[doc]` `[policy]`
 
 ### Time from Home Assistant
 
@@ -151,7 +152,7 @@ Verified 2026-08. Every YAML key in this spec was read from its component page; 
 - [ ] No configuration or comment asserts that subscriptions are push-based; behaviour is correct under either update mechanism
 - [ ] Callable actions declare typed `variables:`, validate them, and answer bad input through `api.respond`
 - [ ] Every automation calling a device action uses the `esphome.{node_name}_{action_name}` form, and the consequence of a device rename is understood
-- [ ] Writable entities respect the documented exclusions (`optimistic`, `initial_value`, `restore_value` versus `lambda`)
+- [ ] Writable `text` template entities respect the documented exclusions (`optimistic`, `initial_value`, `restore_value` versus `lambda`), and no rule from that section was applied to an unread template platform
 - [ ] Devices calling Home Assistant actions have the corresponding permission deliberately enabled
 - [ ] Every incoming change that must be visible goes through the single redraw entry point
 - [ ] The device defines a state for "value not yet received" and for "API disconnected", and `reboot_timeout` is accounted for in the offline design
