@@ -65,7 +65,7 @@ Verified 2026-08.
 - **MUST** understand that these engines attach through the **Wyoming** protocol integration, which connects external speech-to-text, text-to-speech, and wake-word services and auto-discovers running instances (manual host/port entry remains available) `[doc:user]`
 - **MUST** account for the **Supervisor requirement**: the engines ship as Home Assistant apps (formerly add-ons), which presupposes Home Assistant OS or Supervised — Home Assistant Core cannot install them and needs externally hosted Wyoming services instead `[doc:user]` `[policy]`
 - **SHOULD** assemble the pipeline in the documented order — install and start the speech-to-text and text-to-speech services, integrate them under *Settings → Devices & Services*, then create the assistant under *Settings → Voice assistants → Add assistant* and select language and engines `[doc:user]`
-- **SHOULD** create **one pipeline per language or purpose** rather than overloading a single pipeline, since language and engine selection are per-pipeline settings `[doc:user]` `[policy]`
+- **MUST** create **one pipeline per language** rather than overloading a single pipeline, since language and engine selection are per-pipeline settings; each satellite is then assigned the pipeline of the language actually spoken in its room `[doc:user]` `[policy]`
 
 ### Wake-word placement
 
@@ -130,7 +130,8 @@ Verified 2026-08.
   3. **Debug recording** — set `assist_pipeline: {debug_recording_dir: /share/assist_pipeline}` in `configuration.yaml` to capture a `.wav` per command and judge the audio itself
 - **SHOULD** map the symptom to the stage before changing anything: no reaction at all points at wake word, a wrong transcript at speech-to-text, "sorry, I don't understand" at intent matching or exposure, and a silent reply at text-to-speech `[doc:user]` `[policy]`
 - **SHOULD** check **exposure** first when a device is not found — the documented failure mode for unanswered questions is an entity that was never exposed, not a misparsed sentence `[doc:user]`
-- **MUST** remove `debug_recording_dir` once an investigation ends: it writes every spoken command to disk as audio, which is the most sensitive artefact the pipeline produces `[doc:user]` `[policy]`
+- **MUST NOT** leave `debug_recording_dir` enabled beyond a time-boxed investigation, and **MUST** delete the captured `.wav` files along with the config key when it ends: it writes every spoken command to disk as audio, the most sensitive artefact the pipeline produces `[doc:user]` `[policy]`
+- **SHOULD** record what was investigated and over which period whenever debug recording is enabled, so an audio capture is never found later without an explanation `[policy]`
 
 ### Privacy and operational constraints
 
@@ -167,9 +168,6 @@ Verified 2026-08.
 ## Open Questions
 
 - **Agent fallback**: when an LLM-backed conversation agent is configured, is there a local-first or fallback behaviour for commands the built-in intents already handle? Re-checked 2026-08 against the `conversation` integration page and a representative LLM agent page (`openai_conversation`) — **neither documents such an option**, so the question stays open by absence of documentation rather than by lack of looking. Settle it empirically (observe whether a built-in intent still fires with an LLM agent selected) before adopting an LLM agent portfolio-wide.
-- **Speech-to-Phrase versus Whisper**: is the constrained phrase set of Speech-to-Phrase sufficient for this portfolio's command vocabulary, or does free-form dictation (shopping-list items, notes) force Whisper and therefore stronger host hardware?
-- **Pipeline-per-language**: with a bilingual household, is one pipeline per language plus per-satellite assignment the right model, or should satellites in shared rooms carry the majority language only?
-- **Custom wake word**: is a portfolio-specific wake word worth training (distinctiveness, fewer false triggers) given that on-device detection is limited to its three pre-trained models, which would push detection server-side and change the streaming profile?
-- **Debug-recording policy**: should the portfolio forbid `debug_recording_dir` outside a time-boxed investigation, and if so, how is that enforced rather than merely documented?
-- **Satellite count**: at what number of satellites does this portfolio's host need re-sizing, and should that threshold be measured rather than taken from the documented Raspberry Pi 4 reference?
-- **Exposure review cadence**: should entity exposure be audited on a schedule (and by which skill), given that it widens silently as new devices are onboarded?
+- **Engine sizing on the real host**: both the speech-to-text choice (Speech-to-Phrase versus Whisper) and the satellite count at which the host needs re-sizing depend on hardware this spec cannot see. The documented figures — ~8 s versus <1 s transcription, ~5 simultaneous streams on a Raspberry Pi 4 — are calibration points; **measure on the actual host** before fixing either as a portfolio rule.
+
+Settled by decision (kept here so the rationale stays findable, not as open work): one pipeline **per language** with per-satellite assignment; **no** custom wake word, so detection stays on-device and audio leaves a satellite only after the wake word; `debug_recording_dir` is permitted **only** for a time-boxed investigation and its recordings are deleted afterwards; and entity exposure is re-reviewed **at every device onboarding** rather than on a calendar cadence, because onboarding is when exposure actually widens.
