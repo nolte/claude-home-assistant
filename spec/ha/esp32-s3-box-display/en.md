@@ -113,7 +113,7 @@ Verified 2026-08.
 
 - **MUST** define reusable colours as `color:` components with ids (hex, percentage, or integer form) and reference them by id in lambdas, rather than repeating literals across pages — the reference config defines one colour per screen state plus the two timer-bar colours `[doc]` `[ref-config]`
 - **MAY** construct an ad-hoc colour inline as `Color(r, g, b)` inside a lambda where a one-off value is genuinely local `[doc]`
-- **MAY** use the `Color::WHITE` / `Color::BLACK` constants, which the reference config relies on for frames and text; note they are not listed in the component documentation, so a colour component is the more portable form `[ref-config]` `[doc]`
+- **MAY** use the `Color::WHITE` / `Color::BLACK` constants, which the reference config relies on for frames and text: they are declared in ESPHome's own `esphome/core/color.h` as `static const Color BLACK;` / `static const Color WHITE;`, so they are real API rather than an undocumented accident — they are simply absent from the component documentation `[ref-config]` `[doc]`
 - **MUST** parameterise per-state background colours through substitutions when a config is meant to be re-themed, as the reference config does with its `*_illustration_background_color` substitutions `[ref-config]`
 - **SHOULD** verify contrast on the physical panel rather than on a monitor — this is a small, bright 2.4-inch LCD, and the backlight level is a user-controllable light entity that will not always be at 100 % `[policy]`
 
@@ -194,6 +194,5 @@ Verified 2026-08.
 - **Reusable layout package**: are the zone grid and the shared drawing scripts worth extracting into a repo-local ESPHome package that device configs include, rather than re-deriving them per device?
 - **Truncation heuristic**: the 32-character limit is measured for 15-pixel Figtree in a 280-pixel box. Should the portfolio maintain a small measured table (font × size × box width → character budget), or compute the budget at render time from font metrics (`get_baseline`, glyph widths)?
 - **Rotation**: none of the reference configs rotate the panel. If a project mounts the BOX differently, does the zone grid get a rotated twin, or is rotation simply out of scope?
-- **`Color::WHITE` / `Color::BLACK`**: these constants are used by the upstream reference config but are not in the component documentation. Should portfolio configs avoid them in favour of declared `color:` components, or is upstream usage sufficient warrant?
 - **Asset hosting**: the reference config fetches illustrations from GitHub raw URLs at build time. Should portfolio configs vendor image assets into the config repo (reproducible builds, repo size) or keep remote references (small repo, build-time network dependency)?
 - **Animation**: ESPHome ships an `animation:` platform alongside `image:`. Is there a use case on this device that justifies the flash cost of multi-frame assets, given that page switching already covers state transitions?

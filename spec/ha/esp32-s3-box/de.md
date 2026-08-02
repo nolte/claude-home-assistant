@@ -59,11 +59,11 @@ Verifiziert 2026-08; die Referenzkonfigurationen pinnen `min_version: 2026.4.0` 
 - Es **MUSS [MUST]** das **ESP-IDF**-Framework verwendet werden; es ist in aktuellen ESPHome-Releases das Default- und empfohlene Framework für ESP32-Chips, und die Referenzkonfigurationen nutzen es `[doc]` `[ref-config]`
 - `cpu_frequency: 240MHz` **SOLLTE [SHOULD]** gesetzt werden; die Referenzkonfigurationen setzen zusätzlich die sdkconfig-Optionen `CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240`, `CONFIG_ESP32S3_DATA_CACHE_64KB` und `CONFIG_ESP32S3_DATA_CACHE_LINE_64B` `[ref-config]`
 - Der Logger **SOLLTE [SHOULD]** über die native USB-Peripherie laufen (`logger: {hardware_uart: USB_SERIAL_JTAG}`) — die BOX hat genau einen USB-C-Port und keine separate UART-Bridge `[ref-config]`
-- `board: esp32s3box` **KANN [MAY]** wie in den Referenzkonfigurationen beibehalten werden, mit dem Hinweis, dass die Dokumentation der `esp32`-Komponente die `board`-Option inzwischen als „no longer recommended, `variant` should be used instead" führt — siehe Offene Fragen `[doc]` `[ref-config]`
+- `board: esp32s3box` **SOLLTE [SHOULD]** beibehalten werden, wie es alle drei Referenzkonfigurationen tun. Die `esp32`-Dokumentation nennt `board` zwar „no longer recommended" zugunsten von `variant`, sagt aber ebenso, es beeinflusse „only pin aliases and some internal settings", und bei einer reinen `variant`-Config werde das Board „automatically filled using a standard Espressif devkit board". Da diese Spec jeden Pin explizit benennt und auf keinen Alias baut, funktionieren beide Formen — Upstream zu folgen hält Portfolio-Configs gegen die Referenz diffbar `[doc]` `[ref-config]` `[policy]`
 
 ### GPIO-Karte (pro Generation)
 
-- Pin-Werte **MÜSSEN [MUST]** dieser Tabelle entnommen werden statt einem generischen „ESP32-S3"-Pinout. Die Spalten **BOX-3** und **BOX** sind `[bsp]` für die Hardware und `[ref-config]` für die ESPHome-Nutzung. Die **BOX-Lite-Spalte ist teilweise abgeleitet**: Ihre I²S-, Backlight-, Display-CS/DC/RESET- und Taster-Pins sind `[ref-config]`, während I²C, Display-SPI-CLK/MOSI, Endstufen-Freigabe, USB und der fehlende Touch-Interrupt von den Schwester-Boards übernommen und **nicht** gegen ein `esp-box-lite`-BSP verifiziert sind — diese Zellen sind als zu bestätigen zu behandeln, bevor eine BOX-Lite-Config sich auf sie stützt `[bsp]` `[ref-config]` `[policy]`:
+- Pin-Werte **MÜSSEN [MUST]** dieser Tabelle entnommen werden statt einem generischen „ESP32-S3"-Pinout; alle drei Spalten sind `[bsp]` für die Hardware und `[ref-config]` für die ESPHome-Nutzung, jeweils gegen den BSP-Header der eigenen Generation verifiziert (`bsp/esp-box-3`, `bsp/esp-box`, `bsp/esp-box-lite`):
 
 | Funktion | BOX-3 | BOX (Original) | BOX-Lite |
 |---|---|---|---|
@@ -81,9 +81,9 @@ Verifiziert 2026-08; die Referenzkonfigurationen pinnen `min_version: 2026.4.0` 
 | Display CS | `GPIO5` | `GPIO5` | `GPIO5` |
 | Display DC | `GPIO4` | `GPIO4` | `GPIO4` |
 | Display RESET | `GPIO48` (invertiert) | `GPIO48` | `GPIO48` |
-| Touch-Interrupt | `GPIO3` | `GPIO3` | — |
-| Config-/Boot-Taster | `GPIO0` | `GPIO0` | `GPIO0` |
-| Mute-Taster / -Status | `GPIO1` | `GPIO1` | `GPIO1` (ADC-Tasterkette) |
+| Touch-Interrupt | `GPIO3` | `GPIO3` | — *(kein Touch: `BSP_CAPS_TOUCH 0`)* |
+| Config-/Boot-Taster | `GPIO0` | `GPIO0` | `GPIO0` *(einziger Taster im BSP)* |
+| Mute-Taster / -Status | `GPIO1` | `GPIO1` | `GPIO1` *(ADC-Tasterkette, kein Mute)* |
 | Roter Haupttaster | *(über Touch-Controller)* | *(über Touch-Controller)* | — |
 | Dock-/Erweiterungs-I²C SCL / SDA | `GPIO40` / `GPIO41` | — | — |
 | USB D+ / D− | `GPIO20` / `GPIO19` | `GPIO20` / `GPIO19` | `GPIO20` / `GPIO19` |
@@ -96,6 +96,7 @@ Verifiziert 2026-08; die Referenzkonfigurationen pinnen `min_version: 2026.4.0` 
 ### Bestückte Bauteile
 
 - Auf der BOX-3 **MUSS [MUST]** von diesem IC-Satz ausgegangen und die ESPHome-Komponenten entsprechend gebunden werden: Display-Controller (siehe unten), kapazitiver Touch-Controller (siehe unten), **ES7210**-Audio-ADC auf I²C `0x40` (Mikrofon-Array), **ES8311**-Audio-Codec auf I²C `0x18` (Lautsprecherpfad), eine **ICM-42670-/ICM-42607-P**-IMU und ein **AHT30**-Temperatur-/Feuchtesensor `[bsp]` `[doc]`
+- Der IC-Satz der BOX-3 **DARF NICHT [MUST NOT]** auf die **BOX-Lite** übertragen werden, die hinter derselben Silhouette ein anderes Board ist: Ihr BSP nennt einen **ES7243E**-Audio-ADC und einen **ES8156**-Audio-DAC (nicht ES7210/ES8311), einen **ST7789**-Display-Controller, **überhaupt keinen Touch-Controller** (`BSP_CAPS_TOUCH 0`) und einen einzigen Config-Taster — die Audio-Bindungen unten unterscheiden sich daher je Generation `[bsp]` `[ref-config]`
 - Auf BOX und BOX-3 **MÜSSEN [MUST]** **drei** Taster, aber nur **zwei** Taster-GPIOs gezählt werden: Espressifs BSP führt im Enum `BSP_BUTTON_CONFIG`, `BSP_BUTTON_MUTE` und `BSP_BUTTON_MAIN`, während nur `GPIO0` (Config) und `GPIO1` (Mute) GPIO-gestützt sind — der dritte, der rote Taster unter dem Bildschirm, ist ein **über den Touch-Controller gelesener Touch-Key**, kein GPIO `[bsp]` `[doc]`
 - Der Mute-Taster **DARF NICHT [MUST NOT]** als einfacher Kontakt an `GPIO1` behandelt werden: Das BSP hält fest, er sei „wired to Logic Gates, result mapped to `GPIO_NUM_1`" — der Pin trägt also einen abgeleiteten **Mute-Status**, und der Hardware-Mute-Pfad existiert unabhängig von jeder ESPHome-Logik `[bsp]`
 - Wo der **AHT30** tatsächlich sitzt, **SOLLTE [SHOULD]** geklärt werden, bevor er zugesagt wird: Espressifs Produktdokumentation führt Temperatur/Feuchte unter dem separaten Zubehör BOX-3-SENSOR, während das BOX-3-BSP `BSP_CAPS_HUMITURE 1` deklariert und einen `aht30`-Treiber zieht — ein I²C-Scan am vorliegenden Exemplar entscheidet `[vendor]` `[bsp]`
@@ -103,7 +104,7 @@ Verifiziert 2026-08; die Referenzkonfigurationen pinnen `min_version: 2026.4.0` 
 - Der **Display-Controller** **MUSS [MUST]** am vorliegenden Exemplar verifiziert werden, statt einer einzelnen Quelle zu vertrauen: Espressifs BSP-Header-Kommentare nennen **ST7789**, während der Dependency-Satz desselben BSP `esp_lcd_ili9341` zieht — und ESPHome bindet das Panel über ein Board-**Model-Preset** statt über einen rohen Controller-Namen; das Preset ist der unterstützte Pfad, eine falsche manuelle Controller-Wahl zeigt sich als invertierte oder verschobene Farben `[bsp]` `[doc]`
 - Der **Touch-Controller** **MUSS [MUST]** empirisch verifiziert werden (I²C-Scan) statt angenommen: Espressifs BOX-3-BSP deklariert Treiber für **beide**, `esp_lcd_touch_gt911` und `esp_lcd_touch_tt21100`, was bedeutet, dass der bestückte Controller je nach Revision variiert; ESPHome liefert genau deshalb die Touchscreen-Plattformen `gt911` und `tt21100` `[bsp]` `[doc]`
 - Es **DARF NICHT [MUST NOT]** eingeplant werden, die **IMU** aus ESPHome auszulesen: Für die ICM-42670 existiert **keine** Komponente im ESPHome-Sensor-Katalog (der BMI270, LSM6DS und QMI8658 als Beschleunigungs-/Gyroskop-Plattformen führt); ihre Nutzung erfordert eine `external_components`-Implementierung und liegt außerhalb eines Device-YAML-Schnitts `[doc]` `[bsp]`
-- Die Plattform-Abdeckung **SOLLTE [SHOULD]** bestätigt werden, bevor der Feuchtesensor in einer Config zugesagt wird: ESPHome liefert eine `aht10`-Plattform, und ob diese die AHT30-Variante abdeckt, ist gegen die Komponenten-Dokumentation zu prüfen `[doc]`
+- Ein AHT30 **MUSS [MUST]** über die `aht10`-Plattform mit `variant: AHT20` gebunden werden: Die Komponente dokumentiert Unterstützung für „your AHT10, AHT20 or AHT30 I²C-based sensor", und ihr `variant`-Enum bietet `AHT10` (Default) und `AHT20`, wobei letzteres AHT20 und AHT30 abdeckt — der Default an einem AHT30 wählt den falschen Registersatz `[doc]`
 
 ### Display-Bindung
 
@@ -134,7 +135,9 @@ Verifiziert 2026-08; die Referenzkonfigurationen pinnen `min_version: 2026.4.0` 
 ### Audio-Bindung
 
 - Es **MUSS [MUST]** ein I²S-Bus mit `i2s_bclk_pin: GPIO17`, `i2s_mclk_pin: GPIO2` und dem generationsrichtigen `i2s_lrclk_pin` deklariert werden sowie ein I²C-Bus (`SCL 18` / `SDA 8`), den sich beide Codecs teilen `[ref-config]`
-- Die Codecs **MÜSSEN [MUST]** als **externe** Wandler deklariert werden, nicht als rohes I²S: `audio_adc: {platform: es7210, bits_per_sample: 16bit, sample_rate: 16000}` und `audio_dac: {platform: es8311, bits_per_sample: 16bit, sample_rate: 48000}`, beide an die gemeinsame `i2c_id` gebunden `[ref-config]` `[doc]`
+- Die Codecs **MÜSSEN [MUST]** als **externe** Wandler deklariert werden, nicht als rohes I²S, und es **MUSS [MUST]** das zur Generation passende Paar gewählt werden `[ref-config]` `[doc]` `[bsp]`:
+  - **BOX-3 und BOX** — `audio_adc: {platform: es7210, bits_per_sample: 16bit, sample_rate: 16000}` und `audio_dac: {platform: es8311, bits_per_sample: 16bit, sample_rate: 48000}`, beide an die gemeinsame `i2c_id` gebunden
+  - **BOX-Lite** — `audio_adc: {platform: es7243e}` und `audio_dac: {platform: es8156}`; beide Plattformen existieren in ESPHome und sind das, was die BOX-Lite-Referenzkonfiguration deklariert. Ein `es7210`/`es8311`-Paar adressiert auf einer BOX-Lite ICs, die nicht auf dem Board sind
 - Die I²C-Adressen der Codecs **SOLLTEN [SHOULD]** auf ihren Komponenten-Defaults bleiben, die bereits zum Board passen — `0x40` für den ES7210 und `0x18` für den ES8311 — und nur dann explizit gesetzt werden, wenn ein I²C-Scan etwas anderes zeigt `[doc]` `[bsp]`
 - Die Mikrofonempfindlichkeit **SOLLTE [SHOULD]** über `mic_gain` des ES7210 (Bereich `0DB`…`37.5DB`, Default `24DB`) eingestellt werden, bevor zu `volume_multiplier` oder `auto_gain` des Voice-Assistants gegriffen wird, damit die Verstärkung einmal im analogen Pfad statt zweimal wirkt `[doc]` `[ref-config]`
 - Am ES8311 **DARF NICHT [MUST NOT]** `use_microphone: true` gesetzt werden: Die Mikrofone der BOX hängen am ES7210, und der eigene Mikrofonpfad des ES8311 (mit separatem `mic_gain`, Default `42DB`) ist auf diesem Board ungenutzt — der Key defaultet auf `false` und muss dort bleiben `[doc]` `[bsp]`
@@ -159,7 +162,7 @@ Verifiziert 2026-08; die Referenzkonfigurationen pinnen `min_version: 2026.4.0` 
 ### Sensorik, Speicher und Erweiterung
 
 - Die verbaute **IMU** **MUSS [MUST]** als aus einem reinen Device-YAML nicht verfügbar behandelt werden — siehe *Bestückte Bauteile*; wird Bewegung tatsächlich benötigt, ist der Preis ein `external_components`-Treiber, und diese Entscheidung gehört in den Projekt-Scope, nicht in ein Scaffold `[doc]` `[bsp]`
-- Ein **AHT30** **SOLLTE [SHOULD]** (sobald sein Vorhandensein bestätigt ist) als `sensor: {platform: aht10}` am gemeinsamen I²C-Bus gebunden werden, nachdem gegen die Komponenten-Dokumentation verifiziert wurde, dass die Plattform die AHT30-Variante abdeckt `[doc]`
+- Ein **AHT30** **SOLLTE [SHOULD]** (sobald sein Vorhandensein bestätigt ist) als `sensor: {platform: aht10, variant: AHT20}` am gemeinsamen I²C-Bus gebunden werden, gemäß *Bestückte Bauteile* `[doc]`
 - Die Chip-Temperatur des ESP32 (`sensor: {platform: internal_temperature}`) **DARF NICHT [MUST NOT]** als Raumtemperatur veröffentlicht werden: Sie misst den SoC neben laufendem Display und Endstufe, liest zu hoch, und einige ESP32-Varianten liefern ungültige Werte, die die Komponente verwirft `[doc]` `[policy]`
 - Auf einem dauerhaft eingesetzten Gerät **SOLLTEN [SHOULD]** die üblichen Diagnose-Entities mitgeliefert werden — `sensor: {platform: wifi_signal}`, `sensor: {platform: uptime}` und optional `internal_temperature` — jeweils mit `entity_category: diagnostic`, damit sie das nutzerseitige Dashboard nicht zumüllen `[doc]` `[policy]`
 - Der **zweite I²C-Bus** der BOX-3 an `GPIO40` / `GPIO41` (Dock-/Erweiterungsbus) **KANN [MAY]** für projektspezifische Sensoren genutzt werden, wodurch der Codec-Bus an `GPIO18` / `GPIO8` frei von fremdem Verkehr bleibt `[bsp]`
@@ -230,14 +233,12 @@ Verifiziert 2026-08; die Referenzkonfigurationen pinnen `min_version: 2026.4.0` 
 
 ## Offene Fragen
 
-- **`board` vs. `variant`**: Die Dokumentation der ESPHome-`esp32`-Komponente führt `board` als „no longer recommended, `variant` should be used instead", während alle drei Upstream-Referenzkonfigurationen weiterhin `board: esp32s3box` setzen. Sollen Portfolio-Configs der Dokumentation oder den Referenzkonfigurationen folgen — und trägt `board: esp32s3box` noch Pin-Aliase, die `variant: esp32s3` fallen ließe?
 - **Display-Controller**: Espressifs BSP-Header-Kommentare nennen ST7789, während der Dependency-Satz `esp_lcd_ili9341` zieht. Da ESPHome über ein Model-Preset bindet, ist der Widerspruch derzeit harmlos — er sollte aber aufgelöst (oder als revisionsabhängig festgehalten) werden, bevor eine Config Panel-Parameter manuell setzt.
 - **Touch-Controller nach Revision**: Gibt es einen verlässlichen, nicht-empirischen Weg (Aufdruck, Seriennummernbereich), ein GT911- von einem TT21100-Exemplar zu unterscheiden, oder bleibt der I²C-Scan die einzige belastbare Methode?
-- **Deckt `aht10` den AHT30 ab?**: Das Zubehör BOX-3-SENSOR trägt einen AHT30; ESPHome liefert eine `aht10`-Plattform. Die Abdeckung ist gegen die Komponenten-Doku zu bestätigen, bevor der Zubehörsensor in einer scaffoldeten Config zugesagt wird.
 - **IMU-Pfad**: Lohnt es sich, eine `external_components`-Implementierung für die ICM-42670 ins Portfolio zu ziehen, oder bleibt die IMU für ESPHome-getriebene BOX-Projekte außerhalb des Scopes?
 - **Index des roten Tasters**: Welchen `index` (0…3) der rote Haupttaster am GT911 bzw. am TT21100 belegt, ist nicht pro Board dokumentiert. Soll dieses Portfolio den einmal verifizierten Index pro Generation festhalten, damit Scaffolds ihn direkt ausgeben können?
 - **Zweites Mikrofon**: Gibt es in diesem Portfolio einen Anwendungsfall, der `channel: stereo` rechtfertigt (Beamforming, Richtungserkennung) — und konsumiert die Voice-Pipeline überhaupt mehr als einen Kanal, oder bleibt das zweite Mikrofon unter ESPHome faktisch ungenutzt?
-- **SD-Karten-Pfad**: Der Slot ist verdrahtet und die Pins sind bekannt, aber es existiert keine offizielle ESPHome-Komponente. Lohnt es sich, einen `external_components`-SD-Treiber zu übernehmen (lokale Audiodateien, Logging), oder bleibt der Slot ungenutzt?
+- **SD-Karten-Pfad**: Der Slot ist verdrahtet und die Pins sind bekannt, und das Fehlen jeder SD-/Storage-Komponente im ESPHome-Index wurde 2026-08 erneut bestätigt. Lohnt es sich, einen `external_components`-SD-Treiber zu übernehmen (lokale Audiodateien, Logging), oder bleibt der Slot ungenutzt?
 - **Zubehör-Pinouts**: Die Pinouts von BOX-3-DOCK / -SENSOR / -BREAD sind nur als Bilder veröffentlicht. Soll dieses Portfolio eine eigene, am Gerät verifizierte Text-Pin-Tabelle für das Zubehör ableiten und pflegen, oder bleibt Zubehör außerhalb des Scopes?
 - **Quelle der Baseline-Package**: Soll die Board-Baseline als Remote-`packages:`-Referenz auf `esphome/wake-word-voice-assistants` konsumiert werden (immer aktuell, netzabhängig, upstream-kontrolliert) oder repo-lokal vendored (reviewbar, gepinnt, manuell zu aktualisieren)?
 - **Versions-Pinning**: Die Referenzkonfigurationen pinnen `min_version: 2026.4.0`. Soll das Portfolio dieselbe Untergrenze für BOX-Configs pinnen, und wie wird eine Anhebung angesichts der wiederholten Schema-Änderungen in ESPHomes Audio-Komponenten reviewt?

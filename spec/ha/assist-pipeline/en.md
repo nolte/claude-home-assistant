@@ -166,7 +166,7 @@ Verified 2026-08.
 
 ## Open Questions
 
-- **Agent fallback**: when an LLM-backed conversation agent is configured, is there a documented local-first or fallback behaviour for commands the built-in intents already handle, or does the agent receive everything? The behaviour was not confirmed in the sources consulted and should be settled before an LLM agent is adopted portfolio-wide.
+- **Agent fallback**: when an LLM-backed conversation agent is configured, is there a local-first or fallback behaviour for commands the built-in intents already handle? Re-checked 2026-08 against the `conversation` integration page and a representative LLM agent page (`openai_conversation`) — **neither documents such an option**, so the question stays open by absence of documentation rather than by lack of looking. Settle it empirically (observe whether a built-in intent still fires with an LLM agent selected) before adopting an LLM agent portfolio-wide.
 - **Speech-to-Phrase versus Whisper**: is the constrained phrase set of Speech-to-Phrase sufficient for this portfolio's command vocabulary, or does free-form dictation (shopping-list items, notes) force Whisper and therefore stronger host hardware?
 - **Pipeline-per-language**: with a bilingual household, is one pipeline per language plus per-satellite assignment the right model, or should satellites in shared rooms carry the majority language only?
 - **Custom wake word**: is a portfolio-specific wake word worth training (distinctiveness, fewer false triggers) given that on-device detection is limited to its three pre-trained models, which would push detection server-side and change the streaming profile?

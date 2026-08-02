@@ -166,7 +166,7 @@ Verifiziert 2026-08.
 
 ## Offene Fragen
 
-- **Agent-Fallback**: Gibt es bei konfiguriertem LLM-Conversation-Agent ein dokumentiertes Local-First- oder Fallback-Verhalten für Befehle, die die eingebauten Intents ohnehin beherrschen, oder erhält der Agent alles? Das Verhalten ließ sich in den konsultierten Quellen nicht bestätigen und sollte geklärt werden, bevor ein LLM-Agent portfolioweit übernommen wird.
+- **Agent-Fallback**: Gibt es bei konfiguriertem LLM-Conversation-Agent ein Local-First- oder Fallback-Verhalten für Befehle, die die eingebauten Intents ohnehin beherrschen? Erneut geprüft 2026-08 gegen die Seite der `conversation`-Integration und einen repräsentativen LLM-Agenten (`openai_conversation`) — **keine von beiden dokumentiert eine solche Option**, die Frage bleibt also mangels Dokumentation offen, nicht mangels Nachschauens. Empirisch zu klären (beobachten, ob ein eingebauter Intent bei ausgewähltem LLM-Agenten noch feuert), bevor ein LLM-Agent portfolioweit übernommen wird.
 - **Speech-to-Phrase gegenüber Whisper**: Reicht der begrenzte Phrasensatz von Speech-to-Phrase für das Befehlsvokabular dieses Portfolios, oder erzwingt freie Diktatnutzung (Einkaufslisten-Einträge, Notizen) Whisper und damit stärkere Host-Hardware?
 - **Pipeline je Sprache**: Ist bei zweisprachigem Haushalt eine Pipeline je Sprache plus Zuweisung je Satellit das richtige Modell, oder tragen Satelliten in Gemeinschaftsräumen nur die Mehrheitssprache?
 - **Eigenes Wake-Word**: Lohnt ein portfolio-spezifisches Wake-Word (Unterscheidbarkeit, weniger Fehlauslösungen), wo die On-Device-Erkennung auf ihre drei vortrainierten Modelle begrenzt ist — was die Erkennung serverseitig verschieben und das Streaming-Profil ändern würde?
