@@ -8,7 +8,7 @@ Die ESPHome-Achse war in `AUDIENCES.md` von Anfang an deklariert, lieferte aber 
 
 ## Scope
 
-Ein Gerät, eine neue YAML-Datei pro Aufruf, im Device-Config-Root des Consumer-Repositories. Die Komposition bevorzugt geteilte `packages:`; Secrets bleiben `!secret`-Referenzen; der Skill endet bei der geschriebenen Datei plus einem Validierungs-Schritt-Report.
+Ein Gerät, eine neue YAML-Datei pro Aufruf, im Device-Config-Root des Consumer-Repositories. Die Komposition bevorzugt geteilte `packages:`; Credentials bleiben `!env_var`-Referenzen; der Skill endet bei der geschriebenen Datei plus einem Validierungs-Schritt-Report.
 
 ## Ziele
 
@@ -25,7 +25,9 @@ Ein Gerät, eine neue YAML-Datei pro Aufruf, im Device-Config-Root des Consumer-
 
 ## Anforderungen
 
-- **MUSS** vor der Komposition `spec/ha/esphome-config-patterns/de.md` lesen und jedes dortige MUSS erfüllen (Naming, packages-statt-Merge-Keys, Secrets, api-Encryption, ota)
+- **MUSS** vor der Komposition `spec/ha/esphome-config-patterns/de.md` lesen und jedes dortige MUSS erfüllen (Naming, packages-statt-Merge-Keys, Credentials, api-Encryption, ota)
+- **MUSS** zusätzlich `spec/ha/esphome-project-structure/de.md` lesen und die Datei entsprechend platzieren: Device-Dateien flach im Config-Root, Wiederverwendung aus einem Board-Package komponiert statt kopierter Blöcke, und das Substitutions-Trio `name` / `id` / `comment` vorhanden
+- **SOLLTE** beim Scaffolding für bekannte Hardware die Geräte-Spec heranziehen (`spec/ha/esp32-s3-box/de.md` für die BOX-Familie), damit generationsspezifische Pins und Codecs aus der Spec statt aus einer generischen Vorlage stammen
 - **MUSS** jeden emittierten Schema-Key gemäß `spec/ha/upstream-docs-verification` gegen die offiziellen ESPHome-Docs verifizieren
 - **MUSS** den Pre-flight (Config-Root-Erkennung, Kollisions-Check, Secrets-Inventar, Operator-Bestätigung) vor dem Schreiben ausführen
 - **MUSS** die vom Operator zu füllenden Secrets-Keys reporten und `secrets.yaml.example` erweitern, wenn das Repo eine mitführt
@@ -36,7 +38,7 @@ Ein Gerät, eine neue YAML-Datei pro Aufruf, im Device-Config-Root des Consumer-
 
 - [ ] Ein Scaffold-Lauf gegen das Fixture-Layout erzeugt eine Datei, die jeden Checklist-Punkt von `spec/ha/esphome-config-patterns` §Akzeptanzkriterien erfüllt
 - [ ] Ein erneuter Lauf mit demselben Gerätenamen bricht am Kollisions-Pre-flight ab statt zu überschreiben
-- [ ] Der Report benennt jeden `!secret`-Key, den die generierte Datei referenziert
+- [ ] Der Report benennt jede Umgebungsvariable, die die generierte Datei referenziert
 
 ## Offene Fragen
 
