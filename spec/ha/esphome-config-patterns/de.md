@@ -40,7 +40,7 @@ Diese Spec kanonisiert die Device-YAML-Patterns für das Portfolio, destilliert 
 
 - `wifi:`-Credentials **MÜSSEN** aus Umgebungsvariablen kommen (`!env_var WIFI_SSID` / `!env_var WIFI_PASSWORD`), nie aus einer Datei im Repository: Remote-Packages können `!secret` nachweislich nicht auflösen, und Umgebungsvariablen erreichen lokalen wie CI-Build gleichermaßen. Jede gelesene Variable **MUSS** dokumentiert sein, damit ein frischer Checkout baubar ist
 - `wifi:` **SOLLTE** einen `ap:`-Fallback plus `captive_portal:` deklarieren, damit ein unerreichbares Gerät wiederherstellbar bleibt
-- `api:` **MUSS** `encryption: key: !env_var API_ENCRYPTION_KEY` deklarieren — eine unverschlüsselte native API ist ein Finding, keine Variante
+- `api:` **MUSS** `encryption:` mit einem **geräteeigenen** Key deklarieren, geliefert als Substitution, die die Device-Datei setzt (`substitutions: {api_key: !env_var <DEVICE>_API_KEY}`) und konsumiert als `key: ${api_key}` — eine unverschlüsselte native API ist ein Finding, keine Variante
 - `ota:` **MUSS** vorhanden und via `!env_var OTA_PASSWORD` passwortgeschützt sein
 - Kein literales Credential, Token oder Key **DARF** je in einer Device- oder Shared-Datei erscheinen, und eine befüllte `secrets.yaml` **DARF NICHT** committet werden
 

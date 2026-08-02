@@ -17,6 +17,7 @@ Two structural models exist upstream and this spec takes a position between them
 - `[doc]` — the official ESPHome documentation at <https://esphome.io>: authoritative for `packages:`, substitution, and merge semantics.
 - `[fixture]` — the portfolio's real repository [`nolte/esphome-configs`](https://github.com/nolte/esphome-configs), inspected 2026-08: authoritative for what this portfolio actually does today, **not** automatically for what it should do.
 - `[upstream]` — ESPHome's own multi-device repositories (`esphome/firmware`, `esphome/wake-word-voice-assistants`): a comparison point, not a mandate.
+- `[source]` — ESPHome's own source code, where behaviour is real but undocumented. A `[source]`-only fact carries no compatibility promise and may change without a release note.
 - `[policy]` — a nolte-portfolio rule, not an upstream fact.
 
 Verified 2026-08.
@@ -85,9 +86,12 @@ Verified 2026-08.
 
 - **MUST NOT** place `!secret` lookups in any package that is, or might become, a **remote** package: the documentation states remote packages cannot resolve secrets and directs configurations to substitutions with defaults instead `[doc]`
 - **MUST** keep every credential out of version control regardless of mechanism, and **MUST NOT** commit a populated `secrets.yaml` `[policy]`
-- **MUST** use `!env_var` for credentials, as the fixture does for Wi-Fi SSID, password, domain, and fallback-hotspot password: environment variables reach both a local build and a CI build without a file that must never be committed, and they work in packages where `!secret` provably cannot. This is the portfolio's credential mechanism; [`ha/esphome-config-patterns`](../esphome-config-patterns/en.md) carries the same rule `[fixture]` `[doc]` `[policy]`
+- **MUST** use `!env_var` for credentials, as the fixture does for Wi-Fi SSID, password, domain, and fallback-hotspot password: environment variables reach both a local build and a CI build without a file that must never be committed, and they work in packages where `!secret` provably cannot. This is the portfolio's credential mechanism; [`ha/esphome-config-patterns`](../esphome-config-patterns/en.md) carries the same rule `[fixture]` `[source]` `[policy]`
+- **MUST** treat `!env_var` as **undocumented API**: it is registered in ESPHome's `yaml_util.py` and reads `os.environ`, optionally with a fallback (`!env_var NAME default`), but appears in neither the FAQ nor the substitutions documentation — which recommend `!secret` instead. Re-check it on an ESPHome upgrade, and record the check `[source]` `[doc]` `[policy]`
+- **MUST NOT** expect substitutions inside an `!env_var` name: the tag resolves while the YAML is parsed, before substitutions are applied, so `!env_var KEY_${id}` does not work `[source]`
 - **MUST** document every environment variable a package reads, so a fresh checkout can be built without reverse-engineering the failure messages `[policy]`
 - **MUST** keep the API-encryption requirement from [`ha/esphome-config-patterns`](../esphome-config-patterns/en.md) intact across packages: a base package that declares a bare `api:` leaves every device consuming it unencrypted at once, which is exactly the blast radius shared packages create. The fixture's base package currently does this and is a defect to fix, not a variant to codify `[fixture]` `[policy]`
+- **MUST NOT** give the fleet **one shared** API encryption key: a single fleet-wide variable in a shared package means one compromised device exposes every other device's API session, which is the opposite of what encryption is there for. Each device **MUST** carry its own key, set as a substitution in its own device file (`substitutions: {api_key: !env_var <DEVICE>_API_KEY}`) and consumed by the package as `${api_key}` — the indirection is required because `!env_var` cannot interpolate the device name itself `[source]` `[policy]`
 
 ### Remote packages
 
