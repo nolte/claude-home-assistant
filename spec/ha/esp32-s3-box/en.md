@@ -63,7 +63,7 @@ Verified 2026-08; the reference configs pin `min_version: 2026.4.0` `[ref-config
 
 ### GPIO map (per generation)
 
-- **MUST** take pin values from this table rather than from a generic "ESP32-S3" pinout; every value is `[bsp]` for the hardware column and `[ref-config]` for the ESPHome usage:
+- **MUST** take pin values from this table rather than from a generic "ESP32-S3" pinout. The **BOX-3** and **BOX** columns are `[bsp]` for the hardware and `[ref-config]` for the ESPHome usage. The **BOX-Lite column is partly derived**: its I²S, backlight, display CS/DC/RESET, and button pins are `[ref-config]`, while I²C, display SPI CLK/MOSI, amplifier enable, USB, and the absent touch interrupt are carried over from the sibling boards and are **not** verified against an `esp-box-lite` BSP — treat those cells as to be confirmed before a BOX-Lite config relies on them `[bsp]` `[ref-config]` `[policy]`:
 
 | Function | BOX-3 | BOX (original) | BOX-Lite |
 |---|---|---|---|
@@ -100,7 +100,7 @@ Verified 2026-08; the reference configs pin `min_version: 2026.4.0` `[ref-config
 - **MUST NOT** treat the mute button as a plain contact on `GPIO1`: the BSP records it as "wired to Logic Gates, result mapped to `GPIO_NUM_1`", so the pin carries a derived **mute status**, and the hardware mute path exists independently of any ESPHome logic `[bsp]`
 - **SHOULD** resolve where the **AHT30** actually sits before promising it: Espressif's product documentation lists temperature/humidity under the separate BOX-3-SENSOR accessory, while the BOX-3 BSP declares `BSP_CAPS_HUMITURE 1` and pulls an `aht30` driver — an I²C scan on the unit in hand settles it `[vendor]` `[bsp]`
 - **SHOULD** treat the **microSD** slot as out of reach for a plain device YAML: the BSP defines a full SDMMC pin set (and an SPI alternative), but ESPHome's official component index carries no SD-card component (verified 2026-08), so SD access requires `external_components` `[bsp]` `[doc]`
-- **MUST** verify the **display controller** on the unit in hand instead of trusting a single source: Espressif's BSP header comments name **ST7789**, while the same BSP's dependency set pulls `esp_lcd_ili9341`, and ESPHome binds the panel through a board **model preset** (`S3BOX` / `S3BOXLITE`) rather than a raw controller name — the preset is the supported path, and a wrong manual controller choice shows as inverted or shifted colours `[bsp]` `[doc]`
+- **MUST** verify the **display controller** on the unit in hand instead of trusting a single source: Espressif's BSP header comments name **ST7789**, while the same BSP's dependency set pulls `esp_lcd_ili9341`, and ESPHome binds the panel through a board **model preset** rather than a raw controller name — the preset is the supported path, and a wrong manual controller choice shows as inverted or shifted colours `[bsp]` `[doc]`
 - **MUST** verify the **touch controller** empirically (I²C scan) rather than assuming: Espressif's BOX-3 BSP declares drivers for **both** `esp_lcd_touch_gt911` and `esp_lcd_touch_tt21100`, which means the fitted controller varies by revision; ESPHome ships `gt911` and `tt21100` touchscreen platforms for exactly this reason `[bsp]` `[doc]`
 - **MUST NOT** plan on reading the **IMU** from ESPHome: the ICM-42670 has **no** component in the ESPHome sensor catalogue (which ships BMI270, LSM6DS, and QMI8658 as accelerometer/gyroscope platforms); using it requires an `external_components` implementation and is out of scope for a device-YAML slice `[doc]` `[bsp]`
 - **SHOULD** confirm platform coverage before promising the humidity sensor in a config: ESPHome ships an `aht10` platform, and whether it covers the AHT30 variant must be checked against the component documentation `[doc]`
@@ -108,11 +108,11 @@ Verified 2026-08; the reference configs pin `min_version: 2026.4.0` `[ref-config
 ### Display binding
 
 - **MUST** declare the SPI bus explicitly as `clk_pin: 7` / `mosi_pin: 6`; the display is the only device on it in the reference configs `[ref-config]`
-- **MUST** use the board **model preset** rather than hand-rolled panel parameters — `model: S3BOX` for BOX-3 and BOX, `model: S3BOX_LITE` for BOX-Lite; the model sets resolution and panel defaults, and remaining keys override it `[doc]` `[ref-config]`
+- **MUST** use the board **model preset** rather than hand-rolled panel parameters — `model: S3BOX` for BOX-3 and BOX; for BOX-Lite the preset's spelling differs by platform (`S3BOX_LITE` under `ili9xxx`, as the reference config uses it, versus `S3BOXLITE` in the `mipi_spi` model list), so it **MUST** be taken from the documentation of the platform actually declared. The model sets resolution and panel defaults, and remaining keys override it `[doc]` `[ref-config]`
 - **MUST** carry the per-generation display parameters exactly as the reference configs do `[ref-config]`:
   - **BOX-3** — `platform: mipi_spi`, `model: S3BOX`, `invert_colors: false`, `data_rate: 40MHz`, `cs_pin: 5`, `dc_pin: 4`, `reset_pin: {number: 48, inverted: true}`
   - **BOX** — `platform: ili9xxx`, `model: S3BOX`, `invert_colors: false`, `data_rate: 40MHz`, `cs_pin: 5`, `dc_pin: 4`, `reset_pin: 48` (**not** inverted)
-  - **BOX-Lite** — `model: S3BOX_LITE`, `invert_colors: **true**`, plus a backlight output declared `inverted: true`
+  - **BOX-Lite** — `platform: ili9xxx`, `model: S3BOX_LITE`, **`invert_colors: true`** (the one generation that inverts), plus a backlight output declared `inverted: true`
 - **SHOULD** prefer the newer `mipi_spi` platform for new configs; the BOX-3 reference config has moved to it while the older BOX config still uses `ili9xxx` `[ref-config]`
 - **MUST** drive the backlight as a dimmable light rather than a bare GPIO: `output: {platform: ledc, pin: <backlight>}` plus `light: {platform: monochromatic}`, so screen brightness is an HA entity `[ref-config]`
 - **SHOULD** set `update_interval: never` on the display and redraw explicitly from automations or scripts; the reference configs render event-driven pages and call `component.update` themselves `[ref-config]`
