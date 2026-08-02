@@ -4,7 +4,7 @@ Status: draft
 
 ## Kontext
 
-Es gibt vier Domänen-Frontdoors — `ha-integration-solution` (Python-Custom-Integration-Backend), `ha-lovelace-solution` (Lovelace/Frontend), `ha-automation-solution` (YAML-Automationen/Helper) und `ha-pixoo-solution` (Divoom-Pixoo-Anzeige) — aber **keinen Orchestrator darüber**. Die Domänen-Auswahl beruht auf implizitem Skill-Beschreibungs-Matching, und eine echt domänenübergreifende Anfrage (z. B. eine Custom-Card + die zugrunde liegende Integration + eine Automation) fällt zwischen die vier Frontdoors: Wer eine gemischte Anforderung hat, muss selbst auf der richtigen Domänen-Lösung landen, und kein einzelner Skill besitzt eine domänenübergreifende Anfrage.
+Es gibt fünf Domänen-Frontdoors — `ha-integration-solution` (Python-Custom-Integration-Backend), `ha-lovelace-solution` (Lovelace/Frontend), `ha-automation-solution` (YAML-Automationen/Helper), `ha-esphome-solution` (ESPHome-Geräte und -Flotten) und `ha-pixoo-solution` (Divoom-Pixoo-Anzeige) — aber **keinen Orchestrator darüber**. Die Domänen-Auswahl beruht auf implizitem Skill-Beschreibungs-Matching, und eine echt domänenübergreifende Anfrage (z. B. eine Custom-Card + die zugrunde liegende Integration + eine Automation) fällt zwischen die Frontdoors: Wer eine gemischte Anforderung hat, muss selbst auf der richtigen Domänen-Lösung landen, und kein einzelner Skill besitzt eine domänenübergreifende Anfrage.
 
 Dieser Skill ist der **oberste Router**: Er klassifiziert eine unscharfe Home-Assistant-Anforderung in eine oder mehrere Domänen, routet jeden Teil an die zuständige `*-solution` und fädelt die geteilten Identitäten (`domain`, `entity_id`s, Card-Tags, Command-Types) über Domänengrenzen. Er besitzt keine Domänen-Artefakte und macht keine domäneninterne Zerlegung — jede Domänen-Lösung behält ihr eigenes Plan-Freigabe-Gate, ihre Zerlegung, ihr Dispatch und ihre Spec-Konformität.
 
@@ -15,10 +15,10 @@ Domänen-Klassifikation und domänenübergreifendes Routing über der `ha-*-solu
 ## Ziele
 
 - Jede Home-Assistant-Anforderung an einem einzigen Eingangspunkt annehmen und an die korrekte(n) Domänen-Lösung(en) routen, ohne dass die Nutzerin die Domänen-Landschaft kennt
-- Die Anforderung in eine oder mehrere von Integration/Backend, Lovelace/Frontend, YAML-Automation und Pixoo klassifizieren
+- Die Anforderung in eine oder mehrere von Integration/Backend, Lovelace/Frontend, YAML-Automation, ESPHome und Pixoo klassifizieren
 - Eine domänenübergreifende Anforderung über die relevanten `*-solution`s in Abhängigkeitsreihenfolge zerlegen und die geteilten Identitäten (`domain`, `entity_id`s, Device-IDs, Card-Tag/`custom:<type>`, Command-`type`) über Domänengrenzen fädeln
 - Die Domänen-Lösungen zur Laufzeit gegen das lebende `ha-*-solution`-Inventar auflösen, sodass eine hinzugefügte oder umbenannte Domänen-Lösung routbar ist, ohne diesen Skill zu ändern
-- Sauber gegen die vier Domänen-Lösungen abgrenzen: Eine Single-Domain-Anforderung routet direkt an ihre zuständige `*-solution`
+- Sauber gegen die Domänen-Lösungen abgrenzen: Eine Single-Domain-Anforderung routet direkt an ihre zuständige `*-solution`
 
 ## Nicht-Ziele
 
@@ -76,7 +76,7 @@ Domänen-Klassifikation und domänenübergreifendes Routing über der `ha-*-solu
 - [ ] Die Anforderung wird in eine oder mehrere von Integration/Backend, Lovelace/Frontend, YAML-Automation, Pixoo klassifiziert
 - [ ] Eine domänenübergreifende Anforderung wird über die relevanten `*-solution`s in Abhängigkeitsreihenfolge zerlegt, mit über Grenzen gefädelten Identitäten
 - [ ] Domänen-Lösungen werden bei jedem Lauf gegen das lebende `ha-*-solution`-Inventar aufgelöst (eine hinzugefügte oder umbenannte Domänen-Lösung ist routbar, ohne den Router zu ändern)
-- [ ] Eine Single-Domain-Anforderung routet direkt an die zuständige `*-solution`; der Skill grenzt sauber gegen die vier Domänen-Lösungen ab
+- [ ] Eine Single-Domain-Anforderung routet direkt an die zuständige `*-solution`; der Skill grenzt sauber gegen die Domänen-Lösungen ab
 - [ ] Stoppt bei einem NEEDS-WORK-Domänen-Ergebnis, statt eine abhängige Domäne weiterzurouten
 - [ ] Gesamt-Bericht listet jede Domäne, die gelaufene Lösung, die gefädelten Identitäten und reicht die einzelnen Berichte weiter
 

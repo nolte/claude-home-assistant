@@ -157,6 +157,13 @@ Quelle der Wahrheit hinter den Skills und Agents dieses Plugins. Specs sind zwei
 | [`claude/ha-pixoo-solution`](claude/ha-pixoo-solution/en.md) | Skill: `ha-pixoo-solution` | Skill: `ha-pixoo-solution` | draft | unversioned |
 | [`claude/ha-esphome-config-scaffold`](claude/ha-esphome-config-scaffold/en.md) | Skill: `ha-esphome-config-scaffold` | Skill: `ha-esphome-config-scaffold` | draft | unversioned |
 | [`claude/ha-esphome-config-augment`](claude/ha-esphome-config-augment/en.md) | Skill: `ha-esphome-config-augment` | Skill: `ha-esphome-config-augment` | draft | unversioned |
+| [`claude/ha-esphome-solution`](claude/ha-esphome-solution/en.md) | Skill: `ha-esphome-solution` | Skill: `ha-esphome-solution` | draft | unversioned |
+| [`claude/ha-esphome-fleet-scaffold`](claude/ha-esphome-fleet-scaffold/en.md) | Skill: `ha-esphome-fleet-scaffold` | Skill: `ha-esphome-fleet-scaffold` | draft | unversioned |
+| [`claude/ha-esphome-package-author`](claude/ha-esphome-package-author/en.md) | Skill: `ha-esphome-package-author` | Skill: `ha-esphome-package-author` | draft | unversioned |
+| [`claude/ha-esphome-binding-add`](claude/ha-esphome-binding-add/en.md) | Skill: `ha-esphome-binding-add` | Skill: `ha-esphome-binding-add` | draft | unversioned |
+| [`claude/ha-esphome-display-author`](claude/ha-esphome-display-author/en.md) | Skill: `ha-esphome-display-author` | Skill: `ha-esphome-display-author` | draft | unversioned |
+| [`claude/ha-esphome-voice-satellite-add`](claude/ha-esphome-voice-satellite-add/en.md) | Skill: `ha-esphome-voice-satellite-add` | Skill: `ha-esphome-voice-satellite-add` | draft | unversioned |
+| [`claude/ha-esphome-ci-scaffold`](claude/ha-esphome-ci-scaffold/en.md) | Skill: `ha-esphome-ci-scaffold` | Skill: `ha-esphome-ci-scaffold` | draft | unversioned |
 | [`claude/ha-card-sizing-determine`](claude/ha-card-sizing-determine/en.md) | Skill: `ha-card-sizing-determine` | Skill: `ha-card-sizing-determine` | draft | unversioned |
 | [`claude/ha-pixoo-page-author`](claude/ha-pixoo-page-author/en.md) | Skill: `ha-pixoo-page-author` | Skill: `ha-pixoo-page-author` | draft | unversioned |
 | [`claude/ha-pixoo-pixel-art-author`](claude/ha-pixoo-pixel-art-author/en.md) | Skill: `ha-pixoo-pixel-art-author` | Skill: `ha-pixoo-pixel-art-author` | draft | unversioned |

@@ -14,8 +14,8 @@ One device, one new YAML file per invocation, in the consumer repository's devic
 
 - Single discoverable entry point (`/claude-home-assistant:ha-esphome-config-scaffold`) for new device configs
 - Interactive gathering of device name, board family, shared concerns, and initial platforms before any write
-- Pre-flight that catches collisions and missing secrets scaffolding before composition
-- Output that is HA-ready by construction: encrypted native api, ota, AP-fallback wifi — all secret-referenced
+- Pre-flight that catches collisions and undocumented credential variables before composition
+- Output that is HA-ready by construction: natively encrypted api with a per-device key, password-protected ota, AP-fallback wifi — every credential resolved from an environment variable
 
 ## Non-Goals
 
@@ -29,8 +29,8 @@ One device, one new YAML file per invocation, in the consumer repository's devic
 - **MUST** read `spec/ha/esphome-project-structure/en.md` as well and place the file accordingly: device files flat in the config root, reuse composed from a board package rather than copied blocks, and the `name` / `id` / `comment` substitution trio present
 - **SHOULD** consult the device spec when scaffolding for known hardware (`spec/ha/esp32-s3-box/en.md` for the BOX family), so generation-specific pins and codecs come from the spec instead of from a generic template
 - **MUST** verify every emitted schema key against the official ESPHome docs per `spec/ha/upstream-docs-verification`
-- **MUST** run the pre-flight (config-root detection, collision check, secrets inventory, operator confirmation) before writing
-- **MUST** report the secrets keys the operator has to fill, and extend `secrets.yaml.example` when the repo ships one
+- **MUST** run the pre-flight (config-root detection, collision check, credential-variable inventory, operator confirmation) before writing
+- **MUST** emit credentials as `!env_var` references — never `!secret`, never a literal — with a per-device api encryption key supplied as a substitution, and **MUST** report every environment variable the operator has to set, extending the repository's environment-variable documentation when it ships one
 - **SHOULD** offer `esphome config <file>` validation when the toolchain is present; otherwise report it as the caller's next step
 - **MUST NOT** write more than the one device file (plus the optional example-file extension) per run
 

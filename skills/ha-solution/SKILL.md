@@ -1,6 +1,6 @@
 ---
 name: ha-solution
-description: "Top-level front door for any Home Assistant requirement: classifies a result-oriented request into one or more domains (integration/backend, Lovelace/frontend, YAML automation, Divoom Pixoo) and routes it to the correct domain solution(s), so the user never has to pick a domain. For a single-domain request it hands off to the owning ha-{integration,lovelace,automation,pixoo}-solution; for a genuinely cross-domain request it decomposes across the relevant solutions in dependency order and threads the shared identities (domain, entity_ids, card tags, command types) across boundaries. Resolves the domain solutions at runtime. Activate on \"build me an X\" when the domain is unclear or spans several, \"a custom card plus the integration behind it and an automation\", or equivalent German requests. Do not activate when the domain is already unambiguous and single (owning ha-*-solution), for a single clear artifact (owning skill), or for deploying to a live HA instance. Supports resume on re-invocation."
+description: "Top-level front door for any Home Assistant requirement: classifies a result-oriented request into one or more domains (integration/backend, Lovelace/frontend, YAML automation, ESPHome, Divoom Pixoo) and routes it to the correct domain solution(s), so the user never has to pick a domain. For a single-domain request it hands off to the owning ha-{integration,lovelace,automation,esphome,pixoo}-solution; for a cross-domain request it decomposes across the relevant solutions in dependency order and threads the shared identities (domain, entity_ids, card tags, command types) across boundaries. Resolves the domain solutions at runtime. Activate on \"build me an X\" when the domain is unclear or spans several, \"a custom card plus the integration behind it and an automation\", or equivalent German requests. Do not activate when the domain is already unambiguous and single (owning ha-*-solution), for a single clear artifact (owning skill), or for deploying to a live HA instance. Supports resume on re-invocation."
 tags: [home-assistant, orchestration, cross-domain, router]
 phase: plan
 summary: "Top-level router that classifies a Home Assistant requirement into one or more domains and routes each part to the owning ha-*-solution."
@@ -16,6 +16,8 @@ dont_use_when:
     alternative: ha-lovelace-solution
   - situation: "The requirement is clearly a single YAML automation result"
     alternative: ha-automation-solution
+  - situation: "The requirement is clearly a single ESPHome device or fleet result"
+    alternative: ha-esphome-solution
   - situation: "The requirement is clearly a single Pixoo display result"
     alternative: ha-pixoo-solution
   - situation: "You are deploying or importing into a live HA instance"
@@ -24,6 +26,7 @@ see_also:
   - ha-integration-solution
   - ha-lovelace-solution
   - ha-automation-solution
+  - ha-esphome-solution
   - ha-pixoo-solution
 resumable: true
 ---
@@ -32,7 +35,7 @@ resumable: true
 
 Spec: `spec/claude/ha-solution/en.md` (EN canonical) / `spec/claude/ha-solution/de.md` (DE translation).
 
-This skill is the **top-level router** above the four domain front doors (`ha-integration-solution`, `ha-lovelace-solution`, `ha-automation-solution`, `ha-pixoo-solution`). It owns no domain artifacts itself — it classifies the requirement into one or more domains, routes each part to the owning `*-solution`, and threads the shared identities across domain boundaries. Each domain solution keeps its own plan-approval gate, decomposition, dispatch, and spec conformance.
+This skill is the **top-level router** above the five domain front doors (`ha-integration-solution`, `ha-lovelace-solution`, `ha-automation-solution`, `ha-esphome-solution`, `ha-pixoo-solution`). It owns no domain artifacts itself — it classifies the requirement into one or more domains, routes each part to the owning `*-solution`, and threads the shared identities across domain boundaries. Each domain solution keeps its own plan-approval gate, decomposition, dispatch, and spec conformance.
 
 ## Why this is a skill, not an agent
 
@@ -47,15 +50,15 @@ Use this skill when the user describes a **Home Assistant result** and either th
 
 ## When NOT to activate
 
-- the domain is already unambiguous and single → let the owning `ha-*-solution` activate directly (`ha-integration-solution`, `ha-lovelace-solution`, `ha-automation-solution`, `ha-pixoo-solution`)
-- a single clear artifact (one card, one platform, one automation, one Pixoo page) → let the owning individual skill activate directly
+- the domain is already unambiguous and single → let the owning `ha-*-solution` activate directly (`ha-integration-solution`, `ha-lovelace-solution`, `ha-automation-solution`, `ha-esphome-solution`, `ha-pixoo-solution`)
+- a single clear artifact (one card, one platform, one automation, one device config, one Pixoo page) → let the owning individual skill activate directly
 - deploying/importing into a running HA instance → out of scope (the domain solutions and their agents own that)
 
 ## Hard rules
 
 1. **Route, never generate or plan artifacts inline.** This skill classifies and dispatches domain solutions; it never generates an artifact and never does a domain's own artifact decomposition — that belongs to the owning `*-solution`. Each domain solution's own plan gate still applies.
 2. **Resolve the domain solutions at runtime.** Match the requirement against the live inventory of `ha-*-solution` skills (see [Runtime solution resolution](#runtime-solution-resolution)), never a frozen name list — a domain solution added to or renamed within the family is routable without editing this skill.
-3. **Classify into one or more domains.** Bucket the requirement into integration/backend, Lovelace/frontend, YAML-automation, and Pixoo parts; a single-domain requirement routes to exactly one solution, a cross-domain one to several.
+3. **Classify into one or more domains.** Bucket the requirement into integration/backend, Lovelace/frontend, YAML-automation, ESPHome, and Pixoo parts; a single-domain requirement routes to exactly one solution, a cross-domain one to several.
 4. **Plan before route.** Present the domain plan (which domains, which `*-solution`, dependency order, threaded identities) and wait for explicit approval before dispatching any solution.
 5. **Order by dependency and thread shared identities across boundaries.** Dispatch a backend before the frontend/automation that consumes it, and pass the identities produced in one domain — `domain`, `entity_id`s, device ids, card tag / `custom:<type>`, WebSocket command `type` — into the inputs of the dependent domain solution(s). Keep all names consistent per `spec/ha/naming-conventions/en.md`.
 6. **One requirement, one run.** No multi-requirement batches.
@@ -82,12 +85,9 @@ Resolve the owning domain solution for each classified part **at runtime**, by m
 | a dashboard surface — custom cards, editors, features, badges, strategies, custom panels | Lovelace / frontend | `ha-lovelace-solution` |
 | a YAML automation / helper / template / blueprint (no own protocol, no config flow) | automation | `ha-automation-solution` |
 | a Divoom Pixoo 64 display (pages, pixel-art, animation) | Pixoo — optional, device-specific family; applies only when that device is present | `ha-pixoo-solution` |
-| an ESPHome device config (new device, or one more sensor/bus/component) | ESPHome — device-YAML slice; routes to the owning skill directly (no front door yet) | `ha-esphome-config-scaffold` / `ha-esphome-config-augment` |
-| how an ESPHome **repository** is laid out — packages, reuse, fleet naming, CI | ESPHome — project structure; spec-only today, no skill yet | read `spec/ha/esphome-project-structure/` |
-| Home Assistant should drive what an ESPHome device shows or does (subscription, callable action, writable entity, event) | ESPHome — HA-driven content; spec-only today, no skill yet | read `spec/ha/esphome-ha-driven-content/` |
-| an ESP32-S3-BOX device — pins, codecs, display rendering, voice satellite | ESPHome — device-specific family; applies only when that device is present | read `spec/ha/esp32-s3-box/`, `spec/ha/esp32-s3-box-display/`, `spec/ha/assist-pipeline/` |
+| an ESPHome result of any shape — a device, a fleet layout, a Home-Assistant-driven binding, screen content, a voice satellite, or fleet CI | ESPHome | `ha-esphome-solution` |
 
-A cross-domain requirement maps to several rows; the typical order is **integration/backend → Lovelace/frontend → automation → Pixoo**, since the backend produces the `domain` and `entity_id`s the later domains consume.
+A cross-domain requirement maps to several rows; the typical order is **integration/backend → Lovelace/frontend → automation → ESPHome → Pixoo**, since the backend produces the `domain` and `entity_id`s the later domains consume — and an ESPHome device both publishes entities the frontend and automations consume and subscribes to entities they produce, so its position depends on which direction the requirement runs.
 
 ## Workflow
 
