@@ -33,7 +33,7 @@ resumable: true
 
 Spec: `spec/claude/ha-esphome-solution/en.md` (EN canonical) / `spec/claude/ha-esphome-solution/de.md` (DE translation). This spec governs the front-door dispatch/plan contract, structurally consistent with its `ha-{integration,lovelace,automation,pixoo}-solution` siblings; the grounding specs below govern the ESPHome artifacts themselves.
 
-Grounding specs: `spec/ha/esphome-config-patterns/en.md`, `spec/ha/esphome-project-structure/en.md`, `spec/ha/esphome-ha-driven-content/en.md`, and — where the device is one — `spec/ha/esp32-s3-box/en.md`, `spec/ha/esp32-s3-box-display/en.md`, `spec/ha/assist-pipeline/en.md`.
+Grounding specs: `spec/ha/esphome-config-patterns/en.md`, `spec/ha/esphome-project-structure/en.md`, `spec/ha/esphome-ha-driven-content/en.md`, and — where the device is one — `spec/ha/esp32-s3-box/en.md`, `spec/ha/esp32-s3-box-display/en.md`, `spec/ha/esp32-s3-box-display-design/en.md`, `spec/ha/assist-pipeline/en.md`.
 
 This skill is the **front door** to the ESPHome skill family. It generates nothing itself: it decomposes the requirement, plans the combination, and dispatches the owning skills, each of which owns its generation and spec conformance.
 
@@ -94,7 +94,7 @@ Resolve the owning skill for each artifact **at runtime**, by matching the requi
 | a new device to exist | one `<device-name>.yaml` | `ha-esphome-config-scaffold` |
 | one more sensor, bus, component, or package binding on a device | a block in the device file | `ha-esphome-config-augment` |
 | Home Assistant to drive what the device shows or does | subscription, action, writable entity, or return channel | `ha-esphome-binding-add` |
-| something on a panel | pages, redraw script, layout zones, fonts, images | `ha-esphome-display-author` |
+| something on a panel | pages, redraw script, layout zones, fonts, images, and the design system applied to them | `ha-esphome-display-author` |
 | the device to hear and speak | audio path, `voice_assistant:`, wake word, mute | `ha-esphome-voice-satellite-add` |
 | every device validated on every change | validation + compile workflows | `ha-esphome-ci-scaffold` |
 
