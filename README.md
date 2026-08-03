@@ -25,11 +25,12 @@ What the plugin helps you accomplish, each with its front-door skill:
 - **Build a custom integration (Python)** — `ha-integration-solution`: scaffold `custom_components/<domain>/`, then augment config flow, coordinators, entity platforms, services, diagnostics, discovery, repairs, translations, and tests.
 - **Build a Lovelace frontend (TypeScript / JavaScript)** — `ha-lovelace-solution`: custom cards, visual config editors, tile features, badges, dashboard strategies, custom panels, and their WebSocket-command backends.
 - **Author automations & blueprints (YAML)** — `ha-automation-solution`: automations, scripts, helpers, derived/statistical sensors, device automations, and shareable blueprints.
+- **Build ESPHome devices & fleets (YAML)** — `ha-esphome-solution`: the repository layout and its shared packages, device configs, Home-Assistant-driven values and commands, display content, voice satellites, and fleet-wide CI validation.
 - **Drive a Divoom Pixoo display** — `ha-pixoo-solution`: information pages, detailed 64×64 pixel art (shading & contours), and animations, from a described requirement.
 - **Run & test on a dev HA** — agents `ha-dev-instance-provisioner`, `ha-integration-deployer`, `ha-integration-verifier` (local Kubernetes / Kind), plus `ha-test-harness-augment` for pytest coverage.
-- **Review & harden before release** — `ha-quality-scale-audit`, `ha-security-audit`, and the bundled `ha-integration-reviewer` agent.
+- **Review & harden before release** — `ha-quality-scale-audit`, `ha-security-audit`, and the bundled `ha-integration-reviewer` agent; for ESPHome the read-only `ha-esphome-config-reviewer` and `ha-esphome-fleet-reviewer` agents, deliberately independent of the skills that author the configs.
 
-> ESPHome custom components and Home Assistant add-on (Docker / s6) workflows are on the roadmap; no skills ship for them yet.
+> ESPHome custom components (C++/Python) and Home Assistant add-on (Docker / s6) workflows are on the roadmap; no skills ship for them yet.
 
 ## Usage
 

@@ -4,7 +4,7 @@ Status: draft
 
 ## Context
 
-There are four domain front doors — `ha-integration-solution` (Python custom-integration backend), `ha-lovelace-solution` (Lovelace/frontend), `ha-automation-solution` (YAML automations/helpers), and `ha-pixoo-solution` (Divoom Pixoo display) — but **no orchestrator above them**. Domain selection relies on implicit skill-description matching, and a genuinely cross-domain request (e.g. a custom card + its backing integration + an automation) falls between the four front doors: a user with a mixed requirement must land on the right domain solution themselves, and no single skill owns a request that spans domains.
+There are five domain front doors — `ha-integration-solution` (Python custom-integration backend), `ha-lovelace-solution` (Lovelace/frontend), `ha-automation-solution` (YAML automations/helpers), `ha-esphome-solution` (ESPHome devices and fleets), and `ha-pixoo-solution` (Divoom Pixoo display) — but **no orchestrator above them**. Domain selection relies on implicit skill-description matching, and a genuinely cross-domain request (e.g. a custom card + its backing integration + an automation) falls between the front doors: a user with a mixed requirement must land on the right domain solution themselves, and no single skill owns a request that spans domains.
 
 This skill is the **top-level router**: it classifies a fuzzy Home Assistant requirement into one or more domains, routes each part to the owning `*-solution`, and threads the shared identities (`domain`, `entity_id`s, card tags, command types) across domain boundaries. It owns no domain artifacts and does no domain-internal decomposition — each domain solution keeps its own plan-approval gate, decomposition, dispatch, and spec conformance.
 
@@ -15,10 +15,10 @@ Domain classification and cross-domain routing above the `ha-*-solution` family.
 ## Goals
 
 - Accept any Home Assistant requirement at a single entry point and route it to the correct domain solution(s), without the user knowing the domain landscape
-- Classify the requirement into one or more of integration/backend, Lovelace/frontend, YAML-automation, and Pixoo
+- Classify the requirement into one or more of integration/backend, Lovelace/frontend, YAML-automation, ESPHome, and Pixoo
 - Decompose a cross-domain requirement across the relevant `*-solution`s in dependency order and thread the shared identities (`domain`, `entity_id`s, device ids, card tag/`custom:<type>`, command `type`) across domain boundaries
 - Resolve the domain solutions at runtime against the live `ha-*-solution` inventory, so an added or renamed domain solution is routable without editing this skill
-- Delimit cleanly against the four domain solutions: a single-domain requirement routes straight to its owning `*-solution`
+- Delimit cleanly against the domain solutions: a single-domain requirement routes straight to its owning `*-solution`
 
 ## Non-Goals
 
@@ -76,7 +76,7 @@ Domain classification and cross-domain routing above the `ha-*-solution` family.
 - [ ] The requirement is classified into one or more of integration/backend, Lovelace/frontend, YAML-automation, Pixoo
 - [ ] A cross-domain requirement is decomposed across the relevant `*-solution`s in dependency order with identities threaded across boundaries
 - [ ] Domain solutions are resolved against the live `ha-*-solution` inventory each run (an added or renamed domain solution is routable without editing the router)
-- [ ] A single-domain requirement routes straight to the owning `*-solution`; the skill delimits cleanly against the four domain solutions
+- [ ] A single-domain requirement routes straight to the owning `*-solution`; the skill delimits cleanly against the domain solutions
 - [ ] Stops on a NEEDS-WORK domain result instead of routing a dependent domain further
 - [ ] Aggregate report lists each domain, the solution that ran, the threaded identities, and relays the individual reports
 

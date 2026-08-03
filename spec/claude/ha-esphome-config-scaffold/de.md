@@ -14,8 +14,8 @@ Ein Gerät, eine neue YAML-Datei pro Aufruf, im Device-Config-Root des Consumer-
 
 - Ein auffindbarer Einstiegspunkt (`/claude-home-assistant:ha-esphome-config-scaffold`) für neue Device-Configs
 - Interaktives Erheben von Gerätename, Board-Familie, geteilten Concerns und initialen Plattformen vor jedem Write
-- Pre-flight, der Kollisionen und fehlendes Secrets-Scaffolding vor der Komposition fängt
-- Output, der konstruktionsbedingt HA-ready ist: verschlüsselte native api, ota, AP-Fallback-wifi — alles secret-referenziert
+- Pre-flight, der Kollisionen und undokumentierte Credential-Variablen vor der Komposition fängt
+- Output, der konstruktionsbedingt HA-ready ist: nativ verschlüsselte api mit Per-Device-Key, passwortgeschütztes ota, AP-Fallback-wifi — jedes Credential aus einer Environment-Variable aufgelöst
 
 ## Nicht-Ziele
 
@@ -29,8 +29,8 @@ Ein Gerät, eine neue YAML-Datei pro Aufruf, im Device-Config-Root des Consumer-
 - **MUSS** zusätzlich `spec/ha/esphome-project-structure/de.md` lesen und die Datei entsprechend platzieren: Device-Dateien flach im Config-Root, Wiederverwendung aus einem Board-Package komponiert statt kopierter Blöcke, und das Substitutions-Trio `name` / `id` / `comment` vorhanden
 - **SOLLTE** beim Scaffolding für bekannte Hardware die Geräte-Spec heranziehen (`spec/ha/esp32-s3-box/de.md` für die BOX-Familie), damit generationsspezifische Pins und Codecs aus der Spec statt aus einer generischen Vorlage stammen
 - **MUSS** jeden emittierten Schema-Key gemäß `spec/ha/upstream-docs-verification` gegen die offiziellen ESPHome-Docs verifizieren
-- **MUSS** den Pre-flight (Config-Root-Erkennung, Kollisions-Check, Secrets-Inventar, Operator-Bestätigung) vor dem Schreiben ausführen
-- **MUSS** die vom Operator zu füllenden Secrets-Keys reporten und `secrets.yaml.example` erweitern, wenn das Repo eine mitführt
+- **MUSS** den Pre-flight (Config-Root-Erkennung, Kollisions-Check, Inventar der Credential-Variablen, Operator-Bestätigung) vor dem Schreiben ausführen
+- **MUSS** Credentials als `!env_var`-Referenzen ausgeben — nie `!secret`, nie literal — mit einem als Substitution gelieferten Per-Device-API-Encryption-Key, und **MUSS** jede vom Operator zu setzende Environment-Variable reporten sowie die Environment-Variablen-Dokumentation des Repositories erweitern, wenn es eine mitführt
 - **SOLLTE** `esphome config <file>`-Validierung anbieten, wenn die Toolchain vorhanden ist; andernfalls als nächsten Caller-Schritt reporten
 - **DARF NICHT** mehr als die eine Device-Datei (plus optionale Example-Datei-Erweiterung) pro Lauf schreiben
 
