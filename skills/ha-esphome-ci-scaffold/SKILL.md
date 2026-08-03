@@ -35,7 +35,7 @@ Scaffolds the validation pipeline of an ESPHome fleet — the one gate that catc
 
 - **Mid-flow approval is the contract (decisive):** the credential strategy for a validation run, the compile cadence, and the ESPHome version floor are operator decisions with cost and security consequences.
 - **Quick, targeted change in the current context:** one or two workflow files in the repository the conversation is scoped to.
-- **Counter-dimension considered:** enumerating the fleet and the existing pipeline is self-contained (agent bias), but the resulting workflow is iterated with the operator; the read-only audit of an existing pipeline is a different job and belongs to `cicd-pipeline-reviewer` / `ha-esphome-fleet-reviewer`.
+- **Counter-dimension considered:** enumerating the fleet and the existing pipeline is self-contained (agent bias), but the resulting workflow is iterated with the operator; the read-only audit of an existing pipeline is a different job and belongs to `cicd-pipeline-reviewer` (nolte-shared) / `ha-esphome-fleet-reviewer`.
 
 ## When this skill activates
 
@@ -44,8 +44,8 @@ The user wants an ESPHome repository validated automatically — "ESPHome-Config
 ## When NOT to activate
 
 - the repository tree and the package architecture → `ha-esphome-fleet-scaffold`
-- a red run to triage → `workflow-health-triage`
-- an audit of the existing pipeline → `cicd-pipeline-reviewer` (general) / `ha-esphome-fleet-reviewer` (ESPHome-specific)
+- a red run to triage → `workflow-health-triage` (from the nolte-shared plugin; when it is not installed, triage the run against `spec/project/workflow-health/` directly)
+- an audit of the existing pipeline → `cicd-pipeline-reviewer` (nolte-shared, general) / `ha-esphome-fleet-reviewer` (ESPHome-specific, always available here)
 - CI for a Python custom integration → `ha-integration-ci-scaffold`
 - local compile, flash, or OTA rollout → the ESPHome toolchain / operator
 
@@ -91,5 +91,5 @@ The user wants an ESPHome repository validated automatically — "ESPHome-Config
 - Repository layout and package architecture → `ha-esphome-fleet-scaffold`
 - Package-level fixes for a validation failure → `ha-esphome-package-author`
 - Device-level fixes → `ha-esphome-config-augment`
-- A red run → `workflow-health-triage`
+- A red run → `workflow-health-triage` (nolte-shared; absent that plugin, `spec/project/workflow-health/` is the fallback)
 - Flash and OTA rollout → out of scope; the operator and the ESPHome toolchain own those
