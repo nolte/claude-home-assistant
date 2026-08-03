@@ -9,7 +9,7 @@ use_when:
   - "you want screen content designed for an ESPHome device with a panel"
   - "you want one more page for a device state, including a degraded one"
   - "you want the redraw discipline and layout zones done properly instead of ad-hoc coordinates"
-  - "you want the screen to follow the design system — palette roles, type scale, icon sizes — instead of per-page colours and sizes"
+  - "you want the screen to follow the design system — palette roles, type scale, icon sizes — not per-page choices"
 dont_use_when:
   - situation: "You want the panel's hardware binding — SPI pins, model preset, backlight"
     alternative: ha-esphome-config-augment
