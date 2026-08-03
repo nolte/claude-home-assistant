@@ -114,12 +114,12 @@ Verified 2026-08.
   | `c_ok` `00AC49` | 7.15 | 5.53 |
   | `c_warn` `F36D00` | 7.14 | 5.52 |
   | `c_alarm` `F3676C` | 7.03 | 5.43 |
-  | `c_border` `5E5E5E` | 3.05 | 2.36 |
+  | `c_border` `5E5E5E` | 3.15 | 2.43 |
   | `c_disabled` `7A7A7A` | 4.86 | 3.76 |
 
 - **MUST** read that table as the reason the palette is safe: every text and state role clears 4.5:1 on both backgrounds, and quantisation moves the ratios by at most ±0.3 `[derived]`
 - **MUST NOT** use `c_disabled` for text that is meant to be read — at 3.76:1 on `c_surface` it is below the body-text threshold. It is legitimate precisely because WCAG exempts inactive components: it *should* read as unavailable. Secondary readable text is `c_text_dim` `[wcag]` `[derived]`
-- **MUST NOT** use `c_border` as a foreground for text or for a meaning-bearing icon; at 2.36:1 on `c_surface` it fails even the 3:1 graphic threshold and is a structural line only `[derived]`
+- **MUST NOT** use `c_border` as a foreground for text or for a meaning-bearing icon; at 2.43:1 on `c_surface` it fails even the 3:1 graphic threshold and is a structural line only `[derived]`
 - **SHOULD** re-run the computation rather than trusting this table whenever a colour, a background, or `pixel_mode` changes `[policy]`
 
 ### Colour semantics and redundant coding
@@ -138,8 +138,9 @@ Verified 2026-08.
   | `f_caption` | 12 px | `--ha-font-size-s` | status strip (15 px) | units, timestamps, strip labels |
   | `f_body` | 16 px | `--ha-font-size-l` | header / footer box (30 px) | primary and secondary lines |
   | `f_display` | 28 px | `--ha-font-size-3xl` | centre widget (50 px) | the modal value |
-  | `f_hero` | 48 px | `--ha-font-size-5xl` | full-bleed | the one room-distance value |
+  | `f_hero` | 48 px | above the HA scale | full-bleed | the one room-distance value |
 
+- **MUST** treat `f_hero` as a deliberate departure: Home Assistant's scale stops at 40 px (`--ha-font-size-5xl`), which reaches only 14.7 arc-minutes at one metre on this panel. 48 px is chosen from the legibility table above, not from the token set, because HA's scale is calibrated for screens read at desk distance `[ha-tokens]` `[derived]` `[policy]`
 - **MUST** use **Roboto** as the family (`file: "gfonts://Roboto"`), which is Home Assistant's `--ha-font-family-body`. This deliberately departs from the reference configs' Figtree: the tie-break is consistency with the HA frontend, not with the upstream sample `[ha-tokens]` `[ref-config]` `[policy]`
 - **MUST** set an explicit `size:` on every font — it is optional in the schema and **defaults to 20**, so an omitted size renders silently at the wrong step `[doc]`
 - **MUST** set `bpp: 4` on `f_display` and `f_hero`, and **MAY** leave the default `bpp: 1` on `f_caption` and `f_body`. Large glyphs show their staircase; small ones mostly do not, and higher bit depths "increase the binary size considerably" `[doc]` `[policy]`

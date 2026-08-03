@@ -114,12 +114,12 @@ Verifiziert 2026-08.
   | `c_ok` `00AC49` | 7,15 | 5,53 |
   | `c_warn` `F36D00` | 7,14 | 5,52 |
   | `c_alarm` `F3676C` | 7,03 | 5,43 |
-  | `c_border` `5E5E5E` | 3,05 | 2,36 |
+  | `c_border` `5E5E5E` | 3,15 | 2,43 |
   | `c_disabled` `7A7A7A` | 4,86 | 3,76 |
 
 - **MUSS [MUST]** diese Tabelle als Beleg lesen, dass die Palette sicher ist: Jede Text- und Zustandsrolle übertrifft 4,5:1 auf beiden Hintergründen, und die Quantisierung verschiebt die Verhältnisse um höchstens ±0,3 `[derived]`
 - **DARF NICHT [MUST NOT]** `c_disabled` für Text verwenden, der gelesen werden soll — mit 3,76:1 auf `c_surface` liegt er unter der Fließtextschwelle. Legitim ist er genau deshalb, weil WCAG inaktive Komponenten ausnimmt: Er *soll* als nicht verfügbar gelesen werden. Sekundärer lesbarer Text ist `c_text_dim` `[wcag]` `[derived]`
-- **DARF NICHT [MUST NOT]** `c_border` als Vordergrund für Text oder ein bedeutungstragendes Icon verwenden; mit 2,36:1 auf `c_surface` verfehlt er selbst die 3:1-Grafikschwelle und ist ausschließlich Strukturlinie `[derived]`
+- **DARF NICHT [MUST NOT]** `c_border` als Vordergrund für Text oder ein bedeutungstragendes Icon verwenden; mit 2,43:1 auf `c_surface` verfehlt er selbst die 3:1-Grafikschwelle und ist ausschließlich Strukturlinie `[derived]`
 - **SOLLTE [SHOULD]** die Berechnung neu ausführen statt dieser Tabelle zu vertrauen, sobald sich eine Farbe, ein Hintergrund oder `pixel_mode` ändert `[policy]`
 
 ### Farbsemantik und redundante Kodierung
@@ -138,8 +138,9 @@ Verifiziert 2026-08.
   | `f_caption` | 12 px | `--ha-font-size-s` | Statusstreifen (15 px) | Einheiten, Zeitstempel, Streifen-Labels |
   | `f_body` | 16 px | `--ha-font-size-l` | Header-/Footer-Box (30 px) | primäre und sekundäre Zeilen |
   | `f_display` | 28 px | `--ha-font-size-3xl` | Zentral-Widget (50 px) | der modale Wert |
-  | `f_hero` | 48 px | `--ha-font-size-5xl` | vollflächig | der eine Wert für Raumdistanz |
+  | `f_hero` | 48 px | über der HA-Skala | vollflächig | der eine Wert für Raumdistanz |
 
+- **MUSS [MUST]** `f_hero` als bewusste Abweichung behandeln: Home Assistants Skala endet bei 40 px (`--ha-font-size-5xl`), was auf diesem Panel auf einem Meter nur 14,7 Bogenminuten erreicht. Die 48 px stammen aus der Lesbarkeitstabelle oben, nicht aus dem Token-Set, weil HAs Skala auf Bildschirme im Schreibtischabstand kalibriert ist `[ha-tokens]` `[derived]` `[policy]`
 - **MUSS [MUST]** **Roboto** als Familie verwenden (`file: "gfonts://Roboto"`), Home Assistants `--ha-font-family-body`. Das weicht bewusst von Figtree der Referenz-Configs ab: Ausschlaggebend ist Konsistenz mit dem HA-Frontend, nicht mit dem Upstream-Beispiel `[ha-tokens]` `[ref-config]` `[policy]`
 - **MUSS [MUST]** auf jeder Schrift ein explizites `size:` setzen — es ist im Schema optional und **defaultet auf 20**, sodass eine ausgelassene Größe stillschweigend in der falschen Stufe rendert `[doc]`
 - **MUSS [MUST]** `bpp: 4` auf `f_display` und `f_hero` setzen und **KANN [MAY]** den Default `bpp: 1` auf `f_caption` und `f_body` belassen. Große Glyphen zeigen ihre Treppenstufen, kleine meist nicht, und höhere Bittiefen „increase the binary size considerably" `[doc]` `[policy]`
