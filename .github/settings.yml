@@ -21,21 +21,10 @@ repository:
   description: Claude Code skills and agents for Home Assistant development — custom integrations, Lovelace cards, blueprints / automations, and ESPHome / add-on work.
   homepage: https://nolte.github.io/claude-home-assistant
   default_branch: develop
-  topics:
-    - claude-code
-    - claude-code-plugin
-    - claude
-    - anthropic
-    - skills
-    - agents
-    - home-assistant
-    - hacs
-    - custom-components
-    - lovelace
-    - blueprints
-    - automation
-    - divoom-pixoo
-    - pixel-art
+  # A comma-separated string, never a YAML list: probot/settings calls .split() on
+  # topics, and a list throws after the repository PATCH, which silently skips the
+  # branches block (nolte/gh-plumbing#416).
+  topics: claude-code, claude-code-plugin, claude, anthropic, skills, agents, home-assistant, hacs, custom-components, lovelace, blueprints, automation, divoom-pixoo, pixel-art
   allow_squash_merge: true
   allow_merge_commit: false
   allow_rebase_merge: false
@@ -60,5 +49,8 @@ branches:
       required_pull_request_reviews: null
       required_status_checks: null
       enforce_admins: true
-      required_linear_history: true
+      # The release refresh (nolte/gh-plumbing reusable-release-cd-refresh-master @v1.1.23)
+      # advances main through the merges API, which creates a merge commit; a linear-history
+      # requirement would refuse it on every release (nolte/gh-plumbing#384). Operator decision 2026-09-13.
+      required_linear_history: false
       restrictions: null
