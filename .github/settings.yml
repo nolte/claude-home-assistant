@@ -21,21 +21,10 @@ repository:
   description: Claude Code skills and agents for Home Assistant development — custom integrations, Lovelace cards, blueprints / automations, and ESPHome / add-on work.
   homepage: https://nolte.github.io/claude-home-assistant
   default_branch: develop
-  topics:
-    - claude-code
-    - claude-code-plugin
-    - claude
-    - anthropic
-    - skills
-    - agents
-    - home-assistant
-    - hacs
-    - custom-components
-    - lovelace
-    - blueprints
-    - automation
-    - divoom-pixoo
-    - pixel-art
+  # A comma-separated string, never a YAML list: probot/settings calls .split() on
+  # topics, and a list throws after the repository PATCH, which silently skips the
+  # branches block (nolte/gh-plumbing#416).
+  topics: claude-code, claude-code-plugin, claude, anthropic, skills, agents, home-assistant, hacs, custom-components, lovelace, blueprints, automation, divoom-pixoo, pixel-art
   allow_squash_merge: true
   allow_merge_commit: false
   allow_rebase_merge: false
