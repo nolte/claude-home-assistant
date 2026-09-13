@@ -21,6 +21,6 @@ jobs:
       contents: read
       pull-requests: read
       issues: read
-    # Tag pin by choice (github-actions-best-practices §A MAY): nolte
-    # controls gh-plumbing's tags, and branching-model requires a tag here.
-    uses: nolte/gh-plumbing/.github/workflows/reusable-pr-lint.yaml@v2.0.1
+    # Digest pin per github-actions-best-practices §A: the checker runs
+    # from job.workflow_sha, so a moved tag can't swap the rules.
+    uses: nolte/gh-plumbing/.github/workflows/reusable-pr-lint.yaml@6eeab5f407a63c182d82290dbf78faca18b2af3b # v2.0.1
