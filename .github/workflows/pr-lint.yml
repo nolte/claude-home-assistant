@@ -1,0 +1,26 @@
+name: pr-lint
+
+# spec/project/pull-request-workflow/ §"PR lint workflow": lint the
+# pull-request title and body on these four events, required for develop.
+# The rules run in the reusable workflow in nolte/gh-plumbing
+# (nolte/claude-shared#577), so this repository carries no local copy.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  pr-body:
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+    # Digest pin per github-actions-best-practices §A: the checker runs
+    # from job.workflow_sha, so a moved tag can't swap the rules.
+    uses: nolte/gh-plumbing/.github/workflows/reusable-pr-lint.yaml@6eeab5f407a63c182d82290dbf78faca18b2af3b # v2.0.1

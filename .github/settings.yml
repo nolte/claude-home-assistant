@@ -42,6 +42,7 @@ branches:
           - lint
           - test
           - docs
+          - pr-body / PR Lint
       enforce_admins: true
       restrictions: null
   - name: main
